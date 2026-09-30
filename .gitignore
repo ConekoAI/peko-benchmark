@@ -2,6 +2,9 @@
 # Curated results worth keeping should be force-added or summarized elsewhere.
 reports/*/
 !reports/.gitkeep
+# Historical field-test reports migrated from peko-runtime scripts/e2e are
+# curated artifacts, not run output — keep them tracked.
+!reports/field-history/
 
 __pycache__/
 *.pyc
