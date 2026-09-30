@@ -1,0 +1,30 @@
+field = "feature"
+description = "Add a --top-words N flag to an existing text-stats CLI, per a precise output spec (hidden tests)"
+timeout_secs = 900
+prompt = """
+The project contains `mdstats.py`, a stdlib-only Python CLI that reports
+line/word/byte counts for a text file (or stdin), plus an existing
+`tests/` suite that must keep passing.
+
+Add a new flag: `--top-words N`.
+
+Behavior spec (exact — grading tests check this output byte-for-byte):
+- Prints the N most frequent words in the input, one per line, most
+  frequent first.
+- Each line is exactly: the word, a TAB character, the count.
+- Words are lowercased before counting.
+- Words are sequences of ASCII letters and digits; any other character
+  (punctuation, whitespace) separates words.
+- Ties in frequency are broken alphabetically.
+- If the input has fewer than N distinct words, print all of them.
+- `--top-words` composes with the existing flags: when combined with
+  `--lines/--words/--bytes`, the existing summary line is printed first,
+  then the top-words list.
+- `-h/--help` must document the new flag.
+
+Requirements:
+- Keep everything in `mdstats.py`, stdlib only.
+- All existing tests in `tests/` must still pass.
+- Do NOT modify anything under `tests/` (the grader restores pristine
+  copies before scoring).
+"""

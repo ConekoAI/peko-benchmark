@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>demo shop</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 32rem; margin: 2rem auto; }
+    .line { display: flex; justify-content: space-between; padding: 0.25rem 0; }
+    #total { font-weight: 600; border-top: 1px solid #ccc; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>demo shop</h1>
+  <div id="catalog"></div>
+  <h2>cart</h2>
+  <div id="cart"></div>
+  <p id="total"></p>
+  <script type="module">
+    import { createCart, addItem, setQuantity, total, itemCount } from "./cart.js";
+
+    const PRODUCTS = [
+      { id: "p1", name: "Sticker", price: 0.1 },
+      { id: "p2", name: "Mug", price: 12.99 },
+      { id: "p3", name: "Poster", price: 7.5 },
+    ];
+
+    const cart = createCart();
+
+    function render() {
+      document.getElementById("cart").innerHTML = cart.items
+        .map(
+          (it) => `<div class="line" data-id="${it.id}">
+            <span>${it.name}</span>
+            <span>
+              <button data-act="dec">−</button>
+              ${it.qty}
+              <button data-act="inc">+</button>
+              × $${it.price}
+            </span>
+          </div>`
+        )
+        .join("");
+      document.getElementById("total").textContent =
+        `total (${itemCount(cart)} items): $${total(cart)}`;
+    }
+
+    document.getElementById("catalog").innerHTML = PRODUCTS.map(
+      (p) => `<button data-add="${p.id}">add ${p.name} ($${p.price})</button>`
+    ).join(" ");
+
+    document.getElementById("catalog").addEventListener("click", (e) => {
+      const id = e.target.dataset?.add;
+      if (!id) return;
+      addItem(cart, PRODUCTS.find((p) => p.id === id));
+      render();
+    });
+
+    document.getElementById("cart").addEventListener("click", (e) => {
+      const line = e.target.closest(".line");
+      if (!line) return;
+      const item = cart.items.find((it) => it.id === line.dataset.id);
+      if (!item) return;
+      setQuantity(cart, item.id, item.qty + (e.target.dataset.act === "inc" ? 1 : -1));
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Benchmark run artifacts (transcripts, workdirs) — large and ephemeral.
+# Curated results worth keeping should be force-added or summarized elsewhere.
+reports/*/
+!reports/.gitkeep
+
+__pycache__/
+*.pyc
+.DS_Store

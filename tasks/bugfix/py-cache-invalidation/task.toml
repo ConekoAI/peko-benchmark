@@ -1,0 +1,15 @@
+field = "bugfix"
+description = "Tagged dict cache serves stale values after invalidate() — fix the bug, keep the test suite green"
+timeout_secs = 600
+prompt = """
+The project contains `cachelib.py`, a tiny tagged dict cache, and a
+`tests/` suite (stdlib unittest). Some tests currently fail — run them,
+diagnose the bug in `cachelib.py`, and fix it.
+
+Requirements:
+- All tests in `tests/` must pass when you are done.
+- Do NOT modify anything under `tests/` — the tests define the intended
+  behavior. (The grader restores pristine copies before scoring, so
+  editing them does not help.)
+- Do NOT change the public API of `DictCache` (method names/signatures).
+"""

@@ -1,0 +1,22 @@
+field = "frontend"
+description = "Fix cart-logic bugs in a vanilla-JS shop page (qty=0 removal, money rounding) — graded by hidden node tests"
+timeout_secs = 600
+prompt = """
+The project is a dependency-free vanilla-JS shop demo: `index.html` plus
+`cart.js` (an ES module holding all cart logic). Two user-reported bugs:
+
+1. Setting an item's quantity to 0 via the stepper leaves a phantom
+   "0 × item" line in the cart instead of removing the item.
+2. Totals sometimes show long floating-point tails (e.g. buying three
+   $0.10 items shows 0.30000000000000004 instead of 0.30).
+
+Fix both bugs in `cart.js`. Contract the graders rely on:
+- `setQuantity(cart, id, 0)` (or any qty <= 0) removes the item.
+- `total(cart)` returns a number rounded to cents (2 decimals).
+- The exported API (`createCart`, `addItem`, `removeItem`,
+  `setQuantity`, `total`, `itemCount`) and its signatures do not change.
+- `index.html` keeps working with the module as-is.
+
+If node is available you can sanity-check with a quick `node --input-type=module`
+script, but no test suite ships with the fixture.
+"""

@@ -1,0 +1,25 @@
+field = "testing"
+description = "Write genuinely discriminating unittests for a pricing module — graded by validity + mutation catching"
+timeout_secs = 900
+prompt = """
+The project contains `pricing.py`, a stdlib-only module implementing
+discount rules for a small shop. It has NO tests.
+
+Write a thorough unittest suite for it in a new file `test_pricing.py`
+(next to `pricing.py`). Cover:
+- normal cases for every public function,
+- boundary values (e.g. discount tiers right at their thresholds),
+- error cases (invalid input must raise).
+
+Requirements:
+- stdlib `unittest` only; the suite must run with
+  `python3 -m unittest test_pricing -v` from the project directory.
+- Do NOT modify `pricing.py` — it is the specification, assume it is
+  correct. (The grader restores the pristine file before scoring.)
+- Run your tests and make sure they pass before finishing.
+
+Scoring (deterministic): your suite is run against the pristine module
+(must pass) and against several hidden buggy variants of it (must FAIL —
+i.e. your tests must actually catch real bugs). Vacuous tests that pass
+against everything score zero.
+"""
