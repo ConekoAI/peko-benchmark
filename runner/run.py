@@ -48,10 +48,18 @@ TASKS_DIR = REPO_ROOT / "tasks"
 HARNESSES_DIR = REPO_ROOT / "harnesses"
 REPORTS_DIR = REPO_ROOT / "reports"
 
+# The workdir path leads the prompt: a peko agent's default cwd is its own
+# (empty) workspace, and a suffix-only note wastes iterations on "the
+# directory is empty" exploration (observed in the first smoke run).
+PROMPT_PREFIX = (
+    "Working directory: `{work}` — the task project is already there.\n"
+    "Make ALL changes inside that directory (use absolute paths, or pass it\n"
+    "as the working directory for shell commands). Your own home/workspace\n"
+    "directory is unrelated to this task; do not look for the project there.\n\n"
+)
 PROMPT_SUFFIX = (
     "\n\n---\n"
-    "Environment note: the project for this task is located at `{work}`.\n"
-    "Make ALL changes inside that directory. You have shell access — run the\n"
+    "Reminder: work only inside `{work}`. You have shell access — run the\n"
     "relevant tests/commands to verify your work before finishing.\n"
 )
 
@@ -173,7 +181,8 @@ def run_one(task: dict, harness: str, rep: int, report_root: Path) -> dict:
 
     setup_workdir(task, work)
 
-    prompt = task["prompt"].rstrip() + PROMPT_SUFFIX.format(work=work)
+    prompt = (PROMPT_PREFIX.format(work=work) + task["prompt"].rstrip()
+              + PROMPT_SUFFIX.format(work=work))
     prompt_file = run_dir / "prompt.txt"
     prompt_file.write_text(prompt)
 

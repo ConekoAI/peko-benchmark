@@ -19,7 +19,8 @@ Behavior spec (exact — grading tests check this output byte-for-byte):
 - If the input has fewer than N distinct words, print all of them.
 - `--top-words` composes with the existing flags: when combined with
   `--lines/--words/--bytes`, the existing summary line is printed first,
-  then the top-words list.
+  then the top-words list. When `--top-words` is given WITHOUT any of
+  those flags, print ONLY the top-words list — no summary line.
 - `-h/--help` must document the new flag.
 
 Requirements:
