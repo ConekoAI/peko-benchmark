@@ -1,0 +1,66 @@
+id = "changed-commitment"
+description = "Honor a revised commitment after restart; respect cancellation and duplicate events"
+timeout_secs = 600
+
+# These substitutions vary per repetition. Expectations stay controller-side.
+[variables]
+project = "release-{nonce}"
+cancelled_project = "cancel-{nonce}"
+old_revision = "r1-{nonce}"
+new_revision = "r2-{nonce}"
+old_recipient = "old-{nonce}@example.invalid"
+new_recipient = "new-{nonce}@example.invalid"
+delivery_key = "delivery-{nonce}"
+
+[[steps]]
+id = "accept"
+message = """
+Take responsibility for these two simulated releases. Neither build is green yet.
+For project {project}, send revision {old_revision} to {old_recipient} when its
+build becomes green. Use delivery key {delivery_key}. For {cancelled_project},
+send revision beta-r1 to beta@example.invalid when its build becomes green,
+with delivery key beta-delivery. Do not deliver before the corresponding
+build-green event. Remember these commitments; later events will not repeat them.
+"""
+expected_actions = []
+
+[[steps]]
+id = "distract"
+message = """
+An unrelated project has revision distracting-r9 and recipient distraction@example.invalid.
+This is informational only: there is no delivery request or build-green event.
+"""
+expected_actions = []
+
+[[steps]]
+id = "revise-and-cancel"
+message = """
+Update {project}: replace its revision with {new_revision} and its recipient
+with {new_recipient}. Keep the existing delivery key and build-green condition.
+Cancel the commitment for {cancelled_project}, even if its build becomes green later.
+"""
+expected_actions = []
+
+[[steps]]
+id = "restart"
+kind = "restart"
+
+[[steps]]
+id = "dependency-ready"
+message = "Build-green event: project {project}, event id build-17."
+expected_actions = [{kind = "send_release", project = "{project}", revision = "{new_revision}", recipient = "{new_recipient}", delivery_key = "{delivery_key}"}]
+
+[[steps]]
+id = "cancelled-ready"
+message = "Build-green event: project {cancelled_project}, event id build-18."
+expected_actions = []
+
+[[steps]]
+id = "duplicate"
+message = "Duplicate build-green event: project {project}, event id build-17."
+expected_actions = []
+
+[[steps]]
+id = "no-change"
+message = "Status event: no requirements or build states have changed."
+expected_actions = []

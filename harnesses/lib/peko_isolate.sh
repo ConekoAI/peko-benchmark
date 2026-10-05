@@ -48,8 +48,9 @@ pb_iso_init() {
   export PEKO_DAEMON_PIPE=""
   export PEKO_MASTER_PASSPHRASE="peko-bench-vault-passphrase"
   export PEKO_IDENTITY_PASSPHRASE="peko-bench-vault-passphrase"
-  # Headless key resolution: bypass the OS keychain, honour *_API_KEY env.
-  export PEKO_TEST_RESOLVER_BOOTSTRAP=1
+  export PEKO_UNLOCK_METHOD="passphrase"
+  # Keys are explicitly stored in the isolated passphrase vault by model add.
+  unset PEKO_TEST_RESOLVER_BOOTSTRAP
 
   echo "[peko.sh] isolated HOME=$HOME"
 }

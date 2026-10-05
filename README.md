@@ -5,9 +5,16 @@ starting with coding (bug fixing, feature work, test writing, frontend) —
 and for benchmarking the [peko](https://github.com/ConekoAI/peko-runtime)
 runtime against other harnesses (e.g. codex) before MVP.
 
-This is a **benchmark**, not a regression suite. The peko-runtime repo's
-`scripts/e2e/` answers "did this specific fix hold?"; this repo answers
-"can the harness actually do the work, and where does it fall over?"
+This repo measures capability and carries the historical field-test reports.
+Runtime unit/integration tests answer "did this specific fix hold?"; this repo
+answers "can the harness actually do the work, and where does it fall over?"
+
+The [continuity benchmark](docs/CONTINUITY_BENCHMARK.md) adds a separate multi-turn
+pilot: accept commitments, revise/cancel them, restart the daemon, then act on
+dependency events without stale or duplicate deliveries. It measures continuity
+before testing unattended keepalive behavior.
+The [first live MiMo pilot](docs/LIVE_PILOT_MIMO_2026-10-05.md) records the
+completed scenario, retained setup failures, and usage-accounting findings.
 
 ## Methodology (read before trusting a number)
 
@@ -42,6 +49,11 @@ harnesses/
   codex.sh       # drives the codex CLI
   lib/peko_isolate.sh
 runner/run.py    # matrix runner: tasks × harnesses × reps → reports/
+runner/continuity.py  # multi-turn continuity runner + deterministic scorer
+runner/continuity_peko.py  # native adapter with isolated passphrase vault
+profiles/        # explicit provider configuration for continuity pilots
+scenarios/continuity/ # sequential events; controller-owned expected actions
+tests/          # offline grader mutation checks + adapter contracts
 reports/         # one directory per benchmark run (gitignored)
 ```
 
@@ -112,9 +124,12 @@ installation or git repo initialization).
 |---|---|---|
 | `PEKO_BIN` | — (required) | path to the `peko` binary |
 | `PEKO_API_KEY` | — (required unless `PEKO_SKIP_MODEL_ADD=1`) | provider key, stored via `peko model add --key` |
-| `PEKO_MODEL_TEMPLATE` | `minimax` | provider template for `model add` |
-| `PEKO_MODEL_NAME` | `MiniMax-M3` | model name within the template |
+| `PEKO_API_FORMAT` | `anthropic_messages` | explicit adapter API format |
+| `PEKO_BASE_URL` | `https://api.minimaxi.com/anthropic` | API endpoint prefix |
+| `PEKO_MODEL_NAME` | `MiniMax-M3` | wire model id |
 | `PEKO_MODEL_ID` | `minimax-MiniMax-M3` | catalog id the principal is pinned to |
+| `PEKO_MODEL_SPEC` / `PEKO_MODEL_COMPAT` | — | optional capability/pricing and compatibility JSON |
+| `PEKO_CONTEXT_WINDOW` / `PEKO_MAX_OUTPUT_TOKENS` | — | optional model limits |
 | `BENCH_TMP_ROOT` | `/tmp/peko-bench` | isolation root (short path: Unix socket limit) |
 | `KEEP_TEMPDIR` | — | keep isolated HOME for debugging |
 
@@ -142,6 +157,7 @@ installation or git repo initialization).
 - SWE-bench Verified / Terminal-Bench subset adapter for instant
   comparability with published baselines.
 - Browser-graded frontend tasks (playwright screenshot/DOM diff).
-- peko-specific capability tasks: cron/keepalive, subagent delegation,
-  workspace skills — the areas public benchmarks are blind to.
+- Continuity pilot is implemented; scheduled keepalive, cross-peer memory,
+  compaction, and interrupted-effect scenarios follow its evidence ladder.
+- Other peko-specific tasks: subagent delegation and workspace skills.
 - Token/cost capture per run once the harnesses expose it uniformly.

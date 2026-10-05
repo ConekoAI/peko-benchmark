@@ -7,7 +7,8 @@
 #   - exit 0 = harness ran to completion; non-zero = harness failure
 #
 # Required env: PEKO_BIN, PEKO_API_KEY (unless PEKO_SKIP_MODEL_ADD=1).
-# Optional env: PEKO_MODEL_TEMPLATE (minimax), PEKO_MODEL_NAME (MiniMax-M3),
+# Optional env: PEKO_API_FORMAT (anthropic_messages), PEKO_BASE_URL,
+#               PEKO_MODEL_NAME (MiniMax-M3), PEKO_MODEL_SPEC,
 #               PEKO_MODEL_ID (minimax-MiniMax-M3), BENCH_TMP_ROOT,
 #               KEEP_TEMPDIR, BENCH_PRINCIPAL (bench).
 set -uo pipefail
@@ -20,7 +21,8 @@ TIMEOUT_SECS="${4:?}"
 PEKO_BIN="${PEKO_BIN:?set PEKO_BIN to the peko binary path}"
 [[ -x "$PEKO_BIN" ]] || { echo "[peko.sh] PEKO_BIN not executable: $PEKO_BIN" >&2; exit 2; }
 
-MODEL_TEMPLATE="${PEKO_MODEL_TEMPLATE:-minimax}"
+API_FORMAT="${PEKO_API_FORMAT:-anthropic_messages}"
+BASE_URL="${PEKO_BASE_URL:-https://api.minimaxi.com/anthropic}"
 MODEL_NAME="${PEKO_MODEL_NAME:-MiniMax-M3}"
 MODEL_ID="${PEKO_MODEL_ID:-minimax-MiniMax-M3}"
 PRINCIPAL="${BENCH_PRINCIPAL:-bench}"
@@ -35,8 +37,13 @@ echo "[peko.sh] peko version: $("$PEKO_BIN" version 2>&1 | head -1)"
 if [[ -z "${PEKO_SKIP_MODEL_ADD:-}" ]]; then
   [[ -n "${PEKO_API_KEY:-}" ]] || {
     echo "[peko.sh] PEKO_API_KEY required (or PEKO_SKIP_MODEL_ADD=1)" >&2; exit 2; }
-  "$PEKO_BIN" model add --template "$MODEL_TEMPLATE" --model "$MODEL_NAME" \
-    --key "$PEKO_API_KEY" || {
+  model_args=(model add --id "$MODEL_ID" --api-format "$API_FORMAT"
+              --base-url "$BASE_URL" --model "$MODEL_NAME" --key "$PEKO_API_KEY")
+  [[ -z "${PEKO_MODEL_SPEC:-}" ]] || model_args+=(--spec "$PEKO_MODEL_SPEC")
+  [[ -z "${PEKO_MODEL_COMPAT:-}" ]] || model_args+=(--compat "$PEKO_MODEL_COMPAT")
+  [[ -z "${PEKO_CONTEXT_WINDOW:-}" ]] || model_args+=(--context-window "$PEKO_CONTEXT_WINDOW")
+  [[ -z "${PEKO_MAX_OUTPUT_TOKENS:-}" ]] || model_args+=(--max-output-tokens "$PEKO_MAX_OUTPUT_TOKENS")
+  "$PEKO_BIN" "${model_args[@]}" || {
     echo "[peko.sh] model add failed" >&2; exit 2; }
 fi
 
@@ -48,7 +55,7 @@ fi
 # ---- run the task ---------------------------------------------------------
 # `peko send` streams the reply and returns when the run completes.
 echo "[peko.sh] sending task prompt (timeout ${TIMEOUT_SECS}s)…"
-"$PEKO_BIN" send "$PRINCIPAL" --file "$PROMPT_FILE" \
+"$PEKO_BIN" send "$PRINCIPAL" --file "$PROMPT_FILE" --wait \
   >"$OUT_DIR/transcript.txt" 2>"$OUT_DIR/send.err" &
 send_pid=$!
 
