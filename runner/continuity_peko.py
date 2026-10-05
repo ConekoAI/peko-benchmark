@@ -170,6 +170,7 @@ class PekoDriver:
             # Use the Ctrl+C shutdown path; fall back only for this owned PID.
             os.kill(pid, signal.SIGINT)
         except ProcessLookupError:
+            self._capture_daemon_log(pid)
             self.pid = None
             return "already_exited"
         deadline = time.monotonic() + 10
@@ -177,13 +178,23 @@ class PekoDriver:
             try:
                 os.kill(pid, 0)
             except ProcessLookupError:
+                self._capture_daemon_log(pid)
                 self.pid = None
                 return "interrupt"
             time.sleep(0.1)
         # Only the PID from this adapter's isolated pidfile is eligible.
         os.kill(pid, signal.SIGKILL)
+        self._capture_daemon_log(pid)
         self.pid = None
         return "forced"
+
+    def _capture_daemon_log(self, pid):
+        # The daemon opens a fresh log at startup. Preserve each epoch before
+        # restarting, so initialization and shutdown diagnostics are not lost.
+        log = Path(self.temp.name) / ".peko/logs/daemon.log"
+        if log.is_file():
+            (self.run_dir / f"daemon-{pid}.log").write_text(
+                self._redact(log.read_text(errors="replace")))
 
     def restart(self) -> dict:
         previous = self.pid

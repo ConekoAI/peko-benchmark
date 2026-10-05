@@ -15,6 +15,8 @@ dependency events without stale or duplicate deliveries. It measures continuity
 before testing unattended keepalive behavior.
 The [first live MiMo pilot](docs/LIVE_PILOT_MIMO_2026-10-05.md) records the
 completed scenario, retained setup failures, and usage-accounting findings.
+The [fix verification](docs/LIVE_PILOT_MIMO_FIX_VERIFICATION_2026-10-05.md)
+confirms full quota retention and clean signal shutdown in a repeat live run.
 
 ## Methodology (read before trusting a number)
 

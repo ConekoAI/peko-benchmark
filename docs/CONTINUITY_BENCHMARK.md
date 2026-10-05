@@ -7,6 +7,8 @@ knowledge, or keepalive. Existing coding tasks remain the capability baseline.
 
 The [first live MiMo pilot](LIVE_PILOT_MIMO_2026-10-05.md) passed one completed
 scenario and exposed initialization latency and quota persistence findings.
+The [runtime fix verification](LIVE_PILOT_MIMO_FIX_VERIFICATION_2026-10-05.md)
+passed with complete quota retention and clean signal shutdown.
 
 ## 1. First runnable scenario: changed commitment
 
@@ -144,7 +146,7 @@ configuration are recorded. Genesis must succeed before events begin.
 
 Artifacts under `reports/<timestamp>-continuity-<driver>/` include per-run
 `scenario.json`, `observations.jsonl`, `result.json`, model configuration, native
-command logs, daemon log, persisted JSONL conversation/audit traces and quota
+command logs, per-process daemon logs, persisted JSONL conversation/audit traces and quota
 snapshot and `usage-reconciliation.json`, plus aggregate `summary.json` and
 `summary.md`. API keys and
 passphrases are redacted from command logs. The adapter never receives the

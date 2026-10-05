@@ -106,3 +106,6 @@ available. Keep it separate from per-run token counts and USD reference estimate
 Offline benchmark validation after the adapter changes: 22 tests passed;
 shell profile syntax and diff whitespace checks passed. No runtime source
 changes were made for this pilot.
+
+The subsequent [fix verification](LIVE_PILOT_MIMO_FIX_VERIFICATION_2026-10-05.md)
+passed the same scenario with complete quota retention and clean SIGINT restart.
