@@ -11,6 +11,11 @@ as the [initial pilot](LIVE_PILOT_MIMO_2026-10-05.md). Fresh principal and vault
 default genesis and provider-default thinking. Artifacts:
 `reports/20261005T095249683697Z-continuity-peko/`.
 
+PR #420 was squash-merged to runtime `master` as
+`be06b332a0a7470d8f5f4cc900f47e2e9f50c26b` on 2026-10-05. GitHub's Linux
+unit tests (including both native shutdown tests) and both boundary checks
+passed before merge. The Docker integration job was still running at merge.
+
 | Check | Before fix | After fix |
 |---|---|---|
 | Scored turns | 7/7 correct | 7/7 correct |
