@@ -12,7 +12,7 @@ from continuity_proxy import AnthropicRelay
 from continuity_usage import reconcile_usage
 from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
-                                     verify_claw, verify_peko)
+                                     verify_claw, verify_peko, task_paths)
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000}
@@ -57,7 +57,7 @@ def monitor_prompt(url, cadence):
 
 def task_monitor_prompt(url, cadence):
     return ("You are the dedicated release-watch task worker, not the organizational supervisor. "
-            + monitor_prompt(url, cadence)
+            + task_paths() + monitor_prompt(url, cadence)
             + " Maintain only canonical task receipts and current state. Leave routine hot-memory, journal, "
             "skill, and session-tree maintenance to the supervisor; do not rewrite those on every check.")
 
@@ -106,7 +106,7 @@ class PekoResponsibility(PekoDriver):
         metadata = super().start()
         metadata.update(base_url=upstream, common_wire_policy=POLICY, continuation_mode=self.mode,
                         cadence_secs=cadence, initialization="defined_purpose_native_genesis",
-                        api_contract_version=4 if self.topology == "separated" else API_CONTRACT_VERSION,
+                        api_contract_version=5 if self.topology == "separated" else API_CONTRACT_VERSION,
                         topology=self.topology)
         return metadata
 
@@ -229,7 +229,7 @@ class ClawResponsibility(OpenClawDriver):
                         persona_bootstrap_completed=completed, common_wire_policy=POLICY,
                         continuation_mode=self.mode, cadence_secs=self.sim.spec["cadence_secs"],
                         heartbeat="native configured cadence, owner task session, internal-only output",
-                        api_contract_version=4 if self.topology == "separated" else API_CONTRACT_VERSION,
+                        api_contract_version=5 if self.topology == "separated" else API_CONTRACT_VERSION,
                         topology=self.topology)
         if not completed:
             raise RuntimeError("OpenClaw persona onboarding did not finish before task clock")
@@ -255,7 +255,8 @@ class ClawResponsibility(OpenClawDriver):
         prompt.write_text(message)
         key = "agent:main:review" if review else "agent:main:responsibility"
         return final_reply(json.loads(self._command("agent", "--session-key", key,
-                          "--message-file", str(prompt), "--thinking", "off", "--timeout", "90", "--json")))
+                          "--message-file", str(prompt), "--thinking", "off", "--timeout",
+                          "180" if self.topology == "separated" else "90", "--json")))
 
     def telemetry(self):
         schedules = json.loads(self._command("automations", "list", "--all", "--json"))

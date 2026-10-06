@@ -14,7 +14,7 @@ from continuity_proxy import summarize_calls
 from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract, state_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
-from responsibility_topology import execution_evidence
+from responsibility_topology import execution_evidence, task_paths
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 def contract(sim):
     organization = (f"Use one dedicated persistent release-watch task session at {sim.spec['cadence_secs']:g}s "
                     f"and independent organizational supervision at {sim.spec['cadence_secs'] * 2:g}s. "
-                    "Only the task worker inspects dependencies and performs operational actions during the watch. "
+                    + task_paths() + "Only the task worker inspects dependencies and performs operational actions during the watch. "
                     "Owner/review conversations maintain authoritative shared requirements; the worker owns receipts "
                     "and current-state reconciliation; the supervisor organizes and repairs. Native Agent/automation "
                     "registration and bounded setup delegation are allowed. Do not add other monitors, schedules, "
@@ -91,6 +91,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
     started = time.monotonic()
     try:
         metadata = driver.start()
+        if spec.get("topology") == "separated":
+            driver.validate_topology("post-setup")
         sim.phase = "conversation"
         for name, review, message in messages(sim):
             sim.record("ingress", step=name, conversation="review" if review else "owner")
@@ -168,7 +170,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
                       for k in ("worker_session_ids", "supervisor_session_ids")}
         topology = execution_evidence(run_dir, starts[0], ends[0], identities) if starts and ends else {"verified": False}
         metrics["topology_execution"] = topology
-        metrics["topology_registered"] = (len(checks) == 3 and all(c["verified"] for c in checks))
+        metrics["topology_registered"] = ({c["stage"] for c in checks} == {
+            "post-setup", "pre-watch", "post-restart", "post-watch"} and all(c["verified"] for c in checks))
         metrics["passed"] = metrics["passed"] and metrics["topology_registered"] and topology["verified"]
     phases = sorted({r.get("phase") for r in driver.relay.records}) if driver.relay else []
     phase_usage = {p: summarize_calls([r for r in driver.relay.records if r.get("phase") == p]) for p in phases}

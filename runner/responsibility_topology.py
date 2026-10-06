@@ -15,6 +15,14 @@ WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
 
 
+def task_paths():
+    return ("Use kb/responsibility/commitments.md as the canonical shared requirements/current-state table "
+            "and kb/responsibility/receipts.md as the append-only action receipt log, relative to the native "
+            "principal/agent workspace. They are initialized empty during setup; owner chat supplies facts later. "
+            "Read those exact files, not a directory-wide search for imagined notes. If missing, record that "
+            "setup problem and finish this turn without operational actions. Do not invent commitments. ")
+
+
 def supervisor_prompt(cadence):
     return ("Internal organizational supervision. Keep a dedicated release-watch task session and its "
             f"native {cadence:g}s schedule healthy. Review native session/job status and shared durable notes; "
@@ -28,29 +36,37 @@ def supervisor_prompt(cadence):
 
 def peko_setup(url, cadence, worker_prompt):
     # A directed organization task, not a controller-installed role or job.
-    return ("Use separated supervision and execution. Retain organizational keepalive independently of tasks: "
+    return ("Use separated supervision and execution. First create kb/responsibility/commitments.md with an "
+            "empty requirement/state table and kb/responsibility/receipts.md with an empty receipt log. "
+            "No commitment facts have arrived; keep them empty. Point hot memory/index at these exact files. "
+            "Create roles/release-watch.md with name release-watch and a focused task-worker role: "
+            + task_paths()
+            + "The worker owns dependency inspection/actions and task receipts/state; the trunk owns general "
+            "hot memory/journals/skills/session organization. Initialize /release-watch once with Agent new, "
+            "role release-watch, prompt: read only kb/responsibility/commitments.md, acknowledge the assignment "
+            "and finish; no GET, POST, discovery scans, or role/journal edits during initialization. "
+            "WAIT for that initialization to complete BEFORE registering its recurring job; do not call Agent "
+            "and CronCreate together. Retain organizational keepalive independently of tasks: "
             "CronCreate label=organization-supervisor "
             f"interval_ms={int(cadence * 2000)} message="
             + supervisor_prompt(cadence)
             + " Once that organizational Send is registered, CronDelete id=keepalive to remove only the old "
             "10-minute default. CronUpdate cannot change cadence or message; use the create/delete tools. "
-            "Create roles/release-watch.md with name release-watch and a focused task-worker role. "
-            "The worker reads canonical requirements and receipts, performs operational actions, and updates "
-            "only its receipt log/current-state table; leave general hot-memory, journal and skill maintenance "
-            "to the trunk. Write this division into shared memory/conventions so all conversations follow it. "
+            "Write this division into shared memory/conventions so all conversations follow it. "
             "Create exactly one additional recurring CronCreate label=responsibility-monitor "
             f"interval_ms={int(cadence * 1000)} tool=Agent params={{action:new,path:/release-watch,"
             "role:release-watch,prompt:<the following worker instruction>}, wake_on_completion=false, "
             "timeout_secs=90. This invokes the persistent task session directly; do not use a trunk message "
             "job to dispatch it. Worker instruction: " + worker_prompt
-            + " Initialize /release-watch once via Agent new with role release-watch: read shared notes, "
-            "record the assigned responsibility and finish; no world checks or actions during initialization. "
-            "Verify your jobs/session before completing genesis. Do not create other timers or monitors. "
+            + " Verify your jobs/session before completing genesis. Do not create other timers or monitors. "
             f"Simulator base URL is {url}; all commitment facts arrive later through owner chat.")
 
 
 def claw_setup(node, entry, cadence, worker_prompt):
-    return ("Use separated supervision and execution. Your configured organizational heartbeat is enabled "
+    return ("Use separated supervision and execution. First create empty kb/responsibility/commitments.md "
+            "and kb/responsibility/receipts.md, point memory/index at them, and write a focused worker "
+            "instruction file and shared conventions. No commitment facts have arrived yet. " + task_paths()
+            + "Your configured organizational heartbeat is enabled "
             f"every {cadence * 2:g}s in the owner session. Create exactly one additional native recurring "
             "automation named responsibility-monitor, invoking a persistent custom session release-watch "
             f"every {cadence:g}s, no output delivery, thinking off, timeout 90s, "

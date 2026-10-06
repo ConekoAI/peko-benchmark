@@ -40,6 +40,16 @@ Both harnesses receive these instructions. No controller generates notes,
 updates statuses for agents, or supplies expected memory answers. This is a
 prompt change rather than a new enforced runtime memory primitive.
 
+Contracts 4–5's `--topology separated` experiment permits directed native worker
+registration and keeps independent organizational supervision (120s) alongside
+a task worker (60s). Peko genesis authors the role, child and Cron Agent job;
+OpenClaw's model authors a persistent-custom-session automation with the same
+permission and run budget. It does not apply to the event-driven/persistence
+ablations yet. Read-only registration snapshots and session-attributed native
+tool intents extend the gate; task grading, deadlines and oracle remain the
+same. This changes topology and role prompts together. See the
+[protocol and retained results](RESPONSIBILITY_TOPOLOGY_MIMO_2026-10-06.md).
+
 The controller changes dependencies silently. Supervisory runs receive **no
 message, wake request, or manually triggered cron** when dependencies change
 or after the process restarts. Restart retains the native state directory but
