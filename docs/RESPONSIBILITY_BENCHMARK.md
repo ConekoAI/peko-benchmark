@@ -49,6 +49,9 @@ ablations yet. Read-only registration snapshots and session-attributed native
 tool intents extend the gate; task grading, deadlines and oracle remain the
 same. This changes topology and role prompts together. See the
 [protocol and retained results](RESPONSIBILITY_TOPOLOGY_MIMO_2026-10-06.md).
+The first formation attempts and the bounded post-repair pair stopped before
+the watch. Their task metrics are censored, even when the strict full gate fails;
+the verified Peko post-setup arrangement is formation evidence only.
 
 The controller changes dependencies silently. Supervisory runs receive **no
 message, wake request, or manually triggered cron** when dependencies change

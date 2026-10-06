@@ -110,3 +110,80 @@ immediately after setup, so a later conversation failure cannot conceal whether
 the topology formed. Run one fresh sample per harness after this concrete repair.
 Contract 4 and 5 are different setup/task-input interventions, not reliability
 repetitions of an unchanged protocol.
+
+## Contract-5 results
+
+Both retests used benchmark source `5b33f7680f88ff3bb01f7fd826b0a3dd045c816b`.
+Peko used runtime source `fe2074b0a51a7e31096cb02d1512c24abf6d20a5`
+(merged restart repair), version 0.1.0. Its rebuilt CLI SHA-256 is
+`1df3735028765d5dbcdeac1e1149a9438d3cc2ff2a36302f67960aa8305f11c3`,
+and daemon SHA-256 is
+`1894517171ed8e4ae3aea0b59f468928d84ecc2815b97a9416b176b56218c89c`.
+OpenClaw reported `OpenClaw 2026.9.8 (fc23bc8)` in both contracts.
+
+| Contract | Harness | Last observed stage | Unattended watch |
+|---|---|---|---|
+| 4 | Peko | Genesis exceeded 300s; initialization overlapped a task fire | Not started |
+| 4 | OpenClaw | Registered worker; review conversation exceeded 90s | Not started |
+| 5 | Peko | Registration verified; first owner conversation exceeded 180s | Not started |
+| 5 | OpenClaw | Onboarding exceeded 180s; custom task job absent | Not started |
+
+Peko report `20261006T120921466884Z-responsibility-peko` completed genesis
+and passed the post-setup registration check: an independent 120s organizational
+Send job, a 60s Agent job routed to `/release-watch` with the focused role,
+and an initialized persistent child of the trunk. This establishes that the
+runtime can form the requested arrangement under directed setup instructions.
+It does not establish the worker/supervisor execution gate during the watch.
+
+The first owner update then exceeded the 180-second command allowance
+(whole-run wall time 480.252s). The owner session wrote commitment state, but
+also resumed the worker twice and polled async output/cron history instead of
+finishing its acknowledgement. The worker read the inactive pre-watch world;
+the unattended phase never started. Manual driving and waiting during the
+handoff is a concrete remaining behavior problem. The trace does not isolate
+whether shared principal instructions, onboarding instructions or model choices
+caused it. All 33 forwarded calls completed, with one rejected late admission;
+relay and persisted native usage reconcile. The PAYG reference cost is
+$0.022093428 (121,765 uncached input, 812,160 cached input, 9,901 output tokens).
+
+OpenClaw report `20261006T121904260239Z-responsibility-openclaw` exceeded the
+180-second onboarding allowance (whole-run wall time 200.678s). It created the
+shared task files and worker instructions, but BOOTSTRAP remained present and
+the final schedule snapshot contained no custom task automation. No owner
+conversation or registration check was reached. Five calls were forwarded;
+four completed, costing $0.0024743264 in PAYG reference terms. The fifth has
+partial input usage and no final usage, so full-run consumption and cost are
+unknown and native reconciliation fails. Contract metadata is assigned after
+onboarding, so this failed result lacks that field; its pinned source manifest
+and scenario identify the contract-5 intervention. Both retests drained
+telemetry before closing; a successful drain cannot supply missing final usage.
+
+Across the four live attempts, 76 requests were forwarded and 74 completed.
+The completed-call reference subtotal is $0.0434389592; the full total is
+unknown because two OpenClaw calls lack final usage. These figures do not
+estimate actual MiMo Token Plan credit charges. No attempt reached a watch,
+restart or memory probe. Reported strict failures are retained, but obligation,
+deadline, memory, idle-spend and quietness outcomes are unavailable for this
+experiment. Zero actions before a watch are not proof of correct quietness.
+
+## Interpretation and next experiment
+
+The user's proposed separation is implementable with existing native runtime
+primitives. Peko's successful directed formation is supporting evidence for
+that narrower claim. These runs neither confirm its performance advantage nor
+refute the architecture. OpenClaw's earlier flattened success also cannot be
+treated as success under this separated protocol.
+
+The next stabilization target is lifecycle prompting and handoff, before any
+larger trial. Scope procedural creation instructions explicitly to genesis;
+keep ongoing principal purpose separate from setup recipes. Once the worker
+is registered, owner/review conversations should update shared facts and
+acknowledge, without manually resuming the worker or waiting for scheduled
+execution. Treat this as a testable prompt hypothesis, not a proven diagnosis.
+
+Separate two subsequent experiments: a prepared-topology execution test and
+a model-created organization test. If a controller installs topology fixtures
+for the former, label that intervention explicitly and score formation only in
+the latter. This would let the unattended watch evaluate task isolation without
+censoring every metric on onboarding. Retain the present failures; do not
+increase deadlines, budgets or retries silently to obtain a passing pair.
