@@ -20,7 +20,9 @@ ledger, including wrong actions and repeats. A receipt proves recording only;
 there is no simulator deduplication to conceal agent errors.
 
 API contract version 2 supplies the same static endpoints, action schemas and
-recording-receipt semantics to both native monitors as well as conversations.
+recording-receipt semantics in both harnesses' supervision setup and conversations.
+OpenClaw uses a configured heartbeat prompt; Peko's model-driven genesis can
+organize the supplied supervision instructions into cron and shared hot memory.
 Previously those details appeared only in owner/review conversations, retained
 by OpenClaw's owner-session heartbeat but absent from Peko's separate trunk
 unless the agent persisted or retrieved them. Commitment facts remain a memory
@@ -106,6 +108,15 @@ reported separately. Phase assignment is by request start; a call crossing a
 phase boundary is not fractionally attributed. Read counts do not prove useful
 work or internal reasoning. Clock time, full native transcripts, durable memory,
 schedule evidence, and both usage ledgers are retained for failure analysis.
+
+After the watch and memory probe, both responsibility adapters now close relay
+admission and drain forwarded requests for at most 30 seconds (within the
+remaining scenario deadline) before native shutdown. Final telemetry refreshes
+after shutdown so late partial counters cannot disappear from the result.
+`telemetry_drain_completed` records settled handlers, not guaranteed complete
+LLM usage. Missing completion or native reconciliation still fails the gate.
+The drain has offline coverage; live verification remains pending after the
+[latest failed pair](RESPONSIBILITY_INTERFACE_PARITY_2026-10-06.md).
 
 Optional `--profile-prompt` records JSON sizes, cache-marker locations and
 run-local HMAC fingerprints at the relay after the common decoding policy is

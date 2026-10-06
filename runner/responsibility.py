@@ -54,6 +54,17 @@ def messages(sim):
     ]
 
 
+def settled_telemetry(relay, telemetry):
+    """Refresh observed counters after shutdown; never infer missing usage."""
+    result = telemetry | relay.telemetry()
+    native = result.get("native_usage", {})
+    result["native_usage_matches"] = bool(native) and all(
+        result.get(k) == native.get(k) for k in (
+            "request_count", "uncached_input_tokens", "cache_read_tokens",
+            "cache_creation_tokens", "output_tokens"))
+    return result
+
+
 def execute(spec, driver_name, mode, budget, timeout, run_dir):
     run_dir.mkdir(parents=True)
     (run_dir / "scenario.json").write_text(json.dumps(spec, indent=2))
@@ -119,6 +130,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
         except Exception as exc:
             errors.append(f"cleanup {type(exc).__name__}: {exc}")
         sim.close()
+    if driver.relay:
+        telemetry = settled_telemetry(driver.relay, telemetry)
     (run_dir / "run-state.json").write_text(json.dumps({
         "metadata": metadata, "usage": telemetry, "errors": errors,
         "wall_secs": round(time.monotonic() - started, 3)}, indent=2))

@@ -31,7 +31,8 @@ passed once per harness; larger runs are deferred while stabilizing the runtime.
 The [prompt and cache investigation](docs/PROMPT_PROFILE_MIMO_2026-10-06.md)
 records the cost concentration, runtime fixes, and diagnostic verification.
 The [interface parity investigation](docs/RESPONSIBILITY_INTERFACE_PARITY_2026-10-06.md)
-records a later failed watch and the correction to shared supervisor API documentation.
+records the shared supervisor API correction, the subsequent failed pair,
+and a benchmark cleanup repair with offline verification.
 
 ## Methodology (read before trusting a number)
 

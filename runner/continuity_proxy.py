@@ -61,6 +61,9 @@ class AnthropicRelay:
         self.token = secrets.token_hex(24)
         self.records = []
         self.lock = threading.Lock()
+        self.condition = threading.Condition(self.lock)
+        self.admission_open = True
+        self.active_requests = 0
         self.policy = policy
         self.phase = phase or (lambda: "continuity")
         self.profiler = PromptProfiler() if profile_prompt else None
@@ -123,7 +126,9 @@ class AnthropicRelay:
                                  + r.get("usage", {}).get("cache_read_input_tokens", 0) * .0028
                                  for r in self.records) / 1e6
             reason = None
-            if payload.get("model") != "mimo-v2.6-flash":
+            if not self.admission_open:
+                reason = "measurement ended"
+            elif payload.get("model") != "mimo-v2.6-flash":
                 reason = "unexpected model"
             elif isinstance(payload.get("max_tokens"), bool) or not isinstance(payload.get("max_tokens"), int) or not 0 < payload["max_tokens"] <= 8192:
                 reason = "output cap must be at most 8192"
@@ -139,6 +144,8 @@ class AnthropicRelay:
                 record["rejection"] = reason
             elif self.profiler:
                 record["prompt_profile"] = self.profiler.capture(payload, record["index"])
+            if record["forwarded"]:
+                self.active_requests += 1
             self.records.append(record)
             self._save()
         if reason:
@@ -184,6 +191,19 @@ class AnthropicRelay:
             record["wall_secs"] = round(time.monotonic() - started, 3)
             with self.lock:
                 self._save()
+                self.active_requests -= 1
+                self.condition.notify_all()
+
+    def drain(self, timeout_secs: float = 30) -> bool:
+        """End admission and wait boundedly for forwarded handlers to settle.
+
+        Call only after measurement/probe work. A timeout does not imply full
+        usage; interrupted or missing completion records remain incomplete.
+        """
+        with self.condition:
+            self.admission_open = False
+            wait_secs = max(0, min(timeout_secs, self.deadline - time.monotonic()))
+            return self.condition.wait_for(lambda: self.active_requests == 0, wait_secs)
 
     def telemetry(self):
         with self.lock:

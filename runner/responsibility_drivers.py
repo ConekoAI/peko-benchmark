@@ -105,6 +105,7 @@ class PekoResponsibility(PekoDriver):
         raise TimeoutError("no principal reply in native review group")
 
     def telemetry(self):
+        self.metadata["telemetry_drain_completed"] = self.relay.drain()
         self._stop_owned_daemon()
         root = Path(self.temp.name) / ".peko/data/principals" / self.principal
         states = list(root.rglob("quota_state.json"))
@@ -189,6 +190,7 @@ class ClawResponsibility(OpenClawDriver):
     def telemetry(self):
         schedules = json.loads(self._command("automations", "list", "--all", "--json"))
         (self.run_dir / "native-schedules.json").write_text(self._redact(json.dumps(schedules, indent=2)))
+        self.metadata["telemetry_drain_completed"] = self.relay.drain()
         return super().telemetry()
 
 
