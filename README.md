@@ -33,6 +33,8 @@ records the cost concentration, runtime fixes, and diagnostic verification.
 The [interface parity investigation](docs/RESPONSIBILITY_INTERFACE_PARITY_2026-10-06.md)
 records the shared supervisor API correction, the subsequent failed pair,
 and a benchmark cleanup repair with offline verification.
+The [state and cadence validation](docs/RESPONSIBILITY_STATE_COVERAGE_MIMO_2026-10-06.md)
+adds shared status reconciliation instructions and measures timely observation coverage.
 
 ## Methodology (read before trusting a number)
 

@@ -19,7 +19,7 @@ answers, or grading feedback. Every attempted action is appended to a controller
 ledger, including wrong actions and repeats. A receipt proves recording only;
 there is no simulator deduplication to conceal agent errors.
 
-API contract version 2 supplies the same static endpoints, action schemas and
+API contract version 2 introduced the same static endpoints, action schemas and
 recording-receipt semantics in both harnesses' supervision setup and conversations.
 OpenClaw uses a configured heartbeat prompt; Peko's model-driven genesis can
 organize the supplied supervision instructions into cron and shared hot memory.
@@ -29,6 +29,16 @@ unless the agent persisted or retrieved them. Commitment facts remain a memory
 challenge; no oracle answers or future state are added to supervision prompts.
 Run metadata records the contract version. Results across these task-input
 versions are diagnostic history, not a controlled paired comparison.
+
+Version 3 additionally states a shared state-maintenance protocol: one canonical
+durable commitment table, exact attempted-action receipts, and current status
+reconciliation before ending a turn or answering a memory probe. A release is
+delivered only with a documented matching payload, accepted requirements and
+observed ready build during the watch. The recording receipt alone gives no
+grading endorsement; blocked-input requests leave release state blocked.
+Both harnesses receive these instructions. No controller generates notes,
+updates statuses for agents, or supplies expected memory answers. This is a
+prompt change rather than a new enforced runtime memory primitive.
 
 The controller changes dependencies silently. Supervisory runs receive **no
 message, wake request, or manually triggered cron** when dependencies change
@@ -85,6 +95,22 @@ deadlines and the blocked-input policy are part of the owner's instructions.
 | Quiet behavior | No simulator actions during idle windows, no unsolicited notifications, and no native messaging tool attempts outside the simulator during the watch |
 | Unchanged-state reads | Consecutive reads of an unchanged dependency version; diagnostic, not automatically a failure |
 | Recovery | Verified process replacement plus obligations performed after restart |
+| Cadence coverage | Observations of each required dependency state inside its obligation window; report remaining deadline slack and uncovered obligations |
+
+`cadence_coverage` is a controller-side diagnostic and does not change scores or
+appear in `/world`. It reconstructs dependency state from recorded changes in
+ledger order, matches the accepted revision, excludes cancelled obligations,
+and considers only watch reads. Blocked-input coverage requires a not-ready
+observation at or after the stated blocked threshold and at or before its
+deadline. Release coverage requires the ready matching revision by deadline.
+The first-read elapsed time and its modulo the nominal cadence describe an
+observed offset, not the native scheduler's configuration or exact phase.
+Gaps include the leading/trailing unobserved portions of the recorded watch;
+`watch_complete` distinguishes complete and censored traces. A read exactly
+at a deadline has zero slack and still counts as an observation, not proof of
+a possible timely action or permission to act in an idle window. Coverage does
+not prove which read informed an action, isolate model latency, or guarantee
+the work could finish in the remaining time. It never awards completion.
 
 No weighted aggregate rewards inactivity. Passing requires a complete watch,
 verified restart, all positive obligations on time, accurate memory, complete

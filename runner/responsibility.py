@@ -11,7 +11,7 @@ import time
 from pathlib import Path
 
 from continuity_proxy import summarize_calls
-from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract
+from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract, state_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
 
@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def contract(sim):
-    return (action_contract(sim.url)
+    return (action_contract(sim.url) + state_contract()
             + "Persist requirements and delivery receipts in native durable memory for all your sessions. "
             "Every conversation/monitor turn is bounded: make at most one GET /world, act if due, then END THIS TURN. "
             "If watch_active is false, record instructions and acknowledge immediately; never wait for the watch "

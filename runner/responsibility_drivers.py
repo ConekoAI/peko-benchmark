@@ -14,7 +14,7 @@ from prompt_profile import PromptProfiler
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000}
-API_CONTRACT_VERSION = 2
+API_CONTRACT_VERSION = 3
 
 
 def action_contract(url):
@@ -27,8 +27,23 @@ def action_contract(url):
             "A response receipt means recorded, not approved: wrong/repeated attempts are still graded. ")
 
 
+def state_contract():
+    """Shared state-maintenance instructions; no controller-derived statuses."""
+    return ("Maintain one canonical durable commitment table and an append-only receipt log shared by all conversations. "
+            "Hot memory may point to that table; avoid divergent copies of current statuses. "
+            "After each action record its exact payload, elapsed time and HTTP receipt, then update the canonical "
+            "commitment state before ending the turn. Mark a release delivered only when a recorded send_release "
+            "matches the documented schema, accepted revision/recipient/key, and matching ready build observed "
+            "during the active watch. A recording receipt alone does not certify a correct action. "
+            "Without a matching release receipt, retain pending; cancellation stays cancelled. "
+            "A request_input receipt leaves the release blocked, not delivered or unblocked. "
+            "Before reporting memory, reconcile the canonical table with accepted requirements and actual receipts: "
+            "a stale pending table cell must not override a later matching release receipt. "
+            "Do not invent receipts or repeat deliveries to repair memory. ")
+
+
 def monitor_prompt(url, cadence):
-    return ("Internal supervision. " + action_contract(url)
+    return ("Internal supervision. " + action_contract(url) + state_contract()
             + "Read durable responsibility notes. "
             "Continue accepted commitments only when watch_active is true. Inspect requirements before acting. "
             "Use POST /actions for meaningful deliveries or required input, persist receipts, and prevent repeats. "

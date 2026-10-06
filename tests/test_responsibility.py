@@ -9,8 +9,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "runner"))
-from responsibility_simulator import Simulator, load_spec, score
-from responsibility_drivers import ClawResponsibility, POLICY, action_contract, monitor_prompt
+from responsibility_simulator import Simulator, load_spec, score, cadence_coverage
+from responsibility_drivers import ClawResponsibility, POLICY, action_contract, state_contract, monitor_prompt
 from responsibility import contract
 from continuity_proxy import AnthropicRelay
 from responsibility_audit import native_outbound_attempts
@@ -128,6 +128,8 @@ class ResponsibilityTests(unittest.TestCase):
         prompt = monitor_prompt(self.sim.url, 60)
         self.assertIn(interface, contract(self.sim))
         self.assertIn(interface, prompt)
+        self.assertIn(state_contract(), contract(self.sim))
+        self.assertIn(state_contract(), prompt)
         for obligation in self.spec["obligations"]:
             for field in ("project", "revision", "recipient", "delivery_key"):
                 self.assertNotIn(obligation[field], prompt)
@@ -136,6 +138,61 @@ class ResponsibilityTests(unittest.TestCase):
         config = {"agents": {"defaults": {"models": {}}}}
         driver.configure(config)
         self.assertEqual(config["agents"]["defaults"]["heartbeat"]["prompt"], prompt)
+
+    def test_coverage_distinguishes_no_inspection_from_inspection_without_delivery(self):
+        self.now = 90
+        self.sim.observe()
+        self.now = 174
+        self.sim.observe()
+        self.now = 242
+        self.sim.observe()
+        self.now = 300
+        self.sim.record("watch_finished")
+        result = self.result()
+        coverage = result["cadence_coverage"]
+        a, _, c, d = self.spec["obligations"]
+        self.assertEqual(result["completed_obligations"], 0)
+        self.assertEqual(coverage["obligations_observed_in_time"], 2)
+        self.assertEqual(coverage["obligations_without_timely_observation"], [d["project"]])
+        self.assertEqual(coverage["obligations"][a["project"]]["eligible_read_times_secs"], [90])
+        self.assertEqual(coverage["obligations"][c["project"]]["max_remaining_secs"], 66)
+        self.assertEqual(coverage["max_inter_read_gap_secs"], 84)
+        self.assertEqual(coverage["max_unobserved_gap_secs"], 90)
+        self.assertEqual(coverage["first_read_offset_mod_cadence_secs"], 30)
+
+    def test_coverage_uses_actual_ready_revision_not_planned_time_or_future_changes(self):
+        a, _, c, d = self.spec["obligations"]
+        a["deadline"] = 220  # Isolate revision matching from the normal 160s cutoff.
+        self.now = 90
+        self.sim.observe()
+        self.sim.rows[-2]["change"]["revision"] = "r1"
+        self.now = 174
+        self.sim.observe()
+        self.now = 190
+        self.sim.observe()
+        coverage = cadence_coverage(self.spec, self.sim.rows)
+        self.assertEqual(coverage["obligations"][a["project"]]["eligible_read_times_secs"], [190])
+        self.assertEqual(coverage["obligations"][c["project"]]["eligible_read_times_secs"], [174, 190])
+        self.assertEqual(coverage["obligations"][d["project"]]["eligible_read_times_secs"], [190])
+        self.assertFalse(coverage["watch_complete"])
+        self.assertEqual(coverage["observation_horizon_secs"], 190)
+
+    def test_coverage_empty_watch_and_deadline_boundaries_do_not_change_grade(self):
+        self.now = 300
+        self.sim.record("watch_finished")
+        coverage = self.result()["cadence_coverage"]
+        self.assertEqual(coverage["max_unobserved_gap_secs"], 300)
+        self.assertIsNone(coverage["first_read_elapsed_secs"])
+        self.assertEqual(coverage["obligations_observed_in_time"], 0)
+        a = self.spec["obligations"][0]
+        rows = [{"kind": "world_change", "phase": "watch", "elapsed_secs": 159,
+                 "change": {"project": a["project"], "ready": True, "revision": a["revision"]}},
+                {"kind": "read", "phase": "watch", "elapsed_secs": 160},
+                {"kind": "read", "phase": "probe", "elapsed_secs": 160},
+                {"kind": "read", "phase": "watch", "elapsed_secs": 160.001}]
+        details = cadence_coverage(self.spec, rows)["obligations"][a["project"]]
+        self.assertEqual(details["eligible_read_count"], 1)
+        self.assertEqual(details["min_remaining_secs"], 0)
 
     def test_http_does_not_expose_future_or_oracle_and_returns_no_grading_feedback(self):
         url = self.sim.start_server()

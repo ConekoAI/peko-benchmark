@@ -139,6 +139,52 @@ class Simulator:
             self.thread.join(timeout=2)
 
 
+def cadence_coverage(spec: dict, rows: list[dict]) -> dict:
+    """Post-hoc observation coverage, never exposed through the world API.
+
+    A read is an opportunity only when it observes the required dependency
+    state in the obligation's time window. It does not prove the agent used
+    that read or could finish an action within the remaining slack.
+    """
+    required = {o["project"]: o for o in spec["obligations"] if not o.get("cancelled")}
+    world = {o["project"]: {"ready": False, "revision": o["revision"]}
+             for o in spec["obligations"]}
+    opportunities = {project: [] for project in required}
+    reads = []
+    for row in rows:
+        if row["kind"] == "world_change":
+            change = row["change"]
+            world[change["project"]] = {k: change[k] for k in ("ready", "revision")}
+        if row["kind"] != "read" or row["phase"] != "watch" or row["elapsed_secs"] is None:
+            continue
+        t = row["elapsed_secs"]
+        reads.append(t)
+        for project, obligation in required.items():
+            state = world[project]
+            eligible = (not state["ready"] and obligation["blocked_at"] <= t
+                        if "blocked_at" in obligation else
+                        state["ready"] and state["revision"] == obligation["revision"])
+            if eligible and t <= obligation["deadline"]:
+                opportunities[project].append(t)
+    complete = any(r["kind"] == "watch_finished" for r in rows)
+    horizon = max((r["elapsed_secs"] for r in rows
+                   if r["phase"] == "watch" and r["elapsed_secs"] is not None), default=0)
+    boundaries = [0, *reads, horizon]
+    gaps = [round(b - a, 3) for a, b in zip(reads, reads[1:])]
+    return {"version": 1, "watch_complete": complete, "observation_horizon_secs": horizon,
+            "nominal_cadence_secs": spec["cadence_secs"],
+            "first_read_elapsed_secs": reads[0] if reads else None,
+            "first_read_offset_mod_cadence_secs": round(reads[0] % spec["cadence_secs"], 3) if reads else None,
+            "inter_read_gaps_secs": gaps, "max_inter_read_gap_secs": max(gaps, default=None),
+            "max_unobserved_gap_secs": max((round(b - a, 3) for a, b in zip(boundaries, boundaries[1:])), default=0),
+            "obligations_observed_in_time": sum(bool(ts) for ts in opportunities.values()),
+            "obligations_without_timely_observation": [p for p, ts in opportunities.items() if not ts],
+            "obligations": {p: {"eligible_read_times_secs": ts, "eligible_read_count": len(ts),
+                "max_remaining_secs": round(required[p]["deadline"] - ts[0], 3) if ts else None,
+                "min_remaining_secs": round(required[p]["deadline"] - ts[-1], 3) if ts else None}
+                for p, ts in opportunities.items()}}
+
+
 def score(spec: dict, rows: list[dict], restart: dict, finished: bool) -> dict:
     expected = {o["project"]: o for o in spec["obligations"]}
     completed, on_time, latencies = set(), set(), {}
@@ -239,4 +285,4 @@ def score(spec: dict, rows: list[dict], restart: dict, finished: bool) -> dict:
             "human_interventions": sum(r["kind"] == "intervention" for r in rows),
             "watch_status_reads": len(reads),
             "unchanged_state_reads": sum(a["world_version"] == b["world_version"] for a, b in zip(reads, reads[1:])),
-            "restart_count": len(restarts)}
+            "restart_count": len(restarts), "cadence_coverage": cadence_coverage(spec, rows)}
