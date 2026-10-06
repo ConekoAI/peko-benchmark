@@ -7,6 +7,8 @@ Both are fixed in [runtime PR #422](https://github.com/ConekoAI/peko-runtime/pul
 alongside initialization and principal-memory path clarifications.
 These findings do not establish why MiMo missed particular cache entries or
 establish a Peko/OpenClaw efficiency difference.
+PR #422 merged as `1e84d66a8af8219d4242837317aa620e166d1334` after the final
+head's Linux unit/shutdown and module/dependency boundary CI passed.
 
 ## Original paired sample, analyzed offline
 
@@ -221,6 +223,7 @@ unchanged; within-run delta rendering cannot prevent growth across runs.
 The original watch appended roughly 7.8 KB of context at each new turn.
 This is an identified design cost, not changed by the duplicate-section fix.
 
+First repeat one unattended Peko watch after the memory-path correction.
 The next optimization should restore trusted context state across runs only
 when it corresponds to retained conversation history, and invalidate it after
 compaction, truncation or relevant section changes. Inferring that state from
