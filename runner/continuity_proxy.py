@@ -52,12 +52,15 @@ def summarize_calls(records: list[dict]) -> dict:
 
 
 class AnthropicRelay:
-    def __init__(self, base_url: str, key: str, path: Path, deadline: float, budget_usd: float):
+    def __init__(self, base_url: str, key: str, path: Path, deadline: float, budget_usd: float,
+                 policy: dict | None = None, phase=None):
         self.base_url, self.key, self.path = base_url.rstrip("/"), key, path
         self.deadline, self.budget_usd = deadline, budget_usd
         self.token = secrets.token_hex(24)
         self.records = []
         self.lock = threading.Lock()
+        self.policy = policy
+        self.phase = phase or (lambda: "continuity")
         relay = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -93,10 +96,20 @@ class AnthropicRelay:
             return self._refuse(handler, 400, "invalid body size")
         body = handler.rfile.read(size)
         payload = json.loads(body)
+        requested = {k: payload.get(k) for k in ("max_tokens", "thinking", "temperature")}
+        # Optional, explicit common decoding policy for matched responsibility
+        # runs. Default continuity traffic is still forwarded unchanged.
+        if self.policy and payload.get("model") == "mimo-v2.6-flash":
+            payload["max_tokens"] = self.policy["max_tokens"]
+            payload["thinking"] = self.policy["thinking"]
+            payload.pop("temperature", None)
+            payload.pop("output_config", None)
+            body = json.dumps(payload).encode()
         record = {"index": 0, "forwarded": False, "completed": False, "usage": {},
                   "model": payload.get("model"), "max_tokens": payload.get("max_tokens"),
                   "thinking": payload.get("thinking"), "temperature": payload.get("temperature"),
-                  "stream": payload.get("stream"), "started_at": time.time()}
+                  "stream": payload.get("stream"), "started_at": time.time(),
+                  "phase": self.phase(), "requested_decoding": requested}
         with self.lock:
             totals = summarize_calls(self.records)
             # Full cost is unavailable without cache-write pricing; do not admit
@@ -115,7 +128,7 @@ class AnthropicRelay:
                 reason = "scenario deadline reached"
             elif totals["cache_creation_tokens"]:
                 reason = "cache-write pricing is unknown"
-            elif totals["request_count"] >= 100 or (totals["uncached_input_tokens"] or 0) >= 2_000_000 or (totals["output_tokens"] or 0) >= 50_000 or projected_cost >= self.budget_usd:
+            elif totals["request_count"] >= (self.policy or {}).get("request_limit", 100) or (totals["uncached_input_tokens"] or 0) >= 2_000_000 or (totals["output_tokens"] or 0) >= (self.policy or {}).get("output_limit", 50_000) or projected_cost >= self.budget_usd:
                 reason = "scenario usage budget reached"
             record["index"] = len(self.records) + 1
             record["forwarded"] = reason is None

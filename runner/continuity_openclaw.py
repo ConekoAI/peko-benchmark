@@ -154,6 +154,7 @@ class OpenClawDriver:
                                   "reasoning": True, "input": ["text"],
                                   "contextWindow": 1048576, "maxTokens": 8192,
                                   "cost": {"input": .14, "output": .28, "cacheRead": .0028, "cacheWrite": 0}}]}}}}
+        self.configure(config)
         (self.state / "openclaw.json").write_text(json.dumps(config, indent=2))
         (self.run_dir / "model.json").write_text(json.dumps(config, indent=2))
         self.metadata = {"driver": "openclaw", "model": model_ref, "wire_model": "mimo-v2.6-flash",
@@ -178,6 +179,10 @@ class OpenClawDriver:
         self._start_gateway()
         self.metadata["initialization_completed"] = True
         return self.metadata
+
+    def configure(self, config):
+        """Scenario-specific native settings; the continuity default is unchanged."""
+        pass
 
     def _start_gateway(self):
         self.epoch += 1

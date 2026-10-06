@@ -16,6 +16,8 @@ from continuity_usage import reconcile_usage
 
 class PekoDriver:
     def __init__(self, run_dir: Path, timeout_secs: int, budget_usd: float):
+        self.config_env = dict(os.environ)
+        self.seed_extra = ""
         self.binary = None
         self.daemon = None
         self.run_dir = run_dir
@@ -79,14 +81,14 @@ class PekoDriver:
         raise TimeoutError("isolated daemon did not become ready")
 
     def start(self) -> dict:
-        binary = os.environ.get("PEKO_BIN")
+        binary = self.config_env.get("PEKO_BIN")
         if not binary or not Path(binary).is_file():
             raise ValueError("PEKO_BIN must name an existing peko CLI binary")
         self.binary = Path(binary).resolve()
         self.daemon = self.binary.with_name("peko-daemon")
         if not self.daemon.is_file():
             raise ValueError("build peko-daemon beside PEKO_BIN before benchmarking")
-        if not os.environ.get("PEKO_API_KEY"):
+        if not self.config_env.get("PEKO_API_KEY"):
             raise ValueError("PEKO_API_KEY is required for the isolated model catalog")
         self.deadline = time.monotonic() + self.timeout_secs
         # Keep Unix socket paths short; override paths only in child environments.
@@ -94,7 +96,7 @@ class PekoDriver:
         home = Path(self.temp.name)
         peko_home = home / ".peko"
         (peko_home / "run").mkdir(parents=True)
-        self.env = dict(os.environ)
+        self.env = dict(self.config_env)
         self.env.update(HOME=str(home), USERPROFILE=str(home), PEKO_HOME=str(peko_home),
                         PEKO_CONFIG_DIR=str(peko_home), PEKO_DATA_DIR=str(peko_home / "data"),
                         PEKO_CACHE_DIR=str(peko_home / "cache"),
@@ -125,7 +127,7 @@ class PekoDriver:
         seed.write_text(f"name = {json.dumps(self.principal)}\n"
                         f"preferred_model_id = {json.dumps(self.model)}\n"
                         f"[quota]\nbudget_per_cycle = {self.budget_usd}\n"
-                        "request_count = 100\ninput_tokens = 2000000\noutput_tokens = 50000\n")
+                        "request_count = 100\ninput_tokens = 2000000\noutput_tokens = 50000\n" + self.seed_extra)
         self.metadata = {"driver": "peko", "model": self.model, "wire_model": model.get("modelId"),
                 "api_format": self.api_format, "base_url": self.base_url,
                 "model_config": model, "pricing_hint": pricing,

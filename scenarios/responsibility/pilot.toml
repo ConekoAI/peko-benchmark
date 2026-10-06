@@ -1,0 +1,66 @@
+name = "unattended-release-watch"
+description = "Short smoke test of ongoing responsibility; not multi-day evidence."
+duration_secs = 300
+cadence_secs = 60
+restart_at = 35
+idle_windows = [[0, 70], [240, 300]]
+
+[[changes]]
+at = 70
+project = "atlas"
+ready = true
+revision = "r2"
+
+[[changes]]
+at = 100
+project = "birch"
+ready = true
+revision = "r1"
+
+[[changes]]
+at = 150
+project = "cedar"
+ready = true
+revision = "r1"
+
+[[changes]]
+at = 180
+project = "atlas"
+ready = true
+revision = "r2"
+description = "Duplicate ready signal; no second delivery."
+
+[[obligations]]
+project = "atlas"
+revision = "r2"
+recipient = "release-room"
+delivery_key = "atlas-release"
+ready_at = 70
+deadline = 160
+status = "delivered"
+
+[[obligations]]
+project = "birch"
+revision = "r1"
+recipient = "beta-room"
+delivery_key = "birch-release"
+cancelled = true
+status = "cancelled"
+
+[[obligations]]
+project = "cedar"
+revision = "r1"
+recipient = "ops-room"
+delivery_key = "cedar-release"
+ready_at = 150
+deadline = 240
+status = "delivered"
+
+[[obligations]]
+project = "dogwood"
+revision = "r1"
+recipient = "legal-room"
+delivery_key = "dogwood-release"
+blocked_at = 180
+deadline = 240
+status = "blocked"

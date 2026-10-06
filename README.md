@@ -21,6 +21,14 @@ The [OpenClaw / MiMo pilot](docs/LIVE_PILOT_OPENCLAW_MIMO_2026-10-06.md) also
 passed all seven turns on the same model and seed, establishing an external
 persistent-assistant baseline for this scenario.
 
+The [responsibility benchmark](docs/RESPONSIBILITY_BENCHMARK.md) adds a shared
+delivery simulator and an unattended watch: silent dependency changes, revised
+and cancelled commitments, conflicting conversations, a native process
+restart, blocked-input escalation, and idle periods. It reports obligation,
+deadline, memory, repetition, quietness, intervention, and idle-usage metrics.
+The [paired live MiMo pilot](docs/LIVE_PILOT_RESPONSIBILITY_MIMO_2026-10-06.md)
+passed once per harness; larger runs are deferred while stabilizing the runtime.
+
 ## Methodology (read before trusting a number)
 
 1. **Same model, same task, same grader — different harness.** The model is
@@ -57,9 +65,14 @@ runner/run.py    # matrix runner: tasks × harnesses × reps → reports/
 runner/continuity.py  # multi-turn continuity runner + deterministic scorer
 runner/continuity_peko.py  # native adapter with isolated passphrase vault
 runner/continuity_openclaw.py  # isolated native OpenClaw Gateway adapter
-runner/continuity_proxy.py  # unchanged-body Anthropic relay and usage ledger
+runner/continuity_proxy.py  # Anthropic accounting relay; optional common wire policy
+runner/responsibility.py  # native unattended watch and continuation controls
+runner/responsibility_simulator.py  # shared dependency world and action ledger
+runner/responsibility_drivers.py  # native cron/heartbeat adapters
+runner/responsibility_audit.py  # audit native messaging attempts during watch
 profiles/        # explicit provider configuration for continuity pilots
 scenarios/continuity/ # sequential events; controller-owned expected actions
+scenarios/responsibility/ # shared world timeline; controller-owned oracle
 tests/          # offline grader mutation checks + adapter contracts
 reports/         # one directory per benchmark run (gitignored)
 ```
@@ -164,9 +177,10 @@ installation or git repo initialization).
 - SWE-bench Verified / Terminal-Bench subset adapter for instant
   comparability with published baselines.
 - Browser-graded frontend tasks (playwright screenshot/DOM diff).
-- Continuity pilot is implemented; scheduled keepalive, cross-peer memory,
-  compaction, and interrupted-effect scenarios follow its evidence ladder.
+- Continuity and unattended responsibility pilots are implemented; multi-day
+  workloads, mechanism controls, compaction and interrupted effects follow.
 - Other peko-specific tasks: subagent delegation and workspace skills.
 - OpenClaw continuity adapter is implemented; see its pilot report for setup,
   reproducibility and limits of the initial comparison.
-- Token/cost capture per run once the harnesses expose it uniformly.
+- Native/provider token reconciliation and phase cost capture are implemented
+  for the MiMo continuity and responsibility adapters.
