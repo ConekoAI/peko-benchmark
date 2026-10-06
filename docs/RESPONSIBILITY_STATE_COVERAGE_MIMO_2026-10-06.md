@@ -263,3 +263,15 @@ strict deadline/quietness gate under this unchanged task. Preserve these
 results, isolate supervision latency in a bounded follow-up, and rerun the same
 pair only after a concrete improvement. This iteration provides no evidence
 of Peko outperforming OpenClaw or of an architectural advantage.
+
+## Interpretation correction: the intended topology was constrained away
+
+The owner clarified that trunk keepalive is organizational supervision, while
+periodic task attention belongs in separately scheduled task sessions. The
+version-3 benchmark explicitly replaced default keepalive with a task-monitor
+Send, discouraged delegation, and prohibited delegated monitors. Its observed
+overrun is valid for this flattened configuration, but does not establish an
+architectural defect in Peko's intended separation. The
+[directed topology pilot](RESPONSIBILITY_TOPOLOGY_MIMO_2026-10-06.md) tests that
+separation before proposing scheduler redesign. The runtime restart defect and
+its regression tests remain independent of this interpretation correction.

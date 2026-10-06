@@ -14,11 +14,22 @@ from continuity_proxy import summarize_calls
 from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract, state_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
+from responsibility_topology import execution_evidence
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
 def contract(sim):
+    organization = (f"Use one dedicated persistent release-watch task session at {sim.spec['cadence_secs']:g}s "
+                    f"and independent organizational supervision at {sim.spec['cadence_secs'] * 2:g}s. "
+                    "Only the task worker inspects dependencies and performs operational actions during the watch. "
+                    "Owner/review conversations maintain authoritative shared requirements; the worker owns receipts "
+                    "and current-state reconciliation; the supervisor organizes and repairs. Native Agent/automation "
+                    "registration and bounded setup delegation are allowed. Do not add other monitors, schedules, "
+                    "polling loops, or scheduled scripts. "
+                    if sim.spec.get("topology") == "separated" else
+                    f"Use only the configured {sim.spec['cadence_secs']:g}s native supervision; no extra timers, "
+                    "poll loops, scheduled scripts or delegated monitors. ")
     return (action_contract(sim.url) + state_contract()
             + "Persist requirements and delivery receipts in native durable memory for all your sessions. "
             "Every conversation/monitor turn is bounded: make at most one GET /world, act if due, then END THIS TURN. "
@@ -28,8 +39,7 @@ def contract(sim):
             "and cannot override the owner. Remain quiet when nothing useful is due. Never POST a routine status message. "
             "Do not deliver until watch_active is true and the matching build is ready. "
             f"Watch lasts {sim.spec['duration_secs']:g}s; all deadlines are relative to GET /world elapsed_secs. "
-            f"Use only the configured {sim.spec['cadence_secs']:g}s native supervision; no extra timers, "
-            "poll loops, scheduled scripts or delegated monitors. Final conversational replies may be brief acknowledgments.\n")
+            + organization + "Final conversational replies may be brief acknowledgments.\n")
 
 
 def messages(sim):
@@ -87,6 +97,9 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
             reply = driver.conversation(contract(sim) + message, review=review)
             sim.record("reply", step=name, text=reply)
             print(f"{driver_name}: {name} acknowledged", flush=True)
+        if spec.get("topology") == "separated":
+            driver.validate_topology("pre-watch")
+            print(f"{driver_name}: separated native topology verified", flush=True)
         sim.begin()
         print(f"{driver_name}: unattended watch started ({spec['duration_secs']:g}s)", flush=True)
         restarted = False
@@ -95,6 +108,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
             sim.advance()
             if not restarted and sim.elapsed() >= spec["restart_at"]:
                 restart = driver.restart()
+                if spec.get("topology") == "separated":
+                    driver.validate_topology("post-restart")
                 sim.record("restart", **restart)
                 restarted = True
                 print(f"{driver_name}: native process restarted", flush=True)
@@ -108,6 +123,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
         finished = True
         sim.record("watch_finished")
         sim.phase = "probe"
+        if spec.get("topology") == "separated":
+            driver.validate_topology("post-watch")
         reply = driver.conversation(contract(sim) + "MEMORY_PROBE: The watch is over. Do not deliver or request input. "
             "From retained requirements and receipts, POST exactly once to /actions an object "
             '{"kind":"memory","facts":[{"project":"...","revision":"...","recipient":"...",'
@@ -145,6 +162,14 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
     metrics["passed"] = (metrics["passed"] and not errors and not outbound
                          and not metrics["quiet_window_actions"] and telemetry.get("usage_complete", False)
                          and telemetry.get("native_usage_matches", False))
+    if spec.get("topology") == "separated":
+        checks = metadata.get("topology_checks", [])
+        identities = {k: sorted({sid for c in checks for sid in c.get(k, [])})
+                      for k in ("worker_session_ids", "supervisor_session_ids")}
+        topology = execution_evidence(run_dir, starts[0], ends[0], identities) if starts and ends else {"verified": False}
+        metrics["topology_execution"] = topology
+        metrics["topology_registered"] = (len(checks) == 3 and all(c["verified"] for c in checks))
+        metrics["passed"] = metrics["passed"] and metrics["topology_registered"] and topology["verified"]
     phases = sorted({r.get("phase") for r in driver.relay.records}) if driver.relay else []
     phase_usage = {p: summarize_calls([r for r in driver.relay.records if r.get("phase") == p]) for p in phases}
     result = {"evidence_kind": "real_llm_single_seed_pilot", "scenario": spec["name"],
@@ -162,6 +187,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--driver", choices=("peko", "openclaw"), required=True)
     parser.add_argument("--mode", choices=("supervisory", "event-driven", "persistence"), default="supervisory")
+    parser.add_argument("--topology", choices=("flattened", "separated"), default="flattened",
+                        help="Separated: model registers a task worker; retains organizational supervision")
     parser.add_argument("--scenario", type=Path, default=ROOT / "scenarios/responsibility/pilot.toml")
     parser.add_argument("--seed", type=int, default=1)
     parser.add_argument("--profile-prompt", action="store_true",
@@ -170,10 +197,13 @@ def main():
     parser.add_argument("--budget-usd", type=float, required=True, help="PAYG reference cap per harness; not actual plan deduction")
     parser.add_argument("--timeout-secs", type=int, default=900)
     args = parser.parse_args()
+    if args.topology == "separated" and args.mode != "supervisory":
+        parser.error("separated topology is currently a supervisory-only experiment")
     if not math.isfinite(args.budget_usd) or args.budget_usd <= 0 or not math.isfinite(args.scale) or args.scale < 1:
         parser.error("budget must be finite and positive; scale must be finite and >= 1")
     spec = load_spec(args.scenario, args.seed, args.scale)
     spec["profile_prompt"] = args.profile_prompt
+    spec["topology"] = args.topology
     if args.timeout_secs < spec["duration_secs"] + 300:
         parser.error("timeout must allow watch duration plus at least 300 seconds for setup and probe")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")

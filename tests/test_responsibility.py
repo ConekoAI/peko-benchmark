@@ -14,6 +14,8 @@ from responsibility_drivers import ClawResponsibility, POLICY, action_contract, 
 from responsibility import contract
 from continuity_proxy import AnthropicRelay
 from responsibility_audit import native_outbound_attempts
+from responsibility_topology import (verify_peko, verify_claw, execution_evidence,
+                                     supervisor_prompt, WORKER_KEY)
 
 
 class ResponsibilityTests(unittest.TestCase):
@@ -231,6 +233,71 @@ class ResponsibilityTests(unittest.TestCase):
         self.assertEqual(config["agents"]["defaults"]["heartbeat"]["every"], "60s")
         self.assertEqual(config["agents"]["defaults"]["heartbeat"]["target"], "none")
         self.assertEqual(driver.relay.policy, POLICY)
+
+    def test_separated_contract_allows_direct_workers_but_keeps_original_task(self):
+        self.sim.url = "http://127.0.0.1:1234"
+        original = contract(self.sim)
+        self.spec["topology"] = "separated"
+        separated = contract(self.sim)
+        self.assertIn("or delegated monitors", original)
+        self.assertNotIn("or delegated monitors", separated)
+        self.assertIn("Only the task worker", separated)
+        self.assertIn(action_contract(self.sim.url), separated)
+        self.assertIn(state_contract(), separated)
+        self.assertIn("120s", separated)
+        driver = ClawResponsibility(Path(self.temp.name), 900, .1, self.sim, "supervisory")
+        driver.relay = type("Relay", (), {})()
+        config = {"agents": {"defaults": {"models": {}}}}
+        driver.configure(config)
+        hb = config["agents"]["defaults"]["heartbeat"]
+        self.assertEqual(hb["every"], "120s")
+        self.assertEqual(hb["prompt"], supervisor_prompt(60))
+
+    def test_peko_topology_rejects_another_label_that_still_runs_in_trunk(self):
+        sessions = {"root": {"session_id": "root", "parent_session_id": None},
+                    "worker": {"session_id": "worker", "parent_session_id": "root", "slug": "release-watch"}}
+        task = {"id": "task", "name": "responsibility-monitor", "enabled": True,
+                "kind": "spawn_tool", "tool_name": "Agent", "wake_on_completion": False,
+                "tool_params": {"action": "new", "path": "/release-watch", "role": "release-watch", "prompt": "work"},
+                "schedule": {"every_ms": 60000}}
+        keep = {"id": "keepalive", "enabled": True, "kind": "send", "schedule": {"every_ms": 120000}}
+        self.assertTrue(verify_peko({"jobs": [task, keep]}, sessions, 60)["verified"])
+        task["kind"] = "send"
+        self.assertFalse(verify_peko({"jobs": [task, keep]}, sessions, 60)["verified"])
+        task["kind"] = "spawn_tool"
+        task["tool_params"]["path"] = "/"
+        self.assertFalse(verify_peko({"jobs": [task, keep]}, sessions, 60)["verified"])
+        task["tool_params"]["path"] = "/release-watch"
+        self.assertFalse(verify_peko({"jobs": [task, keep, keep]}, sessions, 60)["verified"])
+
+    def test_claw_topology_requires_custom_agent_session_not_a_supervisor_event(self):
+        task = {"name": "responsibility-monitor", "enabled": True,
+                "payload": {"kind": "agentTurn"}, "sessionTarget": "session:release-watch",
+                "schedule": {"everyMs": 60000}, "delivery": {"mode": "none"}}
+        keep = {"enabled": True, "payload": {"kind": "heartbeat"}, "schedule": {"everyMs": 120000}}
+        builtin = {"enabled": True, "declarationKey": "memory-core:memory-dreaming-promotion"}
+        sessions = {"sessions": [{"key": WORKER_KEY, "sessionId": "worker"}]}
+        self.assertTrue(verify_claw({"jobs": [task, keep, builtin]}, sessions, 60)["verified"])
+        task["sessionTarget"] = "main"
+        self.assertFalse(verify_claw({"jobs": [task, keep]}, sessions, 60)["verified"])
+
+    def test_execution_evidence_requires_both_lanes_and_rejects_trunk_operations(self):
+        root = Path(self.temp.name) / "runtime-traces"
+        root.mkdir()
+        def row(role, cmd=None):
+            return {"type": "message.v2", "id": role, "ts": "2026-10-06T00:00:10Z",
+                    "role": "assistant", "content": [{"type": "tool_call", "id": role,
+                    "name": "Bash", "arguments": {"command": cmd}}] if cmd else []}
+        (root / "worker.jsonl").write_text(json.dumps(row("w", "curl http://localhost/world"))+'\n')
+        (root / "supervisor.jsonl").write_text(json.dumps(row("s"))+'\n')
+        ids = {"worker_session_ids": ["worker"], "supervisor_session_ids": ["supervisor"]}
+        result = execution_evidence(Path(self.temp.name), 1791244800, 1791244820, ids)
+        self.assertTrue(result["verified"])
+        self.assertEqual(result["worker_world_tool_calls"], 1)
+        (root / "supervisor.jsonl").write_text(json.dumps(row("s", "curl http://localhost/actions"))+'\n')
+        result = execution_evidence(Path(self.temp.name), 1791244800, 1791244820, ids)
+        self.assertFalse(result["verified"])
+        self.assertEqual(result["nonworker_operational_tool_calls"], 1)
 
     def test_common_policy_is_applied_at_wire_and_usage_has_phase(self):
         import threading

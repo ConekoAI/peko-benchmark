@@ -1,0 +1,165 @@
+"""Directed native topology formation and read-only execution diagnostics.
+
+Contains no obligation answers. Native agents create the schedules and files;
+the controller only verifies their registration and retained execution evidence.
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from responsibility_audit import timestamp
+
+
+WORKER_PATH = "/release-watch"
+WORKER_KEY = "agent:main:release-watch"
+
+
+def supervisor_prompt(cadence):
+    return ("Internal organizational supervision. Keep a dedicated release-watch task session and its "
+            f"native {cadence:g}s schedule healthy. Review native session/job status and shared durable notes; "
+            "repair missing or failed organization when necessary. The task worker owns dependency inspection, "
+            "operational actions and receipt/current-state maintenance. Do not GET /world or POST /actions "
+            "on a supervisor tick. Do not duplicate the worker, run its task yourself, or start polling loops. "
+            "Preserve owner revisions and cancellations across conversations. Curate general memory, skills "
+            "and session organization only when useful; keep hot memory as pointers to authoritative task notes. "
+            "Do not rewrite operational statuses from stale summaries. Finish quietly when organization is healthy.")
+
+
+def peko_setup(url, cadence, worker_prompt):
+    # A directed organization task, not a controller-installed role or job.
+    return ("Use separated supervision and execution. Keep the default keepalive id=keepalive enabled, "
+            f"and CronUpdate it to interval_ms={int(cadence * 2000)} with message="
+            + supervisor_prompt(cadence)
+            + " Create roles/release-watch.md with name release-watch and a focused task-worker role. "
+            "The worker reads canonical requirements and receipts, performs operational actions, and updates "
+            "only its receipt log/current-state table; leave general hot-memory, journal and skill maintenance "
+            "to the trunk. Write this division into shared memory/conventions so all conversations follow it. "
+            "Create exactly one additional recurring CronCreate label=responsibility-monitor "
+            f"interval_ms={int(cadence * 1000)} tool=Agent params={{action:new,path:/release-watch,"
+            "role:release-watch,prompt:<the following worker instruction>}, wake_on_completion=false, "
+            "timeout_secs=90. This invokes the persistent task session directly; do not use a trunk message "
+            "job to dispatch it. Worker instruction: " + worker_prompt
+            + " Initialize /release-watch once via Agent new with role release-watch: read shared notes, "
+            "record the assigned responsibility and finish; no world checks or actions during initialization. "
+            "Verify your jobs/session before completing genesis. Do not create other timers or monitors. "
+            f"Simulator base URL is {url}; all commitment facts arrive later through owner chat.")
+
+
+def claw_setup(node, entry, cadence, worker_prompt):
+    return ("Use separated supervision and execution. Your configured organizational heartbeat is enabled "
+            f"every {cadence * 2:g}s in the owner session. Create exactly one additional native recurring "
+            "automation named responsibility-monitor, invoking a persistent custom session release-watch "
+            f"every {cadence:g}s, no output delivery, thinking off, timeout 90s, "
+            "same configured MiMo model and no fallback. Use native automations or the CLI through exec. "
+            f"CLI: {node} {entry} automations add --name responsibility-monitor --every {cadence:g}s "
+            "--session session:release-watch --thinking off --timeout-seconds 90 --no-deliver "
+            "--fallbacks '' --message <worker instruction>. Do not use a command/script payload or "
+            "send a system-event into the supervisor. Worker instruction: " + worker_prompt
+            + " Write a focused worker instruction file and shared conventions: the worker owns dependency "
+            "inspection, operational actions and receipts/current-state; the supervisor owns organization "
+            "and optional hot-memory/journal/skill maintenance. All conversations use canonical shared "
+            "requirements and receipts. Do not create other timers or monitors. Verify registration and finish.")
+
+
+def job_list(value):
+    if isinstance(value, list):
+        return value
+    if isinstance(value, dict):
+        return value.get("jobs", [])
+    return []
+
+
+def verify_peko(schedule, sessions, cadence):
+    jobs = [j for j in job_list(schedule) if j.get("enabled") and j.get("id") != "genesis"]
+    monitors = [j for j in jobs if j.get("name") == "responsibility-monitor"]
+    keep = [j for j in jobs if j.get("id") == "keepalive"]
+    worker = [s for s in sessions.values() if s.get("slug") == "release-watch"
+              and s.get("parent_session_id") is not None]
+    errors = []
+    if len(jobs) != 2 or len(monitors) != 1 or len(keep) != 1:
+        errors.append("expected exactly one task job plus retained keepalive")
+    if monitors:
+        j = monitors[0]; params = j.get("tool_params", {})
+        if (j.get("kind") != "spawn_tool" or j.get("tool_name") != "Agent"
+                or params.get("path") != WORKER_PATH or params.get("role") != "release-watch"
+                or params.get("action", "new") != "new"
+                or j.get("wake_on_completion", False) or not params.get("prompt")
+                or j.get("schedule", {}).get("every_ms") != int(cadence * 1000)):
+            errors.append("task job must directly invoke Agent in /release-watch at the native cadence")
+    if keep and (keep[0].get("kind") != "send"
+                 or keep[0].get("schedule", {}).get("every_ms") != int(cadence * 2000)):
+        errors.append("keepalive must remain an independent organizational Send")
+    if len(worker) != 1:
+        errors.append("expected one initialized persistent release-watch child")
+    trunks = [s for s in sessions.values() if s.get("parent_session_id") is None]
+    return {"verified": not errors, "errors": errors,
+            "worker_session_ids": [s["session_id"] for s in worker],
+            "supervisor_session_ids": [s["session_id"] for s in trunks]}
+
+
+def verify_claw(schedule, sessions, cadence):
+    jobs = [j for j in job_list(schedule) if j.get("enabled") and not
+            j.get("declarationKey", "").startswith(("memory-core:", "skill-collection-review:"))]
+    monitors = [j for j in jobs if j.get("name") == "responsibility-monitor"]
+    heartbeat = [j for j in jobs if j.get("payload", {}).get("kind") == "heartbeat"]
+    errors = []
+    if len(jobs) != 2 or len(monitors) != 1 or len(heartbeat) != 1:
+        errors.append("expected one task job plus organizational heartbeat")
+    if monitors:
+        j = monitors[0]
+        if (j.get("payload", {}).get("kind") != "agentTurn"
+                or j.get("sessionTarget") != "session:release-watch"
+                or j.get("schedule", {}).get("everyMs") != int(cadence * 1000)
+                or j.get("delivery", {}).get("mode") != "none"):
+            errors.append("task job must directly invoke a persistent release-watch agent turn")
+    if heartbeat and heartbeat[0].get("schedule", {}).get("everyMs") != int(cadence * 2000):
+        errors.append("organizational heartbeat must use the independent supervisor cadence")
+    entries = sessions.get("sessions", [])
+    return {"verified": not errors, "errors": errors,
+            "worker_session_ids": [s["sessionId"] for s in entries if s.get("key") == WORKER_KEY],
+            "supervisor_session_ids": [s["sessionId"] for s in entries
+                                       if s.get("key") == "agent:main:responsibility"]}
+
+
+def execution_evidence(run_dir: Path, start, end, identities):
+    """Audit native tool intents by session, not model claims or simulator scores."""
+    worker = set(identities.get("worker_session_ids", []))
+    supervisor = set(identities.get("supervisor_session_ids", []))
+    found, activity = {}, {"worker": set(), "supervisor": set()}
+    for source in (run_dir / "runtime-traces").rglob("*.jsonl"):
+        for line in source.read_text().splitlines():
+            row = json.loads(line); event = row.get("event", row)
+            if not isinstance(event, dict):
+                continue
+            msg = event.get("message", event)
+            if not isinstance(msg, dict) or msg.get("role") != "assistant":
+                continue
+            at = timestamp(event.get("ts", msg.get("timestamp", event.get("timestamp"))))
+            if at is None or not start <= at <= end:
+                continue
+            sid = row.get("session_id", source.stem)
+            lane = "worker" if sid in worker else "supervisor" if sid in supervisor else "other"
+            if lane in activity:
+                activity[lane].add(msg.get("message_id", row.get("id", f"{sid}:{row.get('seq')}")))
+            for block in msg.get("content", []):
+                args = block.get("arguments", {})
+                if isinstance(args, str):
+                    args = json.loads(args)
+                cmd = str(args.get("command", ""))
+                if block.get("type") not in {"tool_call", "toolCall"} or not any(
+                        endpoint in cmd for endpoint in ("/world", "/actions")):
+                    continue
+                key = block.get("id") or json.dumps(block, sort_keys=True)
+                found[key] = {"time": at, "session_id": sid, "lane": lane,
+                              "world": "/world" in cmd, "actions": "/actions" in cmd}
+    intents = list(found.values())
+    return {"worker_assistant_messages": len(activity["worker"]),
+            "supervisor_assistant_messages": len(activity["supervisor"]),
+            "worker_world_tool_calls": sum(i["world"] and i["lane"] == "worker" for i in intents),
+            "nonworker_operational_tool_calls": sum(i["lane"] != "worker" for i in intents),
+            "intents": intents,
+            "verified": bool(activity["worker"] and activity["supervisor"])
+                        and any(i["world"] and i["lane"] == "worker" for i in intents)
+                        and not any(i["lane"] != "worker" for i in intents),
+            "limitation": "Native command intents, not attribution of every HTTP side effect; no scripts/loops allowed."}

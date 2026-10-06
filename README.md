@@ -37,6 +37,8 @@ The [state and cadence validation](docs/RESPONSIBILITY_STATE_COVERAGE_MIMO_2026-
 adds shared status reconciliation instructions and measures timely observation coverage.
 The runtime restart fix is merged; the latest pair has correct memory for both,
 but Peko misses two deadlines while OpenClaw passes. Larger trials remain deferred.
+The [topology pilot](docs/RESPONSIBILITY_TOPOLOGY_MIMO_2026-10-06.md) tests the
+intended division between organizational supervision and a recurring task worker.
 
 ## Methodology (read before trusting a number)
 
