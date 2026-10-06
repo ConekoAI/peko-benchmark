@@ -260,7 +260,8 @@ class ResponsibilityTests(unittest.TestCase):
                 "kind": "spawn_tool", "tool_name": "Agent", "wake_on_completion": False,
                 "tool_params": {"action": "new", "path": "/release-watch", "role": "release-watch", "prompt": "work"},
                 "schedule": {"every_ms": 60000}}
-        keep = {"id": "keepalive", "enabled": True, "kind": "send", "schedule": {"every_ms": 120000}}
+        keep = {"id": "org", "name": "organization-supervisor", "enabled": True,
+                "kind": "send", "schedule": {"every_ms": 120000}}
         self.assertTrue(verify_peko({"jobs": [task, keep]}, sessions, 60)["verified"])
         task["kind"] = "send"
         self.assertFalse(verify_peko({"jobs": [task, keep]}, sessions, 60)["verified"])

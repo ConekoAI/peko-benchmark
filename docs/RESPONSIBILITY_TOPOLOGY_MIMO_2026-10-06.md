@@ -14,8 +14,8 @@ Keep the same MiMo v2.6 Flash model, seed 1, 300-second watch, 35-second restart
 $0.10 PAYG reference budget per harness. Wire admission remains 60 requests and
 30k output tokens, max output 4096, thinking disabled and no fallback.
 
-Peko genesis receives a directed organization task: retain and retune the
-keepalive to organizational supervision every 120 seconds; create a focused
+Peko genesis receives a directed organization task: create organizational
+keepalive every 120 seconds before removing the old 10-minute default; create a focused
 release-watch role and persistent child; register a separate native 60-second
 Cron job that invokes Agent directly in that child. The worker checks dependency
 state, acts and maintains task receipts/current state. The trunk tends general
@@ -51,3 +51,9 @@ All 60 offline tests pass, including rejection of a renamed trunk job, incorrect
 worker routing, extra custom schedules, loss of the independent supervisor,
 and operational tool intents in the supervisor. Live validation follows below.
 Raw transcripts/native schedule snapshots remain local and gitignored.
+
+A first preflight (`20261006T114903952151Z-responsibility-peko`) stopped because
+local Peko binaries had been removed. It forwarded no model requests. Source
+inspection corrected a setup instruction before live model execution: CronUpdate
+only toggles enabled/completion subscription, so cadence/message replacement
+must use CronCreate followed by CronDelete. This is not a model failure.

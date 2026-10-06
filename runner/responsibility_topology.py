@@ -28,10 +28,13 @@ def supervisor_prompt(cadence):
 
 def peko_setup(url, cadence, worker_prompt):
     # A directed organization task, not a controller-installed role or job.
-    return ("Use separated supervision and execution. Keep the default keepalive id=keepalive enabled, "
-            f"and CronUpdate it to interval_ms={int(cadence * 2000)} with message="
+    return ("Use separated supervision and execution. Retain organizational keepalive independently of tasks: "
+            "CronCreate label=organization-supervisor "
+            f"interval_ms={int(cadence * 2000)} message="
             + supervisor_prompt(cadence)
-            + " Create roles/release-watch.md with name release-watch and a focused task-worker role. "
+            + " Once that organizational Send is registered, CronDelete id=keepalive to remove only the old "
+            "10-minute default. CronUpdate cannot change cadence or message; use the create/delete tools. "
+            "Create roles/release-watch.md with name release-watch and a focused task-worker role. "
             "The worker reads canonical requirements and receipts, performs operational actions, and updates "
             "only its receipt log/current-state table; leave general hot-memory, journal and skill maintenance "
             "to the trunk. Write this division into shared memory/conventions so all conversations follow it. "
@@ -73,7 +76,7 @@ def job_list(value):
 def verify_peko(schedule, sessions, cadence):
     jobs = [j for j in job_list(schedule) if j.get("enabled") and j.get("id") != "genesis"]
     monitors = [j for j in jobs if j.get("name") == "responsibility-monitor"]
-    keep = [j for j in jobs if j.get("id") == "keepalive"]
+    keep = [j for j in jobs if j.get("name") == "organization-supervisor"]
     worker = [s for s in sessions.values() if s.get("slug") == "release-watch"
               and s.get("parent_session_id") is not None]
     errors = []
