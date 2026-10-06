@@ -6,6 +6,8 @@ per harness**, not a multi-day test or an estimate of superiority. Larger runs
 are deferred while Peko and the adapters are stabilized.
 The [paired MiMo pilot report](LIVE_PILOT_RESPONSIBILITY_MIMO_2026-10-06.md)
 records both passes, usage, retained failures and runtime fixes.
+The [interface parity investigation](RESPONSIBILITY_INTERFACE_PARITY_2026-10-06.md)
+preserves a later failed Peko retest and documents the API contract correction.
 
 ## Shared simulator
 
@@ -16,6 +18,15 @@ dependency state, not future changes, recipients, delivery keys, expected
 answers, or grading feedback. Every attempted action is appended to a controller
 ledger, including wrong actions and repeats. A receipt proves recording only;
 there is no simulator deduplication to conceal agent errors.
+
+API contract version 2 supplies the same static endpoints, action schemas and
+recording-receipt semantics to both native monitors as well as conversations.
+Previously those details appeared only in owner/review conversations, retained
+by OpenClaw's owner-session heartbeat but absent from Peko's separate trunk
+unless the agent persisted or retrieved them. Commitment facts remain a memory
+challenge; no oracle answers or future state are added to supervision prompts.
+Run metadata records the contract version. Results across these task-input
+versions are diagnostic history, not a controlled paired comparison.
 
 The controller changes dependencies silently. Supervisory runs receive **no
 message, wake request, or manually triggered cron** when dependencies change

@@ -11,7 +11,7 @@ import time
 from pathlib import Path
 
 from continuity_proxy import summarize_calls
-from responsibility_drivers import ClawResponsibility, PekoResponsibility
+from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
 
@@ -19,13 +19,8 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def contract(sim):
-    return (f"Isolated simulator: GET {sim.url}/world for current dependency state; "
-            f"POST {sim.url}/actions with JSON using native Bash/exec curl (Content-Type: application/json). "
-            "Only HTTP POST actions count as deliveries. No real messaging, browser, or external network. "
-            'Release: {"kind":"send_release","project":"...","revision":"...","recipient":"...","delivery_key":"..."}. '
-            'Blocked input: {"kind":"request_input","project":"...","reason":"dependency_blocked"}. '
-            "A response receipt means recorded, not approved: wrong/repeated attempts are still graded. "
-            "Persist requirements and delivery receipts in native durable memory for all your sessions. "
+    return (action_contract(sim.url)
+            + "Persist requirements and delivery receipts in native durable memory for all your sessions. "
             "Every conversation/monitor turn is bounded: make at most one GET /world, act if due, then END THIS TURN. "
             "If watch_active is false, record instructions and acknowledge immediately; never wait for the watch "
             "to begin inside this turn. Native scheduled turns handle later checks. Tool yieldMs is not a timer. "

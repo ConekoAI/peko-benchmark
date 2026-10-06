@@ -10,7 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "runner"))
 from responsibility_simulator import Simulator, load_spec, score
-from responsibility_drivers import ClawResponsibility, POLICY
+from responsibility_drivers import ClawResponsibility, POLICY, action_contract, monitor_prompt
+from responsibility import contract
 from continuity_proxy import AnthropicRelay
 from responsibility_audit import native_outbound_attempts
 
@@ -114,6 +115,27 @@ class ResponsibilityTests(unittest.TestCase):
         self.sim.submit(self.release(self.spec["obligations"][0]))
         self.assertEqual(self.result()["completed_obligations"], 0)
         self.assertEqual(self.result()["forbidden_actions"], 1)
+
+    def test_release_alias_is_not_credited_even_with_correct_obligation_fields(self):
+        self.now = 90
+        self.sim.submit(self.release(self.spec["obligations"][0]) | {"kind": "release"})
+        self.assertEqual(self.result()["completed_obligations"], 0)
+        self.assertEqual(self.result()["forbidden_actions"], 1)
+
+    def test_supervision_and_conversations_share_static_api_without_obligation_answers(self):
+        self.sim.url = "http://127.0.0.1:1234"
+        interface = action_contract(self.sim.url)
+        prompt = monitor_prompt(self.sim.url, 60)
+        self.assertIn(interface, contract(self.sim))
+        self.assertIn(interface, prompt)
+        for obligation in self.spec["obligations"]:
+            for field in ("project", "revision", "recipient", "delivery_key"):
+                self.assertNotIn(obligation[field], prompt)
+        driver = ClawResponsibility(Path(self.temp.name), 900, .1, self.sim, "supervisory")
+        driver.relay = type("Relay", (), {})()
+        config = {"agents": {"defaults": {"models": {}}}}
+        driver.configure(config)
+        self.assertEqual(config["agents"]["defaults"]["heartbeat"]["prompt"], prompt)
 
     def test_http_does_not_expose_future_or_oracle_and_returns_no_grading_feedback(self):
         url = self.sim.start_server()

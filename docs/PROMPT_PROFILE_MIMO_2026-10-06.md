@@ -161,7 +161,10 @@ returned successfully. The owned daemon was stopped. Binaries were built with
 the final runtime code at `7c705d24decff8de5edc8b1c00300f6d2ae4e527`:
 CLI SHA-256 `a049e90450a36c475d5e4e2869326c062c22708f77c5b160d6c32bcf8a45eab0`;
 daemon SHA-256 `bb502f1a4236f2a404185d4411bdc3204079777fad08d6924ca3c845b9838750`.
-The full unattended scenario has not been rerun after this path correction.
+The full unattended retest after this correction retained notes at the correct
+path but failed on an unsupported simulator action kind. See the
+[interface parity report](RESPONSIBILITY_INTERFACE_PARITY_2026-10-06.md) for
+the unchanged-contract failure and the shared API documentation correction.
 
 The failed watch's finalizer preserved principal memory and transcripts, but
 not `data/workspaces` Markdown. Its tool results still identify the misplaced
@@ -223,8 +226,9 @@ unchanged; within-run delta rendering cannot prevent growth across runs.
 The original watch appended roughly 7.8 KB of context at each new turn.
 This is an identified design cost, not changed by the duplicate-section fix.
 
-First repeat one unattended Peko watch after the memory-path correction.
-The next optimization should restore trusted context state across runs only
+Behavioral stabilization now precedes context optimization: the path-corrected
+retest exposed unequal API documentation availability across native sessions.
+After that is resolved, the next optimization should restore trusted context state across runs only
 when it corresponds to retained conversation history, and invalidate it after
 compaction, truncation or relevant section changes. Inferring that state from
 user-authored Markdown would not provide a trustworthy basis for suppression.
