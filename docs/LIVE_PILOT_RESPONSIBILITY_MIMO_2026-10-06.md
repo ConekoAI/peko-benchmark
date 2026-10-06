@@ -98,6 +98,9 @@ completed seed, failed attempts may have warmed provider caches, scheduling
 phases differ, and setup/native context differ. These observations do not
 establish comparative efficiency. The larger Peko active-phase uncached input
 is a useful prompt/cache diagnostic before expanding the experiment.
+The subsequent [prompt investigation](PROMPT_PROFILE_MIMO_2026-10-06.md)
+documents that diagnosis and separate stabilization attempts; it does not
+replace this paired sample.
 
 ## Failures and fixes retained
 

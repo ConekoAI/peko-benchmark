@@ -63,7 +63,7 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
     run_dir.mkdir(parents=True)
     (run_dir / "scenario.json").write_text(json.dumps(spec, indent=2))
     sources = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-               for pattern in ("runner/responsibility*.py", "runner/continuity*.py")
+               for pattern in ("runner/responsibility*.py", "runner/continuity*.py", "runner/prompt_profile.py")
                for p in ROOT.glob(pattern)}
     (run_dir / "source-manifest.json").write_text(json.dumps(sources, indent=2))
     sim = Simulator(spec, run_dir)
@@ -156,6 +156,8 @@ def main():
     parser.add_argument("--mode", choices=("supervisory", "event-driven", "persistence"), default="supervisory")
     parser.add_argument("--scenario", type=Path, default=ROOT / "scenarios/responsibility/pilot.toml")
     parser.add_argument("--seed", type=int, default=1)
+    parser.add_argument("--profile-prompt", action="store_true",
+                        help="record prompt sizes and run-local keyed hashes, never prompt text")
     parser.add_argument("--scale", type=float, default=1, help="Multiply elapsed times and cadence; 864 gives a 3-day watch")
     parser.add_argument("--budget-usd", type=float, required=True, help="PAYG reference cap per harness; not actual plan deduction")
     parser.add_argument("--timeout-secs", type=int, default=900)
@@ -163,6 +165,7 @@ def main():
     if not math.isfinite(args.budget_usd) or args.budget_usd <= 0 or not math.isfinite(args.scale) or args.scale < 1:
         parser.error("budget must be finite and positive; scale must be finite and >= 1")
     spec = load_spec(args.scenario, args.seed, args.scale)
+    spec["profile_prompt"] = args.profile_prompt
     if args.timeout_secs < spec["duration_secs"] + 300:
         parser.error("timeout must allow watch duration plus at least 300 seconds for setup and probe")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")

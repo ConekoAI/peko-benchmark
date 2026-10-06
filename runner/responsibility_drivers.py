@@ -10,6 +10,7 @@ from continuity_openclaw import OpenClawDriver, final_reply
 from continuity_peko import PekoDriver
 from continuity_proxy import AnthropicRelay
 from continuity_usage import reconcile_usage
+from prompt_profile import PromptProfiler
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000}
@@ -39,6 +40,8 @@ class PekoResponsibility(PekoDriver):
         self.relay = AnthropicRelay(upstream, key, self.run_dir / "provider-calls.jsonl",
                                    time.monotonic() + self.timeout_secs, self.budget_usd,
                                    POLICY, self.phase)
+        if self.sim.spec.get("profile_prompt"):
+            self.relay.profiler = PromptProfiler()
         self.base_url = self.relay.url
         self.config_env = {k: v for k, v in self.config_env.items() if k in (
             "PATH", "LANG", "LC_ALL", "SSL_CERT_FILE", "SSL_CERT_DIR", "TMPDIR", "PEKO_BIN")
@@ -106,7 +109,7 @@ class PekoResponsibility(PekoDriver):
         # Preserve native memory and schedules as well as transcripts, never vaults.
         if self.temp:
             root = Path(self.temp.name) / ".peko"
-            for base in (root / "principals", root / "data/principals"):
+            for base in (root / "principals", root / "data/principals", root / "data/workspaces"):
                 if base.exists():
                     for source in base.rglob("*"):
                         if (source.is_file() and not source.is_symlink()
@@ -138,6 +141,8 @@ class ClawResponsibility(OpenClawDriver):
             model["params"]["maxTokens"] = 4096
         self.relay.policy = POLICY
         self.relay.phase = lambda: phase_for(self.sim)
+        if self.sim.spec.get("profile_prompt"):
+            self.relay.profiler = PromptProfiler()
 
     def start(self):
         metadata = super().start()

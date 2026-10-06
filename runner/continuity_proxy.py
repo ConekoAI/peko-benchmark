@@ -14,6 +14,8 @@ import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from prompt_profile import PromptProfiler
+
 
 def merge_usage(target: dict, event: dict) -> bool:
     """Anthropic start/delta usage is cumulative; later values replace earlier ones."""
@@ -53,7 +55,7 @@ def summarize_calls(records: list[dict]) -> dict:
 
 class AnthropicRelay:
     def __init__(self, base_url: str, key: str, path: Path, deadline: float, budget_usd: float,
-                 policy: dict | None = None, phase=None):
+                 policy: dict | None = None, phase=None, profile_prompt: bool = False):
         self.base_url, self.key, self.path = base_url.rstrip("/"), key, path
         self.deadline, self.budget_usd = deadline, budget_usd
         self.token = secrets.token_hex(24)
@@ -61,6 +63,7 @@ class AnthropicRelay:
         self.lock = threading.Lock()
         self.policy = policy
         self.phase = phase or (lambda: "continuity")
+        self.profiler = PromptProfiler() if profile_prompt else None
         relay = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -134,6 +137,8 @@ class AnthropicRelay:
             record["forwarded"] = reason is None
             if reason:
                 record["rejection"] = reason
+            elif self.profiler:
+                record["prompt_profile"] = self.profiler.capture(payload, record["index"])
             self.records.append(record)
             self._save()
         if reason:

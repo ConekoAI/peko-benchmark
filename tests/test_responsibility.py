@@ -171,7 +171,7 @@ class ResponsibilityTests(unittest.TestCase):
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         relay = AnthropicRelay(f"http://127.0.0.1:{server.server_port}", "secret", Path(self.temp.name)/"calls.jsonl",
-                               time.monotonic()+60, .1, POLICY, lambda: "watch_idle")
+                               time.monotonic()+60, .1, POLICY, lambda: "watch_idle", profile_prompt=True)
         try:
             request = urllib.request.Request(relay.url + "/v1/messages", data=json.dumps({
                 "model": "mimo-v2.6-flash", "max_tokens": 8192, "thinking": {"type": "enabled"}, "temperature": 1}).encode(),
@@ -182,6 +182,7 @@ class ResponsibilityTests(unittest.TestCase):
             self.assertNotIn("temperature", bodies[0])
             self.assertEqual(relay.records[0]["phase"], "watch_idle")
             self.assertEqual(relay.records[0]["requested_decoding"]["max_tokens"], 8192)
+            self.assertEqual(relay.records[0]["prompt_profile"]["version"], 1)
         finally:
             relay.close()
             server.shutdown()

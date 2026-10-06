@@ -28,6 +28,8 @@ restart, blocked-input escalation, and idle periods. It reports obligation,
 deadline, memory, repetition, quietness, intervention, and idle-usage metrics.
 The [paired live MiMo pilot](docs/LIVE_PILOT_RESPONSIBILITY_MIMO_2026-10-06.md)
 passed once per harness; larger runs are deferred while stabilizing the runtime.
+The [prompt and cache investigation](docs/PROMPT_PROFILE_MIMO_2026-10-06.md)
+records the cost concentration, runtime fixes, and diagnostic verification.
 
 ## Methodology (read before trusting a number)
 
@@ -70,6 +72,9 @@ runner/responsibility.py  # native unattended watch and continuation controls
 runner/responsibility_simulator.py  # shared dependency world and action ledger
 runner/responsibility_drivers.py  # native cron/heartbeat adapters
 runner/responsibility_audit.py  # audit native messaging attempts during watch
+runner/prompt_profile.py  # opt-in private request fingerprints and JSON sizes
+runner/profile_usage.py  # offline phase usage and prompt-profile analysis
+runner/memory_path_probe.py  # short native shared-memory write/read diagnostic
 profiles/        # explicit provider configuration for continuity pilots
 scenarios/continuity/ # sequential events; controller-owned expected actions
 scenarios/responsibility/ # shared world timeline; controller-owned oracle

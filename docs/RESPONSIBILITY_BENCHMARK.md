@@ -96,6 +96,16 @@ phase boundary is not fractionally attributed. Read counts do not prove useful
 work or internal reasoning. Clock time, full native transcripts, durable memory,
 schedule evidence, and both usage ledgers are retained for failure analysis.
 
+Optional `--profile-prompt` records JSON sizes, cache-marker locations and
+run-local HMAC fingerprints at the relay after the common decoding policy is
+applied. It does not alter the forwarded request or save prompt text. The random
+HMAC key is never retained, so fingerprints cannot be compared across runs.
+`python3.12 runner/profile_usage.py reports/<run-id>` analyzes retained usage
+and fingerprints offline without calling a model. JSON bytes and exact message
+prefixes are diagnostics, not token counts or proof of cache hits: string and
+typed-block content have different shapes, and backend routing is unobserved.
+See the [prompt investigation](PROMPT_PROFILE_MIMO_2026-10-06.md) for findings.
+
 ## Native initialization and continuation controls
 
 Peko receives a creator-defined purpose and runs its native genesis. The model
