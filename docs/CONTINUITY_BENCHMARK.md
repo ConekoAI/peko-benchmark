@@ -9,6 +9,9 @@ The [first live MiMo pilot](LIVE_PILOT_MIMO_2026-10-05.md) passed one completed
 scenario and exposed initialization latency and quota persistence findings.
 The [runtime fix verification](LIVE_PILOT_MIMO_FIX_VERIFICATION_2026-10-05.md)
 passed with complete quota retention and clean signal shutdown.
+The [OpenClaw pilot](LIVE_PILOT_OPENCLAW_MIMO_2026-10-06.md) passed the same
+scenario/model/seed with complete native/provider usage agreement. The two
+selected configurations currently show parity on the scored outcomes.
 
 ## 1. First runnable scenario: changed commitment
 
@@ -155,6 +158,18 @@ the same OS account: this is not an adversarial isolation benchmark.
 
 ## 4. Evidence ladder and comparison plan
 
+The OpenClaw driver is now implemented. Install the pinned release with
+`sh harnesses/lib/openclaw_install.sh`, export `PEKO_API_KEY`, source both
+`profiles/mimo-v2.6-flash.sh` and `profiles/openclaw-mimo-v2.6-flash.sh`, then run
+`python3.12 runner/continuity.py --driver openclaw --reps 1 --seed 1 --budget-usd 10`.
+It uses an isolated native Gateway with default workspace bootstrap and
+heartbeat, a stable conversation across a process restart, and an unchanged-body
+Anthropic relay to the same MiMo endpoint. The relay enforces admission caps
+between calls and records effective wire settings and usage. It drains the
+Gateway before final accounting and reconciles usage with native transcripts.
+Transcript exports omit credential tables. Full persona onboarding and effective
+thinking settings differ from the initial Peko configuration; see the report.
+
 | Stage | Work | Decision it supports |
 |---|---|---|
 | Now | One live pilot; inspect every reply and failure | Is the scenario and adapter usable? |
@@ -168,7 +183,7 @@ counts and confidence intervals; expand the sample when uncertainty could
 change the decision. Keep failed runs in denominators. Do not selectively rerun
 bad seeds without retaining the original results.
 
-Proposed comparison conditions (not implemented by the current pilot):
+Further comparison conditions (not implemented by the current pilot):
 
 - Ordinary harness with persisted conversation, the same model/tools, and replay
   after restart. This is the credible baseline; a deliberately forgetful agent
@@ -187,7 +202,8 @@ provider, decoding/thinking settings, context window, cache accounting, binary
 versions, scenario seed, and budget. The current adapter records the model catalog
 configuration, pricing, and binary hashes; effective per-call decoding-setting
 capture is a follow-up.
-Until another adapter exists, there is no cross-harness superiority result.
+The OpenClaw adapter permits external comparisons, but the initial single-seed
+pilot does not establish cross-harness superiority.
 
 ## 5. Next scenarios
 

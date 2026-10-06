@@ -215,15 +215,15 @@ def execute(spec: dict, driver, run_dir: Path, evidence_kind: str) -> dict:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", default="changed-commitment")
-    ap.add_argument("--driver", choices=["oracle", "empty", "peko"], required=True)
+    ap.add_argument("--driver", choices=["oracle", "empty", "peko", "openclaw"], required=True)
     ap.add_argument("--reps", type=int, default=1)
     ap.add_argument("--seed", type=int, default=1)
-    ap.add_argument("--budget-usd", type=float, help="required for live Peko; per-repetition quota")
+    ap.add_argument("--budget-usd", type=float, help="required for live drivers; per-repetition reference ceiling")
     args = ap.parse_args()
     if args.reps < 1 or args.seed < 0:
         ap.error("reps must be positive and seed nonnegative")
-    if args.driver == "peko" and (args.budget_usd is None or not 0 < args.budget_usd < float("inf")):
-        ap.error("live Peko requires a finite positive --budget-usd")
+    if args.driver in {"peko", "openclaw"} and (args.budget_usd is None or not 0 < args.budget_usd < float("inf")):
+        ap.error("live drivers require a finite positive --budget-usd")
     path = ROOT / "scenarios" / "continuity" / f"{args.scenario}.toml"
     if not path.is_file() or path.parent != ROOT / "scenarios" / "continuity":
         ap.error("unknown scenario")
@@ -236,6 +236,10 @@ def main() -> int:
         if args.driver == "peko":
             from continuity_peko import PekoDriver
             driver = PekoDriver(run_dir, spec["timeout_secs"], args.budget_usd)
+            kind = "model_run"
+        elif args.driver == "openclaw":
+            from continuity_openclaw import OpenClawDriver
+            driver = OpenClawDriver(run_dir, spec["timeout_secs"], args.budget_usd)
             kind = "model_run"
         else:
             driver = ValidationDriver(spec, args.driver == "oracle")

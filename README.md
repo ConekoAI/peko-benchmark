@@ -17,6 +17,9 @@ The [first live MiMo pilot](docs/LIVE_PILOT_MIMO_2026-10-05.md) records the
 completed scenario, retained setup failures, and usage-accounting findings.
 The [fix verification](docs/LIVE_PILOT_MIMO_FIX_VERIFICATION_2026-10-05.md)
 confirms full quota retention and clean signal shutdown in a repeat live run.
+The [OpenClaw / MiMo pilot](docs/LIVE_PILOT_OPENCLAW_MIMO_2026-10-06.md) also
+passed all seven turns on the same model and seed, establishing an external
+persistent-assistant baseline for this scenario.
 
 ## Methodology (read before trusting a number)
 
@@ -53,6 +56,8 @@ harnesses/
 runner/run.py    # matrix runner: tasks × harnesses × reps → reports/
 runner/continuity.py  # multi-turn continuity runner + deterministic scorer
 runner/continuity_peko.py  # native adapter with isolated passphrase vault
+runner/continuity_openclaw.py  # isolated native OpenClaw Gateway adapter
+runner/continuity_proxy.py  # unchanged-body Anthropic relay and usage ledger
 profiles/        # explicit provider configuration for continuity pilots
 scenarios/continuity/ # sequential events; controller-owned expected actions
 tests/          # offline grader mutation checks + adapter contracts
@@ -162,4 +167,6 @@ installation or git repo initialization).
 - Continuity pilot is implemented; scheduled keepalive, cross-peer memory,
   compaction, and interrupted-effect scenarios follow its evidence ladder.
 - Other peko-specific tasks: subagent delegation and workspace skills.
+- OpenClaw continuity adapter is implemented; see its pilot report for setup,
+  reproducibility and limits of the initial comparison.
 - Token/cost capture per run once the harnesses expose it uniformly.
