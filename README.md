@@ -35,6 +35,8 @@ records the shared supervisor API correction, the subsequent failed pair,
 and a benchmark cleanup repair with offline verification.
 The [state and cadence validation](docs/RESPONSIBILITY_STATE_COVERAGE_MIMO_2026-10-06.md)
 adds shared status reconciliation instructions and measures timely observation coverage.
+The runtime restart fix is merged; the latest pair has correct memory for both,
+but Peko misses two deadlines while OpenClaw passes. Larger trials remain deferred.
 
 ## Methodology (read before trusting a number)
 

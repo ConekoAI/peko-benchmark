@@ -141,8 +141,10 @@ remaining scenario deadline) before native shutdown. Final telemetry refreshes
 after shutdown so late partial counters cannot disappear from the result.
 `telemetry_drain_completed` records settled handlers, not guaranteed complete
 LLM usage. Missing completion or native reconciliation still fails the gate.
-The drain has offline coverage; live verification remains pending after the
-[latest failed pair](RESPONSIBILITY_INTERFACE_PARITY_2026-10-06.md).
+The drain has offline coverage and live verification in the
+[version-3 pair](RESPONSIBILITY_STATE_COVERAGE_MIMO_2026-10-06.md): all requests
+completed and matched native counters. The retained initial restart-interrupted
+Peko attempt still has unknown full-run usage, despite its successful final drain.
 
 Optional `--profile-prompt` records JSON sizes, cache-marker locations and
 run-local HMAC fingerprints at the relay after the common decoding policy is
