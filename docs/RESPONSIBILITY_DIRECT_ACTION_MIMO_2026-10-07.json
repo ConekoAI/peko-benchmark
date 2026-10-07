@@ -1,0 +1,205 @@
+{
+  "evidence_kind": "real_llm_single_seed_pilot",
+  "contract_version": 7,
+  "simulator_seed": 1,
+  "model": "mimo-v2.6-flash",
+  "benchmark_source": "b89a9de95a11dc5c671163af05d43bb250620f41",
+  "runtime_source": "fe2074b0a51a7e31096cb02d1512c24abf6d20a5",
+  "launch_mode": "concurrent_pair_with_isolated_native_homes",
+  "cost_basis": "payg_reference_not_subscription_charge",
+  "runs": {
+    "peko": {
+      "report_id": "20261007T013625292944Z-responsibility-peko",
+      "version": "0.1.0",
+      "wall_secs": 689.613,
+      "metrics": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "completed_obligations": 0,
+        "on_time_obligations": 0,
+        "missed_deadlines": 3,
+        "repeated_actions": 0,
+        "forbidden_actions": 1,
+        "stale_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "memory_facts_correct": 16,
+        "memory_facts_total": 16,
+        "human_interventions": 0,
+        "watch_status_reads": 0,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "topology_execution_verified": false,
+      "worker_world_tool_intents": 0,
+      "nonworker_operational_tool_intents": 0,
+      "usage": {
+        "request_count": 44,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 171593,
+        "cache_read_tokens": 1253312,
+        "output_tokens": 10057,
+        "cost_usd": null,
+        "usage_complete": false,
+        "native_usage_matches": false
+      },
+      "completed_call_subset": {
+        "request_count": 42,
+        "cost_usd": 0.030348253600000003,
+        "usage_complete": true
+      },
+      "incomplete_forwarded_calls": [
+        {
+          "phase": "conversation",
+          "wall_secs": 70.514,
+          "status": 200,
+          "usage": {}
+        },
+        {
+          "phase": "watch_idle",
+          "wall_secs": 14.686,
+          "status": 200,
+          "usage": {}
+        }
+      ],
+      "phase_usage": {
+        "conversation": {
+          "request_count": 17,
+          "rejected_request_count": 0,
+          "cost_usd": null,
+          "usage_complete": false
+        },
+        "probe": {
+          "request_count": 7,
+          "rejected_request_count": 0,
+          "cost_usd": 0.0055960072,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 12,
+          "rejected_request_count": 0,
+          "cost_usd": 0.008617655200000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 4,
+          "rejected_request_count": 0,
+          "cost_usd": 0.0031547768000000005,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 4,
+          "rejected_request_count": 0,
+          "cost_usd": null,
+          "usage_complete": false
+        }
+      },
+      "errors": []
+    },
+    "openclaw": {
+      "report_id": "20261007T013625176262Z-responsibility-openclaw",
+      "version": "OpenClaw 2026.9.8 (fc23bc8)",
+      "wall_secs": 510.77,
+      "metrics": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "completed_obligations": 1,
+        "on_time_obligations": 0,
+        "missed_deadlines": 3,
+        "repeated_actions": 0,
+        "forbidden_actions": 1,
+        "stale_deliveries": 1,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "memory_facts_correct": 15,
+        "memory_facts_total": 16,
+        "human_interventions": 0,
+        "watch_status_reads": 4,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "topology_execution_verified": true,
+      "worker_world_tool_intents": 4,
+      "nonworker_operational_tool_intents": 0,
+      "usage": {
+        "request_count": 43,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 155188,
+        "cache_read_tokens": 700224,
+        "output_tokens": 10979,
+        "cost_usd": null,
+        "usage_complete": false,
+        "native_usage_matches": false
+      },
+      "completed_call_subset": {
+        "request_count": 40,
+        "cost_usd": 0.026761067200000002,
+        "usage_complete": true
+      },
+      "incomplete_forwarded_calls": [
+        {
+          "phase": "watch_idle",
+          "wall_secs": 37.35,
+          "status": 200,
+          "usage": {}
+        },
+        {
+          "phase": "watch_idle",
+          "wall_secs": 9.329,
+          "status": 200,
+          "usage": {}
+        },
+        {
+          "phase": "watch_active",
+          "wall_secs": 12.555,
+          "status": 200,
+          "usage": {}
+        }
+      ],
+      "phase_usage": {
+        "conversation": {
+          "request_count": 12,
+          "rejected_request_count": 0,
+          "cost_usd": 0.010476984,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 7,
+          "rejected_request_count": 0,
+          "cost_usd": 0.004084438400000001,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 6,
+          "rejected_request_count": 0,
+          "cost_usd": 0.003624140800000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 8,
+          "rejected_request_count": 0,
+          "cost_usd": null,
+          "usage_complete": false
+        },
+        "watch_idle": {
+          "request_count": 10,
+          "rejected_request_count": 0,
+          "cost_usd": null,
+          "usage_complete": false
+        }
+      },
+      "errors": []
+    }
+  },
+  "runtime_followup": {
+    "pull_request": "https://github.com/ConekoAI/peko-runtime/pull/424",
+    "head_commit": "2eb607e62f56f5fe0dbda99b0c0870a5e2df1b50",
+    "live_pair_predates_fix": true,
+    "post_fix_live_validation": false,
+    "local_library_tests_passed": 2750,
+    "local_library_tests_ignored": 3,
+    "final_focused_cron_tests_passed": 20
+  }
+}

@@ -47,6 +47,11 @@ reached the unattended watch with verified worker/supervisor separation in both
 harnesses. Both met all three deadlines; OpenClaw passed the full gate, while
 Peko repeated two HTTP actions after shell timing errors and exhausted the
 request allowance before its memory probe.
+The [direct-action follow-up](docs/RESPONSIBILITY_DIRECT_ACTION_MIMO_2026-10-07.md)
+removed repeated actions in its sample, but both harnesses failed task deadlines.
+It exposed an interrupted Peko tool cron that suppressed later ticks, plus
+precondition, stale-requirement and delayed-continuation failures. Neither run
+has complete cost telemetry; the retained failures precede the runtime recovery fix.
 
 ## Methodology (read before trusting a number)
 
