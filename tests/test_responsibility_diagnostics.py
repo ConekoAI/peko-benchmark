@@ -106,20 +106,23 @@ class DiagnosticsTests(unittest.TestCase):
             arm_peko(driver)
             self.assertTrue(verify_peko(json.loads(path.read_text()), sessions, 60)['verified'])
 
-    def test_claw_clock_preparation_preserves_payloads_and_matches_start_offsets(self):
+    def test_claw_clock_preparation_uses_native_api_and_shared_offsets(self):
         from types import SimpleNamespace
         from responsibility_prepared import set_claw_due_times
-        with tempfile.TemporaryDirectory() as folder:
-            state = Path(folder); path = state/'cron/jobs.json'; path.parent.mkdir()
-            path.write_text(json.dumps({'jobs': [{'name':'responsibility-monitor','schedule':{'kind':'every','everyMs':60000},
-                'payload':{'kind':'agentTurn','message':'static worker'},'state':{}},
-                {'name':'heartbeat','schedule':{'kind':'every','everyMs':120000}, 'payload':{'kind':'heartbeat'},'state':{}}]}))
-            driver = SimpleNamespace(state=state, sim=SimpleNamespace(spec={'cadence_secs':60}),
-                _stop_gateway=lambda: None, _start_gateway=lambda: None)
-            with patch('responsibility_prepared.time.time', return_value=1000): set_claw_due_times(driver, True)
-            jobs = json.loads(path.read_text())['jobs']
-            self.assertEqual([j['state']['nextRunAtMs'] for j in jobs], [1020000,1120000])
-            self.assertEqual(jobs[0]['payload']['message'], 'static worker')
+        calls = []
+        jobs = {'jobs': [{'id': 'worker', 'name': 'responsibility-monitor', 'payload': {'kind': 'agentTurn'}},
+                         {'id': 'supervisor', 'payload': {'kind': 'heartbeat'}}]}
+        def command(*args):
+            if args[0] == 'automations': return json.dumps(jobs)
+            calls.append(json.loads(args[args.index('--params')+1])); return '{}'
+        driver = SimpleNamespace(sim=SimpleNamespace(spec={'cadence_secs': 60}), _command=command)
+        with patch('responsibility_prepared.time.time', return_value=1000): set_claw_due_times(driver, True)
+        self.assertEqual([c['patch']['schedule']['anchorMs'] for c in calls], [1020000,1120000])
+        self.assertEqual([c['patch']['schedule']['everyMs'] for c in calls], [60000,120000])
+        self.assertTrue(all(set(c['patch']) == {'schedule'} for c in calls))
+        calls.clear()
+        with patch('responsibility_prepared.time.time', return_value=1000): set_claw_due_times(driver, False)
+        self.assertEqual([c['patch']['schedule']['anchorMs'] for c in calls], [4600000,4600000])
 
     def test_policy_recall_requires_explicit_deadlines_thresholds_and_nulls(self):
         spec = load_spec(ROOT / 'scenarios/responsibility/pilot.toml', 1)

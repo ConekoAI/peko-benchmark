@@ -93,15 +93,19 @@ def prepare_claw(driver, worker_prompt):
 
 
 def set_claw_due_times(driver, armed=False):
-    driver._stop_gateway()
-    path = driver.state / 'cron/jobs.json'
-    schedule = json.loads(path.read_text())
+    # The pinned runtime owns schedule persistence (currently SQLite).
+    # Use its native RPC surface rather than editing a legacy JSON path.
+    schedule = json.loads(driver._command('automations', 'list', '--all', '--json'))
+    jobs = schedule if isinstance(schedule, list) else schedule.get('jobs', [])
     now = int(time.time() * 1000)
-    for job in schedule['jobs']:
+    matched = 0
+    for job in jobs:
         if job.get('name') == 'responsibility-monitor' or job.get('payload', {}).get('kind') == 'heartbeat':
-            offset = (20000 if job.get('name') == 'responsibility-monitor' else int(driver.sim.spec['cadence_secs'] * 2000)) if armed else 3_600_000
-            job.setdefault('state', {})['nextRunAtMs'] = now + offset
-            if job.get('schedule', {}).get('kind') == 'every':
-                job['schedule']['anchorMs'] = now + offset - job['schedule']['everyMs']
-    path.write_text(json.dumps(schedule, indent=2))
-    driver._start_gateway()
+            multiple = 1 if job.get('name') == 'responsibility-monitor' else 2
+            offset = (20_000 if multiple == 1 else int(driver.sim.spec['cadence_secs'] * 2000)) if armed else 3_600_000
+            params = {'id': job['id'], 'patch': {'schedule': {'kind': 'every',
+                      'everyMs': int(driver.sim.spec['cadence_secs'] * multiple * 1000), 'anchorMs': now + offset}}}
+            driver._command('gateway', 'call', 'cron.update', '--params', json.dumps(params), '--json')
+            matched += 1
+    if matched != 2:
+        raise ValueError('prepared clock requires one worker and one organizational heartbeat')
