@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'runner'))
 from responsibility_timing import native_cron_timing
 from responsibility_drivers import task_monitor_prompt
+from responsibility import settled_telemetry
 
 
 class NativeTimingTests(unittest.TestCase):
@@ -49,3 +50,21 @@ class NativeTimingTests(unittest.TestCase):
                          'at most one short sentence', 'Do not wait, add polling, drop durable writes',
                          'Make at most one GET', 'not_before'):
             self.assertIn(fragment, prompt)
+
+    def test_interrupted_usage_is_explained_without_forgiving_native_gate(self):
+        from types import SimpleNamespace
+        from continuity_proxy import summarize_calls
+        calls = [{'index': 1, 'forwarded': True, 'status': 200, 'completed': True,
+                  'usage': {'input_tokens': 10, 'output_tokens': 5}},
+                 {'index': 2, 'forwarded': True, 'status': 200, 'completed': True,
+                  'downstream_disconnected': True,
+                  'usage': {'input_tokens': 3, 'output_tokens': 2, 'cache_read_input_tokens': 100}}]
+        native = summarize_calls(calls[:1])
+        relay = SimpleNamespace(records=calls, telemetry=lambda: summarize_calls(calls))
+        result = settled_telemetry(relay, {'native_usage': native})
+        self.assertFalse(result['native_usage_matches'])
+        self.assertTrue(result['native_reconciliation_diagnostic']['difference_exactly_explained_by_disconnected_calls'])
+        self.assertEqual(result['native_reconciliation_diagnostic']['disconnected_request_indices'], [2])
+        calls[-1]['completed'] = False
+        incomplete = settled_telemetry(relay, {'native_usage': native})
+        self.assertFalse(incomplete['native_reconciliation_diagnostic']['difference_exactly_explained_by_disconnected_calls'])

@@ -91,6 +91,22 @@ def settled_telemetry(relay, telemetry):
         result.get(k) == native.get(k) for k in (
             "request_count", "uncached_input_tokens", "cache_read_tokens",
             "cache_creation_tokens", "output_tokens"))
+    keys = ("request_count", "uncached_input_tokens", "cache_read_tokens",
+            "cache_creation_tokens", "output_tokens")
+    interrupted = [r for r in getattr(relay, "records", [])
+                   if r.get("forwarded") and r.get("downstream_disconnected")]
+    known = bool(native) and result.get("usage_complete", False) and all(
+        isinstance(result.get(k), int) and isinstance(native.get(k), int) for k in keys)
+    delta = {k: result[k] - native[k] for k in keys} if known else None
+    subset = summarize_calls(interrupted)
+    explained = bool(known and interrupted and subset["usage_complete"] and
+                     all(delta[k] == subset[k] for k in keys))
+    result["native_reconciliation_diagnostic"] = {
+        "version": 1, "controller_minus_native": delta,
+        "disconnected_request_indices": [r["index"] for r in interrupted],
+        "difference_exactly_explained_by_disconnected_calls": explained,
+        "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; "
+                      "this does not change the native equality or full-pass gate."}
     return result
 
 

@@ -208,3 +208,8 @@ Peko audit fields, deduplicate runs, measure whole-turn durations and preserve
 open runs as censored. Legacy or OpenClaw evidence without this native format
 is unmeasured, not zero overruns. These diagnostics do not change score gates
 or forgive missed deadlines or incomplete native usage reconciliation.
+
+`native_reconciliation_diagnostic` checks whether a complete controller-minus-
+native usage difference exactly equals complete upstream calls whose client
+disconnected. Interrupted/incomplete usage remains unknown. This attribution
+does not change the strict native equality gate or count as a native quota fix.
