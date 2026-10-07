@@ -19,8 +19,9 @@ expected status or future dependency state is copied. Owner chat supplies every
 requirement through the normal conversation route.
 
 Prepared schedules are delayed until owner/review conversations finish, then
-armed with a first worker tick after one second and organizational supervision
-after 120 seconds (60-second worker cadence). Both native homes are restarted
+armed with a first worker tick after 20 seconds and organizational supervision
+after 120 seconds (60-second worker cadence). The 20-second lead permits native readiness/registration checks before the task
+clock starts. Both native homes are restarted
 when arming; this is preparation, separate from the measured restart at 35
 seconds. Registration and actual execution remain required. Schema fixtures
 are pinned by the source manifest; registration failures are retained.
@@ -53,9 +54,12 @@ Token Plan deductions. Peko's native cost backstop includes the probe allowance.
 - Memory measurement explicitly distinguishes missing probes from invalid
   probes and valid measured facts. Missing measurement is not forgetting.
 
-These diagnostics supplement the existing action/deadline/quiet/memory grade;
-they do not silently rewrite that grade. Current memory facts still omit
-threshold/deadline recall; observed compliance measures use of those policies.
+Contract 8 CLI runs require these diagnostics for a pass, and the memory probe
+also measures explicit deadline and blocked_at values (null where unspecified):
+24 facts rather than 16. These requirements are explicit scenario flags; replay
+of older scenarios retains its old grade. A missing receipt file is unmeasured
+and cannot satisfy the new gate. Observed compliance measures policy use;
+recall alone cannot prove compliance.
 
 ## Gates before the next experiment
 

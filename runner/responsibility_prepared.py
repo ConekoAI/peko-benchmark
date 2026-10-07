@@ -70,7 +70,7 @@ def arm_peko(driver):
     path = next(root.rglob('cron/schedule.toml')); schedule = json.loads(path.read_text())
     now = dt.datetime.now(dt.timezone.utc)
     for job in schedule['jobs']:
-        offset = 1 if job['name'] == 'responsibility-monitor' else driver.sim.spec['cadence_secs'] * 2
+        offset = 20 if job['name'] == 'responsibility-monitor' else driver.sim.spec['cadence_secs'] * 2
         job['next_run'] = (now + dt.timedelta(seconds=offset)).isoformat()
     path.write_text(json.dumps(schedule, indent=2))
     driver._command('daemon', 'start', '--interval', '5'); driver._ready()
@@ -99,7 +99,7 @@ def set_claw_due_times(driver, armed=False):
     now = int(time.time() * 1000)
     for job in schedule['jobs']:
         if job.get('name') == 'responsibility-monitor' or job.get('payload', {}).get('kind') == 'heartbeat':
-            offset = (1000 if job.get('name') == 'responsibility-monitor' else int(driver.sim.spec['cadence_secs'] * 2000)) if armed else 3_600_000
+            offset = (20000 if job.get('name') == 'responsibility-monitor' else int(driver.sim.spec['cadence_secs'] * 2000)) if armed else 3_600_000
             job.setdefault('state', {})['nextRunAtMs'] = now + offset
             if job.get('schedule', {}).get('kind') == 'every':
                 job['schedule']['anchorMs'] = now + offset - job['schedule']['everyMs']

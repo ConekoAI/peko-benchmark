@@ -118,5 +118,19 @@ class DiagnosticsTests(unittest.TestCase):
                 _stop_gateway=lambda: None, _start_gateway=lambda: None)
             with patch('responsibility_prepared.time.time', return_value=1000): set_claw_due_times(driver, True)
             jobs = json.loads(path.read_text())['jobs']
-            self.assertEqual([j['state']['nextRunAtMs'] for j in jobs], [1001000,1120000])
+            self.assertEqual([j['state']['nextRunAtMs'] for j in jobs], [1020000,1120000])
             self.assertEqual(jobs[0]['payload']['message'], 'static worker')
+
+    def test_policy_recall_requires_explicit_deadlines_thresholds_and_nulls(self):
+        spec = load_spec(ROOT / 'scenarios/responsibility/pilot.toml', 1)
+        spec['measure_memory_policy'] = True
+        facts = [{k:o.get(k) for k in ('project','revision','recipient','delivery_key','deadline','blocked_at')}
+                 | {'status': 'cancelled' if o.get('cancelled') else 'blocked' if 'blocked_at' in o else 'pending'}
+                 for o in spec['obligations']]
+        rows = [{'kind':'action','seq':1,'phase':'probe','elapsed_secs':300,'action':{'kind':'memory','facts':facts}}]
+        result = score(spec, rows, {}, True)
+        self.assertEqual(result['memory_facts_total'], 24); self.assertEqual(result['memory_facts_correct'], 24)
+        facts[-1]['blocked_at'] = 0
+        self.assertEqual(score(spec, rows, {}, True)['memory_facts_correct'], 23)
+        del facts[0]['blocked_at']
+        self.assertEqual(score(spec, rows, {}, True)['memory_facts_correct'], 22)

@@ -249,7 +249,8 @@ def score(spec: dict, rows: list[dict], restart: dict, finished: bool) -> dict:
             chatter += 1
         forbidden += not valid
     required = {o["project"] for o in spec["obligations"] if not o.get("cancelled")}
-    facts_total = len(expected) * 4
+    policy_keys = ("deadline", "blocked_at") if spec.get("measure_memory_policy") else ()
+    facts_total = len(expected) * (4 + len(policy_keys))
     facts_correct = 0
     memory_valid = memory_reports == 1 and isinstance(memory, list) and all(
         isinstance(f, dict) and isinstance(f.get("project"), str) for f in memory)
@@ -265,6 +266,7 @@ def score(spec: dict, rows: list[dict], restart: dict, finished: bool) -> dict:
             facts_correct += sum(fact.get(k) == obligation[k]
                                  for k in ("revision", "recipient", "delivery_key"))
             facts_correct += fact.get("status") == actual_status
+            facts_correct += sum(k in fact and fact[k] == obligation.get(k) for k in policy_keys)
     restarts = [r for r in rows if r["kind"] == "restart"]
     protocol += not memory_valid
     reads = [r for r in rows if r["kind"] == "read" and r["phase"] == "watch"]

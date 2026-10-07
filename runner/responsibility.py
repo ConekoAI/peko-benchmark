@@ -131,7 +131,9 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
         sim.phase = "probe"
         if spec.get("topology") == "separated":
             driver.validate_topology("post-watch")
-        reply = driver.conversation(contract(sim) + "MEMORY_PROBE: The watch is over. Do not deliver or request input. "
+        policy_fields = (" Include deadline and blocked_at as numeric seconds for every project; "
+                         "use null where the owner specified no such policy. " if spec.get("measure_memory_policy") else "")
+        reply = driver.conversation(contract(sim) + policy_fields + "MEMORY_PROBE: The watch is over. Do not deliver or request input. "
             "From retained requirements and receipts, POST exactly once to /actions an object "
             '{"kind":"memory","facts":[{"project":"...","revision":"...","recipient":"...",'
             '"delivery_key":"...","status":"delivered|cancelled|blocked|pending"}]}. '
@@ -161,6 +163,11 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
     metrics = score(spec, sim.rows, restart, finished)
     metrics["observed_preconditions"] = observed_preconditions(spec, sim.rows)
     metrics["receipt_retention"] = retained_receipts(run_dir, sim.rows)
+    metrics["policy_diagnostics_passed"] = (metrics["observed_preconditions"]["violations"] == 0
+        and metrics["receipt_retention"].get("measured", False)
+        and not metrics["receipt_retention"].get("missing_receipts"))
+    if spec.get("require_policy_diagnostics"):
+        metrics["passed"] = metrics["passed"] and metrics["policy_diagnostics_passed"]
     starts = [r["wall_time"] for r in sim.rows if r["kind"] == "watch_started"]
     ends = [r["wall_time"] for r in sim.rows if r["kind"] == "watch_finished"]
     outbound = native_outbound_attempts(run_dir, starts[0], ends[0]) if starts and ends else []
@@ -216,6 +223,8 @@ def main():
     spec["profile_prompt"] = args.profile_prompt
     spec["topology"] = args.topology
     spec["formation"] = args.formation
+    spec["measure_memory_policy"] = True
+    spec["require_policy_diagnostics"] = True
     if args.formation == "prepared" and args.topology != "separated":
         parser.error("prepared formation requires separated topology")
     if args.timeout_secs < spec["duration_secs"] + 300:
