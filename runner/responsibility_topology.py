@@ -15,7 +15,7 @@ from responsibility_audit import timestamp
 
 WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
-SEPARATED_CONTRACT_VERSION = 10
+SEPARATED_CONTRACT_VERSION = 11
 
 
 def direct_action_prompt(url):
@@ -33,6 +33,13 @@ def direct_action_prompt(url):
             "observation time rather than action completion time; do not run a separate timestamp subprocess. "
             "On a worker check, batch independent canonical-file reads where supported. After meaningful actions "
             "persist receipts and changed task state with concise related writes, then finish. "
+            "For a scheduled worker, prepare the receipt append and changed commitment edits together "
+            "in one model response using native tool calls for the separate files; the runtime may serialize "
+            "those writes. Keep exact payloads and receipts in the durable files. After successful writes, "
+            "end with at most one short sentence; do not repeat payloads, receipts, or the commitment table "
+            "in a final summary. The nominal interval is not a turn budget: a whole turn longer than the "
+            "interval can cause skipped checks. Do not wait, add polling, drop durable writes, or alter "
+            "owner deadlines to meet that interval. "
             "When inactive or no action/state change is needed, do not append no-action receipt rows, rewrite "
             "unchanged requirements, add last-check timestamps, or curate other memory; finish quietly. ")
 

@@ -1,4 +1,4 @@
-# Responsibility execution protocol — contract 10
+# Responsibility execution protocol — contract 11
 
 This stabilization protocol separates organization formation from execution. It
 is not a new result or evidence of superiority. Contract 7 scores stay frozen.
@@ -190,3 +190,21 @@ same failure as choosing incorrectly after reading eligible state. Specify and
 test overrun/catch-up semantics before changing them, then stabilize the worker
 before supervisor ablation or statistical samples. See the
 [guarded pair and confirmation](RESPONSIBILITY_GUARDED_MIMO_2026-10-07.md).
+
+## Contract 11: fewer worker response rounds, unchanged cron policy
+
+The worker prepares receipt and changed commitment writes in the same model
+response and requests a single brief final sentence. Native writes may still
+execute serially; this is fewer model round trips, not parallel file mutation
+or a transaction spanning files. Exact receipts, action payloads and required
+state updates remain durable. There is no shorter hard timeout, wider deadline,
+extra polling, catch-up policy, or hidden obligation answer.
+
+Both separated harnesses receive this static guidance. One Peko-only follow-up
+checks the known overrun, not cross-harness parity under a new contract. The
+runtime now advertises nominal intervals and records scheduled/finish/next times
+plus skipped interval slots. New `native_cron_timing` diagnostics read these
+Peko audit fields, deduplicate runs, measure whole-turn durations and preserve
+open runs as censored. Legacy or OpenClaw evidence without this native format
+is unmeasured, not zero overruns. These diagnostics do not change score gates
+or forgive missed deadlines or incomplete native usage reconciliation.

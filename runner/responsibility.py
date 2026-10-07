@@ -17,6 +17,7 @@ from responsibility_drivers import ClawResponsibility, PekoResponsibility, actio
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
 from responsibility_diagnostics import observed_preconditions, retained_receipts
+from responsibility_timing import native_cron_timing
 from responsibility_topology import execution_evidence, task_paths, handoff_prompt, direct_action_prompt
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -211,6 +212,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
                          and telemetry.get("native_usage_matches", False))
     if spec.get("topology") == "separated":
         checks = metadata.get("topology_checks", [])
+        if starts and ends:
+            metrics["native_cron_timing"] = native_cron_timing(run_dir, starts[0], ends[0])
         identities = {k: sorted({sid for c in checks for sid in c.get(k, [])})
                       for k in ("worker_session_ids", "supervisor_session_ids")}
         topology = execution_evidence(run_dir, starts[0], ends[0], identities) if starts and ends else {"verified": False}
