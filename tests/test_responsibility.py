@@ -11,12 +11,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "runner"))
 from responsibility_simulator import Simulator, load_spec, score, cadence_coverage
-from responsibility_drivers import ClawResponsibility, POLICY, action_contract, state_contract, monitor_prompt
+from responsibility_drivers import (ClawResponsibility, POLICY, action_contract, state_contract,
+                                    monitor_prompt, task_monitor_prompt)
 from responsibility import contract
 from continuity_proxy import AnthropicRelay
 from responsibility_audit import native_outbound_attempts
 from responsibility_topology import (verify_peko, verify_claw, execution_evidence,
                                      supervisor_prompt, WORKER_KEY, SEPARATED_CONTRACT_VERSION)
+from responsibility_topology import direct_action_prompt
 
 
 class ResponsibilityTests(unittest.TestCase):
@@ -245,6 +247,12 @@ class ResponsibilityTests(unittest.TestCase):
         self.assertIn("Only the task worker", separated)
         self.assertIn(action_contract(self.sim.url), separated)
         self.assertIn(state_contract(), separated)
+        worker = task_monitor_prompt(self.sim.url, self.spec['cadence_secs'])
+        self.assertIn(direct_action_prompt(self.sim.url), separated)
+        self.assertIn(direct_action_prompt(self.sim.url), worker)
+        for obligation in self.spec["obligations"]:
+            for field in ("project", "revision", "recipient", "delivery_key"):
+                self.assertNotIn(obligation[field], worker)
         self.assertIn("120s", separated)
         driver = ClawResponsibility(Path(self.temp.name), 900, .1, self.sim, "supervisory")
         driver.relay = type("Relay", (), {})()

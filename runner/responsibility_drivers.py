@@ -13,7 +13,7 @@ from continuity_usage import reconcile_usage
 from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
                                      verify_claw, verify_peko, task_paths,
-                                     handoff_prompt, SEPARATED_CONTRACT_VERSION)
+                                     handoff_prompt, direct_action_prompt, SEPARATED_CONTRACT_VERSION)
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000}
@@ -60,7 +60,8 @@ def task_monitor_prompt(url, cadence):
     return ("You are the dedicated release-watch task worker, not the organizational supervisor. "
             + task_paths() + monitor_prompt(url, cadence)
             + " Maintain only canonical task receipts and current state. Leave routine hot-memory, journal, "
-            "skill, and session-tree maintenance to the supervisor; do not rewrite those on every check.")
+            "skill, and session-tree maintenance to the supervisor; do not rewrite those on every check. "
+            + direct_action_prompt(url))
 
 
 class PekoResponsibility(PekoDriver):

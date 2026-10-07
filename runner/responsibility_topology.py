@@ -13,7 +13,26 @@ from responsibility_audit import timestamp
 
 WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
-SEPARATED_CONTRACT_VERSION = 6
+SEPARATED_CONTRACT_VERSION = 7
+
+
+def direct_action_prompt(url):
+    """Shared execution guidance, without obligation values or grader answers."""
+    return ("For each distinct accepted action, issue at most one POST and immediately expose its response. "
+            "Use one direct native Bash/exec command of this form: "
+            f"curl -sS --max-time 10 -H 'Content-Type: application/json' --data '<actual JSON payload>' {url}/actions. "
+            "Do not wrap a mutating request in shell variables, date commands, arithmetic, pipelines, retries, "
+            "or other output-processing commands. Use the returned receipt as evidence. "
+            "A nonzero exit of a compound command does not prove that an earlier POST failed. "
+            "Never repeat a mutating request merely to recover or reformat output after an error. "
+            "If its outcome is uncertain, persist the attempted payload and uncertainty, do not invent success, "
+            "and do not resubmit in this or later ticks unless durable evidence establishes it did not occur. "
+            "For elapsed-time notes use the already observed GET /world elapsed_secs, clearly labeled as "
+            "observation time rather than action completion time; do not run a separate timestamp subprocess. "
+            "On a worker check, batch independent canonical-file reads where supported. After meaningful actions "
+            "persist receipts and changed task state with concise related writes, then finish. "
+            "When inactive or no action/state change is needed, do not append no-action receipt rows, rewrite "
+            "unchanged requirements, add last-check timestamps, or curate other memory; finish quietly. ")
 
 
 def handoff_prompt():
