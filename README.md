@@ -52,6 +52,11 @@ removed repeated actions in its sample, but both harnesses failed task deadlines
 It exposed an interrupted Peko tool cron that suppressed later ticks, plus
 precondition, stale-requirement and delayed-continuation failures. Neither run
 has complete cost telemetry; the retained failures precede the runtime recovery fix.
+The [post-recovery pair](docs/RESPONSIBILITY_RECOVERY_MIMO_2026-10-07.md)
+completed 2/3 obligations on time in both harnesses, with complete usage reconciliation.
+Both escalated too early; Peko repeated a retained action and exhausted its request
+allowance before the memory probe. Scheduled work continued after restart, but
+the restart missed the specific interrupted-run fault window.
 
 ## Methodology (read before trusting a number)
 

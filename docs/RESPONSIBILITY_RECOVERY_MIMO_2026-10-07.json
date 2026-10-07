@@ -1,0 +1,703 @@
+{
+  "evidence_kind": "real_llm_single_seed_pilot",
+  "contract_version": 7,
+  "simulator_seed": 1,
+  "model": "mimo-v2.6-flash",
+  "benchmark_source": "2cccefd0ddeea8b398c651c7b1810d74b727f773",
+  "runtime_source": "6f3c70a636357c7753c17bad8aff469c6f2f9d05",
+  "runtime_pull_request": "https://github.com/ConekoAI/peko-runtime/pull/424",
+  "runner_matches_pre_fix_pair": true,
+  "launch_mode": "concurrent_isolated_native_homes",
+  "cost_basis": "payg_reference_not_subscription_charge",
+  "runs": {
+    "peko": {
+      "report_id": "20261007T023810989822Z-responsibility-peko",
+      "version": "0.1.0",
+      "binary_hashes": {
+        "cli_sha256": "da42f5257a48cb1f6d124b522de8941f37a2978f7a2b26397c759b51b530b628",
+        "daemon_sha256": "64203cb0d34960a7d303583501573c4dbb081f056530081b57d9d0c67c493f2b"
+      },
+      "wall_secs": 583.256,
+      "metrics": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "required_obligations": 3,
+        "completed_obligations": 2,
+        "obligation_completion_rate": 0.6666666666666666,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 2.6,
+          "cedar-91b72265b1f5": 40.416
+        },
+        "forbidden_actions": 2,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 1,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "memory_facts_correct": 0,
+        "memory_facts_total": 16,
+        "memory_accuracy": 0.0,
+        "protocol_errors": 1,
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "watch_status_reads": 4,
+        "unchanged_state_reads": 1,
+        "restart_count": 1,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": true,
+          "observation_horizon_secs": 300.031,
+          "nominal_cadence_secs": 60,
+          "first_read_elapsed_secs": 4.279,
+          "first_read_offset_mod_cadence_secs": 4.279,
+          "inter_read_gaps_secs": [
+            61.707,
+            57.567,
+            59.633
+          ],
+          "max_inter_read_gap_secs": 61.707,
+          "max_unobserved_gap_secs": 116.845,
+          "obligations_observed_in_time": 3,
+          "obligations_without_timely_observation": [],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                123.553
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 36.447,
+              "min_remaining_secs": 36.447
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                183.186
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 56.814,
+              "min_remaining_secs": 56.814
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                183.186
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 56.814,
+              "min_remaining_secs": 56.814
+            }
+          }
+        },
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "topology_execution": {
+          "worker_assistant_messages": 24,
+          "supervisor_assistant_messages": 6,
+          "worker_world_tool_calls": 4,
+          "nonworker_operational_tool_calls": 0,
+          "verified": true,
+          "limitation": "Native command intents, not attribution of every HTTP side effect; no scripts/loops allowed."
+        },
+        "topology_registered": true
+      },
+      "memory_probe_measured": false,
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 60,
+        "rejected_request_count": 4,
+        "input_tokens": 2040891,
+        "uncached_input_tokens": 230843,
+        "output_tokens": 16553,
+        "cache_read_tokens": 1810048,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.042020994400000004,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "usage_source": "persisted_assistant_usage",
+          "usage_complete": true,
+          "cost_usd": 0.042020994400000004,
+          "input_tokens": 2040891,
+          "uncached_input_tokens": 230843,
+          "output_tokens": 16553,
+          "request_count": 60,
+          "cache_read_tokens": 1810048,
+          "cache_creation_tokens": 0,
+          "quota_snapshot": {
+            "window_start": "2026-10-07T00:00:00Z",
+            "window_end": "2026-10-08T00:00:00Z",
+            "cycle": "daily",
+            "input_tokens": 230843,
+            "output_tokens": 16553,
+            "request_count": 60,
+            "cost_usd": 0.036952860000000004,
+            "cache_read_tokens": 1810048,
+            "cache_creation_tokens": 0
+          },
+          "quota_snapshot_request_count_matches": true
+        },
+        "native_usage_matches": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 18,
+          "rejected_request_count": 0,
+          "input_tokens": 600062,
+          "uncached_input_tokens": 86910,
+          "output_tokens": 4163,
+          "cache_read_tokens": 513152,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.014769865600000001,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "probe": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": false,
+          "request_count": 0,
+          "rejected_request_count": 1,
+          "input_tokens": null,
+          "uncached_input_tokens": null,
+          "output_tokens": null,
+          "cache_read_tokens": null,
+          "cache_creation_tokens": null,
+          "cost_usd": null,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "setup": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 14,
+          "rejected_request_count": 0,
+          "input_tokens": 473489,
+          "uncached_input_tokens": 44049,
+          "output_tokens": 6408,
+          "cache_read_tokens": 429440,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.009163532,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "watch_active": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 21,
+          "rejected_request_count": 2,
+          "input_tokens": 785675,
+          "uncached_input_tokens": 70347,
+          "output_tokens": 4789,
+          "cache_read_tokens": 715328,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.013192418400000003,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "watch_idle": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 7,
+          "rejected_request_count": 1,
+          "input_tokens": 181665,
+          "uncached_input_tokens": 29537,
+          "output_tokens": 1193,
+          "cache_read_tokens": 152128,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.004895178400000001,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "topology_checks": [
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [
+            "b163379a-d5e2-4ef7-97ee-d0dfbfa96a68"
+          ],
+          "supervisor_session_ids": [
+            "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+          ],
+          "stage": "post-setup"
+        },
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [
+            "b163379a-d5e2-4ef7-97ee-d0dfbfa96a68"
+          ],
+          "supervisor_session_ids": [
+            "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+          ],
+          "stage": "pre-watch"
+        },
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [
+            "b163379a-d5e2-4ef7-97ee-d0dfbfa96a68"
+          ],
+          "supervisor_session_ids": [
+            "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+          ],
+          "stage": "post-restart"
+        },
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [
+            "b163379a-d5e2-4ef7-97ee-d0dfbfa96a68"
+          ],
+          "supervisor_session_ids": [
+            "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+          ],
+          "stage": "post-watch"
+        }
+      ],
+      "errors": [
+        "RuntimeError: Peko send failed (rc=1); see command-34.log"
+      ],
+      "restart": {
+        "seq": 11,
+        "kind": "restart",
+        "phase": "watch",
+        "elapsed_secs": 40.157,
+        "wall_time": 1791341012.51329,
+        "restart_verified": true,
+        "previous_pid": 55584,
+        "current_pid": 56769,
+        "restart_kind": "process_restart",
+        "termination": "interrupt"
+      },
+      "watch_read_times_secs": [
+        4.279,
+        65.986,
+        123.553,
+        183.186
+      ],
+      "operational_actions": [
+        {
+          "elapsed_secs": 11.423,
+          "payload": {
+            "kind": "request_input",
+            "project": "dogwood-91b72265b1f5",
+            "reason": "dependency_blocked"
+          }
+        },
+        {
+          "elapsed_secs": 72.776,
+          "payload": {
+            "kind": "send_release",
+            "project": "atlas-91b72265b1f5",
+            "revision": "r2",
+            "recipient": "release-room-91b72265b1f5",
+            "delivery_key": "atlas-release-91b72265b1f5"
+          }
+        },
+        {
+          "elapsed_secs": 130.453,
+          "payload": {
+            "kind": "send_release",
+            "project": "atlas-91b72265b1f5",
+            "revision": "r2",
+            "recipient": "release-room-91b72265b1f5",
+            "delivery_key": "atlas-release-91b72265b1f5"
+          }
+        },
+        {
+          "elapsed_secs": 190.497,
+          "payload": {
+            "kind": "send_release",
+            "project": "cedar-91b72265b1f5",
+            "revision": "r1",
+            "recipient": "ops-room-91b72265b1f5",
+            "delivery_key": "cedar-release-91b72265b1f5"
+          }
+        }
+      ],
+      "diagnostics": {
+        "abandoned_untracked_run_recovery_exercised": false,
+        "recovered_interrupted_run_log_count": 0,
+        "last_worker_completion_before_restart": "2026-10-07T02:43:16.926927Z",
+        "first_worker_start_after_restart": "2026-10-07T02:43:46.873064Z",
+        "final_worker_job_run_count": 7,
+        "post_watch_running_rows": 0,
+        "duplicate_prior_receipt_retained_and_read": true,
+        "first_atlas_post_observed_ready": false,
+        "first_atlas_post_scored_valid_at_server_action_time": true,
+        "memory_probe_failure": "controller_60_forwarded_request_limit",
+        "prewatch_forwarded_requests": 32,
+        "watch_forwarded_requests": 28,
+        "memory_score_interpretation": "0/16 because no probe was admitted; retained-memory accuracy is unmeasured"
+      }
+    },
+    "openclaw": {
+      "report_id": "20261007T023811015707Z-responsibility-openclaw",
+      "version": "OpenClaw 2026.9.8 (fc23bc8)",
+      "binary_hashes": {
+        "entry_sha256": "aa8606ca0d62ff133ef5b7bd2323ec8ff3f8eb384404399cd5e742918d63b0a1",
+        "installation_lock_sha256": "f0aaf18317523f89b3de38599126fdf530f1f570992503320b75bd4850be4263"
+      },
+      "wall_secs": 427.16,
+      "metrics": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "required_obligations": 3,
+        "completed_obligations": 2,
+        "obligation_completion_rate": 0.6666666666666666,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 10.042,
+          "cedar-91b72265b1f5": 48.716
+        },
+        "forbidden_actions": 1,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 0,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "memory_facts_correct": 16,
+        "memory_facts_total": 16,
+        "memory_accuracy": 1.0,
+        "protocol_errors": 0,
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "watch_status_reads": 5,
+        "unchanged_state_reads": 1,
+        "restart_count": 1,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": true,
+          "observation_horizon_secs": 300.112,
+          "nominal_cadence_secs": 60,
+          "first_read_elapsed_secs": 17.145,
+          "first_read_offset_mod_cadence_secs": 17.145,
+          "inter_read_gaps_secs": [
+            54.21,
+            61.704,
+            62.081,
+            62.689
+          ],
+          "max_inter_read_gap_secs": 62.689,
+          "max_unobserved_gap_secs": 62.689,
+          "obligations_observed_in_time": 3,
+          "obligations_without_timely_observation": [],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                71.355,
+                133.059
+              ],
+              "eligible_read_count": 2,
+              "max_remaining_secs": 88.645,
+              "min_remaining_secs": 26.941
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                195.14
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 44.86,
+              "min_remaining_secs": 44.86
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                195.14
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 44.86,
+              "min_remaining_secs": 44.86
+            }
+          }
+        },
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "topology_execution": {
+          "worker_assistant_messages": 21,
+          "supervisor_assistant_messages": 7,
+          "worker_world_tool_calls": 5,
+          "nonworker_operational_tool_calls": 0,
+          "verified": true,
+          "limitation": "Native command intents, not attribution of every HTTP side effect; no scripts/loops allowed."
+        },
+        "topology_registered": true
+      },
+      "memory_probe_measured": true,
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 48,
+        "rejected_request_count": 0,
+        "input_tokens": 1283516,
+        "uncached_input_tokens": 258364,
+        "output_tokens": 11177,
+        "cache_read_tokens": 1025152,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.04217094560000001,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "request_count": 48,
+          "uncached_input_tokens": 258364,
+          "output_tokens": 11177,
+          "cache_read_tokens": 1025152,
+          "cache_creation_tokens": 0
+        },
+        "native_usage_matches": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 8,
+          "rejected_request_count": 0,
+          "input_tokens": 184289,
+          "uncached_input_tokens": 47521,
+          "output_tokens": 2060,
+          "cache_read_tokens": 136768,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0076126904,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "probe": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 8,
+          "rejected_request_count": 0,
+          "input_tokens": 350791,
+          "uncached_input_tokens": 79111,
+          "output_tokens": 1309,
+          "cache_read_tokens": 271680,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.012202764000000001,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "setup": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 4,
+          "rejected_request_count": 0,
+          "input_tokens": 79491,
+          "uncached_input_tokens": 19587,
+          "output_tokens": 3879,
+          "cache_read_tokens": 59904,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.003996031200000001,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "watch_active": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 13,
+          "rejected_request_count": 0,
+          "input_tokens": 296034,
+          "uncached_input_tokens": 39202,
+          "output_tokens": 2108,
+          "cache_read_tokens": 256832,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0067976496,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "watch_idle": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 15,
+          "rejected_request_count": 0,
+          "input_tokens": 372911,
+          "uncached_input_tokens": 72943,
+          "output_tokens": 1821,
+          "cache_read_tokens": 299968,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0115618104,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "topology_checks": [
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [],
+          "supervisor_session_ids": [
+            "4865aadd-d4c8-4b71-a40e-6790b822cab9"
+          ],
+          "stage": "post-setup"
+        },
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [],
+          "supervisor_session_ids": [
+            "4865aadd-d4c8-4b71-a40e-6790b822cab9"
+          ],
+          "stage": "pre-watch"
+        },
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [
+            "c3fc146d-1a74-470d-ae39-458d7ed7e882"
+          ],
+          "supervisor_session_ids": [
+            "4865aadd-d4c8-4b71-a40e-6790b822cab9"
+          ],
+          "stage": "post-restart"
+        },
+        {
+          "verified": true,
+          "errors": [],
+          "worker_session_ids": [
+            "c3fc146d-1a74-470d-ae39-458d7ed7e882"
+          ],
+          "supervisor_session_ids": [
+            "4865aadd-d4c8-4b71-a40e-6790b822cab9"
+          ],
+          "stage": "post-watch"
+        }
+      ],
+      "errors": [],
+      "restart": {
+        "seq": 10,
+        "kind": "restart",
+        "phase": "watch",
+        "elapsed_secs": 41.925,
+        "wall_time": 1791340831.604167,
+        "restart_verified": true,
+        "previous_pid": 55507,
+        "current_pid": 56065,
+        "restart_kind": "process_restart",
+        "termination": "interrupt",
+        "previous_exit_code": 0
+      },
+      "watch_read_times_secs": [
+        17.145,
+        71.355,
+        133.059,
+        195.14,
+        257.829
+      ],
+      "operational_actions": [
+        {
+          "elapsed_secs": 22.103,
+          "payload": {
+            "kind": "request_input",
+            "project": "dogwood-91b72265b1f5",
+            "reason": "dependency_blocked"
+          }
+        },
+        {
+          "elapsed_secs": 80.115,
+          "payload": {
+            "kind": "send_release",
+            "project": "atlas-91b72265b1f5",
+            "revision": "r2",
+            "recipient": "release-room-91b72265b1f5",
+            "delivery_key": "atlas-release-91b72265b1f5"
+          }
+        },
+        {
+          "elapsed_secs": 198.839,
+          "payload": {
+            "kind": "send_release",
+            "project": "cedar-91b72265b1f5",
+            "revision": "r1",
+            "recipient": "ops-room-91b72265b1f5",
+            "delivery_key": "cedar-release-91b72265b1f5"
+          }
+        }
+      ],
+      "diagnostics": {
+        "dogwood_threshold_present_in_worker_read": true,
+        "premature_receipt_claimed_threshold_met": true,
+        "receipt_log_lost_prior_rows": [
+          "dogwood_input",
+          "cedar_release"
+        ],
+        "prewatch_forwarded_requests": 12,
+        "watch_forwarded_requests": 28,
+        "memory_score_scope": [
+          "revision",
+          "recipient",
+          "delivery_key",
+          "actual_status"
+        ],
+        "memory_score_excludes": [
+          "deadline",
+          "escalation_threshold",
+          "append_only_receipt_history"
+        ]
+      }
+    }
+  },
+  "validation": {
+    "source_manifest_parity": true,
+    "common_wire_policy_verified": true,
+    "scores_replayed_from_ledger": true,
+    "all_forwarded_usage_complete": true,
+    "native_usage_reconciled": true,
+    "owned_native_processes_stopped": true,
+    "additional_live_retries": 0
+  }
+}

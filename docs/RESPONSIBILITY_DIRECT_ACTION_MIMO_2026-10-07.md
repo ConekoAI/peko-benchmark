@@ -164,3 +164,8 @@ overdue blocked run before claiming health. Stronger guarantees would require
 structured/versioned action preconditions and receipt reconciliation, applied
 equally to both harnesses and declared as a separate intervention. No extra
 live retry, budget increase, deduplication or grader change was used here.
+
+A [frozen post-merge pair](RESPONSIBILITY_RECOVERY_MIMO_2026-10-07.md) is retained
+separately. It observed continued Peko worker execution after restart but did
+not intersect the abandoned-row fault window. Its results do not retrospectively
+change this pair or establish a causal performance gain from the fix.

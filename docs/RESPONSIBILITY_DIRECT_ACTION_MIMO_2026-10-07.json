@@ -213,6 +213,8 @@
       "windows_unit",
       "mock_llm_integration",
       "real_llm_integration"
-    ]
+    ],
+    "post_fix_pilot_report": "RESPONSIBILITY_RECOVERY_MIMO_2026-10-07.md",
+    "post_fix_pilot_fault_window_exercised": false
   }
 }
