@@ -42,6 +42,11 @@ the intended division between organizational supervision and a recurring task
 worker. Peko's repaired setup formed that arrangement, but both harnesses stopped
 before the unattended watch, so task-performance results are unavailable.
 Larger trials remain deferred while stabilizing setup and handoff.
+The subsequent [scoped handoff pilot](docs/RESPONSIBILITY_HANDOFF_MIMO_2026-10-07.md)
+reached the unattended watch with verified worker/supervisor separation in both
+harnesses. Both met all three deadlines; OpenClaw passed the full gate, while
+Peko repeated two HTTP actions after shell timing errors and exhausted the
+request allowance before its memory probe.
 
 ## Methodology (read before trusting a number)
 

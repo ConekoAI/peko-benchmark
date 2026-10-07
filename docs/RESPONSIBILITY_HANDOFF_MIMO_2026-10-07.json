@@ -1,0 +1,152 @@
+{
+  "evidence_kind": "real_llm_single_seed_pilot",
+  "contract_version": 6,
+  "simulator_seed": 1,
+  "model": "mimo-v2.6-flash",
+  "benchmark_source": "89b9284",
+  "runtime_source": "fe2074b0a51a7e31096cb02d1512c24abf6d20a5",
+  "launch_mode": "concurrent_pair_with_isolated_native_homes",
+  "cost_basis": "payg_reference_not_subscription_charge",
+  "runs": {
+    "peko": {
+      "report_id": "20261007T002751843940Z-responsibility-peko",
+      "version": "0.1.0",
+      "wall_secs": 552.713,
+      "metrics": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "repeated_actions": 2,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "memory_facts_correct": 0,
+        "memory_facts_total": 16,
+        "human_interventions": 0,
+        "watch_status_reads": 4,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "topology_execution_verified": true,
+      "worker_world_tool_intents": 5,
+      "nonworker_operational_tool_intents": 0,
+      "usage": {
+        "request_count": 60,
+        "rejected_request_count": 4,
+        "uncached_input_tokens": 185132,
+        "cache_read_tokens": 1494464,
+        "output_tokens": 14925,
+        "cost_usd": 0.0342819792,
+        "usage_complete": true,
+        "native_usage_matches": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 14,
+          "rejected_request_count": 0,
+          "cost_usd": 0.007523874400000001,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 0,
+          "rejected_request_count": 1,
+          "cost_usd": null,
+          "usage_complete": false
+        },
+        "setup": {
+          "request_count": 16,
+          "rejected_request_count": 0,
+          "cost_usd": 0.0090740496,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 21,
+          "rejected_request_count": 0,
+          "cost_usd": 0.011254980800000002,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 9,
+          "rejected_request_count": 3,
+          "cost_usd": 0.0064290744,
+          "usage_complete": true
+        }
+      },
+      "errors": [
+        "RuntimeError: Peko send failed (rc=1); see command-24.log"
+      ],
+      "memory_probe_outcome": "unavailable_request_admission_exhausted"
+    },
+    "openclaw": {
+      "report_id": "20261007T002751952161Z-responsibility-openclaw",
+      "version": "OpenClaw 2026.9.8 (fc23bc8)",
+      "wall_secs": 512.395,
+      "metrics": {
+        "passed": true,
+        "trace_complete": true,
+        "restart_verified": true,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "repeated_actions": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "memory_facts_correct": 16,
+        "memory_facts_total": 16,
+        "human_interventions": 0,
+        "watch_status_reads": 5,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "topology_execution_verified": true,
+      "worker_world_tool_intents": 5,
+      "nonworker_operational_tool_intents": 0,
+      "usage": {
+        "request_count": 56,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 200723,
+        "cache_read_tokens": 1082176,
+        "output_tokens": 12887,
+        "cost_usd": 0.0347396728,
+        "usage_complete": true,
+        "native_usage_matches": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 12,
+          "rejected_request_count": 0,
+          "cost_usd": 0.007945733600000001,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 7,
+          "rejected_request_count": 0,
+          "cost_usd": 0.0050227912000000005,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 5,
+          "rejected_request_count": 0,
+          "cost_usd": 0.004754120000000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 20,
+          "rejected_request_count": 0,
+          "cost_usd": 0.0076098960000000005,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 12,
+          "rejected_request_count": 0,
+          "cost_usd": 0.009407132000000002,
+          "usage_complete": true
+        }
+      },
+      "errors": [],
+      "memory_probe_outcome": "measured_16_of_16"
+    }
+  }
+}
