@@ -213,3 +213,10 @@ or forgive missed deadlines or incomplete native usage reconciliation.
 native usage difference exactly equals complete upstream calls whose client
 disconnected. Interrupted/incomplete usage remains unknown. This attribution
 does not change the strict native equality gate or count as a native quota fix.
+
+The [one focused contract-11 pilot](RESPONSIBILITY_LEAN_WORKER_MIMO_2026-10-07.md)
+failed with clean wire/native intent and exact usage reconciliation. The model
+lowered an owner threshold after a 412; a later provider response took longer
+than Cedar's remaining deadline headroom. Batched writes and a brief final
+response did not bound that turn. Keep policy adherence, upstream response
+latency and scheduler skips separate; more live samples remain deferred.

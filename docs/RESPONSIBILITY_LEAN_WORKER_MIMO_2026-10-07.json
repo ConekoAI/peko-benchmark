@@ -1,0 +1,901 @@
+{
+  "evidence_kind": "one_peko_only_worker_latency_confirmation_not_paired_replication",
+  "report": "20261007T093415083175Z-responsibility-peko",
+  "original_result_sha256": "bd13fa005beee11d7656eb8c9e0fcaf4febf64480776f51c0cefd88876880278",
+  "benchmark_commit": "12d7c39",
+  "compiled_runtime_commit": "849acf40",
+  "runtime_pr": "https://github.com/ConekoAI/peko-runtime/pull/428",
+  "runtime_merge_commit": "e3db06eff7ea95d49eef8c8dbb68ea671ab1f918",
+  "api_contract_version": 11,
+  "metadata": {
+    "driver": "peko",
+    "model": "mimo-v2.6-flash",
+    "wire_model": "mimo-v2.6-flash",
+    "api_format": "anthropic_messages",
+    "base_url": "https://token-plan-cn.xiaomimimo.com/anthropic",
+    "model_config": {
+      "id": "mimo-v2.6-flash",
+      "displayName": "mimo-v2.6-flash",
+      "templateId": null,
+      "modelId": "mimo-v2.6-flash",
+      "apiFormat": "anthropic_messages",
+      "baseUrl": "http://127.0.0.1:63254",
+      "contextWindow": 1048576,
+      "maxOutputTokens": 4096,
+      "requiresKey": true,
+      "enabled": true,
+      "credentialId": "e8ae71f5-0ad0-421f-80d5-85e5e0ac0755",
+      "spec": {
+        "imageInput": false,
+        "audioInput": false,
+        "toolSupport": "function_calling",
+        "streaming": true,
+        "thinking": "optional",
+        "jsonMode": false,
+        "decisions": false,
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28
+        }
+      }
+    },
+    "pricing_hint": {
+      "input_per_million": 0.14,
+      "output_per_million": 0.28
+    },
+    "cost_basis": "payg_reference_not_subscription_charge",
+    "version": "0.1.0",
+    "budget_usd": 0.05,
+    "cli_sha256": "7451442a5ed983c157fc22784341eaebfec777751e8a0d5d26cb4217f44bf939",
+    "daemon_sha256": "375f566192482207cdf35c09cd28ffbc80defdf9af89ffac1dfe12052d4b8e33",
+    "restart_kind": "process_restart",
+    "initialization": "defined_purpose_native_genesis",
+    "initialization_completed": true,
+    "formation": "controller_prepared_empty_native_topology",
+    "common_wire_policy": {
+      "max_tokens": 4096,
+      "thinking": {
+        "type": "disabled"
+      },
+      "request_limit": 60,
+      "output_limit": 30000,
+      "probe_allowance": {
+        "request_limit": 8,
+        "output_limit": 6000,
+        "budget_usd": 0.01
+      }
+    },
+    "continuation_mode": "supervisory",
+    "cadence_secs": 60.0,
+    "api_contract_version": 11,
+    "topology": "separated",
+    "action_mode": "guarded",
+    "action_service_version": 1,
+    "topology_checks": [
+      {
+        "verified": true,
+        "errors": [],
+        "worker_session_ids": [
+          "d3a87884-41af-4b69-baa3-771b8c253fca"
+        ],
+        "supervisor_session_ids": [
+          "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+        ],
+        "stage": "post-setup"
+      },
+      {
+        "verified": true,
+        "errors": [],
+        "worker_session_ids": [
+          "d3a87884-41af-4b69-baa3-771b8c253fca"
+        ],
+        "supervisor_session_ids": [
+          "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+        ],
+        "stage": "pre-watch"
+      },
+      {
+        "verified": true,
+        "errors": [],
+        "worker_session_ids": [
+          "d3a87884-41af-4b69-baa3-771b8c253fca"
+        ],
+        "supervisor_session_ids": [
+          "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+        ],
+        "stage": "post-restart"
+      },
+      {
+        "verified": true,
+        "errors": [],
+        "worker_session_ids": [
+          "d3a87884-41af-4b69-baa3-771b8c253fca"
+        ],
+        "supervisor_session_ids": [
+          "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+        ],
+        "stage": "post-watch"
+      }
+    ],
+    "probe_schedules_suspended": true,
+    "telemetry_drain_completed": true
+  },
+  "source_manifest": {
+    "runner/responsibility_audit.py": "ed5f59827ac7e18c653be01f9dff6a9476873160895bb5b2cc75cd542ab10003",
+    "runner/responsibility_diagnostics.py": "4bf9673ac54e8fac3495d138b23b037eb52c84670ed1ef71199a7f5f947b26ba",
+    "runner/responsibility_topology.py": "686af7a5142b6dbadd985463fa9f0c86ba1b65ab4bde650cf2f232935e5f12c3",
+    "runner/responsibility_timing.py": "06b0555016de835262d70f2abb311ddde2af6e47f7bf58a694255c1b0cdfb600",
+    "runner/responsibility_drivers.py": "dbbfa0c0ecb319129bf6a1599120340b3f8e58a3b70607ad2202057a5278f003",
+    "runner/responsibility_surface_smoke.py": "87c4179a88b8f37eb104044c2eb22b08c3701dad126e54789816c54e138c7b5d",
+    "runner/responsibility_prepared.py": "6d218c6e4ac20aa86977443e682bbd9cc8b2fa245124959eabc6186f8201fffb",
+    "runner/responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+    "runner/responsibility_simulator.py": "33bd2863cc60a5da5d9d19cfd408b60e3adb81bc42157e35c5ffd915fa458e74",
+    "runner/responsibility.py": "f810d5211f88cbdcf4b5f87df8d85194a5838f149f80f149d41844a8cb2b9ddc",
+    "runner/continuity_usage.py": "c10ce57404a78eee83526cf8673ec7f87c5602794adb8f6fabcced463c68e90b",
+    "runner/continuity_peko.py": "28e7c60a9599036bf6d20543e8c84461df80fbfbd00a6f9a2b879bb48779dc51",
+    "runner/continuity_openclaw.py": "9ef3ba369c2a86e50fce68936a4843e1d94dda836ff80503366ed38876703ab1",
+    "runner/continuity_proxy.py": "c9959ccceec914d97bf24e504fb51de31ef10934def96bda57731b84fdf53d1c",
+    "runner/continuity.py": "53996221126a79865e17597ea0486c4b6e0182ddf3e31b5a637158f0cdbd0d84",
+    "runner/prompt_profile.py": "a1dfb59d2bff2d9a717b1fcfbabfad063f8af138226645c4503eeeaadbd5f468",
+    "runner/tool_surface.py": "18f34ebf3934e1de8a36c94d68c5f4fcd962cad57393d140135ff4d7d7201f58"
+  },
+  "metrics": {
+    "passed": false,
+    "trace_complete": true,
+    "restart_verified": true,
+    "required_obligations": 3,
+    "completed_obligations": 2,
+    "obligation_completion_rate": 0.6666666666666666,
+    "on_time_obligations": 1,
+    "missed_deadlines": 2,
+    "delivery_latency_secs": {
+      "atlas-91b72265b1f5": 23.033,
+      "cedar-91b72265b1f5": 92.268
+    },
+    "forbidden_actions": 1,
+    "stale_deliveries": 0,
+    "cancelled_deliveries": 0,
+    "premature_deliveries": 0,
+    "repeated_actions": 0,
+    "unnecessary_notifications": 0,
+    "quiet_window_actions": 1,
+    "remained_quiet": false,
+    "memory_facts_correct": 24,
+    "memory_facts_total": 24,
+    "memory_accuracy": 1.0,
+    "protocol_errors": 0,
+    "memory_measurement": "measured",
+    "requested_human_input": 1,
+    "human_interventions": 0,
+    "watch_status_reads": 4,
+    "unchanged_state_reads": 0,
+    "restart_count": 1,
+    "cadence_coverage": {
+      "version": 1,
+      "watch_complete": true,
+      "observation_horizon_secs": 300.052,
+      "nominal_cadence_secs": 60.0,
+      "first_read_elapsed_secs": 27.559,
+      "first_read_offset_mod_cadence_secs": 27.559,
+      "inter_read_gaps_secs": [
+        62.554,
+        56.764,
+        60.315
+      ],
+      "max_inter_read_gap_secs": 62.554,
+      "max_unobserved_gap_secs": 92.86,
+      "obligations_observed_in_time": 3,
+      "obligations_without_timely_observation": [],
+      "obligations": {
+        "atlas-91b72265b1f5": {
+          "eligible_read_times_secs": [
+            90.113,
+            146.877
+          ],
+          "eligible_read_count": 2,
+          "max_remaining_secs": 69.887,
+          "min_remaining_secs": 13.123
+        },
+        "cedar-91b72265b1f5": {
+          "eligible_read_times_secs": [
+            207.192
+          ],
+          "eligible_read_count": 1,
+          "max_remaining_secs": 32.808,
+          "min_remaining_secs": 32.808
+        },
+        "dogwood-91b72265b1f5": {
+          "eligible_read_times_secs": [
+            207.192
+          ],
+          "eligible_read_count": 1,
+          "max_remaining_secs": 32.808,
+          "min_remaining_secs": 32.808
+        }
+      }
+    },
+    "action_boundary": {
+      "version": 1,
+      "attempts": 5,
+      "invalid_policy_attempts": 3,
+      "rejected_attempts": 2,
+      "idempotent_replays": 0,
+      "committed_effects": 3,
+      "limitation": "Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible."
+    },
+    "observed_preconditions": {
+      "version": 1,
+      "violations": 1,
+      "actions": [
+        {
+          "action_seq": 13,
+          "project": "atlas-91b72265b1f5",
+          "read_seq": 11,
+          "observed_elapsed_secs": 90.113,
+          "observed_precondition_satisfied": true
+        },
+        {
+          "action_seq": 20,
+          "project": "dogwood-91b72265b1f5",
+          "read_seq": 15,
+          "observed_elapsed_secs": 146.877,
+          "observed_precondition_satisfied": false
+        },
+        {
+          "action_seq": 24,
+          "project": "cedar-91b72265b1f5",
+          "read_seq": 22,
+          "observed_elapsed_secs": 207.192,
+          "observed_precondition_satisfied": true
+        }
+      ],
+      "limitation": "Read attribution assumes the declared single operational worker."
+    },
+    "receipt_retention": {
+      "measured": true,
+      "expected_receipts": [
+        1,
+        2,
+        3
+      ],
+      "retained_receipts": [
+        1,
+        2,
+        3
+      ],
+      "missing_receipts": [],
+      "limitation": "Numeric references only; content truth and append-only history require a separate mutation audit."
+    },
+    "policy_diagnostics_passed": false,
+    "native_outbound_attempts": 0,
+    "controller_continuations": 0,
+    "native_cron_timing": {
+      "version": 1,
+      "measured": true,
+      "runs": [
+        {
+          "run_id": "28ee717c-e961-4899-a1ab-45faad1aa771",
+          "job_id": "prepared-responsibility-monitor",
+          "job_name": "responsibility-monitor",
+          "status": "success",
+          "duration_secs": 11.635,
+          "nominal_interval_secs": 60.0,
+          "scheduled_at": "2026-10-07T09:38:29.373370Z",
+          "finished_at": "2026-10-07T09:38:45.284961Z",
+          "next_run_at": "2026-10-07T09:39:29.373370Z",
+          "late_admission_secs": 4.277,
+          "skipped_interval_slots": 0,
+          "turn_exceeded_interval": false
+        },
+        {
+          "run_id": "16d91397-be26-43c6-91b3-3afc6aeafaba",
+          "job_id": "prepared-responsibility-monitor",
+          "job_name": "responsibility-monitor",
+          "status": "success",
+          "duration_secs": 23.701,
+          "nominal_interval_secs": 60.0,
+          "scheduled_at": "2026-10-07T09:39:29.373370Z",
+          "finished_at": "2026-10-07T09:39:57.512468Z",
+          "next_run_at": "2026-10-07T09:40:29.373370Z",
+          "late_admission_secs": 4.438,
+          "skipped_interval_slots": 0,
+          "turn_exceeded_interval": false
+        },
+        {
+          "run_id": "62fe1bbd-5f01-42ce-9111-fad79ce61a04",
+          "job_id": "prepared-organization-supervisor",
+          "job_name": "organization-supervisor",
+          "status": "success",
+          "duration_secs": 47.28,
+          "nominal_interval_secs": 120.0,
+          "scheduled_at": "2026-10-07T09:40:09.373370Z",
+          "finished_at": "2026-10-07T09:41:01.088890Z",
+          "next_run_at": "2026-10-07T09:42:09.373370Z",
+          "late_admission_secs": 4.436,
+          "skipped_interval_slots": 0,
+          "turn_exceeded_interval": false
+        },
+        {
+          "run_id": "0c4f5179-a9dd-4318-a848-e36ffae7e133",
+          "job_id": "prepared-responsibility-monitor",
+          "job_name": "responsibility-monitor",
+          "status": "success",
+          "duration_secs": 35.716,
+          "nominal_interval_secs": 60.0,
+          "scheduled_at": "2026-10-07T09:40:29.373370Z",
+          "finished_at": "2026-10-07T09:41:09.527973Z",
+          "next_run_at": "2026-10-07T09:41:29.373370Z",
+          "late_admission_secs": 4.439,
+          "skipped_interval_slots": 0,
+          "turn_exceeded_interval": false
+        },
+        {
+          "run_id": "1fd40c97-efc6-42f6-8989-04624c84241d",
+          "job_id": "prepared-organization-supervisor",
+          "job_name": "organization-supervisor",
+          "status": "success",
+          "duration_secs": 36.703,
+          "nominal_interval_secs": 120.0,
+          "scheduled_at": "2026-10-07T09:42:09.373370Z",
+          "finished_at": "2026-10-07T09:42:50.515301Z",
+          "next_run_at": "2026-10-07T09:44:09.373370Z",
+          "late_admission_secs": 4.439,
+          "skipped_interval_slots": 0,
+          "turn_exceeded_interval": false
+        },
+        {
+          "run_id": "8c57bd12-1e61-49cc-8a42-dc394a7421cc",
+          "job_id": "prepared-responsibility-monitor",
+          "job_name": "responsibility-monitor",
+          "status": "success",
+          "duration_secs": 76.82,
+          "nominal_interval_secs": 60.0,
+          "scheduled_at": "2026-10-07T09:41:29.373370Z",
+          "finished_at": "2026-10-07T09:42:50.632069Z",
+          "next_run_at": "2026-10-07T09:43:29.373370Z",
+          "late_admission_secs": 4.439,
+          "skipped_interval_slots": 1,
+          "turn_exceeded_interval": true
+        }
+      ],
+      "open_runs_at_snapshot": [],
+      "worker_completed_runs": 4,
+      "worker_turns_exceeding_interval": 1,
+      "worker_max_turn_secs": 76.82,
+      "worker_skipped_interval_slots": 1,
+      "limitation": "Completed native run audits only; open/interrupted runs are not zero-duration successes. Skipped slots include late admission and execution, not necessarily missed observations."
+    },
+    "topology_registered": true
+  },
+  "tool_attribution": {
+    "version": 2,
+    "counts": {
+      "native_success": 67,
+      "native_error_requires_investigation": 4
+    },
+    "calls": [
+      {
+        "request_index": 5,
+        "wire_id": "call_9bde50e5706549ab9c609d50",
+        "native_id": "call_9bde50e5706549ab9c609d50",
+        "name": "Glob",
+        "intent_preserved": true,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_error_requires_investigation",
+        "argument_sources": []
+      },
+      {
+        "request_index": 6,
+        "wire_id": "call_d8531f3ee95b4f77b1c634e7",
+        "native_id": "call_d8531f3ee95b4f77b1c634e7",
+        "name": "Glob",
+        "intent_preserved": true,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_error_requires_investigation",
+        "argument_sources": []
+      },
+      {
+        "request_index": 6,
+        "wire_id": "call_9bc116ce34364e1683ee21b3",
+        "native_id": "call_9bc116ce34364e1683ee21b3",
+        "name": "Glob",
+        "intent_preserved": true,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_error_requires_investigation",
+        "argument_sources": []
+      },
+      {
+        "request_index": 26,
+        "wire_id": "call_b47a0ea39ea8417f858bbc3d",
+        "native_id": "call_b47a0ea39ea8417f858bbc3d",
+        "name": "Glob",
+        "intent_preserved": true,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_error_requires_investigation",
+        "argument_sources": []
+      }
+    ],
+    "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved."
+  },
+  "topology_execution": {
+    "worker_assistant_messages": 20,
+    "supervisor_assistant_messages": 8,
+    "worker_world_tool_calls": 4,
+    "nonworker_operational_tool_calls": 0,
+    "intents": [
+      {
+        "time": 1791365921.775928,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791365984.337079,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791365987.437633,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      },
+      {
+        "time": 1791366041.096923,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791366044.469145,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      },
+      {
+        "time": 1791366048.560468,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      },
+      {
+        "time": 1791366051.939306,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      },
+      {
+        "time": 1791366101.423411,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791366136.678382,
+        "session_id": "d3a87884-41af-4b69-baa3-771b8c253fca",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      }
+    ],
+    "verified": true,
+    "version": 2,
+    "limitation": "Direct native curl URL arguments, not attribution of every HTTP side effect; complex commands/scripts require separate investigation."
+  },
+  "usage": {
+    "usage_source": "controller_observed_anthropic_usage",
+    "usage_complete": true,
+    "request_count": 48,
+    "rejected_request_count": 0,
+    "input_tokens": 1304760,
+    "uncached_input_tokens": 150968,
+    "output_tokens": 9013,
+    "cache_read_tokens": 1153792,
+    "cache_creation_tokens": 0,
+    "cost_usd": 0.0268897776,
+    "cost_basis": "payg_reference_not_subscription_charge",
+    "pricing": {
+      "input_per_million": 0.14,
+      "output_per_million": 0.28,
+      "cache_read_per_million": 0.0028
+    },
+    "native_usage": {
+      "usage_source": "persisted_assistant_usage",
+      "usage_complete": true,
+      "cost_usd": 0.026889777599999998,
+      "input_tokens": 1304760,
+      "uncached_input_tokens": 150968,
+      "output_tokens": 9013,
+      "request_count": 48,
+      "cache_read_tokens": 1153792,
+      "cache_creation_tokens": 0,
+      "quota_snapshot": {
+        "window_start": "2026-10-07T00:00:00Z",
+        "window_end": "2026-10-08T00:00:00Z",
+        "cycle": "daily",
+        "input_tokens": 150968,
+        "output_tokens": 9013,
+        "request_count": 48,
+        "cost_usd": 0.02365916,
+        "cache_read_tokens": 1153792,
+        "cache_creation_tokens": 0
+      },
+      "quota_snapshot_request_count_matches": true
+    },
+    "native_usage_matches": true,
+    "native_reconciliation_diagnostic": {
+      "version": 1,
+      "controller_minus_native": {
+        "request_count": 0,
+        "uncached_input_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_creation_tokens": 0,
+        "output_tokens": 0
+      },
+      "disconnected_request_indices": [],
+      "difference_exactly_explained_by_disconnected_calls": false,
+      "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+    }
+  },
+  "phase_usage": {
+    "conversation": {
+      "usage_source": "controller_observed_anthropic_usage",
+      "usage_complete": true,
+      "request_count": 8,
+      "rejected_request_count": 0,
+      "input_tokens": 187541,
+      "uncached_input_tokens": 38613,
+      "output_tokens": 1508,
+      "cache_read_tokens": 148928,
+      "cache_creation_tokens": 0,
+      "cost_usd": 0.0062450584000000005,
+      "cost_basis": "payg_reference_not_subscription_charge",
+      "pricing": {
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "cache_read_per_million": 0.0028
+      }
+    },
+    "probe": {
+      "usage_source": "controller_observed_anthropic_usage",
+      "usage_complete": true,
+      "request_count": 3,
+      "rejected_request_count": 0,
+      "input_tokens": 94416,
+      "uncached_input_tokens": 11920,
+      "output_tokens": 484,
+      "cache_read_tokens": 82496,
+      "cache_creation_tokens": 0,
+      "cost_usd": 0.0020353088000000003,
+      "cost_basis": "payg_reference_not_subscription_charge",
+      "pricing": {
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "cache_read_per_million": 0.0028
+      }
+    },
+    "setup": {
+      "usage_source": "controller_observed_anthropic_usage",
+      "usage_complete": true,
+      "request_count": 9,
+      "rejected_request_count": 0,
+      "input_tokens": 230565,
+      "uncached_input_tokens": 30245,
+      "output_tokens": 2023,
+      "cache_read_tokens": 200320,
+      "cache_creation_tokens": 0,
+      "cost_usd": 0.0053616359999999995,
+      "cost_basis": "payg_reference_not_subscription_charge",
+      "pricing": {
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "cache_read_per_million": 0.0028
+      }
+    },
+    "watch_active": {
+      "usage_source": "controller_observed_anthropic_usage",
+      "usage_complete": true,
+      "request_count": 20,
+      "rejected_request_count": 0,
+      "input_tokens": 539761,
+      "uncached_input_tokens": 41137,
+      "output_tokens": 3479,
+      "cache_read_tokens": 498624,
+      "cache_creation_tokens": 0,
+      "cost_usd": 0.0081294472,
+      "cost_basis": "payg_reference_not_subscription_charge",
+      "pricing": {
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "cache_read_per_million": 0.0028
+      }
+    },
+    "watch_idle": {
+      "usage_source": "controller_observed_anthropic_usage",
+      "usage_complete": true,
+      "request_count": 8,
+      "rejected_request_count": 0,
+      "input_tokens": 252477,
+      "uncached_input_tokens": 29053,
+      "output_tokens": 1519,
+      "cache_read_tokens": 223424,
+      "cache_creation_tokens": 0,
+      "cost_usd": 0.005118327200000001,
+      "cost_basis": "payg_reference_not_subscription_charge",
+      "pricing": {
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "cache_read_per_million": 0.0028
+      }
+    }
+  },
+  "world_reads": [
+    27.559,
+    90.113,
+    146.877,
+    207.192
+  ],
+  "action_attempts": [
+    {
+      "seq": 12,
+      "kind": "action_attempt",
+      "phase": "watch",
+      "elapsed_secs": 93.217,
+      "wall_time": 1791365987.4755368,
+      "envelope": {
+        "action": {
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5",
+          "revision": "r2",
+          "recipient": "release-room-91b72265b1f5",
+          "delivery_key": "atlas-release-91b72265b1f5"
+        },
+        "preconditions": {
+          "watch_active": true,
+          "dependency": {
+            "ready": true,
+            "revision": "r2"
+          }
+        }
+      },
+      "response": {
+        "accepted": true,
+        "recorded": true,
+        "effect_applied": true,
+        "replayed": false,
+        "receipt": 1,
+        "action_key": "send_release:atlas-release-91b72265b1f5",
+        "action": {
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5",
+          "revision": "r2",
+          "recipient": "release-room-91b72265b1f5",
+          "delivery_key": "atlas-release-91b72265b1f5"
+        },
+        "committed_elapsed_secs": 93.216
+      },
+      "http_status": 200
+    },
+    {
+      "seq": 17,
+      "kind": "action_attempt",
+      "phase": "watch",
+      "elapsed_secs": 150.249,
+      "wall_time": 1791366044.507956,
+      "envelope": {
+        "action": {
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5",
+          "reason": "dependency_blocked"
+        },
+        "preconditions": {
+          "watch_active": true,
+          "dependency": {
+            "ready": false
+          },
+          "not_before": 180
+        }
+      },
+      "response": {
+        "accepted": false,
+        "effect_applied": false,
+        "error": "explicit dependency ready and revision required"
+      },
+      "http_status": 400
+    },
+    {
+      "seq": 18,
+      "kind": "action_attempt",
+      "phase": "watch",
+      "elapsed_secs": 154.338,
+      "wall_time": 1791366048.596747,
+      "envelope": {
+        "action": {
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5",
+          "reason": "dependency_blocked"
+        },
+        "preconditions": {
+          "watch_active": true,
+          "dependency": {
+            "ready": false,
+            "revision": "r1"
+          },
+          "not_before": 180
+        }
+      },
+      "response": {
+        "accepted": false,
+        "effect_applied": false,
+        "error": "declared preconditions not satisfied",
+        "action_key": "request_input:dogwood-91b72265b1f5"
+      },
+      "http_status": 412
+    },
+    {
+      "seq": 19,
+      "kind": "action_attempt",
+      "phase": "watch",
+      "elapsed_secs": 157.719,
+      "wall_time": 1791366051.97783,
+      "envelope": {
+        "action": {
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5",
+          "reason": "dependency_blocked"
+        },
+        "preconditions": {
+          "watch_active": true,
+          "dependency": {
+            "ready": false,
+            "revision": "r1"
+          },
+          "not_before": 146
+        }
+      },
+      "response": {
+        "accepted": true,
+        "recorded": true,
+        "effect_applied": true,
+        "replayed": false,
+        "receipt": 2,
+        "action_key": "request_input:dogwood-91b72265b1f5",
+        "action": {
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5",
+          "reason": "dependency_blocked"
+        },
+        "committed_elapsed_secs": 157.718
+      },
+      "http_status": 200
+    },
+    {
+      "seq": 23,
+      "kind": "action_attempt",
+      "phase": "watch",
+      "elapsed_secs": 242.454,
+      "wall_time": 1791366136.713392,
+      "envelope": {
+        "action": {
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5",
+          "revision": "r1",
+          "recipient": "ops-room-91b72265b1f5",
+          "delivery_key": "cedar-release-91b72265b1f5"
+        },
+        "preconditions": {
+          "watch_active": true,
+          "dependency": {
+            "ready": true,
+            "revision": "r1"
+          }
+        }
+      },
+      "response": {
+        "accepted": true,
+        "recorded": true,
+        "effect_applied": true,
+        "replayed": false,
+        "receipt": 3,
+        "action_key": "send_release:cedar-release-91b72265b1f5",
+        "action": {
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5",
+          "revision": "r1",
+          "recipient": "ops-room-91b72265b1f5",
+          "delivery_key": "cedar-release-91b72265b1f5"
+        },
+        "committed_elapsed_secs": 242.452
+      },
+      "http_status": 200
+    }
+  ],
+  "interrupted_calls": [],
+  "errors": [],
+  "wall_secs": 572.046,
+  "validation": {
+    "runtime_library_tests_passed": 2756,
+    "runtime_library_tests_ignored": 3,
+    "benchmark_tests_passed": 88,
+    "scripted_surface_report": "20261007T092703437273Z-surface-peko",
+    "surface_checks_passed": 14,
+    "surface_real_llm_calls": 0,
+    "surface_runtime_commit": "876d2264",
+    "surface_scope_note": "The later 849acf40 change only distinguishes async wait-end audit fields from task completion; operational tool code is unchanged."
+  },
+  "comparison_before": {
+    "report": "20261007T052018247526Z-responsibility-peko",
+    "original_result_sha256": "4e1b19a294a4e62bc1125b7750393e3dee67553f9e360a9666d35a117208f5a8",
+    "contract": 10,
+    "completed_on_time": 2,
+    "memory_correct": 24,
+    "max_observation_gap_secs": 112.268,
+    "known_cedar_turn_secs": 60.759,
+    "known_cedar_model_iterations": 6
+  },
+  "limits": [
+    "One stochastic sample, not a causal latency estimate or a parity claim.",
+    "Scheduling policy and score gates are unchanged; response guidance and audit fields changed.",
+    "Completed native audits exclude open/nonterminal async waits.",
+    "PAYG reference cost is not actual Token Plan charge.",
+    "Selected native smoke surfaces do not certify every advertised tool."
+  ],
+  "attribution_review": {
+    "all_wire_native_calls_preserved": 71,
+    "operational_post_request_indices": [
+      23,
+      32,
+      33,
+      35,
+      40
+    ],
+    "operational_post_intents_preserved": true,
+    "remaining_glob_errors": [
+      {
+        "request_index": 5,
+        "pattern": "{skills,tools}/**",
+        "classification": "brace syntax treated as literal directory; surface limitation not made explicit"
+      },
+      {
+        "request_index": 6,
+        "pattern": "skills/*",
+        "classification": "absent optional skills directory"
+      },
+      {
+        "request_index": 6,
+        "pattern": "tools/*",
+        "classification": "absent optional tools directory"
+      },
+      {
+        "request_index": 26,
+        "pattern": "{tasks,notes,shared,data}/**",
+        "classification": "brace syntax treated as literal directory; surface limitation not made explicit"
+      }
+    ],
+    "cedar_response_before_post": {
+      "request_index": 40,
+      "wall_secs": 35.143,
+      "native_post_tool_duration_secs": 0.069,
+      "observed_ready_elapsed_secs": 207.192,
+      "effect_elapsed_secs": 242.454
+    },
+    "cedar_model_response_for_batched_writes": {
+      "request_index": 42,
+      "wall_secs": 29.918
+    },
+    "limitation": "Response wall time includes provider/network/relay/decoding; exact causes are not separately instrumented. Failed optional discovery Glob calls did not occur in the worker action path."
+  }
+}

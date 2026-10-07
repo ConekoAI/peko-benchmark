@@ -58,6 +58,13 @@ Both escalated too early; Peko repeated a retained action and exhausted its requ
 allowance before the memory probe. Scheduled work continued after restart, but
 the restart missed the specific interrupted-run fault window.
 
+The [guarded pilot and stream fix](docs/RESPONSIBILITY_GUARDED_MIMO_2026-10-07.md)
+found real concurrent-stream argument corruption in Peko and verified its repair.
+The [worker-duration follow-up](docs/RESPONSIBILITY_LEAN_WORKER_MIMO_2026-10-07.md)
+has preserved tool intent and exact usage reconciliation, but still fails due to
+an altered owner threshold and a provider response exceeding deadline headroom.
+Native interval skips are now audited. Further live samples remain deferred.
+
 ## Methodology (read before trusting a number)
 
 1. **Same model, same task, same grader — different harness.** The model is
