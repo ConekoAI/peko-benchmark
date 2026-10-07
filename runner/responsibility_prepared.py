@@ -11,7 +11,7 @@ import uuid
 import tomllib
 from pathlib import Path
 from responsibility_topology import task_paths, handoff_prompt, supervisor_prompt
-from responsibility_strategy import selected as strategy_selected, supervisor as strategy_supervisor, provision_sdk
+from responsibility_strategy import selected as strategy_selected, supervisor as strategy_supervisor, provision_sdk, capabilities
 from responsibility_strategy import handoff as strategy_handoff
 
 
@@ -28,6 +28,8 @@ def prepare_peko(driver, worker_prompt):
     root = home / 'data/principals' / driver.principal
     workspace = home / 'principals' / driver.principal
     empty_notes(workspace, worker_prompt, strategy_selected(driver.sim.spec))
+    if strategy_selected(driver.sim.spec):
+        (workspace / 'NATIVE_AUTOMATION.md').write_text(capabilities('peko', workspace))
     roles = workspace / 'roles'; roles.mkdir(exist_ok=True)
     (roles / 'release-watch.md').write_text('---\nname: release-watch\ndescription: Periodic release responsibility worker\n---\n' + worker_prompt)
     indices = list(root.rglob('sessions.json'))
@@ -91,6 +93,8 @@ def arm_peko(driver):
 
 def prepare_claw(driver, worker_prompt):
     empty_notes(driver.workspace, worker_prompt, strategy_selected(driver.sim.spec))
+    if strategy_selected(driver.sim.spec):
+        (driver.workspace / 'NATIVE_AUTOMATION.md').write_text(capabilities('openclaw', driver.workspace, driver.node, driver.entry))
     (driver.workspace / 'BOOTSTRAP.md').unlink(missing_ok=True)
     (driver.workspace / 'IDENTITY.md').write_text('# Responsibility Bench\nConcise release coordinator.\n')
     (driver.workspace / 'USER.md').write_text('# User\nThe benchmark owner supplies requirements in chat.\n')

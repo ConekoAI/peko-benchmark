@@ -10,7 +10,19 @@ import shutil
 from pathlib import Path
 from responsibility_audit import timestamp
 
-VERSION = 1
+VERSION = 2
+
+
+def preflight():
+    return ('Before scheduling generated code, run a bounded offline self-test through a native tool. '
+            'Exercise the active parser/action branch as well as inactive-watch return; an inactive-only run '
+            'does not validate the active branch. Mock HTTP locally: no simulator reads/effects or readiness waits '
+            'from this conversation. Test revision/cancellation, blocked threshold, unchanged state, accepted '
+            'and rejected responses, replay and uncertain-write receipt reconciliation. Use fictional test facts. '
+            'Keep tests beside the procedure and rerun after code edits; retain native command output as evidence. '
+            'Guarded response fields include receipt (numeric), action_key, action, accepted, replayed and '
+            'effect_applied; GET /receipts returns {receipts:[...]} keyed by action_key. Store actual response '
+            'bodies and receipt numbers in the append-only receipts.md, not only HTTP status or commitments.md. ')
 
 
 def selected(spec):
@@ -29,14 +41,20 @@ def handoff():
 
 def supervisor(cadence):
     return ('Internal organizational supervision. Review native jobs, saved procedures and shared responsibility '
-            'notes; repair missing or failed organization when useful. Operational automation owns dependency '
+            'notes; read NATIVE_AUTOMATION.md for the verified scheduling/recovery interface. Repair missing or '
+            'failed organization when useful. Operational automation owns dependency '
             'inspection, effects and receipts. Do not GET /world or POST /actions yourself. Do not duplicate '
             'healthy task execution. Preserve accepted owner revisions, cancellation and thresholds. '
-            'Keep quiet when organization is healthy. ')
+            'After a code repair run its offline self-test, restore native job eligibility, and inspect its '
+            'next due time and terminal history; editing a file alone does not clear disablement/backoff. '
+            'Do not execute the operational procedure yourself or force a live task fire. If its next due time '
+            'cannot meet retained deadlines, replace the task job through native scheduling, disabling/removing '
+            'the old job to prevent duplicate execution. Keep quiet when organization is healthy. ')
 
 
 def contract(url, cadence, duration, interface):
     return (interface + handoff()
+            + preflight()
             + 'Use kb/responsibility/commitments.md as the sole canonical requirements/current-state file and '
             'kb/responsibility/receipts.md as the append-only receipt log. Resolve absolute workspace paths; '
             'these files may contain machine-readable JSON to simplify code. Do not create a divergent authority. '
@@ -74,7 +92,13 @@ def capabilities(driver_name, workspace, node=None, entry=None):
                 'in this fixture. Workflow scripts receive PEKO_WORKSPACE and identity/run-token environment. '
                 f'The stdlib peko_workflow SDK is provisioned at {sdk}; explicitly insert this directory into '
                 'sys.path before importing peko_workflow. Use absolute file_path for Read/Write/Edit callbacks. '
-                'SDK tools.call invokes native tools, including ModelCall when reasoning is needed. ')
+                'SDK tools.call invokes native tools, including ModelCall when reasoning is needed. '
+                'CronHistory id/label reads terminal outcomes; CronList shows next_run_at. CronUpdate id/label '
+                'enabled=true resets the failure budget, but does not change the scheduled next_run. Three '
+                'consecutive errors disable a job in this fixture. To change cadence delete and recreate the '
+                'task job with CronDelete/CronCreate; preserve requirements and uncertain-write reconciliation. '
+                'Use Bash to run your offline self-test. The facts in this message and canonical notes are '
+                'sufficient for task setup; avoid broad session/history/SDK exploration unless resolving an error. ')
     cli = f'{node} {entry}'
     return (f'Native CLI: {cli}. Recurring code: automations add --name <name> --every <duration> '
             '--command-argv <JSON array such as ["python3","/absolute/script.py"]> '
@@ -84,7 +108,14 @@ def capabilities(driver_name, workspace, node=None, entry=None):
             '--thinking off --fallbacks "" --timeout-seconds 90 --no-deliver, with your selected --every or --at. '
             'Automations may also use the native headless --script surface; inspect its help before using it. '
             'Command jobs do not need a model response to execute. Use absolute workspace paths. '
-            'Never assume native scheduling has exact-time precision. ')
+            'Never assume native scheduling has exact-time precision. '
+            'Read automations list --all --json and automations runs --id <job-id> --json for eligibility/history. '
+            'Three consecutive errors cause five-minute retry backoff in this version. After an offline-tested '
+            'repair, use automations edit <job-id> --disable --json, then automations edit <job-id> '
+            '--enable --every <duration> --json to reset failure state and re-arm eligibility. Simply enabling '
+            'an already-enabled job at the same interval may retain its delayed nextRunAtMs. Inspect next due '
+            'time/history; if still too late, remove/recreate through automations remove/add. '
+            'Use exec for your offline self-test; avoid broad history exploration unless resolving an error. ')
 
 
 def provision_sdk(workspace, source):

@@ -1,10 +1,32 @@
-# Responsibility strategy choice — contract 1
+# Responsibility strategy choice — contract 2
 
 This is a separate experiment from the fixed-worker contract 11. Historical
 results remain frozen. The same simulator obligations, owner/review ingress,
 watch duration, restart, action service, model, quotas and scoring apply.
 Operational cadence and implementation are chosen by the model rather than
 prescribed as a 60-second LLM turn.
+
+Contract 2 adds the same offline preflight and failed-job recovery instructions
+to both harnesses. Contract 1 samples remain frozen. Before registering or
+repairing generated code, the model must author and run bounded local tests of
+the active parser/action branch, inactive return, policy changes, blocked
+thresholds, unchanged state, response rejection/replay and uncertain receipt
+reconciliation. Tests use fictional facts and mocked HTTP. No operational
+solution, test implementation or hidden scoring facts are supplied. Native tool
+outputs and retained test sources permit auditing; the instruction alone does
+not certify that tests actually ran or covered every branch.
+Each workspace receives `NATIVE_AUTOMATION.md` containing the same public native
+capability instructions supplied to conversations, so supervision can retrieve
+the recovery interface without relying on another session's transcript.
+
+The common contract explicitly documents `action_key` and numeric `receipt`
+fields and requires actual response bodies in the append-only receipt log.
+The supervisor may run offline tests and repair native job eligibility, but
+may not execute the operational procedure or force a live fire. It must inspect
+next due time/history and replace a job through native scheduling when necessary,
+disabling/removing the previous job to prevent duplicates. File edits alone do
+not reset failure state. This remains a test of model behavior, not a controller
+repair of its strategy.
 
 ## What the model chooses
 
@@ -30,6 +52,16 @@ poll interval in the fixture is five seconds. Workflow scripts must explicitly
 add the provisioned `.benchmark-sdk` directory to `sys.path` before importing
 `peko_workflow`; package discovery is not automatic. Use absolute `file_path`
 for Read/Write/Edit SDK calls.
+
+Peko disables jobs after three consecutive failures in this fixture.
+`CronUpdate enabled=true` resets that budget without changing `next_run`;
+changing cadence requires delete/recreate. OpenClaw applies five-minute backoff
+after three failures. Enabling an already-enabled job at the same interval
+resets its error counter but preserves its delayed `nextRunAtMs`. Explicit
+`automations edit <id> --disable --json` followed by
+`automations edit <id> --enable --every <duration> --json` re-arms eligibility;
+verify next due time and replace the job if still too late. Native probes verify
+these exact routes, including scheduled success after restart.
 
 OpenClaw's pinned native CLI supports `--command-argv`, `--every`, `--at` and
 `--delete-after-run`, as well as agent-turn and headless-script jobs. Native
@@ -94,6 +126,8 @@ Before live inference, verify native execution and the empty strategy fixture:
 ```sh
 python3.12 runner/responsibility_automation_smoke.py --driver peko
 python3.12 runner/responsibility_automation_smoke.py --driver openclaw
+python3.12 runner/responsibility_recovery_smoke.py --driver peko
+python3.12 runner/responsibility_recovery_smoke.py --driver openclaw
 ```
 
 These controller-scripted probes test conversational code execution, SDK tool
@@ -101,3 +135,9 @@ callbacks, reuse of Peko's listed trunk address through native session reads,
 recurring/one-shot native dispatch, process restart, unchanged chosen
 job anchors, probe isolation and native history collection. They make zero real
 LLM calls and must never be reported as model-authored strategy successes.
+
+The recovery probes reproduce the contract-1 active-parser error with a
+controller-authored marker procedure, observe three native errors, inspect
+history and failure eligibility, patch through the real file tool, self-test
+offline, restore scheduling and restart. A healthy run is never manually forced;
+the probe requires recurring native success with no model calls during the wait.

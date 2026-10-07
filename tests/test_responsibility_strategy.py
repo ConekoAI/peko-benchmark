@@ -1,4 +1,5 @@
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -12,9 +13,33 @@ import responsibility_strategy as strategy
 from responsibility import contract
 from responsibility_prepared import arm_peko, pause_claw_for_probe, empty_notes, set_claw_due_times
 from responsibility_drivers import prepared_worker_prompt
+from responsibility_recovery_smoke import SCRIPT, BAD_PARSE, GOOD_PARSE
 
 
 class StrategyTests(unittest.TestCase):
+    def test_offline_preflight_reproduces_active_bug_and_has_no_effect(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp)/'probe.py'
+            path.write_text(SCRIPT.replace('PARSER', BAD_PARSE))
+            failed = subprocess.run([sys.executable,str(path),'--self-test'],capture_output=True,text=True)
+            self.assertNotEqual(failed.returncode,0)
+            self.assertIn('UnboundLocalError',failed.stderr)
+            path.write_text(SCRIPT.replace('PARSER', GOOD_PARSE))
+            passed = subprocess.run([sys.executable,str(path),'--self-test'],capture_output=True,text=True)
+            self.assertEqual(passed.returncode,0,passed.stderr)
+            self.assertIn('PREFLIGHT_OK active inactive receipts',passed.stdout)
+            self.assertEqual(list(Path(temp).iterdir()),[path])
+
+    def test_shared_preflight_and_supervisor_recovery_preserve_role_boundaries(self):
+        prompt = strategy.contract('http://127.0.0.1:1',60,300,'PUBLIC_INTERFACE ')
+        for fragment in ('offline self-test', 'active parser/action branch', 'fictional test facts',
+                         'action_key', 'actual response bodies', 'rerun after code edits'):
+            self.assertIn(fragment,prompt)
+        supervisor = strategy.supervisor(60)
+        self.assertIn('editing a file alone does not clear',supervisor)
+        self.assertIn('Do not execute the operational procedure yourself',supervisor)
+        self.assertIn('disabling/removing the old job',supervisor)
+
     def test_claw_arm_waits_for_native_heartbeat_reconciliation(self):
         pages = iter([{'jobs':[]}, {'jobs':[{'enabled':True,'payload':{'kind':'heartbeat'},
                                           'schedule':{'everyMs':120000}}]}])
