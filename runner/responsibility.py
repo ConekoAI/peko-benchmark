@@ -19,11 +19,15 @@ from responsibility_audit import native_outbound_attempts
 from responsibility_diagnostics import observed_preconditions, retained_receipts
 from responsibility_timing import native_cron_timing
 from responsibility_topology import execution_evidence, task_paths, handoff_prompt, direct_action_prompt
+import responsibility_strategy as strategy
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
 def contract(sim):
+    if strategy.selected(sim.spec):
+        return strategy.contract(sim.url, sim.spec['cadence_secs'], sim.spec['duration_secs'],
+                                 action_contract(sim.url, bool(getattr(sim, 'action_service', None))) + state_contract())
     organization = (f"Use one dedicated persistent release-watch task session at {sim.spec['cadence_secs']:g}s "
                     f"and independent organizational supervision at {sim.spec['cadence_secs'] * 2:g}s. "
                     + task_paths() + "Only the task worker inspects dependencies and performs operational actions during the watch. "
@@ -228,15 +232,25 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
                          and telemetry.get("native_usage_matches", False))
     if spec.get("topology") == "separated":
         checks = metadata.get("topology_checks", [])
+        chosen = {j['id']:j for c in checks for j in c.get('operational_jobs', [])} if strategy.selected(spec) else None
         if starts and ends:
-            metrics["native_cron_timing"] = native_cron_timing(run_dir, starts[0], ends[0])
+            metrics["native_cron_timing"] = native_cron_timing(run_dir, starts[0], ends[0], chosen)
         identities = {k: sorted({sid for c in checks for sid in c.get(k, [])})
                       for k in ("worker_session_ids", "supervisor_session_ids")}
-        topology = execution_evidence(run_dir, starts[0], ends[0], identities) if starts and ends else {"verified": False}
+        topology = (strategy.execution_evidence(run_dir, starts[0], ends[0]) if strategy.selected(spec)
+                    else execution_evidence(run_dir, starts[0], ends[0], identities)) if starts and ends else {"verified": False}
         metrics["topology_execution"] = topology
         metrics["topology_registered"] = ({c["stage"] for c in checks} == {
             "post-setup", "pre-watch", "post-restart", "post-watch"} and all(c["verified"] for c in checks))
         metrics["passed"] = metrics["passed"] and metrics["topology_registered"] and topology["verified"]
+        if strategy.selected(spec):
+            artifacts = run_dir / 'strategy-artifacts.json'
+            metrics['strategy_choice'] = {'version':strategy.VERSION, 'chosen_native_jobs':list(chosen.values()),
+                'retained_artifacts':json.loads(artifacts.read_text()) if artifacts.exists() else [],
+                'limitation':'Authorship, job shape and native execution are measured separately from correctness. '
+                             'Provider tail-latency guarantees and causal multi-worker read attribution are not measured.'}
+            metrics['observed_preconditions']['limitation'] = ('Latest public read check only; operational jobs '
+                'must serialize. This does not establish which concurrent script observed each action precondition.')
     phases = sorted({r.get("phase") for r in driver.relay.records}) if driver.relay else []
     phase_usage = {p: summarize_calls([r for r in driver.relay.records if r.get("phase") == p]) for p in phases}
     result = {"evidence_kind": "real_llm_single_seed_pilot", "scenario": spec["name"],
@@ -255,6 +269,8 @@ def main():
     parser.add_argument("--action-mode", choices=("raw", "guarded"), default="raw",
                         help="Separate action-service experiment; raw historical contract remains available")
     parser.add_argument("--driver", choices=("peko", "openclaw"), required=True)
+    parser.add_argument('--execution-policy', choices=('fixed-worker', 'strategy-choice'), default='fixed-worker',
+                        help='Separate strategy-choice track permits model-authored native workflows and cadence')
     parser.add_argument("--formation", choices=("model", "prepared"), default="model",
                         help="Model-created organization or declared controller-prepared empty execution fixture")
     parser.add_argument("--mode", choices=("supervisory", "event-driven", "persistence"), default="supervisory")
@@ -268,6 +284,9 @@ def main():
     parser.add_argument("--budget-usd", type=float, required=True, help="PAYG reference cap per harness; not actual plan deduction")
     parser.add_argument("--timeout-secs", type=int, default=900)
     args = parser.parse_args()
+    if args.execution_policy == 'strategy-choice' and (args.topology != 'separated'
+            or args.mode != 'supervisory' or args.formation != 'prepared'):
+        parser.error('strategy-choice requires --topology separated --mode supervisory --formation prepared')
     if args.topology == "separated" and args.mode != "supervisory":
         parser.error("separated topology is currently a supervisory-only experiment")
     if not math.isfinite(args.budget_usd) or args.budget_usd <= 0 or not math.isfinite(args.scale) or args.scale < 1:
@@ -278,6 +297,7 @@ def main():
     spec["profile_prompt"] = args.profile_prompt
     spec["topology"] = args.topology
     spec["formation"] = args.formation
+    spec['execution_policy'] = args.execution_policy
     spec["measure_memory_policy"] = True
     spec["require_policy_diagnostics"] = True
     if args.formation == "prepared" and args.topology != "separated":
@@ -285,7 +305,8 @@ def main():
     if args.timeout_secs < spec["duration_secs"] + 300:
         parser.error("timeout must allow watch duration plus at least 300 seconds for setup and probe")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    run_dir = ROOT / "reports" / f"{stamp}-responsibility-{args.driver}"
+    track = '-strategy-choice' if strategy.selected(spec) else ''
+    run_dir = ROOT / "reports" / f"{stamp}-responsibility{track}-{args.driver}"
     result = execute(spec, args.driver, args.mode, args.budget_usd, args.timeout_secs, run_dir)
     return 0 if result["metrics"]["passed"] else 1
 

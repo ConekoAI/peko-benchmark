@@ -1,5 +1,10 @@
 # Responsibility execution protocol — contract 11
 
+This document describes the fixed-worker track. The separate
+[strategy-choice contract 1](RESPONSIBILITY_STRATEGY_CHOICE.md) permits authored
+workflows, chosen operational cadence and native one-shots. Its results must not
+be pooled with fixed-worker scores.
+
 This stabilization protocol separates organization formation from execution. It
 is not a new result or evidence of superiority. Contract 7 scores stay frozen.
 

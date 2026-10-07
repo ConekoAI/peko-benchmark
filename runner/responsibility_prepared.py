@@ -11,13 +11,15 @@ import uuid
 import tomllib
 from pathlib import Path
 from responsibility_topology import task_paths, handoff_prompt, supervisor_prompt
+from responsibility_strategy import selected as strategy_selected, supervisor as strategy_supervisor, provision_sdk
+from responsibility_strategy import handoff as strategy_handoff
 
 
-def empty_notes(workspace: Path, worker_prompt: str):
+def empty_notes(workspace: Path, worker_prompt: str, strategy=False):
     folder = workspace / 'kb/responsibility'; folder.mkdir(parents=True, exist_ok=True)
     (folder / 'commitments.md').write_text('# Shared requirements\n\nNo commitments received yet.\n')
     (folder / 'receipts.md').write_text('# Action receipts (append-only)\n\n')
-    (workspace / 'RESPONSIBILITY.md').write_text(task_paths() + handoff_prompt() + '\n' + worker_prompt)
+    (workspace / 'RESPONSIBILITY.md').write_text((strategy_handoff() if strategy else task_paths() + handoff_prompt()) + '\n' + worker_prompt)
 
 
 def prepare_peko(driver, worker_prompt):
@@ -25,7 +27,7 @@ def prepare_peko(driver, worker_prompt):
     home = Path(driver.temp.name) / '.peko'
     root = home / 'data/principals' / driver.principal
     workspace = home / 'principals' / driver.principal
-    empty_notes(workspace, worker_prompt)
+    empty_notes(workspace, worker_prompt, strategy_selected(driver.sim.spec))
     roles = workspace / 'roles'; roles.mkdir(exist_ok=True)
     (roles / 'release-watch.md').write_text('---\nname: release-watch\ndescription: Periodic release responsibility worker\n---\n' + worker_prompt)
     indices = list(root.rglob('sessions.json'))
@@ -58,13 +60,19 @@ def prepare_peko(driver, worker_prompt):
                 'created_at': stamp.isoformat(), 'next_run': (stamp + dt.timedelta(seconds=3600)).isoformat(),
                 'delete_after_run': False, 'enabled': True, 'run_count': 0, 'consecutive_failures': 0,
                 'origin_session': trunk['session_id'], **action}
-    schedule['jobs'] = [job('organization-supervisor', 2, {'kind': 'send', 'message': supervisor_prompt(cadence)}),
+    schedule['jobs'] = [job('organization-supervisor', 2, {'kind': 'send', 'message': (
+                            strategy_supervisor(cadence) if strategy_selected(driver.sim.spec) else supervisor_prompt(cadence))}),
                         job('responsibility-monitor', 1, {'kind': 'spawn_tool', 'tool_name': 'Agent',
                             'tool_params': {'action': 'new', 'path': '/release-watch', 'role': 'release-watch', 'prompt': worker_prompt},
                             'wake_on_completion': False, 'timeout_secs': 90})]
+    if strategy_selected(driver.sim.spec):
+        schedule['jobs'] = schedule['jobs'][:1]
+        sdk = Path(driver.config_env['PEKO_WORKFLOW_SDK_SOURCE'])
+        driver.metadata['workflow_sdk_manifest'] = provision_sdk(workspace, sdk)
     schedules[0].write_text(json.dumps(schedule, indent=2))
     driver._command('daemon', 'start', '--interval', '5'); driver._ready()
-    driver.metadata['formation'] = 'controller_prepared_empty_native_topology'
+    driver.metadata['formation'] = ('controller_prepared_empty_strategy_workspace' if strategy_selected(driver.sim.spec)
+                                    else 'controller_prepared_empty_native_topology')
 
 
 def arm_peko(driver):
@@ -73,6 +81,8 @@ def arm_peko(driver):
     path = next(root.rglob('cron/schedule.toml')); schedule = json.loads(path.read_text())
     now = dt.datetime.now(dt.timezone.utc)
     for job in schedule['jobs']:
+        if strategy_selected(driver.sim.spec) and job['name'] != 'organization-supervisor':
+            continue  # Never rewrite the model's chosen job times.
         offset = 20 if job['name'] == 'responsibility-monitor' else driver.sim.spec['cadence_secs'] * 2
         job['next_run'] = (now + dt.timedelta(seconds=offset)).isoformat()
     path.write_text(json.dumps(schedule, indent=2))
@@ -80,13 +90,17 @@ def arm_peko(driver):
 
 
 def prepare_claw(driver, worker_prompt):
-    empty_notes(driver.workspace, worker_prompt)
+    empty_notes(driver.workspace, worker_prompt, strategy_selected(driver.sim.spec))
     (driver.workspace / 'BOOTSTRAP.md').unlink(missing_ok=True)
     (driver.workspace / 'IDENTITY.md').write_text('# Responsibility Bench\nConcise release coordinator.\n')
     (driver.workspace / 'USER.md').write_text('# User\nThe benchmark owner supplies requirements in chat.\n')
-    (driver.workspace / 'SOUL.md').write_text('# Purpose\nOrganize responsibility workers and preserve shared requirements.\n' + handoff_prompt())
+    (driver.workspace / 'SOUL.md').write_text('# Purpose\nOrganize responsibility workers and preserve shared requirements.\n'
+                                          + (strategy_handoff() if strategy_selected(driver.sim.spec) else handoff_prompt()))
     driver._command('agents', 'set-identity', '--agent', 'main', '--workspace', str(driver.workspace),
                     '--name', 'Responsibility Bench', '--theme', 'Concise release coordinator', '--emoji', '📋')
+    if strategy_selected(driver.sim.spec):
+        driver.metadata['formation'] = 'controller_prepared_empty_strategy_workspace'
+        return
     driver._command('automations', 'add', '--name', 'responsibility-monitor',
                     '--every', f"{driver.sim.spec['cadence_secs']:g}s", '--session', 'session:release-watch',
                     '--thinking', 'off', '--timeout-seconds', '90', '--no-deliver', '--fallbacks', '',
@@ -103,6 +117,8 @@ def set_claw_due_times(driver, armed=False):
                         f"{driver.sim.spec['cadence_secs'] * 2:g}s")
         driver._stop_gateway()
         driver._start_gateway()
+    if strategy_selected(driver.sim.spec):
+        return  # Model owns operational job shapes, cadence and anchors.
     schedule = json.loads(driver._command('automations', 'list', '--all', '--json'))
     jobs = schedule if isinstance(schedule, list) else schedule.get('jobs', [])
     monitors = [j for j in jobs if j.get('name') == 'responsibility-monitor']
@@ -130,7 +146,9 @@ def pause_claw_for_probe(driver):
     schedule = json.loads(driver._command('automations', 'list', '--all', '--json'))
     jobs = schedule if isinstance(schedule, list) else schedule.get('jobs', [])
     for job in jobs:
-        if job.get('name') == 'responsibility-monitor':
+        if (job.get('name') == 'responsibility-monitor' or (strategy_selected(getattr(getattr(driver, 'sim', None), 'spec', {}))
+                and job.get('payload', {}).get('kind') != 'heartbeat'
+                and not job.get('declarationKey', '').startswith(('memory-core:', 'skill-collection-review:')))):
             driver._command('automations', 'edit', job['id'], '--disable')
     driver._stop_gateway(); driver._start_gateway()
     driver.metadata['probe_schedules_suspended'] = True

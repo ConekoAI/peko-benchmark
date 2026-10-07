@@ -169,6 +169,13 @@ installation or git repo initialization).
 
 ## Harness contract
 
+The responsibility [strategy-choice track](docs/RESPONSIBILITY_STRATEGY_CHOICE.md)
+lets each harness author native workflows, choose operational cadence and use
+one-shot jobs while preserving the existing obligations, budgets and scoring.
+It is separate from the historical fixed-worker trials. The zero-real-LLM
+`runner/responsibility_automation_smoke.py` verifies the native code/cron paths
+and empty strategy fixture before a live run.
+
 `harnesses/<name>.sh <workdir> <prompt_file> <out_dir> <timeout_secs>`:
 
 - Runs the agent on `<workdir>` with the prompt from `<prompt_file>`.

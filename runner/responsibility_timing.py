@@ -5,7 +5,7 @@ from pathlib import Path
 from responsibility_audit import timestamp
 
 
-def native_cron_timing(run_dir: Path, start: float, end: float):
+def native_cron_timing(run_dir: Path, start: float, end: float, worker_job_ids=None):
     snapshot = run_dir / 'topology-post-watch.json'
     if not snapshot.exists():
         return {'version': 1, 'measured': False, 'reason': 'no Peko post-watch schedule snapshot'}
@@ -48,7 +48,8 @@ def native_cron_timing(run_dir: Path, start: float, end: float):
         return {'version': 1, 'measured': False, 'reason': 'no new native completion timing fields',
                 'open_runs_at_snapshot': censored}
     runs = sorted(events.values(), key=lambda r: r['finished_at'])
-    workers = [r for r in runs if r['job_name'] == 'responsibility-monitor']
+    workers = [r for r in runs if (r['job_id'] in worker_job_ids if worker_job_ids is not None
+                                  else r['job_name'] == 'responsibility-monitor')]
     return {'version': 1, 'measured': True, 'runs': runs, 'open_runs_at_snapshot': censored,
             'worker_completed_runs': len(workers),
             'worker_turns_exceeding_interval': sum(r['turn_exceeded_interval'] is True for r in workers),

@@ -16,6 +16,7 @@ from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
                                      verify_claw, verify_peko, task_paths,
                                      handoff_prompt, direct_action_prompt, SEPARATED_CONTRACT_VERSION)
+import responsibility_strategy as strategy
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000,
@@ -69,6 +70,13 @@ def task_monitor_prompt(url, cadence, guarded=False):
             + direct_action_prompt(url))
 
 
+def prepared_worker_prompt(sim):
+    if strategy.selected(sim.spec):
+        return strategy.contract(sim.url, sim.spec['cadence_secs'], sim.spec['duration_secs'],
+                                 action_contract(sim.url, bool(sim.action_service)) + state_contract())
+    return task_monitor_prompt(sim.url, sim.spec['cadence_secs'], bool(sim.action_service))
+
+
 class PekoResponsibility(PekoDriver):
     def __init__(self, run_dir, timeout_secs, budget_usd, simulator, mode):
         super().__init__(run_dir, timeout_secs, budget_usd)
@@ -94,6 +102,12 @@ class PekoResponsibility(PekoDriver):
             or k.startswith("PEKO_MODEL_") or k.startswith("PEKO_CACHE_READ_")
             or k in ("PEKO_CONTEXT_WINDOW", "PEKO_COST_BASIS", "PEKO_API_FORMAT")}
         self.config_env.update(PEKO_API_KEY=self.relay.token, PEKO_MAX_OUTPUT_TOKENS="4096")
+        if strategy.selected(self.sim.spec):
+            sdk = Path(os.environ.get('PEKO_WORKFLOW_SDK_SOURCE',
+                str(Path(self.binary or self.config_env['PEKO_BIN']).resolve().parents[2] / 'sdks/python/peko_workflow/src/peko_workflow')))
+            if not (sdk / 'client.py').is_file():
+                raise ValueError('strategy-choice requires PEKO_WORKFLOW_SDK_SOURCE pointing to the SDK package directory')
+            self.config_env['PEKO_WORKFLOW_SDK_SOURCE'] = str(sdk)
         cadence = self.sim.spec["cadence_secs"]
         rhythm = (f"Replace the default keepalive: CronDelete id=keepalive, then CronCreate "
                   f"label=responsibility-monitor interval_ms={int(cadence * 1000)} message="
@@ -115,6 +129,11 @@ class PekoResponsibility(PekoDriver):
                     + "In genesis keep native identity and memory scaffolding, disable the default keepalive; "
                     "do not create task sessions or schedules. The benchmark controller prepares an empty "
                     "organization afterward. Owner messages will supply requirements. End genesis promptly.")
+            if strategy.selected(self.sim.spec):
+                goal = ('Responsibility Bench coordinates simulated releases. ' + strategy.handoff()
+                        + 'In genesis disable the default keepalive and end promptly. The controller prepares '
+                        'empty shared notes and independent organizational supervision afterward; owner chat '
+                        'will supply commitments and you will choose the operational automation.')
         self.native_budget_usd = self.budget_usd + POLICY["probe_allowance"]["budget_usd"]
         self.seed_extra = ("\n[identity]\ndisplay_name = \"Responsibility Bench\"\n"
                            "description = \"Concise coordinator for simulated release obligations\"\n"
@@ -122,13 +141,15 @@ class PekoResponsibility(PekoDriver):
         try:
             super().start()
             if self.formation == "prepared":
-                prepare_peko(self, task_monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service)))
+                prepare_peko(self, prepared_worker_prompt(self.sim))
         finally:
             self.metadata.update(base_url=upstream, common_wire_policy=POLICY, continuation_mode=self.mode,
                                  cadence_secs=cadence, initialization="defined_purpose_native_genesis",
                                  api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
                                  topology=self.topology, action_mode=self.sim.spec.get("action_mode", "raw"),
                                  action_service_version=self.sim.spec.get("action_service_version"))
+            self.metadata.update(execution_policy=self.sim.spec.get('execution_policy', 'fixed-worker'),
+                                 strategy_contract_version=strategy.VERSION if strategy.selected(self.sim.spec) else None)
         return self.metadata
 
     def validate_topology(self, stage):
@@ -139,7 +160,8 @@ class PekoResponsibility(PekoDriver):
             raise ValueError("no unique native schedule and session index for topology verification")
         schedule = json.loads(schedule_files[0].read_text())
         sessions = json.loads(session_files[0].read_text())
-        check = verify_peko(schedule, sessions, self.sim.spec["cadence_secs"]) | {"stage": stage}
+        check = (strategy.verify('peko', schedule, sessions, self.sim.spec['cadence_secs'], stage)
+                 if strategy.selected(self.sim.spec) else verify_peko(schedule, sessions, self.sim.spec["cadence_secs"])) | {"stage": stage}
         self.topology_checks.append(check)
         (self.run_dir / f"topology-{stage}.json").write_text(self._redact(json.dumps(
             {"check": check, "schedule": schedule, "sessions": sessions}, indent=2)))
@@ -159,6 +181,9 @@ class PekoResponsibility(PekoDriver):
         return phase_for(self.sim)
 
     def conversation(self, message, review=False):
+        if strategy.selected(self.sim.spec):
+            workspace = Path(self.temp.name) / '.peko/principals' / self.principal
+            message += '\n' + strategy.capabilities('peko', workspace)
         if not review:
             return self.turn(message)
         # A separate group conversation under the same principal. The owner
@@ -199,6 +224,8 @@ class PekoResponsibility(PekoDriver):
     def close(self):
         # Preserve native memory and schedules as well as transcripts, never vaults.
         if self.temp:
+            if strategy.selected(self.sim.spec):
+                strategy.retain_artifacts(self, Path(self.temp.name) / '.peko/principals' / self.principal)
             root = Path(self.temp.name) / ".peko"
             for base in (root / "principals", root / "data/principals", root / "data/workspaces"):
                 if base.exists():
@@ -232,6 +259,8 @@ class ClawResponsibility(OpenClawDriver):
             "prompt": supervisor_prompt(cadence) if self.topology == "separated" else monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service)),
             "timeoutSeconds": 90})
         config["tools"] = {"exec": {"host": "gateway", "security": "full", "ask": "off"}}
+        if strategy.selected(self.sim.spec):
+            config['agents']['defaults']['heartbeat']['prompt'] = strategy.supervisor(cadence)
         for model in config["agents"]["defaults"]["models"].values():
             model["params"]["maxTokens"] = 4096
         self.relay.policy = POLICY
@@ -248,9 +277,12 @@ class ClawResponsibility(OpenClawDriver):
                                  api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
                                  topology=self.topology, action_mode=self.sim.spec.get("action_mode", "raw"),
                                  action_service_version=self.sim.spec.get("action_service_version"))
+            self.metadata.update(execution_policy=self.sim.spec.get('execution_policy', 'fixed-worker'),
+                                 strategy_contract_version=strategy.VERSION if strategy.selected(self.sim.spec) else None)
         if self.formation == "prepared":
-            prepare_claw(self, task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"], bool(self.sim.action_service)))
-            metadata.update(persona_bootstrap_completed=True, initialization="controller_prepared_empty_native_topology")
+            prepare_claw(self, prepared_worker_prompt(self.sim))
+            metadata.update(persona_bootstrap_completed=True, initialization=("controller_prepared_empty_strategy_workspace"
+                            if strategy.selected(self.sim.spec) else "controller_prepared_empty_native_topology"))
             return metadata
         instruction = ("Onboarding: your agreed name is Responsibility Bench. Your agreed vibe is concise release "
                   "coordinator for an isolated simulation, emoji 📋. Skip avatar generation and optional apps/plugins. "
@@ -292,8 +324,12 @@ class ClawResponsibility(OpenClawDriver):
     def validate_topology(self, stage):
         schedule = json.loads(self._command("automations", "list", "--all", "--json"))
         sessions = json.loads(self._command("sessions", "--all-agents", "--json"))
-        check = verify_claw(schedule, sessions, self.sim.spec["cadence_secs"],
-                            require_supervisor=not (self.formation == "prepared" and stage == "post-setup")) | {"stage": stage}
+        check = (strategy.verify('openclaw', schedule, sessions, self.sim.spec['cadence_secs'], stage)
+                 if strategy.selected(self.sim.spec) else verify_claw(schedule, sessions, self.sim.spec["cadence_secs"],
+                            require_supervisor=not (self.formation == "prepared" and stage == "post-setup"))) | {"stage": stage}
+        if strategy.selected(self.sim.spec) and stage == 'post-watch':
+            history = strategy.claw_runs(self)
+            (self.run_dir / 'strategy-native-runs.json').write_text(self._redact(json.dumps(history, indent=2)))
         self.topology_checks.append(check)
         (self.run_dir / f"topology-{stage}.json").write_text(self._redact(json.dumps(
             {"check": check, "schedule": schedule, "sessions": sessions}, indent=2)))
@@ -310,7 +346,8 @@ class ClawResponsibility(OpenClawDriver):
 
     def conversation(self, message, review=False):
         prompt = Path(self.temp.name) / "event.txt"
-        prompt.write_text(message)
+        prompt.write_text(message + ('\n' + strategy.capabilities('openclaw', self.workspace, self.node, self.entry)
+                                    if strategy.selected(self.sim.spec) else ''))
         key = "agent:main:review" if review else "agent:main:responsibility"
         return final_reply(json.loads(self._command("agent", "--session-key", key,
                           "--message-file", str(prompt), "--thinking", "off", "--timeout",
@@ -321,6 +358,11 @@ class ClawResponsibility(OpenClawDriver):
         (self.run_dir / "native-schedules.json").write_text(self._redact(json.dumps(schedules, indent=2)))
         self.metadata["telemetry_drain_completed"] = self.relay.drain()
         return super().telemetry()
+
+    def close(self):
+        if self.temp and strategy.selected(self.sim.spec):
+            strategy.retain_artifacts(self, self.workspace)
+        super().close()
 
 
 def phase_for(sim):
