@@ -40,7 +40,7 @@ Both harnesses receive these instructions. No controller generates notes,
 updates statuses for agents, or supplies expected memory answers. This is a
 prompt change rather than a new enforced runtime memory primitive.
 
-Contracts 4–5's `--topology separated` experiment permits directed native worker
+Contracts 4–6's `--topology separated` experiment permits directed native worker
 registration and keeps independent organizational supervision (120s) alongside
 a task worker (60s). Peko genesis authors the role, child and Cron Agent job;
 OpenClaw's model authors a persistent-custom-session automation with the same
@@ -52,6 +52,10 @@ same. This changes topology and role prompts together. See the
 The first formation attempts and the bounded post-repair pair stopped before
 the watch. Their task metrics are censored, even when the strict full gate fails;
 the verified Peko post-setup arrangement is formation evidence only.
+Contract 6 scopes setup to genesis/onboarding and makes owner/review handoffs
+update shared facts and acknowledge without driving the worker. See the
+[handoff pilot](RESPONSIBILITY_HANDOFF_MIMO_2026-10-07.md) for the intervention
+and its bounded live validation.
 
 The controller changes dependencies silently. Supervisory runs receive **no
 message, wake request, or manually triggered cron** when dependencies change

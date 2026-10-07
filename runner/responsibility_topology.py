@@ -13,6 +13,18 @@ from responsibility_audit import timestamp
 
 WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
+SEPARATED_CONTRACT_VERSION = 6
+
+
+def handoff_prompt():
+    return ("On OWNER_UPDATE or REVIEW_CONVERSATION, this is a requirements handoff, not worker execution. "
+            "Read only canonical requirements/receipts as needed, persist accepted owner changes or retain them "
+            "against tentative review proposals, then acknowledge and END THIS TURN. Do not GET /world, "
+            "perform operational POSTs, resume/spawn the worker, trigger a job, poll async output or cron history, "
+            "or wait for a future tick in these conversations. The registered native worker will read the shared "
+            "files on its next turn. Do not recreate or empty task files or rerun genesis/onboarding setup. "
+            "On MEMORY_PROBE, read retained requirements/receipts and submit only the requested memory object; "
+            "do not resume workers, inspect /world, deliver or wait. ")
 
 
 def task_paths():
@@ -36,7 +48,10 @@ def supervisor_prompt(cadence):
 
 def peko_setup(url, cadence, worker_prompt):
     # A directed organization task, not a controller-installed role or job.
-    return ("Use separated supervision and execution. First create kb/responsibility/commitments.md with an "
+    return ("<genesis-only-setup> Execute this recipe ONLY in the first trunk turn whose current message "
+            "starts [genesis]. It is not an ongoing task for owner, review, worker, or keepalive turns. "
+            "After genesis, retain the established files and jobs; never repeat initialization or clear task state. "
+            "Use separated supervision and execution. First create kb/responsibility/commitments.md with an "
             "empty requirement/state table and kb/responsibility/receipts.md with an empty receipt log. "
             "No commitment facts have arrived; keep them empty. Point hot memory/index at these exact files. "
             "Create roles/release-watch.md with name release-watch and a focused task-worker role: "
@@ -52,18 +67,21 @@ def peko_setup(url, cadence, worker_prompt):
             + supervisor_prompt(cadence)
             + " Once that organizational Send is registered, CronDelete id=keepalive to remove only the old "
             "10-minute default. CronUpdate cannot change cadence or message; use the create/delete tools. "
-            "Write this division into shared memory/conventions so all conversations follow it. "
-            "Create exactly one additional recurring CronCreate label=responsibility-monitor "
+            "Write this division and the following handoff rules into shared memory/conventions: "
+            + handoff_prompt()
+            + "Create exactly one additional recurring CronCreate label=responsibility-monitor "
             f"interval_ms={int(cadence * 1000)} tool=Agent params={{action:new,path:/release-watch,"
             "role:release-watch,prompt:<the following worker instruction>}, wake_on_completion=false, "
             "timeout_secs=90. This invokes the persistent task session directly; do not use a trunk message "
             "job to dispatch it. Worker instruction: " + worker_prompt
             + " Verify your jobs/session before completing genesis. Do not create other timers or monitors. "
-            f"Simulator base URL is {url}; all commitment facts arrive later through owner chat.")
+            f"Simulator base URL is {url}; all commitment facts arrive later through owner chat. "
+            "</genesis-only-setup>")
 
 
 def claw_setup(node, entry, cadence, worker_prompt):
-    return ("Use separated supervision and execution. First create empty kb/responsibility/commitments.md "
+    return ("ONBOARDING-ONLY setup recipe; never repeat it in owner, review, worker or heartbeat turns. "
+            "Use separated supervision and execution. First create empty kb/responsibility/commitments.md "
             "and kb/responsibility/receipts.md, point memory/index at them, and write a focused worker "
             "instruction file and shared conventions. No commitment facts have arrived yet. " + task_paths()
             + "Your configured organizational heartbeat is enabled "
@@ -75,10 +93,14 @@ def claw_setup(node, entry, cadence, worker_prompt):
             "--session session:release-watch --thinking off --timeout-seconds 90 --no-deliver "
             "--fallbacks '' --message <worker instruction>. Do not use a command/script payload or "
             "send a system-event into the supervisor. Worker instruction: " + worker_prompt
-            + " Write a focused worker instruction file and shared conventions: the worker owns dependency "
+            + " Shared conventions must state: the worker owns dependency "
             "inspection, operational actions and receipts/current-state; the supervisor owns organization "
             "and optional hot-memory/journal/skill maintenance. All conversations use canonical shared "
-            "requirements and receipts. Do not create other timers or monitors. Verify registration and finish.")
+            "requirements and receipts. " + handoff_prompt()
+            + "Do not create other timers or monitors. Verify registration and finish. "
+            "Keep onboarding minimal: batch independent file writes where supported, skip daily journals and "
+            "optional memory curation, and avoid repeated directory inventories or CLI discovery commands. "
+            "Do not launch the worker manually; its registered native timer initializes it on its first tick.")
 
 
 def job_list(value):

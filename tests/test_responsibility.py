@@ -3,6 +3,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -15,7 +16,7 @@ from responsibility import contract
 from continuity_proxy import AnthropicRelay
 from responsibility_audit import native_outbound_attempts
 from responsibility_topology import (verify_peko, verify_claw, execution_evidence,
-                                     supervisor_prompt, WORKER_KEY)
+                                     supervisor_prompt, WORKER_KEY, SEPARATED_CONTRACT_VERSION)
 
 
 class ResponsibilityTests(unittest.TestCase):
@@ -270,6 +271,24 @@ class ResponsibilityTests(unittest.TestCase):
         self.assertFalse(verify_peko({"jobs": [task, keep]}, sessions, 60)["verified"])
         task["tool_params"]["path"] = "/release-watch"
         self.assertFalse(verify_peko({"jobs": [task, keep, keep]}, sessions, 60)["verified"])
+
+    def test_failed_onboarding_retains_contract_and_bootstrap_evidence(self):
+        self.sim.url = "http://127.0.0.1:1234"
+        self.spec["topology"] = "separated"
+        driver = ClawResponsibility(Path(self.temp.name), 900, .1, self.sim, "supervisory")
+        driver.workspace = Path(self.temp.name)
+        driver.node, driver.entry = "node", Path("openclaw.mjs")
+        (driver.workspace / "BOOTSTRAP.md").write_text("Not completed")
+        def baseline(_):
+            driver.metadata = {"initialization_completed": True}
+            return driver.metadata
+        with patch("responsibility_drivers.OpenClawDriver.start", baseline), \
+                patch.object(driver, "turn", side_effect=TimeoutError("onboarding")):
+            with self.assertRaises(TimeoutError):
+                driver.start()
+        self.assertEqual(driver.metadata["api_contract_version"], SEPARATED_CONTRACT_VERSION)
+        self.assertEqual(driver.metadata["topology"], "separated")
+        self.assertFalse(driver.metadata["persona_bootstrap_completed"])
 
     def test_claw_topology_requires_custom_agent_session_not_a_supervisor_event(self):
         task = {"name": "responsibility-monitor", "enabled": True,

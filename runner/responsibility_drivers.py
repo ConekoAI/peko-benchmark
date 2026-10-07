@@ -12,7 +12,8 @@ from continuity_proxy import AnthropicRelay
 from continuity_usage import reconcile_usage
 from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
-                                     verify_claw, verify_peko, task_paths)
+                                     verify_claw, verify_peko, task_paths,
+                                     handoff_prompt, SEPARATED_CONTRACT_VERSION)
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000}
@@ -96,19 +97,23 @@ class PekoResponsibility(PekoDriver):
                 "On genesis keep the existing memory structure, avoid speculative files or delegation, "
                 "record this purpose in hot memory and configure the requested native cadence. " + rhythm)
         if self.topology == "separated":
-            goal = ("You are Responsibility Bench, the organizational supervisor of a persistent principal. "
-                    "Keep existing memory scaffolding, initialize canonical shared requirement/state/receipt "
-                    "notes without inventing commitments, and organize one dedicated task worker. "
+            goal = ("Responsibility Bench is a persistent principal coordinating simulated release obligations. "
+                    "Its trunk is the organizational supervisor; /release-watch owns periodic task execution; "
+                    "peer owner/review conversations receive requirement changes. Each session follows its current "
+                    "turn's role, not every other role. Keep existing memory scaffolding and authoritative shared "
+                    "requirements/receipts without inventing facts. " + handoff_prompt()
                     + peko_setup(self.sim.url, cadence, task_monitor_prompt(self.sim.url, cadence)))
         self.seed_extra = ("\n[identity]\ndisplay_name = \"Responsibility Bench\"\n"
                            "description = \"Concise coordinator for simulated release obligations\"\n"
                            "\n[intent]\ngoals = [" + json.dumps(goal) + "]\n")
-        metadata = super().start()
-        metadata.update(base_url=upstream, common_wire_policy=POLICY, continuation_mode=self.mode,
-                        cadence_secs=cadence, initialization="defined_purpose_native_genesis",
-                        api_contract_version=5 if self.topology == "separated" else API_CONTRACT_VERSION,
-                        topology=self.topology)
-        return metadata
+        try:
+            super().start()
+        finally:
+            self.metadata.update(base_url=upstream, common_wire_policy=POLICY, continuation_mode=self.mode,
+                                 cadence_secs=cadence, initialization="defined_purpose_native_genesis",
+                                 api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
+                                 topology=self.topology)
+        return self.metadata
 
     def validate_topology(self, stage):
         root = Path(self.temp.name) / ".peko/data/principals" / self.principal
@@ -211,7 +216,13 @@ class ClawResponsibility(OpenClawDriver):
             self.relay.profiler = PromptProfiler()
 
     def start(self):
-        metadata = super().start()
+        try:
+            metadata = super().start()
+        finally:
+            self.metadata.update(common_wire_policy=POLICY, continuation_mode=self.mode,
+                                 cadence_secs=self.sim.spec["cadence_secs"],
+                                 api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
+                                 topology=self.topology)
         instruction = ("Onboarding: your agreed name is Responsibility Bench. Your agreed vibe is concise release "
                   "coordinator for an isolated simulation, emoji 📋. Skip avatar generation and optional apps/plugins. "
                   "Complete applicable BOOTSTRAP steps now in one bounded turn: persist identity, soul and user "
@@ -219,17 +230,26 @@ class ClawResponsibility(OpenClawDriver):
                   f"CLI entry: {self.node} {self.entry}. Workspace: {self.workspace}. "
                   "No recommendations or questions are needed. Remove BOOTSTRAP.md when done. "
                   "Reply briefly.")
+        if self.topology == "separated":
+            instruction += (" Set identity directly with "
+                            f"{self.node} {self.entry} agents set-identity --agent main "
+                            f"--workspace {self.workspace} --name 'Responsibility Bench' "
+                            "--theme 'Concise release coordinator for an isolated simulation' --emoji '📋'. "
+                            "No identity CLI discovery is needed. ")
         instruction += (claw_setup(self.node, self.entry, self.sim.spec["cadence_secs"],
                                    task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"]))
                         if self.topology == "separated" else
                         "Do not start any tasks or schedules beyond the configured heartbeat.")
-        self.turn(instruction)
+        try:
+            self.turn(instruction)
+        finally:
+            metadata["persona_bootstrap_completed"] = not (self.workspace / "BOOTSTRAP.md").exists()
         completed = not (self.workspace / "BOOTSTRAP.md").exists()
         metadata.update(initialization="native_baseline_and_completed_llm_onboarding",
                         persona_bootstrap_completed=completed, common_wire_policy=POLICY,
                         continuation_mode=self.mode, cadence_secs=self.sim.spec["cadence_secs"],
                         heartbeat="native configured cadence, owner task session, internal-only output",
-                        api_contract_version=5 if self.topology == "separated" else API_CONTRACT_VERSION,
+                        api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
                         topology=self.topology)
         if not completed:
             raise RuntimeError("OpenClaw persona onboarding did not finish before task clock")

@@ -14,7 +14,7 @@ from continuity_proxy import summarize_calls
 from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract, state_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
-from responsibility_topology import execution_evidence, task_paths
+from responsibility_topology import execution_evidence, task_paths, handoff_prompt
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -24,8 +24,9 @@ def contract(sim):
                     f"and independent organizational supervision at {sim.spec['cadence_secs'] * 2:g}s. "
                     + task_paths() + "Only the task worker inspects dependencies and performs operational actions during the watch. "
                     "Owner/review conversations maintain authoritative shared requirements; the worker owns receipts "
-                    "and current-state reconciliation; the supervisor organizes and repairs. Native Agent/automation "
-                    "registration and bounded setup delegation are allowed. Do not add other monitors, schedules, "
+                    "and current-state reconciliation; the supervisor organizes and repairs. Worker/job setup is "
+                    "already complete; only genesis/onboarding creates them. " + handoff_prompt()
+                    + "Do not add other monitors, schedules, "
                     "polling loops, or scheduled scripts. "
                     if sim.spec.get("topology") == "separated" else
                     f"Use only the configured {sim.spec['cadence_secs']:g}s native supervision; no extra timers, "
