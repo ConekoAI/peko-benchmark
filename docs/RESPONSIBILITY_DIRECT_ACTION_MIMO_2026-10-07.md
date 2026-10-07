@@ -140,10 +140,14 @@ Extend Peko's first-open recovery to abandoned SpawnTool rows without an
 attached task id. Close them as failed with a partial-outcome warning and
 retain authored enablement/cadence; leave tracked task ids with the existing
 reconciler and preserve live runs across aliases/engine clones. Regression
-coverage requires a later due tool fire to execute after recovery. The correction is submitted in [runtime PR #424](https://github.com/ConekoAI/peko-runtime/pull/424).
+coverage requires a later due tool fire to execute after recovery. The correction merged in [runtime PR #424](https://github.com/ConekoAI/peko-runtime/pull/424),
+commit `6f3c70a636357c7753c17bad8aff469c6f2f9d05`.
 Local validation passed 2,750 library tests (three existing tests ignored),
 all-target Clippy with warnings denied, formatting and both boundary checks.
 The final portable regression fixture passed all 20 focused cron-engine tests.
+[CI on the final PR revision](https://github.com/ConekoAI/peko-runtime/actions/runs/37559898257)
+passed both lint jobs and Linux library/daemon-shutdown tests. Windows and
+mock/real-LLM integration tiers were skipped by their normal gates.
 This live pair predates the correction and does not validate its real-LLM behavior.
 
 The direct-command guidance eliminated the previously observed shell-timing

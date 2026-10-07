@@ -200,6 +200,19 @@
     "post_fix_live_validation": false,
     "local_library_tests_passed": 2750,
     "local_library_tests_ignored": 3,
-    "final_focused_cron_tests_passed": 20
+    "final_focused_cron_tests_passed": 20,
+    "state": "merged",
+    "merge_commit": "6f3c70a636357c7753c17bad8aff469c6f2f9d05",
+    "ci_run": "https://github.com/ConekoAI/peko-runtime/actions/runs/37559898257",
+    "ci_passed": [
+      "module_boundaries",
+      "workspace_dependencies",
+      "linux_library_and_daemon_shutdown"
+    ],
+    "ci_skipped": [
+      "windows_unit",
+      "mock_llm_integration",
+      "real_llm_integration"
+    ]
   }
 }
