@@ -1,0 +1,2001 @@
+{
+  "evidence_kind": "one_guarded_pair_plus_one_focused_peko_fix_validation",
+  "api_contract_version": 10,
+  "action_service_version": 1,
+  "model": "mimo-v2.6-flash",
+  "reporting_diagnostics_commit": "5921eef",
+  "runtime_fixes": {
+    "cron_cost_surface": {
+      "pr": 426,
+      "merge_commit": "74e6e740e977a3a2b68165019d25d8acc7df3bd7"
+    },
+    "provider_stream_isolation": {
+      "pr": 427,
+      "compiled_source_commit": "b48538dac052ee6ceedeef7630144440abca9421",
+      "merge_commit": "2129103cfeea457df01750add1b7e35b84fc7c46",
+      "provider_tests_passed": 237,
+      "library_tests_passed": 2754,
+      "library_tests_ignored": 3,
+      "ci_run": 37575659422
+    }
+  },
+  "unchanged_prompt_functions_verified_by_ast": [
+    "direct_action_prompt",
+    "handoff_prompt",
+    "task_paths",
+    "supervisor_prompt",
+    "peko_setup",
+    "claw_setup"
+  ],
+  "runs": [
+    {
+      "label": "original_openclaw",
+      "report": "20261007T045717845035Z-responsibility-openclaw",
+      "original_result_sha256": "d880f3dec642be2654ade4120bb0f15319ba0d5927c5f7c1c8e92b0b44f3acb2",
+      "benchmark_commit": "f7c68f3",
+      "metadata": {
+        "driver": "openclaw",
+        "model": "mimo-benchmark/mimo-v2.6-flash",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "base_url": "https://token-plan-cn.xiaomimimo.com/anthropic",
+        "version": "OpenClaw 2026.9.8 (fc23bc8)",
+        "node_version": "v24.17.0",
+        "entry_sha256": "aa8606ca0d62ff133ef5b7bd2323ec8ff3f8eb384404399cd5e742918d63b0a1",
+        "package_version": "2026.9.8",
+        "budget_usd": 0.05,
+        "budget_enforcement": "controller_relay_between_calls",
+        "initialization": "controller_prepared_empty_native_topology",
+        "initialization_completed": true,
+        "restart_kind": "process_restart",
+        "thinking": "OpenClaw default; effective wire field captured per call",
+        "heartbeat": "native default cadence; short event-driven scenario",
+        "model_config": {
+          "gateway": {
+            "mode": "local",
+            "port": 56588,
+            "bind": "loopback",
+            "auth": {
+              "mode": "token",
+              "token": "${OPENCLAW_GATEWAY_TOKEN}"
+            }
+          },
+          "agents": {
+            "defaults": {
+              "workspace": "/tmp/obc-p9u0q5uq/.openclaw/workspace",
+              "model": {
+                "primary": "mimo-benchmark/mimo-v2.6-flash",
+                "fallbacks": []
+              },
+              "models": {
+                "mimo-benchmark/mimo-v2.6-flash": {
+                  "params": {
+                    "maxTokens": 4096
+                  }
+                }
+              },
+              "timeoutSeconds": 180,
+              "thinkingDefault": "off",
+              "heartbeat": {
+                "every": "0m",
+                "session": "agent:main:responsibility",
+                "target": "none",
+                "prompt": "Internal organizational supervision. Keep a dedicated release-watch task session and its native 60s schedule healthy. Review native session/job status and shared durable notes; repair missing or failed organization when necessary. The task worker owns dependency inspection, operational actions and receipt/current-state maintenance. Do not GET /world or POST /actions on a supervisor tick. Do not duplicate the worker, run its task yourself, or start polling loops. Preserve owner revisions and cancellations across conversations. Curate general memory, skills and session organization only when useful; keep hot memory as pointers to authoritative task notes. Do not rewrite operational statuses from stale summaries. Finish quietly when organization is healthy.",
+                "timeoutSeconds": 90
+              }
+            }
+          },
+          "models": {
+            "mode": "replace",
+            "providers": {
+              "mimo-benchmark": {
+                "baseUrl": "http://127.0.0.1:56587",
+                "api": "anthropic-messages",
+                "apiKey": "${OPENCLAW_BENCH_PROVIDER_TOKEN}",
+                "models": [
+                  {
+                    "id": "mimo-v2.6-flash",
+                    "name": "MiMo v2.6 Flash benchmark",
+                    "reasoning": true,
+                    "input": [
+                      "text"
+                    ],
+                    "contextWindow": 1048576,
+                    "maxTokens": 8192,
+                    "cost": {
+                      "input": 0.14,
+                      "output": 0.28,
+                      "cacheRead": 0.0028,
+                      "cacheWrite": 0
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "tools": {
+            "exec": {
+              "host": "gateway",
+              "security": "full",
+              "ask": "off"
+            }
+          }
+        },
+        "npm_integrity": "sha512-G+JkNUhtpDE3cXR4AEi2NyyG9fqI/T2WUSl8ZnR8AATH8Dh1kC3qYFL7wwPoZtgHiP/cszA86PEiE0PDysxb9Q==",
+        "installation_lock_sha256": "f0aaf18317523f89b3de38599126fdf530f1f570992503320b75bd4850be4263",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "continuation_mode": "supervisory",
+        "cadence_secs": 60,
+        "api_contract_version": 10,
+        "topology": "separated",
+        "action_mode": "guarded",
+        "action_service_version": 1,
+        "formation": "controller_prepared_empty_native_topology",
+        "persona_bootstrap_completed": true,
+        "topology_checks": [
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [],
+            "supervisor_session_ids": [],
+            "stage": "post-setup"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [],
+            "supervisor_session_ids": [
+              "3b0fddc6-bafc-4f6a-973d-22c35033694f"
+            ],
+            "stage": "pre-watch"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "efada7bd-a23e-48d7-b47c-3f291957eec2"
+            ],
+            "supervisor_session_ids": [
+              "3b0fddc6-bafc-4f6a-973d-22c35033694f"
+            ],
+            "stage": "post-restart"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "efada7bd-a23e-48d7-b47c-3f291957eec2"
+            ],
+            "supervisor_session_ids": [
+              "3b0fddc6-bafc-4f6a-973d-22c35033694f"
+            ],
+            "stage": "post-watch"
+          }
+        ],
+        "probe_schedules_suspended": true,
+        "telemetry_drain_completed": true
+      },
+      "source_manifest": {
+        "runner/responsibility_audit.py": "ed5f59827ac7e18c653be01f9dff6a9476873160895bb5b2cc75cd542ab10003",
+        "runner/responsibility_diagnostics.py": "4bf9673ac54e8fac3495d138b23b037eb52c84670ed1ef71199a7f5f947b26ba",
+        "runner/responsibility_topology.py": "295ed10dfff2ac4ffb6c85feba30bccbcb93e31272435ba0b13032ca4e21901f",
+        "runner/responsibility_drivers.py": "dbbfa0c0ecb319129bf6a1599120340b3f8e58a3b70607ad2202057a5278f003",
+        "runner/responsibility_surface_smoke.py": "87c4179a88b8f37eb104044c2eb22b08c3701dad126e54789816c54e138c7b5d",
+        "runner/responsibility_prepared.py": "6d218c6e4ac20aa86977443e682bbd9cc8b2fa245124959eabc6186f8201fffb",
+        "runner/responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+        "runner/responsibility_simulator.py": "33bd2863cc60a5da5d9d19cfd408b60e3adb81bc42157e35c5ffd915fa458e74",
+        "runner/responsibility.py": "eacd0842fc2c7faf3683093d85557ddc95a11672004683a1ac2aa3d4fc9fddd4",
+        "runner/continuity_usage.py": "c10ce57404a78eee83526cf8673ec7f87c5602794adb8f6fabcced463c68e90b",
+        "runner/continuity_peko.py": "28e7c60a9599036bf6d20543e8c84461df80fbfbd00a6f9a2b879bb48779dc51",
+        "runner/continuity_openclaw.py": "9ef3ba369c2a86e50fce68936a4843e1d94dda836ff80503366ed38876703ab1",
+        "runner/continuity_proxy.py": "c9959ccceec914d97bf24e504fb51de31ef10934def96bda57731b84fdf53d1c",
+        "runner/continuity.py": "53996221126a79865e17597ea0486c4b6e0182ddf3e31b5a637158f0cdbd0d84",
+        "runner/prompt_profile.py": "a1dfb59d2bff2d9a717b1fcfbabfad063f8af138226645c4503eeeaadbd5f468",
+        "runner/tool_surface.py": "ad85d5ecb60416fd1f60382361a6b8b50683e8efa4db89b0913b2d3d16b011c5"
+      },
+      "metrics_original": {
+        "passed": true,
+        "trace_complete": true,
+        "restart_verified": true,
+        "required_obligations": 3,
+        "completed_obligations": 3,
+        "obligation_completion_rate": 1.0,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 24.617,
+          "cedar-91b72265b1f5": 8.932
+        },
+        "forbidden_actions": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 0,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_accuracy": 1.0,
+        "protocol_errors": 0,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "watch_status_reads": 5,
+        "unchanged_state_reads": 1,
+        "restart_count": 1,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": true,
+          "observation_horizon_secs": 300.182,
+          "nominal_cadence_secs": 60,
+          "first_read_elapsed_secs": 27.323,
+          "first_read_offset_mod_cadence_secs": 27.323,
+          "inter_read_gaps_secs": [
+            60.887,
+            63.028,
+            54.089,
+            60.089
+          ],
+          "max_inter_read_gap_secs": 63.028,
+          "max_unobserved_gap_secs": 63.028,
+          "obligations_observed_in_time": 3,
+          "obligations_without_timely_observation": [],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                88.21,
+                151.238
+              ],
+              "eligible_read_count": 2,
+              "max_remaining_secs": 71.79,
+              "min_remaining_secs": 8.762
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                151.238,
+                205.327
+              ],
+              "eligible_read_count": 2,
+              "max_remaining_secs": 88.762,
+              "min_remaining_secs": 34.673
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                205.327
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 34.673,
+              "min_remaining_secs": 34.673
+            }
+          }
+        },
+        "action_boundary": {
+          "version": 1,
+          "attempts": 3,
+          "invalid_policy_attempts": 0,
+          "rejected_attempts": 0,
+          "idempotent_replays": 0,
+          "committed_effects": 3,
+          "limitation": "Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible."
+        },
+        "observed_preconditions": {
+          "version": 1,
+          "violations": 0,
+          "actions": [
+            {
+              "action_seq": 13,
+              "project": "atlas-91b72265b1f5",
+              "read_seq": 11,
+              "observed_elapsed_secs": 88.21,
+              "observed_precondition_satisfied": true
+            },
+            {
+              "action_seq": 18,
+              "project": "cedar-91b72265b1f5",
+              "read_seq": 16,
+              "observed_elapsed_secs": 151.238,
+              "observed_precondition_satisfied": true
+            },
+            {
+              "action_seq": 22,
+              "project": "dogwood-91b72265b1f5",
+              "read_seq": 20,
+              "observed_elapsed_secs": 205.327,
+              "observed_precondition_satisfied": true
+            }
+          ],
+          "limitation": "Read attribution assumes the declared single operational worker."
+        },
+        "receipt_retention": {
+          "measured": true,
+          "expected_receipts": [
+            1,
+            2,
+            3
+          ],
+          "retained_receipts": [
+            1,
+            2,
+            3
+          ],
+          "missing_receipts": [],
+          "limitation": "Numeric references only; content truth and append-only history require a separate mutation audit."
+        },
+        "policy_diagnostics_passed": true,
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "tool_attribution_v2": {
+        "version": 2,
+        "counts": {
+          "native_success": 40
+        },
+        "calls": [],
+        "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved."
+      },
+      "topology_execution_v2": {
+        "worker_assistant_messages": 0,
+        "supervisor_assistant_messages": 7,
+        "worker_world_tool_calls": 0,
+        "nonworker_operational_tool_calls": 8,
+        "intents": [
+          {
+            "time": 1791349156.239,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349212.936,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349221.227,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791349272.895,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349284.26,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791349334.88,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349338.339,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791349395.301,
+            "session_id": "efada7bd-a23e-48d7-b47c-3f291957eec2",
+            "lane": "other",
+            "world": true,
+            "actions": false
+          }
+        ],
+        "verified": false,
+        "version": 2,
+        "limitation": "Direct native curl URL arguments, not attribution of every HTTP side effect; complex commands/scripts require separate investigation."
+      },
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 36,
+        "rejected_request_count": 0,
+        "input_tokens": 696045,
+        "uncached_input_tokens": 112813,
+        "output_tokens": 6840,
+        "cache_read_tokens": 583232,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.019342069599999998,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "request_count": 36,
+          "uncached_input_tokens": 112813,
+          "output_tokens": 6840,
+          "cache_read_tokens": 583232,
+          "cache_creation_tokens": 0
+        },
+        "native_usage_matches": true
+      },
+      "interrupted_calls": [],
+      "controller_minus_native_usage": {
+        "request_count": 0,
+        "uncached_input_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 0
+      },
+      "difference_exactly_explained_by_interrupted_calls": true,
+      "action_attempts": [
+        {
+          "seq": 12,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 94.782,
+          "wall_time": 1791349227.786695,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r2"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 1,
+            "action_key": "send_release:atlas-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 94.781
+          },
+          "http_status": 200
+        },
+        {
+          "seq": 17,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 159.007,
+          "wall_time": 1791349292.0115469,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "cedar-91b72265b1f5",
+              "revision": "r1",
+              "recipient": "ops-room-91b72265b1f5",
+              "delivery_key": "cedar-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r1"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 2,
+            "action_key": "send_release:cedar-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "cedar-91b72265b1f5",
+              "revision": "r1",
+              "recipient": "ops-room-91b72265b1f5",
+              "delivery_key": "cedar-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 159.007
+          },
+          "http_status": 200
+        },
+        {
+          "seq": 21,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 209.795,
+          "wall_time": 1791349342.7984488,
+          "envelope": {
+            "action": {
+              "kind": "request_input",
+              "project": "dogwood-91b72265b1f5",
+              "reason": "dependency_blocked"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": false,
+                "revision": "r1"
+              },
+              "not_before": 180
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 3,
+            "action_key": "request_input:dogwood-91b72265b1f5",
+            "action": {
+              "kind": "request_input",
+              "project": "dogwood-91b72265b1f5",
+              "reason": "dependency_blocked"
+            },
+            "committed_elapsed_secs": 209.794
+          },
+          "http_status": 200
+        }
+      ],
+      "world_read_times_secs": [
+        27.323,
+        88.21,
+        151.238,
+        205.327,
+        265.416
+      ],
+      "errors": [],
+      "wall_secs": 426.035
+    },
+    {
+      "label": "original_peko",
+      "report": "20261007T045927462387Z-responsibility-peko",
+      "original_result_sha256": "d40d39aed5c0aa0e44ff8133f5a17723bc30bb1e58b806a4605558b75da108a0",
+      "benchmark_commit": "f7c68f3",
+      "metadata": {
+        "driver": "peko",
+        "model": "mimo-v2.6-flash",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "base_url": "https://token-plan-cn.xiaomimimo.com/anthropic",
+        "model_config": {
+          "id": "mimo-v2.6-flash",
+          "displayName": "mimo-v2.6-flash",
+          "templateId": null,
+          "modelId": "mimo-v2.6-flash",
+          "apiFormat": "anthropic_messages",
+          "baseUrl": "http://127.0.0.1:56936",
+          "contextWindow": 1048576,
+          "maxOutputTokens": 4096,
+          "requiresKey": true,
+          "enabled": true,
+          "credentialId": "cabeeb80-a9d2-4e5d-bd1d-0e954223ed17",
+          "spec": {
+            "imageInput": false,
+            "audioInput": false,
+            "toolSupport": "function_calling",
+            "streaming": true,
+            "thinking": "optional",
+            "jsonMode": false,
+            "decisions": false,
+            "pricing": {
+              "input_per_million": 0.14,
+              "output_per_million": 0.28
+            }
+          }
+        },
+        "pricing_hint": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28
+        },
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "version": "0.1.0",
+        "budget_usd": 0.05,
+        "cli_sha256": "257ef9122e8fe80caa355028e1074bc5d47284b811f75c95822f3583e95a5520",
+        "daemon_sha256": "7c9c27b804e3e8ec1f1cc58a638f8a85952f66bf0b9a03733f2497c2e99adb88",
+        "restart_kind": "process_restart",
+        "initialization": "defined_purpose_native_genesis",
+        "initialization_completed": true,
+        "formation": "controller_prepared_empty_native_topology",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "continuation_mode": "supervisory",
+        "cadence_secs": 60,
+        "api_contract_version": 10,
+        "topology": "separated",
+        "action_mode": "guarded",
+        "action_service_version": 1,
+        "topology_checks": [
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "4ca08c59-eb60-4606-b5f2-757848a54900"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "post-setup"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "4ca08c59-eb60-4606-b5f2-757848a54900"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "pre-watch"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "4ca08c59-eb60-4606-b5f2-757848a54900"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "post-restart"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "4ca08c59-eb60-4606-b5f2-757848a54900"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "post-watch"
+          }
+        ],
+        "probe_schedules_suspended": true,
+        "telemetry_drain_completed": true
+      },
+      "source_manifest": {
+        "runner/responsibility_audit.py": "ed5f59827ac7e18c653be01f9dff6a9476873160895bb5b2cc75cd542ab10003",
+        "runner/responsibility_diagnostics.py": "4bf9673ac54e8fac3495d138b23b037eb52c84670ed1ef71199a7f5f947b26ba",
+        "runner/responsibility_topology.py": "295ed10dfff2ac4ffb6c85feba30bccbcb93e31272435ba0b13032ca4e21901f",
+        "runner/responsibility_drivers.py": "dbbfa0c0ecb319129bf6a1599120340b3f8e58a3b70607ad2202057a5278f003",
+        "runner/responsibility_surface_smoke.py": "87c4179a88b8f37eb104044c2eb22b08c3701dad126e54789816c54e138c7b5d",
+        "runner/responsibility_prepared.py": "6d218c6e4ac20aa86977443e682bbd9cc8b2fa245124959eabc6186f8201fffb",
+        "runner/responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+        "runner/responsibility_simulator.py": "33bd2863cc60a5da5d9d19cfd408b60e3adb81bc42157e35c5ffd915fa458e74",
+        "runner/responsibility.py": "eacd0842fc2c7faf3683093d85557ddc95a11672004683a1ac2aa3d4fc9fddd4",
+        "runner/continuity_usage.py": "c10ce57404a78eee83526cf8673ec7f87c5602794adb8f6fabcced463c68e90b",
+        "runner/continuity_peko.py": "28e7c60a9599036bf6d20543e8c84461df80fbfbd00a6f9a2b879bb48779dc51",
+        "runner/continuity_openclaw.py": "9ef3ba369c2a86e50fce68936a4843e1d94dda836ff80503366ed38876703ab1",
+        "runner/continuity_proxy.py": "c9959ccceec914d97bf24e504fb51de31ef10934def96bda57731b84fdf53d1c",
+        "runner/continuity.py": "53996221126a79865e17597ea0486c4b6e0182ddf3e31b5a637158f0cdbd0d84",
+        "runner/prompt_profile.py": "a1dfb59d2bff2d9a717b1fcfbabfad063f8af138226645c4503eeeaadbd5f468",
+        "runner/tool_surface.py": "ad85d5ecb60416fd1f60382361a6b8b50683e8efa4db89b0913b2d3d16b011c5"
+      },
+      "metrics_original": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "required_obligations": 3,
+        "completed_obligations": 2,
+        "obligation_completion_rate": 0.6666666666666666,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 23.833,
+          "cedar-91b72265b1f5": 63.179
+        },
+        "forbidden_actions": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 0,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "memory_facts_correct": 21,
+        "memory_facts_total": 24,
+        "memory_accuracy": 0.875,
+        "protocol_errors": 0,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "watch_status_reads": 4,
+        "unchanged_state_reads": 0,
+        "restart_count": 1,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": true,
+          "observation_horizon_secs": 300.079,
+          "nominal_cadence_secs": 60,
+          "first_read_elapsed_secs": 28.143,
+          "first_read_offset_mod_cadence_secs": 28.143,
+          "inter_read_gaps_secs": [
+            60.574,
+            60.529,
+            59.751
+          ],
+          "max_inter_read_gap_secs": 60.574,
+          "max_unobserved_gap_secs": 91.082,
+          "obligations_observed_in_time": 3,
+          "obligations_without_timely_observation": [],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                88.717,
+                149.246
+              ],
+              "eligible_read_count": 2,
+              "max_remaining_secs": 71.283,
+              "min_remaining_secs": 10.754
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                208.997
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 31.003,
+              "min_remaining_secs": 31.003
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                208.997
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 31.003,
+              "min_remaining_secs": 31.003
+            }
+          }
+        },
+        "action_boundary": {
+          "version": 1,
+          "attempts": 3,
+          "invalid_policy_attempts": 1,
+          "rejected_attempts": 1,
+          "idempotent_replays": 0,
+          "committed_effects": 2,
+          "limitation": "Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible."
+        },
+        "observed_preconditions": {
+          "version": 1,
+          "violations": 0,
+          "actions": [
+            {
+              "action_seq": 15,
+              "project": "atlas-91b72265b1f5",
+              "read_seq": 13,
+              "observed_elapsed_secs": 88.717,
+              "observed_precondition_satisfied": true
+            },
+            {
+              "action_seq": 23,
+              "project": "cedar-91b72265b1f5",
+              "read_seq": 21,
+              "observed_elapsed_secs": 208.997,
+              "observed_precondition_satisfied": true
+            }
+          ],
+          "limitation": "Read attribution assumes the declared single operational worker."
+        },
+        "receipt_retention": {
+          "measured": true,
+          "expected_receipts": [
+            1,
+            2
+          ],
+          "retained_receipts": [
+            1,
+            2
+          ],
+          "missing_receipts": [],
+          "limitation": "Numeric references only; content truth and append-only history require a separate mutation audit."
+        },
+        "policy_diagnostics_passed": true,
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "tool_attribution_v2": {
+        "version": 2,
+        "counts": {
+          "native_success": 65,
+          "native_error_requires_investigation": 1,
+          "unresolved": 10,
+          "native_arguments_substituted": 2
+        },
+        "calls": [
+          {
+            "request_index": 26,
+            "wire_id": "call_f6682cdee0c44ccf80971acd",
+            "native_id": "call_f6682cdee0c44ccf80971acd",
+            "name": "Glob",
+            "intent_preserved": true,
+            "native_is_error": true,
+            "missing_required": [],
+            "category": "native_error_requires_investigation",
+            "argument_sources": []
+          },
+          {
+            "request_index": 29,
+            "wire_id": "call_256936fcc1564360894822f5",
+            "native_id": "call256936fcc1564360894822f5",
+            "name": "Write",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 29,
+            "wire_id": "call_681517dfb00c48e1b3b3560c",
+            "native_id": "call681517dfb00c48e1b3b3560c",
+            "name": "Write",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 29,
+            "wire_id": "call_966c8b265fd642e680554d82",
+            "native_id": "call966c8b265fd642e680554d82",
+            "name": "Bash",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 33,
+            "wire_id": "call_6d97b9a64cdc4f5499460d66",
+            "native_id": "call6d97b9a64cdc4f5499460d66",
+            "name": "Write",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 34,
+            "wire_id": "call_373fd837284544e892455c47",
+            "native_id": "call_373fd837284544e892455c47",
+            "name": "Edit",
+            "intent_preserved": false,
+            "native_is_error": true,
+            "missing_required": [],
+            "category": "native_arguments_substituted",
+            "argument_sources": [
+              {
+                "request_index": 33,
+                "id": "call_6d97b9a64cdc4f5499460d66",
+                "name": "Write"
+              },
+              {
+                "request_index": 35,
+                "id": "call_02318c70438c48538f188db1",
+                "name": "Write"
+              }
+            ]
+          },
+          {
+            "request_index": 34,
+            "wire_id": "call_d46fec54756b4e41bf185c7b",
+            "native_id": "calld46fec54756b4e41bf185c7b",
+            "name": "Edit",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 34,
+            "wire_id": "call_4b164ee9ed33428b8778db27",
+            "native_id": "call4b164ee9ed33428b8778db27",
+            "name": "Bash",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 43,
+            "wire_id": "call_dce9e83e898940b994ad6b41",
+            "native_id": "calldce9e83e898940b994ad6b41",
+            "name": "Bash",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 44,
+            "wire_id": "call_aa30811bc6ba495e8386e63d",
+            "native_id": "callaa30811bc6ba495e8386e63d",
+            "name": "Read",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 45,
+            "wire_id": "call_89a5d3cad8c044c09a0137ed",
+            "native_id": "call89a5d3cad8c044c09a0137ed",
+            "name": "Bash",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          },
+          {
+            "request_index": 46,
+            "wire_id": "call_0e955b24539f4d3db535afcf",
+            "native_id": "call_0e955b24539f4d3db535afcf",
+            "name": "Read",
+            "intent_preserved": false,
+            "native_is_error": true,
+            "missing_required": [],
+            "category": "native_arguments_substituted",
+            "argument_sources": [
+              {
+                "request_index": 45,
+                "id": "call_89a5d3cad8c044c09a0137ed",
+                "name": "Bash"
+              },
+              {
+                "request_index": 47,
+                "id": "call_a937670e5b3f438981a441c8",
+                "name": "Bash"
+              }
+            ]
+          },
+          {
+            "request_index": 47,
+            "wire_id": "call_a937670e5b3f438981a441c8",
+            "native_id": "calla937670e5b3f438981a441c8",
+            "name": "Bash",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          }
+        ],
+        "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved."
+      },
+      "topology_execution_v2": {
+        "worker_assistant_messages": 21,
+        "supervisor_assistant_messages": 8,
+        "worker_world_tool_calls": 4,
+        "nonworker_operational_tool_calls": 0,
+        "intents": [
+          {
+            "time": 1791349441.901067,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349502.458466,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349507.730774,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791349562.991537,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349567.010247,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791349622.744036,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791349627.079492,
+            "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          }
+        ],
+        "verified": true,
+        "version": 2,
+        "limitation": "Direct native curl URL arguments, not attribution of every HTTP side effect; complex commands/scripts require separate investigation."
+      },
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 50,
+        "rejected_request_count": 0,
+        "input_tokens": 1362204,
+        "uncached_input_tokens": 159004,
+        "output_tokens": 14567,
+        "cache_read_tokens": 1203200,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.02970828,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "usage_source": "persisted_assistant_usage",
+          "usage_complete": true,
+          "cost_usd": 0.029462742400000002,
+          "input_tokens": 1315238,
+          "uncached_input_tokens": 158630,
+          "output_tokens": 14343,
+          "request_count": 49,
+          "cache_read_tokens": 1156608,
+          "cache_creation_tokens": 0,
+          "quota_snapshot": {
+            "window_start": "2026-10-07T00:00:00Z",
+            "window_end": "2026-10-08T00:00:00Z",
+            "cycle": "daily",
+            "input_tokens": 158630,
+            "output_tokens": 14343,
+            "request_count": 49,
+            "cost_usd": 0.02622424,
+            "cache_read_tokens": 1156608,
+            "cache_creation_tokens": 0
+          },
+          "quota_snapshot_request_count_matches": true
+        },
+        "native_usage_matches": false
+      },
+      "interrupted_calls": [
+        {
+          "index": 47,
+          "phase": "watch_idle",
+          "started_at": 1791349684.268812,
+          "wall_secs": 34.391,
+          "usage": {
+            "input_tokens": 374,
+            "output_tokens": 224,
+            "cache_read_input_tokens": 46592
+          },
+          "downstream_disconnected": true
+        }
+      ],
+      "controller_minus_native_usage": {
+        "request_count": 1,
+        "uncached_input_tokens": 374,
+        "cache_read_tokens": 46592,
+        "output_tokens": 224
+      },
+      "difference_exactly_explained_by_interrupted_calls": true,
+      "action_attempts": [
+        {
+          "seq": 14,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 93.986,
+          "wall_time": 1791349507.7706082,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r2"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 1,
+            "action_key": "send_release:atlas-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 93.985
+          },
+          "http_status": 200
+        },
+        {
+          "seq": 19,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 153.265,
+          "wall_time": 1791349567.048758,
+          "envelope": {
+            "action": {
+              "kind": "request_input",
+              "project": "dogwood-91b72265b1f5",
+              "reason": "dependency_blocked"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": false,
+                "revision": "r1"
+              },
+              "not_before": 180
+            }
+          },
+          "response": {
+            "accepted": false,
+            "effect_applied": false,
+            "error": "declared preconditions not satisfied",
+            "action_key": "request_input:dogwood-91b72265b1f5"
+          },
+          "http_status": 412
+        },
+        {
+          "seq": 22,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 213.334,
+          "wall_time": 1791349627.117318,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "cedar-91b72265b1f5",
+              "revision": "r1",
+              "recipient": "ops-room-91b72265b1f5",
+              "delivery_key": "cedar-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r1"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 2,
+            "action_key": "send_release:cedar-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "cedar-91b72265b1f5",
+              "revision": "r1",
+              "recipient": "ops-room-91b72265b1f5",
+              "delivery_key": "cedar-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 213.333
+          },
+          "http_status": 200
+        }
+      ],
+      "world_read_times_secs": [
+        28.143,
+        88.717,
+        149.246,
+        208.997
+      ],
+      "errors": [],
+      "wall_secs": 586.425
+    },
+    {
+      "label": "stream_fixed_peko_confirmation",
+      "report": "20261007T052018247526Z-responsibility-peko",
+      "original_result_sha256": "4e1b19a294a4e62bc1125b7750393e3dee67553f9e360a9666d35a117208f5a8",
+      "benchmark_commit": "5921eef",
+      "metadata": {
+        "driver": "peko",
+        "model": "mimo-v2.6-flash",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "base_url": "https://token-plan-cn.xiaomimimo.com/anthropic",
+        "model_config": {
+          "id": "mimo-v2.6-flash",
+          "displayName": "mimo-v2.6-flash",
+          "templateId": null,
+          "modelId": "mimo-v2.6-flash",
+          "apiFormat": "anthropic_messages",
+          "baseUrl": "http://127.0.0.1:59735",
+          "contextWindow": 1048576,
+          "maxOutputTokens": 4096,
+          "requiresKey": true,
+          "enabled": true,
+          "credentialId": "79520633-4537-4133-b618-55475f2bc687",
+          "spec": {
+            "imageInput": false,
+            "audioInput": false,
+            "toolSupport": "function_calling",
+            "streaming": true,
+            "thinking": "optional",
+            "jsonMode": false,
+            "decisions": false,
+            "pricing": {
+              "input_per_million": 0.14,
+              "output_per_million": 0.28
+            }
+          }
+        },
+        "pricing_hint": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28
+        },
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "version": "0.1.0",
+        "budget_usd": 0.05,
+        "cli_sha256": "82c343c632fa701e78acdcf1445e1f927fbf5190b1cefd91531eb8265894465e",
+        "daemon_sha256": "a779dbc0d08a5c82b0ced76a7e2acf77adba66b281c891af0e1886cbcfc47e94",
+        "restart_kind": "process_restart",
+        "initialization": "defined_purpose_native_genesis",
+        "initialization_completed": true,
+        "formation": "controller_prepared_empty_native_topology",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "continuation_mode": "supervisory",
+        "cadence_secs": 60,
+        "api_contract_version": 10,
+        "topology": "separated",
+        "action_mode": "guarded",
+        "action_service_version": 1,
+        "topology_checks": [
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "f0bb4f1a-d409-48e7-8005-962d927760cc"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "post-setup"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "f0bb4f1a-d409-48e7-8005-962d927760cc"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "pre-watch"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "f0bb4f1a-d409-48e7-8005-962d927760cc"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "post-restart"
+          },
+          {
+            "verified": true,
+            "errors": [],
+            "worker_session_ids": [
+              "f0bb4f1a-d409-48e7-8005-962d927760cc"
+            ],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "stage": "post-watch"
+          }
+        ],
+        "probe_schedules_suspended": true,
+        "telemetry_drain_completed": true
+      },
+      "source_manifest": {
+        "runner/responsibility_audit.py": "ed5f59827ac7e18c653be01f9dff6a9476873160895bb5b2cc75cd542ab10003",
+        "runner/responsibility_diagnostics.py": "4bf9673ac54e8fac3495d138b23b037eb52c84670ed1ef71199a7f5f947b26ba",
+        "runner/responsibility_topology.py": "fd6c9ee3cd73e5075b38da26e567fce057a4e367286399ab6891ded32752cd14",
+        "runner/responsibility_drivers.py": "dbbfa0c0ecb319129bf6a1599120340b3f8e58a3b70607ad2202057a5278f003",
+        "runner/responsibility_surface_smoke.py": "87c4179a88b8f37eb104044c2eb22b08c3701dad126e54789816c54e138c7b5d",
+        "runner/responsibility_prepared.py": "6d218c6e4ac20aa86977443e682bbd9cc8b2fa245124959eabc6186f8201fffb",
+        "runner/responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+        "runner/responsibility_simulator.py": "33bd2863cc60a5da5d9d19cfd408b60e3adb81bc42157e35c5ffd915fa458e74",
+        "runner/responsibility.py": "eacd0842fc2c7faf3683093d85557ddc95a11672004683a1ac2aa3d4fc9fddd4",
+        "runner/continuity_usage.py": "c10ce57404a78eee83526cf8673ec7f87c5602794adb8f6fabcced463c68e90b",
+        "runner/continuity_peko.py": "28e7c60a9599036bf6d20543e8c84461df80fbfbd00a6f9a2b879bb48779dc51",
+        "runner/continuity_openclaw.py": "9ef3ba369c2a86e50fce68936a4843e1d94dda836ff80503366ed38876703ab1",
+        "runner/continuity_proxy.py": "c9959ccceec914d97bf24e504fb51de31ef10934def96bda57731b84fdf53d1c",
+        "runner/continuity.py": "53996221126a79865e17597ea0486c4b6e0182ddf3e31b5a637158f0cdbd0d84",
+        "runner/prompt_profile.py": "a1dfb59d2bff2d9a717b1fcfbabfad063f8af138226645c4503eeeaadbd5f468",
+        "runner/tool_surface.py": "18f34ebf3934e1de8a36c94d68c5f4fcd962cad57393d140135ff4d7d7201f58"
+      },
+      "metrics_original": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "required_obligations": 3,
+        "completed_obligations": 2,
+        "obligation_completion_rate": 0.6666666666666666,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 27.284,
+          "cedar-91b72265b1f5": 10.451
+        },
+        "forbidden_actions": 1,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 0,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_accuracy": 1.0,
+        "protocol_errors": 0,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "watch_status_reads": 5,
+        "unchanged_state_reads": 1,
+        "restart_count": 1,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": true,
+          "observation_horizon_secs": 300.176,
+          "nominal_cadence_secs": 60,
+          "first_read_elapsed_secs": 31.221,
+          "first_read_offset_mod_cadence_secs": 31.221,
+          "inter_read_gaps_secs": [
+            25.094,
+            37.526,
+            62.403,
+            112.268
+          ],
+          "max_inter_read_gap_secs": 112.268,
+          "max_unobserved_gap_secs": 112.268,
+          "obligations_observed_in_time": 2,
+          "obligations_without_timely_observation": [
+            "dogwood-91b72265b1f5"
+          ],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                93.841,
+                156.244
+              ],
+              "eligible_read_count": 2,
+              "max_remaining_secs": 66.159,
+              "min_remaining_secs": 3.756
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                156.244
+              ],
+              "eligible_read_count": 1,
+              "max_remaining_secs": 83.756,
+              "min_remaining_secs": 83.756
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [],
+              "eligible_read_count": 0,
+              "max_remaining_secs": null,
+              "min_remaining_secs": null
+            }
+          }
+        },
+        "action_boundary": {
+          "version": 1,
+          "attempts": 4,
+          "invalid_policy_attempts": 2,
+          "rejected_attempts": 1,
+          "idempotent_replays": 0,
+          "committed_effects": 3,
+          "limitation": "Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible."
+        },
+        "observed_preconditions": {
+          "version": 1,
+          "violations": 0,
+          "actions": [
+            {
+              "action_seq": 14,
+              "project": "atlas-91b72265b1f5",
+              "read_seq": 12,
+              "observed_elapsed_secs": 93.841,
+              "observed_precondition_satisfied": true
+            },
+            {
+              "action_seq": 19,
+              "project": "cedar-91b72265b1f5",
+              "read_seq": 17,
+              "observed_elapsed_secs": 156.244,
+              "observed_precondition_satisfied": true
+            },
+            {
+              "action_seq": 25,
+              "project": "dogwood-91b72265b1f5",
+              "read_seq": 21,
+              "observed_elapsed_secs": 268.512,
+              "observed_precondition_satisfied": true
+            }
+          ],
+          "limitation": "Read attribution assumes the declared single operational worker."
+        },
+        "receipt_retention": {
+          "measured": true,
+          "expected_receipts": [
+            1,
+            2,
+            3
+          ],
+          "retained_receipts": [
+            1,
+            2,
+            3
+          ],
+          "missing_receipts": [],
+          "limitation": "Numeric references only; content truth and append-only history require a separate mutation audit."
+        },
+        "policy_diagnostics_passed": true,
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "topology_registered": true
+      },
+      "tool_attribution_v2": {
+        "version": 2,
+        "counts": {
+          "native_success": 63,
+          "native_error_requires_investigation": 1,
+          "unresolved": 1
+        },
+        "calls": [
+          {
+            "request_index": 30,
+            "wire_id": "call_615e14bb4b1b41f5874338aa",
+            "native_id": "call_615e14bb4b1b41f5874338aa",
+            "name": "Glob",
+            "intent_preserved": true,
+            "native_is_error": true,
+            "missing_required": [],
+            "category": "native_error_requires_investigation",
+            "argument_sources": []
+          },
+          {
+            "request_index": 48,
+            "wire_id": "call_2b1c868efa49417483bd8bbb",
+            "native_id": "call2b1c868efa49417483bd8bbb",
+            "name": "Edit",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "argument_sources": []
+          }
+        ],
+        "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved."
+      },
+      "topology_execution_v2": {
+        "worker_assistant_messages": 22,
+        "supervisor_assistant_messages": 8,
+        "worker_world_tool_calls": 5,
+        "nonworker_operational_tool_calls": 0,
+        "intents": [
+          {
+            "time": 1791350648.298136,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791350673.393659,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791350710.920909,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791350714.41997,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791350773.376907,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791350777.721548,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791350885.635674,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": true,
+            "actions": false
+          },
+          {
+            "time": 1791350894.005636,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          },
+          {
+            "time": 1791350901.744854,
+            "session_id": "f0bb4f1a-d409-48e7-8005-962d927760cc",
+            "lane": "worker",
+            "world": false,
+            "actions": true
+          }
+        ],
+        "verified": true,
+        "version": 2,
+        "limitation": "Direct native curl URL arguments, not attribution of every HTTP side effect; complex commands/scripts require separate investigation."
+      },
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 51,
+        "rejected_request_count": 0,
+        "input_tokens": 1315463,
+        "uncached_input_tokens": 128647,
+        "output_tokens": 10367,
+        "cache_read_tokens": 1186816,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.024236424800000003,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "usage_source": "persisted_assistant_usage",
+          "usage_complete": true,
+          "cost_usd": 0.023864652000000004,
+          "input_tokens": 1267525,
+          "uncached_input_tokens": 127685,
+          "output_tokens": 9990,
+          "request_count": 49,
+          "cache_read_tokens": 1139840,
+          "cache_creation_tokens": 0,
+          "quota_snapshot": {
+            "window_start": "2026-10-07T00:00:00Z",
+            "window_end": "2026-10-08T00:00:00Z",
+            "cycle": "daily",
+            "input_tokens": 127685,
+            "output_tokens": 9990,
+            "request_count": 49,
+            "cost_usd": 0.020673100000000003,
+            "cache_read_tokens": 1139840,
+            "cache_creation_tokens": 0
+          },
+          "quota_snapshot_request_count_matches": true
+        },
+        "native_usage_matches": false
+      },
+      "interrupted_calls": [
+        {
+          "index": 19,
+          "phase": "watch_idle",
+          "started_at": 1791350648.397401,
+          "wall_secs": 6.114,
+          "usage": {
+            "input_tokens": 318,
+            "output_tokens": 93,
+            "cache_read_input_tokens": 22528
+          },
+          "downstream_disconnected": true
+        },
+        {
+          "index": 48,
+          "phase": "watch_idle",
+          "started_at": 1791350913.838777,
+          "wall_secs": 10.206,
+          "usage": {
+            "input_tokens": 644,
+            "output_tokens": 284,
+            "cache_read_input_tokens": 24448
+          },
+          "downstream_disconnected": true
+        }
+      ],
+      "controller_minus_native_usage": {
+        "request_count": 2,
+        "uncached_input_tokens": 962,
+        "cache_read_tokens": 46976,
+        "output_tokens": 377
+      },
+      "difference_exactly_explained_by_interrupted_calls": true,
+      "action_attempts": [
+        {
+          "seq": 13,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 97.343,
+          "wall_time": 1791350714.460002,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r2"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 1,
+            "action_key": "send_release:atlas-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 97.342
+          },
+          "http_status": 200
+        },
+        {
+          "seq": 18,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 160.591,
+          "wall_time": 1791350777.7576451,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "cedar-91b72265b1f5",
+              "revision": "r1",
+              "recipient": "ops-room-91b72265b1f5",
+              "delivery_key": "cedar-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r1"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 2,
+            "action_key": "send_release:cedar-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "cedar-91b72265b1f5",
+              "revision": "r1",
+              "recipient": "ops-room-91b72265b1f5",
+              "delivery_key": "cedar-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 160.59
+          },
+          "http_status": 200
+        },
+        {
+          "seq": 23,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 276.879,
+          "wall_time": 1791350894.043893,
+          "envelope": {
+            "action": {
+              "kind": "request_input",
+              "project": "dogwood-91b72265b1f5",
+              "reason": "dependency_blocked"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": false,
+                "not_before": 180
+              }
+            }
+          },
+          "response": {
+            "accepted": false,
+            "effect_applied": false,
+            "error": "invalid preconditions schema"
+          },
+          "http_status": 400
+        },
+        {
+          "seq": 24,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 284.62,
+          "wall_time": 1791350901.7853582,
+          "envelope": {
+            "action": {
+              "kind": "request_input",
+              "project": "dogwood-91b72265b1f5",
+              "reason": "dependency_blocked"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": false,
+                "revision": "r1"
+              },
+              "not_before": 180
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 3,
+            "action_key": "request_input:dogwood-91b72265b1f5",
+            "action": {
+              "kind": "request_input",
+              "project": "dogwood-91b72265b1f5",
+              "reason": "dependency_blocked"
+            },
+            "committed_elapsed_secs": 284.619
+          },
+          "http_status": 200
+        }
+      ],
+      "world_read_times_secs": [
+        31.221,
+        56.315,
+        93.841,
+        156.244,
+        268.512
+      ],
+      "errors": [],
+      "wall_secs": 531.046
+    }
+  ],
+  "total_payg_reference_cost_usd": 0.0732867744,
+  "actual_token_plan_charge": null,
+  "confirmation_worker_timing": {
+    "native_runs": [
+      {
+        "id": "00de61c8-9bf0-450c-b4f1-6b61fae8099f",
+        "job_id": "prepared-responsibility-monitor",
+        "started_at": "2026-10-07T05:23:56.556792Z",
+        "finished_at": "2026-10-07T05:24:16.592995Z",
+        "status": "failed",
+        "error": "daemon restarted before cron SpawnTool completed; outcome may be partial"
+      },
+      {
+        "id": "615ab53e-33ea-4e77-adc0-e5c6bd4242f9",
+        "job_id": "prepared-responsibility-monitor",
+        "started_at": "2026-10-07T05:24:16.594152Z",
+        "finished_at": "2026-10-07T05:24:41.247823Z",
+        "status": "success",
+        "error": null
+      },
+      {
+        "id": "40fe3954-ff28-4b82-ab1f-0e55fea62981",
+        "job_id": "prepared-responsibility-monitor",
+        "started_at": "2026-10-07T05:24:56.594833Z",
+        "finished_at": "2026-10-07T05:25:36.352824Z",
+        "status": "success",
+        "error": null
+      },
+      {
+        "id": "5c83e264-7193-4aa0-b7a4-4a80bf4f30dc",
+        "job_id": "prepared-organization-supervisor",
+        "started_at": "2026-10-07T05:25:36.644349Z",
+        "finished_at": "2026-10-07T05:26:26.323482Z",
+        "status": "success",
+        "error": null
+      },
+      {
+        "id": "f9843d7f-2b28-420c-b4aa-953edcae44cb",
+        "job_id": "prepared-responsibility-monitor",
+        "started_at": "2026-10-07T05:25:56.644632Z",
+        "finished_at": "2026-10-07T05:26:57.403563Z",
+        "status": "success",
+        "error": null
+      },
+      {
+        "id": "edb68438-b698-4a7b-bf5c-c5a05b09e95a",
+        "job_id": "prepared-organization-supervisor",
+        "started_at": "2026-10-07T05:27:36.644312Z",
+        "finished_at": "2026-10-07T05:28:07.764760Z",
+        "status": "success",
+        "error": null
+      },
+      {
+        "id": "e30cd822-721f-43e0-ba79-fddb97fca37d",
+        "job_id": "prepared-responsibility-monitor",
+        "started_at": "2026-10-07T05:27:56.644175Z",
+        "finished_at": null,
+        "status": "running",
+        "error": null
+      }
+    ],
+    "cedar_turn_duration_secs": 60.759,
+    "cedar_model_iterations": 6,
+    "cedar_native_tool_intents": [
+      {
+        "timestamp": "2026-10-07T05:26:03.027891Z",
+        "name": "Read",
+        "id": "call_304bdb3658d742f09d16798d",
+        "argument_keys": [
+          "file_path"
+        ]
+      },
+      {
+        "timestamp": "2026-10-07T05:26:03.027891Z",
+        "name": "Read",
+        "id": "call_f9c9188a916f4f87964369c4",
+        "argument_keys": [
+          "file_path"
+        ]
+      },
+      {
+        "timestamp": "2026-10-07T05:26:13.376907Z",
+        "name": "Bash",
+        "id": "call_81479cfff22f497d8f0abf49",
+        "argument_keys": [
+          "command",
+          "description"
+        ]
+      },
+      {
+        "timestamp": "2026-10-07T05:26:17.721548Z",
+        "name": "Bash",
+        "id": "call_6b807fc2fcac40cb9c0ee1b4",
+        "argument_keys": [
+          "command",
+          "description"
+        ]
+      },
+      {
+        "timestamp": "2026-10-07T05:26:33.917596Z",
+        "name": "Edit",
+        "id": "call_5e25628e93b74a829db6704e",
+        "argument_keys": [
+          "file_path",
+          "new_string",
+          "old_string"
+        ]
+      },
+      {
+        "timestamp": "2026-10-07T05:26:38.309873Z",
+        "name": "Edit",
+        "id": "call_bc1ced4c82794a5eb6b0c25e",
+        "argument_keys": [
+          "file_path",
+          "new_string",
+          "old_string"
+        ]
+      }
+    ],
+    "coalesced_fire_log_time": "2026-10-07T05:26:56.645449Z",
+    "next_worker_start": "2026-10-07T05:27:56.644175Z",
+    "world_observation_gap_secs": 112.268,
+    "timely_dogwood_observations": 0,
+    "overrun_policy": "in-flight coalescing, then advance to first future interval slot; no catch-up burst"
+  },
+  "limits": [
+    "No statistical replication or multi-day claim.",
+    "Smoke verifies selected native surfaces, not every tool or concurrency schedule.",
+    "Root required fields are a partial schema check.",
+    "Native account totals remain lower for interrupted streams whose endings only the relay consumed.",
+    "Common service does not know hidden owner deadlines, cancellations or recipients.",
+    "Original failed results are unchanged; v2 diagnostics are supplemental replay."
+  ],
+  "next_gate": "Stabilize worker turn duration and explicit scheduler overrun semantics before more paired samples or supervisor ablations."
+}

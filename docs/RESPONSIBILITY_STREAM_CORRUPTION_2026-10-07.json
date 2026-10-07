@@ -1,0 +1,259 @@
+{
+  "evidence_kind": "post_hoc_diagnostics_replay_not_new_model_run",
+  "report": "20261007T045927462387Z-responsibility-peko",
+  "original_result_sha256": "d40d39aed5c0aa0e44ff8133f5a17723bc30bb1e58b806a4605558b75da108a0",
+  "original_benchmark_commit": "f7c68f3",
+  "replay_benchmark_commit": "5921eef",
+  "tool_attribution": {
+    "version": 2,
+    "counts": {
+      "native_success": 65,
+      "native_error_requires_investigation": 1,
+      "unresolved": 10,
+      "native_arguments_substituted": 2
+    },
+    "calls": [
+      {
+        "request_index": 26,
+        "wire_id": "call_f6682cdee0c44ccf80971acd",
+        "native_id": "call_f6682cdee0c44ccf80971acd",
+        "name": "Glob",
+        "intent_preserved": true,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_error_requires_investigation",
+        "argument_sources": []
+      },
+      {
+        "request_index": 29,
+        "wire_id": "call_256936fcc1564360894822f5",
+        "native_id": "call256936fcc1564360894822f5",
+        "name": "Write",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 29,
+        "wire_id": "call_681517dfb00c48e1b3b3560c",
+        "native_id": "call681517dfb00c48e1b3b3560c",
+        "name": "Write",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 29,
+        "wire_id": "call_966c8b265fd642e680554d82",
+        "native_id": "call966c8b265fd642e680554d82",
+        "name": "Bash",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 33,
+        "wire_id": "call_6d97b9a64cdc4f5499460d66",
+        "native_id": "call6d97b9a64cdc4f5499460d66",
+        "name": "Write",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 34,
+        "wire_id": "call_373fd837284544e892455c47",
+        "native_id": "call_373fd837284544e892455c47",
+        "name": "Edit",
+        "intent_preserved": false,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_arguments_substituted",
+        "argument_sources": [
+          {
+            "request_index": 33,
+            "id": "call_6d97b9a64cdc4f5499460d66",
+            "name": "Write"
+          },
+          {
+            "request_index": 35,
+            "id": "call_02318c70438c48538f188db1",
+            "name": "Write"
+          }
+        ]
+      },
+      {
+        "request_index": 34,
+        "wire_id": "call_d46fec54756b4e41bf185c7b",
+        "native_id": "calld46fec54756b4e41bf185c7b",
+        "name": "Edit",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 34,
+        "wire_id": "call_4b164ee9ed33428b8778db27",
+        "native_id": "call4b164ee9ed33428b8778db27",
+        "name": "Bash",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 43,
+        "wire_id": "call_dce9e83e898940b994ad6b41",
+        "native_id": "calldce9e83e898940b994ad6b41",
+        "name": "Bash",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 44,
+        "wire_id": "call_aa30811bc6ba495e8386e63d",
+        "native_id": "callaa30811bc6ba495e8386e63d",
+        "name": "Read",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 45,
+        "wire_id": "call_89a5d3cad8c044c09a0137ed",
+        "native_id": "call89a5d3cad8c044c09a0137ed",
+        "name": "Bash",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      },
+      {
+        "request_index": 46,
+        "wire_id": "call_0e955b24539f4d3db535afcf",
+        "native_id": "call_0e955b24539f4d3db535afcf",
+        "name": "Read",
+        "intent_preserved": false,
+        "native_is_error": true,
+        "missing_required": [],
+        "category": "native_arguments_substituted",
+        "argument_sources": [
+          {
+            "request_index": 45,
+            "id": "call_89a5d3cad8c044c09a0137ed",
+            "name": "Bash"
+          },
+          {
+            "request_index": 47,
+            "id": "call_a937670e5b3f438981a441c8",
+            "name": "Bash"
+          }
+        ]
+      },
+      {
+        "request_index": 47,
+        "wire_id": "call_a937670e5b3f438981a441c8",
+        "native_id": "calla937670e5b3f438981a441c8",
+        "name": "Bash",
+        "intent_preserved": false,
+        "native_is_error": null,
+        "missing_required": [],
+        "category": "unresolved",
+        "argument_sources": []
+      }
+    ],
+    "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved.",
+    "calls_included": "Non-success cases only; full evidence remains in the frozen raw result."
+  },
+  "topology_execution": {
+    "worker_assistant_messages": 21,
+    "supervisor_assistant_messages": 8,
+    "worker_world_tool_calls": 4,
+    "nonworker_operational_tool_calls": 0,
+    "intents": [
+      {
+        "time": 1791349441.901067,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791349502.458466,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791349507.730774,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      },
+      {
+        "time": 1791349562.991537,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791349567.010247,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      },
+      {
+        "time": 1791349622.744036,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": true,
+        "actions": false
+      },
+      {
+        "time": 1791349627.079492,
+        "session_id": "4ca08c59-eb60-4606-b5f2-757848a54900",
+        "lane": "worker",
+        "world": false,
+        "actions": true
+      }
+    ],
+    "verified": true,
+    "version": 2,
+    "limitation": "Direct native curl URL arguments, not attribution of every HTTP side effect; complex commands/scripts require separate investigation."
+  },
+  "interrupted_usage": [
+    {
+      "index": 47,
+      "phase": "watch_idle",
+      "usage": {
+        "input_tokens": 374,
+        "output_tokens": 224,
+        "cache_read_input_tokens": 46592
+      },
+      "completed": true,
+      "downstream_disconnected": true
+    }
+  ],
+  "interpretation": "Two proven native argument substitutions; missing calls stay unresolved. The topology violation in original score was journal prose, not an HTTP request. Original metrics/score remain frozen."
+}

@@ -23,8 +23,9 @@ does not explain its missed Cedar deadline.
 
 Peko's CronCreate description and `tool` parameter promise no LLM cost for fixed
 scheduled tool calls while naming Agent as an example. Agent can invoke models.
-A runtime PR corrects that advertised cost promise to distinguish fixed dispatch
-from model calls performed by the invoked tool.
+[Runtime PR #426](https://github.com/ConekoAI/peko-runtime/pull/426), now merged,
+corrects that advertised cost promise to distinguish fixed dispatch from model
+calls performed by the invoked tool.
 
 The historical Cedar trace saved `Edit` with shell-command arguments and a
 missing-fields error. The original provider tool response was not captured.
@@ -58,3 +59,8 @@ Scripted reports and binary hashes are summarized in
 [the JSON evidence](RESPONSIBILITY_SURFACE_AUDIT_2026-10-07.json). Probe source and
 semantics are in [the execution protocol](RESPONSIBILITY_EXECUTION_PROTOCOL.md).
 Native scheduling cadence and restart behavior remain separate live-test gates.
+
+Subsequent live concurrent-stream evidence found a real runtime parser bug,
+which these sequential surface probes did not cover. The fix and one focused
+confirmation are recorded in the
+[guarded pilot report](RESPONSIBILITY_GUARDED_MIMO_2026-10-07.md).

@@ -1,4 +1,4 @@
-# Responsibility execution protocol — contract 9
+# Responsibility execution protocol — contract 10
 
 This stabilization protocol separates organization formation from execution. It
 is not a new result or evidence of superiority. Contract 7 scores stay frozen.
@@ -152,3 +152,41 @@ is not implemented or claimed; the measured restart is of the native harness.
 Do not pool guarded/raw scores, model/prepared formation, or different contract
 versions. Organizational-supervisor ablation remains behind execution, interface
 and accounting stability gates.
+
+## Diagnostics replay v2 after the first guarded pair
+
+The first guarded pair used frozen benchmark commit `f7c68f3`. Wire/native
+comparisons revealed Peko parser corruption: Edit got Write arguments, and Read
+got Bash arguments from concurrent responses. Matching argument hashes prove
+these substitutions; unmatched/missing calls remain unresolved. Runtime PR
+[#427](https://github.com/ConekoAI/peko-runtime/pull/427) isolates cloned stream
+buffers and Anthropic pending usage. Successful sequential surface tests do not
+prove concurrent correctness. Interleaved adapter and actual concurrent HTTP/SSE
+regressions both reproduced the defect without LLM calls.
+
+Diagnostics v2 also fixes a benchmark false positive: a journal command saying
+"No /world GET" was classified as an operational request by substring search.
+Only direct Bash/exec curl URL arguments count now; prose and a corrupted Read
+with a command argument do not. This matcher covers the declared direct-command
+contract; complex shell forms require separate investigation. Historical result
+files are preserved. A supplemental replay records corrected diagnostics,
+without silently changing their score or attributing every missing action to
+one cause. The Peko-only confirmation uses unchanged model-facing contract 10
+with v2 diagnostics and the fixed runtime; it is a fix validation, not another
+sample pooled into a parity claim.
+
+## Scheduling evidence after the stream fix
+
+Configured intervals are nominal schedule slots, not guaranteed observation
+frequency. Peko coalesces in-flight jobs and advances to the first future slot
+after completion; it skips past-due slots without a catch-up burst. A 60.759s
+worker turn in the confirmation skipped a 60s slot and left a 112.268s gap in
+world observations. All tools in that turn succeeded. A registered healthy job
+can therefore still miss an entire deadline window.
+
+Keep full-turn duration, native run history, actual observation gaps and eligible
+observations separate. A deadline miss without a timely observation is not the
+same failure as choosing incorrectly after reading eligible state. Specify and
+test overrun/catch-up semantics before changing them, then stabilize the worker
+before supervisor ablation or statistical samples. See the
+[guarded pair and confirmation](RESPONSIBILITY_GUARDED_MIMO_2026-10-07.md).

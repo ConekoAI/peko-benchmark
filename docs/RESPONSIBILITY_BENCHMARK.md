@@ -201,6 +201,16 @@ cannot establish benefits of principal seeding independently from scheduling,
 memory organization, or model behavior. Later paired seeds and explicit Peko
 ablations are needed for those claims.
 
+## Current stabilization evidence
+
+The [contract-10 guarded pair and focused Peko confirmation](RESPONSIBILITY_GUARDED_MIMO_2026-10-07.md)
+found and fixed shared concurrent-stream parser state in Peko. Sequential native
+surface smoke checks alone did not catch it. OpenClaw passed the guarded pilot;
+Peko's confirmation preserved tool intent and recalled all memory facts but still
+missed a deadline after a worker turn exceeded its nominal interval. Stabilize
+turn duration and explicit overrun semantics before adding live samples or
+claiming model-only failure, parity, or supervisory value.
+
 ## Run one pilot
 
 ```bash
