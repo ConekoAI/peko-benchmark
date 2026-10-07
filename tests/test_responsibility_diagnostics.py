@@ -92,7 +92,9 @@ class DiagnosticsTests(unittest.TestCase):
             index.write_text(json.dumps({'root': {'session_id': 'root', 'parent_session_id': None,
                 'total_input_tokens': 42, 'message_count': 5, 'agent_name': 'root'}}))
             path = root / 'cron/schedule.toml'; path.parent.mkdir(parents=True)
-            path.write_text(json.dumps({'version': 2, 'jobs': [{'id': 'keepalive', 'principal_id': 'principal-test'}], 'runs': []}))
+            path.write_text(json.dumps({'version': 2, 'jobs': [], 'runs': []}))
+            workspace=home/'.peko/principals/bench';workspace.mkdir(parents=True)
+            (workspace/'principal.toml').write_text('id = "principal-test"\n')
             driver = SimpleNamespace(temp=SimpleNamespace(name=folder), principal='bench', sim=SimpleNamespace(spec={'cadence_secs': 60}),
                 metadata={}, _stop_owned_daemon=lambda: None, _command=lambda *args: None, _ready=lambda: None)
             prepare_peko(driver, 'static worker instruction')

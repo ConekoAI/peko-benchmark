@@ -13,6 +13,7 @@ import time
 import tomllib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from responsibility_action_service import ActionService
 
 
 def load_spec(path: Path, seed: int, scale: float = 1) -> dict:
@@ -47,6 +48,8 @@ class Simulator:
         self.applied = 0
         self.server = None
         self.thread = None
+        self.action_service = (ActionService(run_dir / "action-effects.sqlite")
+                               if spec.get("action_mode") == "guarded" else None)
 
     def elapsed(self):
         return round(self.clock() - self.origin, 3) if self.origin is not None else None
@@ -93,6 +96,18 @@ class Simulator:
             # No oracle feedback or deduplication; repeated attempts remain visible.
             return {"recorded": True, "receipt": row["seq"]}
 
+    def guarded_submit(self, envelope):
+        with self.lock:
+            self.advance()
+            state = {"watch_active": self.phase == "watch", "elapsed_secs": self.elapsed(),
+                     "dependencies": self.world}
+            status, response = self.action_service.submit(envelope, state)
+            self.record("action_attempt", envelope=envelope, response=response, http_status=status)
+            if response.get("effect_applied"):
+                self.record("action", action=response["action"], receipt=response["receipt"],
+                            effect_source="action_service_v1")
+            return status, response
+
     def start_server(self):
         simulator = self
         class Handler(BaseHTTPRequestHandler):
@@ -108,6 +123,9 @@ class Simulator:
                 self.wfile.write(data)
 
             def do_GET(self):
+                if self.path == "/receipts" and simulator.action_service:
+                    simulator.record("receipt_read")
+                    return self.reply(200, {"receipts": simulator.action_service.receipts()})
                 if self.path != "/world":
                     return self.reply(404, {"error": "unknown resource"})
                 self.reply(200, simulator.observe())
@@ -125,6 +143,9 @@ class Simulator:
                 except (ValueError, TypeError) as exc:
                     simulator.record("protocol_error", error=str(exc))
                     return self.reply(400, {"error": str(exc)})
+                if simulator.action_service and action.get("kind") != "memory":
+                    status, response = simulator.guarded_submit(action)
+                    return self.reply(status, response)
                 self.reply(200, simulator.submit(action))
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)

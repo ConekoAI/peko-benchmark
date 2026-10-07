@@ -86,3 +86,34 @@ class RelayDrainTests(unittest.TestCase):
         self.assertFalse(result["usage_complete"])
         self.assertFalse(result["native_usage_matches"])
         self.assertIsNone(result["cost_usd"])
+
+    def test_downstream_disconnect_does_not_discard_upstream_completion_usage(self):
+        import socket
+        import struct
+        first, finish = threading.Event(), threading.Event()
+        class Upstream(BaseHTTPRequestHandler):
+            def log_message(self, *_): pass
+            def do_POST(self):
+                self.rfile.read(int(self.headers['Content-Length']))
+                self.send_response(200);self.send_header('Content-Type','text/event-stream');self.end_headers()
+                self.wfile.write(b'data: {"type":"message_start","message":{"usage":{"input_tokens":10}}}\n\n');self.wfile.flush()
+                first.set();finish.wait(5)
+                events=[{'type':'message_delta','usage':{'output_tokens':5}}, {'type':'message_stop'}]
+                for event in events:
+                    self.wfile.write(('data: '+json.dumps(event)+'\n\n').encode());self.wfile.flush()
+        server=ThreadingHTTPServer(('127.0.0.1',0),Upstream)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        with tempfile.TemporaryDirectory() as folder:
+            relay=AnthropicRelay(f'http://127.0.0.1:{server.server_port}','dummy',Path(folder)/'calls.jsonl',time.monotonic()+20,.1)
+            client=socket.create_connection(('127.0.0.1',relay.server.server_port))
+            try:
+                body=b'{"model":"mimo-v2.6-flash","max_tokens":4096,"stream":true}'
+                request=(f'POST /v1/messages HTTP/1.1\r\nHost: localhost\r\nx-api-key: {relay.token}\r\nContent-Length: {len(body)}\r\n\r\n').encode()+body
+                client.sendall(request);self.assertTrue(first.wait(2));client.recv(4096)
+                client.setsockopt(socket.SOL_SOCKET,socket.SO_LINGER,struct.pack('ii',1,0));client.close()
+                finish.set();self.assertTrue(relay.drain(3))
+                self.assertTrue(relay.records[0]['downstream_disconnected'])
+                self.assertTrue(relay.telemetry()['usage_complete'])
+                self.assertEqual(relay.telemetry()['output_tokens'],5)
+            finally:
+                client.close();finish.set();relay.close();server.shutdown();server.server_close()

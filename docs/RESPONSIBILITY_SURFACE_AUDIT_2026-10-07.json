@@ -1,0 +1,494 @@
+{
+  "evidence_kind": "scripted_provider_native_surface_smoke",
+  "real_llm_calls": 0,
+  "results": [
+    {
+      "driver": "peko",
+      "report": "20261007T045231031420Z-surface-peko",
+      "passed": true,
+      "checks": [
+        {
+          "check": "absolute-read",
+          "wire_tool": {
+            "id": "surface1",
+            "name": "Read",
+            "argument_keys": [
+              "file_path"
+            ],
+            "arguments_sha256": "c4586669f0b43dc6cf852fbddc1460f2ce6cf6a7caa28c15b7c043fc61f61266",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "relative-read",
+          "wire_tool": {
+            "id": "surface2",
+            "name": "Read",
+            "argument_keys": [
+              "file_path"
+            ],
+            "arguments_sha256": "1f0a5c919f9022c94b05a89616efe7d603181439586aaee36843ce6f69e11ee4",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": true,
+          "expected_error": true,
+          "expected_content_found": false,
+          "passed": true
+        },
+        {
+          "check": "write",
+          "wire_tool": {
+            "id": "surface3",
+            "name": "Write",
+            "argument_keys": [
+              "content",
+              "file_path"
+            ],
+            "arguments_sha256": "78aa4a306b41b1fb1fbdb201ebbeffa43bda1f8cc4893fb73c161dee797b5872",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "edit",
+          "wire_tool": {
+            "id": "surface4",
+            "name": "Edit",
+            "argument_keys": [
+              "file_path",
+              "new_string",
+              "old_string"
+            ],
+            "arguments_sha256": "0271bd69b6d0ccde8a5d868f920e82fda9c257e8f42c19ad56c0b5abebbae6b1",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "read-after-edit",
+          "wire_tool": {
+            "id": "surface5",
+            "name": "Read",
+            "argument_keys": [
+              "file_path"
+            ],
+            "arguments_sha256": "c4586669f0b43dc6cf852fbddc1460f2ce6cf6a7caa28c15b7c043fc61f61266",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "cwd",
+          "wire_tool": {
+            "id": "surface6",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "d66a53fedbf412beeadb3868ece33ec9e7e20e9aa0224b75a70c5655b8ca2e2c",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "world-get",
+          "wire_tool": {
+            "id": "surface7",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "1d71ed764f76009c2b15483cdac71e61e739ee5806e4d33a2710c40fd9e33ffe",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "action-post",
+          "wire_tool": {
+            "id": "surface8",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "eaeb5061e4efdcfeee4c37f7c62d9eac4e888ce3334b153ab6054e21ef99aae2",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "persistent-child-dispatch",
+          "passed": true,
+          "wire_tools": [
+            {
+              "id": "surface9",
+              "name": "Agent",
+              "argument_keys": [
+                "action",
+                "path",
+                "prompt",
+                "role",
+                "timeout_secs"
+              ],
+              "arguments_sha256": "a4ba556279f41042b0252e2b3726d80d9bcc46037a58b9df3d494ac00c9b6c30",
+              "advertised": true,
+              "missing_required": []
+            },
+            {
+              "id": "surface10",
+              "name": "Read",
+              "argument_keys": [
+                "file_path"
+              ],
+              "arguments_sha256": "c4586669f0b43dc6cf852fbddc1460f2ce6cf6a7caa28c15b7c043fc61f61266",
+              "advertised": true,
+              "missing_required": []
+            },
+            {
+              "id": "surface11",
+              "name": "Bash",
+              "argument_keys": [
+                "command"
+              ],
+              "arguments_sha256": "1d71ed764f76009c2b15483cdac71e61e739ee5806e4d33a2710c40fd9e33ffe",
+              "advertised": true,
+              "missing_required": []
+            }
+          ],
+          "distinct_worker_session_verified": true
+        },
+        {
+          "check": "guard-commit",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface12",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "954ae5d8d4e41d3517b61ce63daee775046bc32ba1e429ccf474a66373b92d0f",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "guard-replay",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface13",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "954ae5d8d4e41d3517b61ce63daee775046bc32ba1e429ccf474a66373b92d0f",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "guard-conflict",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface14",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "3a29f57ef7a6f641c7881b716d7de509d9fe3699762be8bb44668e4576c38731",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "guard-rejected-precondition",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface15",
+            "name": "Bash",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "ce71ceb6506ae75b33b6445746f4ad43078e6cbf2b80e985366dabb48a0ec303",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "durable-receipt-lookup",
+          "passed": true
+        }
+      ],
+      "version": "0.1.0",
+      "binary_sha256": "9da56ad4e5a5cc2f9583f9300fa0ba6770246f6173829daec28294179d79aa3b",
+      "daemon_sha256": "18ac0113644c89ccd55e913c83c36bb015309da07886e3edde1f8c37a074ccd1",
+      "artifact_sha256": "a8a4664ccb54dad429fc11bf51564de95c1b46b98a94236b8cc07e95d7ea90ad"
+    },
+    {
+      "driver": "openclaw",
+      "report": "20261007T045231035980Z-surface-openclaw",
+      "passed": true,
+      "checks": [
+        {
+          "check": "absolute-read",
+          "wire_tool": {
+            "id": "surface1",
+            "name": "read",
+            "argument_keys": [
+              "path"
+            ],
+            "arguments_sha256": "ae0cc0540ea2dc0154c637fb881cdeeb4eba88929b4d5da35d5391467812173c",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "relative-read",
+          "wire_tool": {
+            "id": "surface2",
+            "name": "read",
+            "argument_keys": [
+              "path"
+            ],
+            "arguments_sha256": "eddd754908d69cef5c5732203d3c1e7df018730228b1abeddbd6204725959742",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "write",
+          "wire_tool": {
+            "id": "surface3",
+            "name": "write",
+            "argument_keys": [
+              "content",
+              "path"
+            ],
+            "arguments_sha256": "2e365e274d4c400933d1e18cdd2b95e7d419b577299c8cf470ec2a4f3a57a323",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "edit",
+          "wire_tool": {
+            "id": "surface4",
+            "name": "edit",
+            "argument_keys": [
+              "edits",
+              "path"
+            ],
+            "arguments_sha256": "c03d7154b1a526ef27f3b7e27fa53b671abd59f59d7d0dbe6304230f009dd500",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "read-after-edit",
+          "wire_tool": {
+            "id": "surface5",
+            "name": "read",
+            "argument_keys": [
+              "path"
+            ],
+            "arguments_sha256": "ae0cc0540ea2dc0154c637fb881cdeeb4eba88929b4d5da35d5391467812173c",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "cwd",
+          "wire_tool": {
+            "id": "surface6",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "d66a53fedbf412beeadb3868ece33ec9e7e20e9aa0224b75a70c5655b8ca2e2c",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "world-get",
+          "wire_tool": {
+            "id": "surface7",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "ec1f44e24602d0e8a1a9c5884a9a94c944a3a7ad8d49de256e8ec193534da261",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "action-post",
+          "wire_tool": {
+            "id": "surface8",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "4f1c660e0e7ff6f3f46c6cb1cc37861ffac981ec5712ef634051a85b0bf43145",
+            "advertised": true,
+            "missing_required": []
+          },
+          "native_result_error": false,
+          "expected_error": false,
+          "expected_content_found": true,
+          "passed": true
+        },
+        {
+          "check": "persistent-worker-dispatch",
+          "passed": true,
+          "wire_tools": [
+            {
+              "id": "surface9",
+              "name": "read",
+              "argument_keys": [
+                "path"
+              ],
+              "arguments_sha256": "ae0cc0540ea2dc0154c637fb881cdeeb4eba88929b4d5da35d5391467812173c",
+              "advertised": true,
+              "missing_required": []
+            },
+            {
+              "id": "surface10",
+              "name": "exec",
+              "argument_keys": [
+                "command"
+              ],
+              "arguments_sha256": "ec1f44e24602d0e8a1a9c5884a9a94c944a3a7ad8d49de256e8ec193534da261",
+              "advertised": true,
+              "missing_required": []
+            }
+          ],
+          "distinct_worker_session_verified": true
+        },
+        {
+          "check": "guard-commit",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface11",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "cdb63cf721bc3ce56001211427155bd21b4a5b00187cd982673dfbceb0bf6b1a",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "guard-replay",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface12",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "cdb63cf721bc3ce56001211427155bd21b4a5b00187cd982673dfbceb0bf6b1a",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "guard-conflict",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface13",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "4663d4ef518432a9d955d1907314f6a860b1f53ee61c62c6c4b9d35feb809ca8",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "guard-rejected-precondition",
+          "passed": true,
+          "wire_tool": {
+            "id": "surface14",
+            "name": "exec",
+            "argument_keys": [
+              "command"
+            ],
+            "arguments_sha256": "32af9249eba4f374d95e8f7d51f0cb1c6732f78e37612cd7f4869a1713f0bf1e",
+            "advertised": true,
+            "missing_required": []
+          }
+        },
+        {
+          "check": "durable-receipt-lookup",
+          "passed": true
+        }
+      ],
+      "version": "OpenClaw 2026.9.8 (fc23bc8)",
+      "binary_sha256": "aa8606ca0d62ff133ef5b7bd2323ec8ff3f8eb384404399cd5e742918d63b0a1",
+      "daemon_sha256": null,
+      "artifact_sha256": "efa02bb4823bd41ce3cc16c09abe3d8cd1a04978bc26c34a7660437cc4982ff7"
+    }
+  ],
+  "limitations": "Covered native file/shell/worker/HTTP surfaces only. No model competence, cadence, recovery, or superiority evidence. The scripted service supplies all responses."
+}

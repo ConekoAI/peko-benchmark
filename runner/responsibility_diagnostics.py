@@ -48,7 +48,7 @@ def observed_preconditions(spec, rows):
 def retained_receipts(run_dir: Path, rows):
     """Check numeric native receipt references, without treating prose as proof."""
     files = list((run_dir / 'runtime-traces').rglob('responsibility/receipts.md'))
-    expected = [r['seq'] for r in rows if r['kind'] == 'action' and r['action'].get('kind') != 'memory']
+    expected = [r.get('receipt', r['seq']) for r in rows if r['kind'] == 'action' and r['action'].get('kind') != 'memory']
     if len(files) != 1:
         return {'measured': False, 'reason': 'no unique native receipt log', 'expected_receipts': expected}
     text = files[0].read_text()

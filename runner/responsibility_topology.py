@@ -13,7 +13,7 @@ from responsibility_audit import timestamp
 
 WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
-SEPARATED_CONTRACT_VERSION = 9
+SEPARATED_CONTRACT_VERSION = 10
 
 
 def direct_action_prompt(url):
@@ -48,8 +48,10 @@ def handoff_prompt():
 
 def task_paths():
     return ("Use kb/responsibility/commitments.md as the canonical shared requirements/current-state table "
-            "and kb/responsibility/receipts.md as the append-only action receipt log, relative to the native "
-            "principal/agent workspace. They are initialized empty during setup; owner chat supplies facts later. "
+            "and kb/responsibility/receipts.md as the append-only action receipt log under the native "
+            "principal/agent workspace. Resolve both to absolute paths before file or shell calls. In Peko, "
+            "use the principal workspace/KB path advertised in runtime context: file tools and Bash default "
+            "to a different runtime working directory. In OpenClaw use the configured agent workspace. They are initialized empty during setup; owner chat supplies facts later. "
             "Read those exact files, not a directory-wide search for imagined notes. If missing, record that "
             "setup problem and finish this turn without operational actions. Do not invent commitments. ")
 

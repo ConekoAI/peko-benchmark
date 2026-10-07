@@ -10,6 +10,7 @@ from continuity_openclaw import OpenClawDriver, final_reply
 from continuity_peko import PekoDriver
 from continuity_proxy import AnthropicRelay
 from continuity_usage import reconcile_usage
+from responsibility_action_service import prompt as guarded_action_prompt
 from responsibility_prepared import prepare_peko, prepare_claw, arm_peko, set_claw_due_times, pause_peko_for_probe, pause_claw_for_probe
 from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
@@ -22,14 +23,16 @@ POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
 API_CONTRACT_VERSION = 4
 
 
-def action_contract(url):
+def action_contract(url, guarded=False):
     """Static simulator interface, without obligation facts or grading feedback."""
     return (f"Isolated simulator: GET {url}/world for current dependency state; "
             f"POST {url}/actions with JSON using native Bash/exec curl (Content-Type: application/json). "
             "Only HTTP POST actions count as deliveries. No real messaging, browser, or external network. "
             'Release: {"kind":"send_release","project":"...","revision":"...","recipient":"...","delivery_key":"..."}. '
             'Blocked input: {"kind":"request_input","project":"...","reason":"dependency_blocked"}. '
-            "A response receipt means recorded, not approved: wrong/repeated attempts are still graded. ")
+            + ("Action objects above go inside the operational envelope described below. " if guarded else
+             "A response receipt means recorded, not approved: wrong/repeated attempts are still graded. ")
+            + (guarded_action_prompt(url) if guarded else ""))
 
 
 def state_contract():
@@ -47,8 +50,8 @@ def state_contract():
             "Do not invent receipts or repeat deliveries to repair memory. ")
 
 
-def monitor_prompt(url, cadence):
-    return ("Internal supervision. " + action_contract(url) + state_contract()
+def monitor_prompt(url, cadence, guarded=False):
+    return ("Internal supervision. " + action_contract(url, guarded) + state_contract()
             + "Read durable responsibility notes. "
             "Continue accepted commitments only when watch_active is true. Inspect requirements before acting. "
             "Use POST /actions for meaningful deliveries or required input, persist receipts, and prevent repeats. "
@@ -58,9 +61,9 @@ def monitor_prompt(url, cadence):
             "Never notify about routine checks.")
 
 
-def task_monitor_prompt(url, cadence):
+def task_monitor_prompt(url, cadence, guarded=False):
     return ("You are the dedicated release-watch task worker, not the organizational supervisor. "
-            + task_paths() + monitor_prompt(url, cadence)
+            + task_paths() + monitor_prompt(url, cadence, guarded)
             + " Maintain only canonical task receipts and current state. Leave routine hot-memory, journal, "
             "skill, and session-tree maintenance to the supervisor; do not rewrite those on every check. "
             + direct_action_prompt(url))
@@ -94,7 +97,7 @@ class PekoResponsibility(PekoDriver):
         cadence = self.sim.spec["cadence_secs"]
         rhythm = (f"Replace the default keepalive: CronDelete id=keepalive, then CronCreate "
                   f"label=responsibility-monitor interval_ms={int(cadence * 1000)} message="
-                  + monitor_prompt(self.sim.url, cadence)) if self.mode == "supervisory" else (
+                  + monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service))) if self.mode == "supervisory" else (
                   "For this controlled ablation, disable the default keepalive with CronUpdate id=keepalive enabled=false. "
                   "Do not create any scheduled or background work; only react to external messages.")
         goal = ("You are Responsibility Bench, a concise release coordinator for an isolated simulation. "
@@ -106,7 +109,7 @@ class PekoResponsibility(PekoDriver):
                     "peer owner/review conversations receive requirement changes. Each session follows its current "
                     "turn's role, not every other role. Keep existing memory scaffolding and authoritative shared "
                     "requirements/receipts without inventing facts. " + handoff_prompt()
-                    + peko_setup(self.sim.url, cadence, task_monitor_prompt(self.sim.url, cadence)))
+                    + peko_setup(self.sim.url, cadence, task_monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service))))
         if self.formation == "prepared":
             goal = ("Responsibility Bench coordinates simulated releases. " + handoff_prompt()
                     + "In genesis keep native identity and memory scaffolding, disable the default keepalive; "
@@ -119,12 +122,13 @@ class PekoResponsibility(PekoDriver):
         try:
             super().start()
             if self.formation == "prepared":
-                prepare_peko(self, task_monitor_prompt(self.sim.url, cadence))
+                prepare_peko(self, task_monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service)))
         finally:
             self.metadata.update(base_url=upstream, common_wire_policy=POLICY, continuation_mode=self.mode,
                                  cadence_secs=cadence, initialization="defined_purpose_native_genesis",
                                  api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
-                                 topology=self.topology)
+                                 topology=self.topology, action_mode=self.sim.spec.get("action_mode", "raw"),
+                                 action_service_version=self.sim.spec.get("action_service_version"))
         return self.metadata
 
     def validate_topology(self, stage):
@@ -225,7 +229,7 @@ class ClawResponsibility(OpenClawDriver):
         config["agents"]["defaults"].update(thinkingDefault="off", heartbeat={
             "every": f"{cadence * (2 if self.topology == 'separated' else 1):g}s" if self.mode == "supervisory" and self.formation != "prepared" else "0m",
             "session": "agent:main:responsibility", "target": "none",
-            "prompt": supervisor_prompt(cadence) if self.topology == "separated" else monitor_prompt(self.sim.url, cadence),
+            "prompt": supervisor_prompt(cadence) if self.topology == "separated" else monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service)),
             "timeoutSeconds": 90})
         config["tools"] = {"exec": {"host": "gateway", "security": "full", "ask": "off"}}
         for model in config["agents"]["defaults"]["models"].values():
@@ -242,9 +246,10 @@ class ClawResponsibility(OpenClawDriver):
             self.metadata.update(common_wire_policy=POLICY, continuation_mode=self.mode,
                                  cadence_secs=self.sim.spec["cadence_secs"],
                                  api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
-                                 topology=self.topology)
+                                 topology=self.topology, action_mode=self.sim.spec.get("action_mode", "raw"),
+                                 action_service_version=self.sim.spec.get("action_service_version"))
         if self.formation == "prepared":
-            prepare_claw(self, task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"]))
+            prepare_claw(self, task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"], bool(self.sim.action_service)))
             metadata.update(persona_bootstrap_completed=True, initialization="controller_prepared_empty_native_topology")
             return metadata
         instruction = ("Onboarding: your agreed name is Responsibility Bench. Your agreed vibe is concise release "
@@ -261,7 +266,7 @@ class ClawResponsibility(OpenClawDriver):
                             "--theme 'Concise release coordinator for an isolated simulation' --emoji '📋'. "
                             "No identity CLI discovery is needed. ")
         instruction += (claw_setup(self.node, self.entry, self.sim.spec["cadence_secs"],
-                                   task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"]))
+                                   task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"], bool(self.sim.action_service)))
                         if self.topology == "separated" else
                         "Do not start any tasks or schedules beyond the configured heartbeat.")
         try:
@@ -274,7 +279,8 @@ class ClawResponsibility(OpenClawDriver):
                         continuation_mode=self.mode, cadence_secs=self.sim.spec["cadence_secs"],
                         heartbeat="native configured cadence, owner task session, internal-only output",
                         api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
-                        topology=self.topology)
+                        topology=self.topology, action_mode=self.sim.spec.get("action_mode", "raw"),
+                                 action_service_version=self.sim.spec.get("action_service_version"))
         if not completed:
             raise RuntimeError("OpenClaw persona onboarding did not finish before task clock")
         return metadata

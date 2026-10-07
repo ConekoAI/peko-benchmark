@@ -85,3 +85,70 @@ organizational fault. Supervisor value means faster truthful recovery or more
 completed obligations after accounting for its cost. Intentional pause and
 cancellation must not be repaired away. Expand workload and repetitions only
 after those gates pass.
+
+## Contract 10: interface evidence and common action service
+
+Contract 10 corrects canonical-file path guidance: Peko's native file/Bash
+working directory is `<data>/workspaces`, while its principal KB lives in the
+principal workspace. Resolve the advertised principal KB anchor to absolute
+paths. OpenClaw's default file/exec directory is its configured agent workspace.
+The same logical filenames are used by both. Prepared Peko jobs now obtain the
+stable principal id from `principal.toml`, even when genesis deleted all jobs.
+
+Run `python3.12 runner/responsibility_surface_smoke.py --driver peko|openclaw`
+with the native binary/entry profile. It uses a local scripted Anthropic server,
+zero real LLM calls, and real native decoding and dispatch. It checks absolute
+and relative reads, writes/edits, cwd, HTTP world/action calls, distinct persistent
+worker-session execution, and the guarded commit/replay/conflict/precondition
+and receipt-lookup routes. A relative Peko read is expected to fail; the corrected
+instructions require absolute paths. Failure of that expected negative case does
+not count as a working path. Retain fixture failures as fixture failures.
+
+Provider evidence now records advertised tool names, schema hashes, root required
+keys and property types; response tool ids/names, argument keys/hashes and stream
+completeness; and subsequent request tool-result ids/errors/content hashes.
+Argument values and prompt text are not captured in this evidence. Native intent
+and result must match the provider evidence before a missing required argument
+is attributed to a model choice. Valid-looking calls that fail remain unresolved
+native errors requiring investigation. Root-key checks are not full JSON Schema
+validation, and the smoke test proves only the covered surfaces. Historical runs
+lack provider tool-call evidence and cannot be retroactively given this stronger
+attribution.
+
+The relay continues bounded upstream consumption after a downstream disconnect,
+retaining completion/usage if actually received. This improves controller spend
+accounting, not proof of native receipt or native quota attribution. Missing
+usage stays unknown; aggregate native/controller discrepancies still fail the
+accounting gate.
+
+`--action-mode guarded` is a separate action-service-v1 experiment; default `raw`
+preserves unguarded behavior. Operational POST bodies are `{action,preconditions}`.
+The service checks active watch and an explicit dependency readiness/revision
+against current public world state. Blocked-input requests also supply a finite
+`not_before` threshold. It does not know hidden owner obligations, cancellations,
+recipients, deadlines, future changes or the correct threshold. Those remain
+model responsibilities. Incorrect owner policy can therefore still commit an
+invalid effect, and the grader still penalizes it.
+
+Committed effects and their responses are one SQLite transaction with FULL
+synchronous durability. Keys are `send_release:<delivery_key>` and
+`request_input:<project>`. Exact committed-envelope retries return the original
+receipt without another effect, including after service reopen or watch end.
+Different envelopes under a committed key return 409. Invalid schemas return 400;
+unsatisfied declared conditions return 412. Neither commits an effect. Rejected
+keys remain eligible for a later valid attempt. `GET /receipts` exposes only past
+committed receipts, never future state or grading answers. Memory probes retain
+the plain memory schema.
+
+Every attempt, response, rejection and replay remains in the audit ledger.
+Operational completion/latency use committed effects. The report separately
+measures invalid policy attempts, boundary rejections, idempotent replays and
+committed effects. Invalid attempts fail the guarded pass gate even if the service
+prevented their effects. Receipt retention uses durable service receipt ids in
+this track. The SQLite file is authoritative for effects; the JSONL ledger is
+an audit mirror. Controller-crash recovery of the entire benchmark clock/ledger
+is not implemented or claimed; the measured restart is of the native harness.
+
+Do not pool guarded/raw scores, model/prepared formation, or different contract
+versions. Organizational-supervisor ablation remains behind execution, interface
+and accounting stability gates.

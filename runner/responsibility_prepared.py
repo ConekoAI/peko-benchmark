@@ -8,6 +8,7 @@ import datetime as dt
 import json
 import time
 import uuid
+import tomllib
 from pathlib import Path
 from responsibility_topology import task_paths, handoff_prompt, supervisor_prompt
 
@@ -46,7 +47,9 @@ def prepare_peko(driver, worker_prompt):
     indices[0].write_text(json.dumps(sessions, indent=2))
     indices[0].with_name(sid + '.jsonl').write_text('')
     schedule = json.loads(schedules[0].read_text())
-    identity = next(j['principal_id'] for j in schedule['jobs'])
+    identity = tomllib.loads((workspace / 'principal.toml').read_text()).get('id')
+    if not isinstance(identity, str) or not identity:
+        raise ValueError('prepared topology requires a persisted principal id')
     cadence = driver.sim.spec['cadence_secs']
     stamp = dt.datetime.now(dt.timezone.utc)
     def job(name, multiple, action):

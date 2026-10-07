@@ -1,4 +1,4 @@
-"""Loopback Anthropic relay: unchanged payloads, bounded calls, usage-only evidence.
+"""Loopback Anthropic relay: bounded calls, usage and value-free tool evidence.
 
 The upstream credential remains in the controller; the agent gets a disposable
 relay token. This is an accounting adapter, not an adversarial security boundary.
@@ -15,6 +15,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from prompt_profile import PromptProfiler
+from tool_surface import catalog, results, StreamTools, tool_call
 
 
 def merge_usage(target: dict, event: dict) -> bool:
@@ -115,7 +116,9 @@ class AnthropicRelay:
                   "model": payload.get("model"), "max_tokens": payload.get("max_tokens"),
                   "thinking": payload.get("thinking"), "temperature": payload.get("temperature"),
                   "stream": payload.get("stream"), "started_at": time.time(),
-                  "phase": self.phase(), "requested_decoding": requested}
+                  "phase": self.phase(), "requested_decoding": requested,
+                  "tool_catalog": catalog(payload), "request_tool_results": results(payload)}
+        stream_tools = StreamTools(record["tool_catalog"])
         with self.lock:
             probe_policy = (self.policy or {}).get("probe_allowance")
             is_probe = record["phase"] == "probe"
@@ -179,12 +182,22 @@ class AnthropicRelay:
                         if line.startswith(b"data: ") and line.strip() != b"data: [DONE]":
                             event = json.loads(line[6:])
                             record["completed"] = merge_usage(record["usage"], event) or record["completed"]
-                        handler.wfile.write(line)
-                        handler.wfile.flush()
+                            stream_tools.event(event)
+                        if not record.get("downstream_disconnected"):
+                            try:
+                                handler.wfile.write(line)
+                                handler.wfile.flush()
+                            except (BrokenPipeError, ConnectionResetError):
+                                # Keep consuming upstream to account for an interrupted native run.
+                                # Completion/usage is evidence, not proof the client received it.
+                                record["downstream_disconnected"] = True
                 else:
                     data = response.read()
                     if response.status == 200:
-                        merge_usage(record["usage"], json.loads(data))
+                        decoded = json.loads(data)
+                        merge_usage(record["usage"], decoded)
+                        record["response_tool_calls"] = [tool_call(b, record["tool_catalog"])
+                            for b in decoded.get("content", []) if b.get("type") == "tool_use"]
                         record["completed"] = True
                     handler.wfile.write(data)
                     handler.wfile.flush()
@@ -194,6 +207,8 @@ class AnthropicRelay:
             record["transport_error"] = type(exc).__name__
             handler.close_connection = True
         finally:
+            if payload.get("stream"):
+                record["response_tool_calls"] = stream_tools.evidence()
             record["wall_secs"] = round(time.monotonic() - started, 3)
             with self.lock:
                 self._save()
