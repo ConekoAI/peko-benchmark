@@ -13,7 +13,7 @@ from responsibility_audit import timestamp
 
 WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
-SEPARATED_CONTRACT_VERSION = 7
+SEPARATED_CONTRACT_VERSION = 8
 
 
 def direct_action_prompt(url):

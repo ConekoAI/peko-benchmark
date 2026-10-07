@@ -117,14 +117,20 @@ class AnthropicRelay:
                   "stream": payload.get("stream"), "started_at": time.time(),
                   "phase": self.phase(), "requested_decoding": requested}
         with self.lock:
-            totals = summarize_calls(self.records)
+            probe_policy = (self.policy or {}).get("probe_allowance")
+            is_probe = record["phase"] == "probe"
+            budget_records = ([r for r in self.records if (r.get("phase") == "probe") == is_probe]
+                              if probe_policy else self.records)
+            limits = probe_policy if probe_policy and is_probe else (self.policy or {})
+            budget_limit = probe_policy["budget_usd"] if probe_policy and is_probe else self.budget_usd
+            totals = summarize_calls(budget_records)
             # Full cost is unavailable without cache-write pricing; do not admit
             # another call once the provider has reported such tokens.
             projected_cost = sum((r.get("usage", {}).get("input_tokens", 0)
                                   + r.get("usage", {}).get("cache_creation_input_tokens", 0)) * .14
                                  + r.get("usage", {}).get("output_tokens", 0) * .28
                                  + r.get("usage", {}).get("cache_read_input_tokens", 0) * .0028
-                                 for r in self.records) / 1e6
+                                 for r in budget_records) / 1e6
             reason = None
             if not self.admission_open:
                 reason = "measurement ended"
@@ -136,7 +142,7 @@ class AnthropicRelay:
                 reason = "scenario deadline reached"
             elif totals["cache_creation_tokens"]:
                 reason = "cache-write pricing is unknown"
-            elif totals["request_count"] >= (self.policy or {}).get("request_limit", 100) or (totals["uncached_input_tokens"] or 0) >= 2_000_000 or (totals["output_tokens"] or 0) >= (self.policy or {}).get("output_limit", 50_000) or projected_cost >= self.budget_usd:
+            elif totals["request_count"] >= limits.get("request_limit", 100) or (totals["uncached_input_tokens"] or 0) >= 2_000_000 or (totals["output_tokens"] or 0) >= limits.get("output_limit", 50_000) or projected_cost >= budget_limit:
                 reason = "scenario usage budget reached"
             record["index"] = len(self.records) + 1
             record["forwarded"] = reason is None

@@ -126,7 +126,7 @@ class PekoDriver:
         seed = home / "seed.toml"
         seed.write_text(f"name = {json.dumps(self.principal)}\n"
                         f"preferred_model_id = {json.dumps(self.model)}\n"
-                        f"[quota]\nbudget_per_cycle = {self.budget_usd}\n"
+                        f"[quota]\nbudget_per_cycle = {getattr(self, 'native_budget_usd', self.budget_usd)}\n"
                         "request_count = 100\ninput_tokens = 2000000\noutput_tokens = 50000\n" + self.seed_extra)
         self.metadata = {"driver": "peko", "model": self.model, "wire_model": model.get("modelId"),
                 "api_format": self.api_format, "base_url": self.base_url,

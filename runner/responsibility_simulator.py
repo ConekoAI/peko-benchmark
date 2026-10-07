@@ -83,7 +83,7 @@ class Simulator:
             state = {"watch_active": self.phase == "watch", "elapsed_secs": self.elapsed(),
                      "duration_secs": self.spec["duration_secs"], "world_version": self.applied,
                      "dependencies": json.loads(json.dumps(self.world))}
-            self.record("read", world_version=self.applied)
+            self.record("read", world_version=self.applied, snapshot=state)
             return state
 
     def submit(self, action):
@@ -281,6 +281,7 @@ def score(spec: dict, rows: list[dict], restart: dict, finished: bool) -> dict:
             "remained_quiet": idle_actions == 0 and chatter == 0,
             "memory_facts_correct": facts_correct, "memory_facts_total": facts_total,
             "memory_accuracy": facts_correct / facts_total, "protocol_errors": protocol,
+            "memory_measurement": ("measured" if memory_valid else "invalid" if memory_reports else "unmeasured"),
             "requested_human_input": help_requests,
             "human_interventions": sum(r["kind"] == "intervention" for r in rows),
             "watch_status_reads": len(reads),

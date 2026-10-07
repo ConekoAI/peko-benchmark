@@ -14,6 +14,7 @@ from continuity_proxy import summarize_calls
 from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract, state_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
+from responsibility_diagnostics import observed_preconditions, retained_receipts
 from responsibility_topology import execution_evidence, task_paths, handoff_prompt, direct_action_prompt
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -100,6 +101,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
             reply = driver.conversation(contract(sim) + message, review=review)
             sim.record("reply", step=name, text=reply)
             print(f"{driver_name}: {name} acknowledged", flush=True)
+        if hasattr(driver, "begin_watch"):
+            driver.begin_watch()
         if spec.get("topology") == "separated":
             driver.validate_topology("pre-watch")
             print(f"{driver_name}: separated native topology verified", flush=True)
@@ -156,6 +159,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
         "metadata": metadata, "usage": telemetry, "errors": errors,
         "wall_secs": round(time.monotonic() - started, 3)}, indent=2))
     metrics = score(spec, sim.rows, restart, finished)
+    metrics["observed_preconditions"] = observed_preconditions(spec, sim.rows)
+    metrics["receipt_retention"] = retained_receipts(run_dir, sim.rows)
     starts = [r["wall_time"] for r in sim.rows if r["kind"] == "watch_started"]
     ends = [r["wall_time"] for r in sim.rows if r["kind"] == "watch_finished"]
     outbound = native_outbound_attempts(run_dir, starts[0], ends[0]) if starts and ends else []
@@ -190,6 +195,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--driver", choices=("peko", "openclaw"), required=True)
+    parser.add_argument("--formation", choices=("model", "prepared"), default="model",
+                        help="Model-created organization or declared controller-prepared empty execution fixture")
     parser.add_argument("--mode", choices=("supervisory", "event-driven", "persistence"), default="supervisory")
     parser.add_argument("--topology", choices=("flattened", "separated"), default="flattened",
                         help="Separated: model registers a task worker; retains organizational supervision")
@@ -208,6 +215,9 @@ def main():
     spec = load_spec(args.scenario, args.seed, args.scale)
     spec["profile_prompt"] = args.profile_prompt
     spec["topology"] = args.topology
+    spec["formation"] = args.formation
+    if args.formation == "prepared" and args.topology != "separated":
+        parser.error("prepared formation requires separated topology")
     if args.timeout_secs < spec["duration_secs"] + 300:
         parser.error("timeout must allow watch duration plus at least 300 seconds for setup and probe")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")

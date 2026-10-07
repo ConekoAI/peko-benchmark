@@ -216,3 +216,7 @@ installation or git repo initialization).
   reproducibility and limits of the initial comparison.
 - Native/provider token reconciliation and phase cost capture are implemented
   for the MiMo continuity and responsibility adapters.
+
+The [contract 8 execution protocol](docs/RESPONSIBILITY_EXECUTION_PROTOCOL.md)
+separates prepared organization from model formation, preserves a distinct memory-probe
+allowance, and adds observed-precondition and receipt-retention diagnostics.

@@ -10,13 +10,15 @@ from continuity_openclaw import OpenClawDriver, final_reply
 from continuity_peko import PekoDriver
 from continuity_proxy import AnthropicRelay
 from continuity_usage import reconcile_usage
+from responsibility_prepared import prepare_peko, prepare_claw, arm_peko, set_claw_due_times
 from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
                                      verify_claw, verify_peko, task_paths,
                                      handoff_prompt, direct_action_prompt, SEPARATED_CONTRACT_VERSION)
 
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
-          "request_limit": 60, "output_limit": 30000}
+          "request_limit": 60, "output_limit": 30000,
+          "probe_allowance": {"request_limit": 8, "output_limit": 6000, "budget_usd": .01}}
 API_CONTRACT_VERSION = 3
 
 
@@ -71,6 +73,7 @@ class PekoResponsibility(PekoDriver):
         self.principal = "responsibility-bench"
         self.topology = self.sim.spec.get("topology", "flattened")
         self.topology_checks = []
+        self.formation = self.sim.spec.get("formation", "model")
 
     def start(self):
         key = os.environ.get("PEKO_API_KEY") or os.environ.get("MIMO_API_KEY")
@@ -104,11 +107,19 @@ class PekoResponsibility(PekoDriver):
                     "turn's role, not every other role. Keep existing memory scaffolding and authoritative shared "
                     "requirements/receipts without inventing facts. " + handoff_prompt()
                     + peko_setup(self.sim.url, cadence, task_monitor_prompt(self.sim.url, cadence)))
+        if self.formation == "prepared":
+            goal = ("Responsibility Bench coordinates simulated releases. " + handoff_prompt()
+                    + "In genesis keep native identity and memory scaffolding, disable the default keepalive; "
+                    "do not create task sessions or schedules. The benchmark controller prepares an empty "
+                    "organization afterward. Owner messages will supply requirements. End genesis promptly.")
+        self.native_budget_usd = self.budget_usd + POLICY["probe_allowance"]["budget_usd"]
         self.seed_extra = ("\n[identity]\ndisplay_name = \"Responsibility Bench\"\n"
                            "description = \"Concise coordinator for simulated release obligations\"\n"
                            "\n[intent]\ngoals = [" + json.dumps(goal) + "]\n")
         try:
             super().start()
+            if self.formation == "prepared":
+                prepare_peko(self, task_monitor_prompt(self.sim.url, cadence))
         finally:
             self.metadata.update(base_url=upstream, common_wire_policy=POLICY, continuation_mode=self.mode,
                                  cadence_secs=cadence, initialization="defined_purpose_native_genesis",
@@ -132,6 +143,10 @@ class PekoResponsibility(PekoDriver):
         if not check["verified"]:
             raise ValueError("separated topology registration failed: " + "; ".join(check["errors"]))
         return check
+
+    def begin_watch(self):
+        if self.formation == "prepared":
+            arm_peko(self)
 
     def phase(self):
         return phase_for(self.sim)
@@ -200,6 +215,7 @@ class ClawResponsibility(OpenClawDriver):
         self.sim, self.mode = simulator, mode
         self.topology = self.sim.spec.get("topology", "flattened")
         self.topology_checks = []
+        self.formation = self.sim.spec.get("formation", "model")
 
     def configure(self, config):
         cadence = self.sim.spec["cadence_secs"]
@@ -224,6 +240,10 @@ class ClawResponsibility(OpenClawDriver):
                                  cadence_secs=self.sim.spec["cadence_secs"],
                                  api_contract_version=SEPARATED_CONTRACT_VERSION if self.topology == "separated" else API_CONTRACT_VERSION,
                                  topology=self.topology)
+        if self.formation == "prepared":
+            prepare_claw(self, task_monitor_prompt(self.sim.url, self.sim.spec["cadence_secs"]))
+            metadata.update(persona_bootstrap_completed=True, initialization="controller_prepared_empty_native_topology")
+            return metadata
         instruction = ("Onboarding: your agreed name is Responsibility Bench. Your agreed vibe is concise release "
                   "coordinator for an isolated simulation, emoji 📋. Skip avatar generation and optional apps/plugins. "
                   "Complete applicable BOOTSTRAP steps now in one bounded turn: persist identity, soul and user "
@@ -255,6 +275,10 @@ class ClawResponsibility(OpenClawDriver):
         if not completed:
             raise RuntimeError("OpenClaw persona onboarding did not finish before task clock")
         return metadata
+
+    def begin_watch(self):
+        if self.formation == "prepared":
+            set_claw_due_times(self, armed=True)
 
     def validate_topology(self, stage):
         schedule = json.loads(self._command("automations", "list", "--all", "--json"))
