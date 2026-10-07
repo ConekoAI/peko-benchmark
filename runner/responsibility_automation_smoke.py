@@ -71,6 +71,14 @@ def run(name, out):
             prepare_claw(driver, 'SCRIPTED_FIXTURE: no commitment facts; marker procedures are controller probes.')
             driver._command('config','set','agents.defaults.heartbeat.prompt',strategy.supervisor(60))
         snapshot('post-setup')
+        if name == 'peko':
+            listed = invoke('session', {'action':'list'})
+            roots = [s for s in json.loads(listed['content'])['sessions'] if s.get('path') == 'sess:/']
+            checks.append({'check':'listed-trunk-address', 'passed':len(roots) == 1})
+            if len(roots) != 1:
+                raise ValueError('native session list did not advertise exactly one addressable trunk')
+            for action in ('history', 'status', 'list'):
+                invoke('session', {'action':action, 'path':roots[0]['path']})
         scripts = workspace/'workflows'; scripts.mkdir(exist_ok=True)
         script = scripts/'surface_marker.py'
         script.write_text('import sys, time, json\nfrom pathlib import Path\n'

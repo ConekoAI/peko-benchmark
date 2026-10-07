@@ -97,6 +97,7 @@ python3.12 runner/responsibility_automation_smoke.py --driver openclaw
 ```
 
 These controller-scripted probes test conversational code execution, SDK tool
-callbacks, recurring/one-shot native dispatch, process restart, unchanged chosen
+callbacks, reuse of Peko's listed trunk address through native session reads,
+recurring/one-shot native dispatch, process restart, unchanged chosen
 job anchors, probe isolation and native history collection. They make zero real
 LLM calls and must never be reported as model-authored strategy successes.

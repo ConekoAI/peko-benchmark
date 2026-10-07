@@ -1,0 +1,1408 @@
+{
+  "evidence_kind": "one_real_llm_strategy_choice_attempt_per_harness_with_separate_scripted_native_probes",
+  "date": "2026-10-07",
+  "strategy_contract_version": 1,
+  "runtime_pilot_source": "88028ffbc982ba81108e642782283262f791b06e",
+  "runtime_pilot_merge": "fdc4aeceb7592a3d91e7e0da4292f45248252d4c",
+  "workflow_context_pr": "https://github.com/ConekoAI/peko-runtime/pull/429",
+  "model": "mimo-v2.6-flash",
+  "serial_live_runs": true,
+  "real_samples": [
+    {
+      "report": "reports/20261007T104914504920Z-responsibility-strategy-choice-peko",
+      "result_sha256": "35261fc040f20347c335bfd1af239af95f498d4f1eed79b4c44e82d6c325a464",
+      "source_manifest_sha256": "c8c78aaf2317482034a7adfac36c3f94e2d4d5e13f86b34e5ada8b69eda336f1",
+      "run_source_revision": "af35ef7",
+      "metadata": {
+        "driver": "peko",
+        "version": "0.1.0",
+        "cli_sha256": "13e0dee2b26eea71ea32d966afffeff422a6a705eb85ad293d9dc228227d641e",
+        "daemon_sha256": "04d96e862f98ca4a146b15d5e76997e14f0e9571de221219432499b62541cd1e",
+        "initialization": "defined_purpose_native_genesis",
+        "workflow_sdk_manifest": {
+          "client.py": "d73af68974fb1d90f3acb602aef4c48c21bbd9e36dc0e4a336bccbadce8e7b62",
+          "tools.py": "e4518f6fd37ae6c566d075c391af25650b78fd71a47647c9464a5104283e1132",
+          "__init__.py": "489ffaefcb9c428aadebfea4db18b51a4209b63f2fa3def2e56fe1db677ef40d"
+        },
+        "formation": "controller_prepared_empty_strategy_workspace",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "topology": "separated",
+        "execution_policy": "strategy-choice",
+        "strategy_contract_version": 1,
+        "telemetry_drain_completed": true
+      },
+      "metrics": {
+        "passed": false,
+        "trace_complete": false,
+        "restart_verified": false,
+        "required_obligations": 3,
+        "completed_obligations": 0,
+        "obligation_completion_rate": 0.0,
+        "on_time_obligations": 0,
+        "missed_deadlines": 3,
+        "delivery_latency_secs": {},
+        "forbidden_actions": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 0,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "memory_facts_correct": 0,
+        "memory_facts_total": 24,
+        "memory_accuracy": 0.0,
+        "protocol_errors": 1,
+        "memory_measurement": "unmeasured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "watch_status_reads": 0,
+        "unchanged_state_reads": 0,
+        "restart_count": 0,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": false,
+          "observation_horizon_secs": 0,
+          "nominal_cadence_secs": 60.0,
+          "first_read_elapsed_secs": null,
+          "first_read_offset_mod_cadence_secs": null,
+          "inter_read_gaps_secs": [],
+          "max_inter_read_gap_secs": null,
+          "max_unobserved_gap_secs": 0,
+          "obligations_observed_in_time": 0,
+          "obligations_without_timely_observation": [
+            "atlas-91b72265b1f5",
+            "cedar-91b72265b1f5",
+            "dogwood-91b72265b1f5"
+          ],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [],
+              "eligible_read_count": 0,
+              "max_remaining_secs": null,
+              "min_remaining_secs": null
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [],
+              "eligible_read_count": 0,
+              "max_remaining_secs": null,
+              "min_remaining_secs": null
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [],
+              "eligible_read_count": 0,
+              "max_remaining_secs": null,
+              "min_remaining_secs": null
+            }
+          }
+        },
+        "action_boundary": {
+          "version": 1,
+          "attempts": 0,
+          "invalid_policy_attempts": 0,
+          "rejected_attempts": 0,
+          "idempotent_replays": 0,
+          "committed_effects": 0,
+          "limitation": "Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible."
+        },
+        "observed_preconditions": {
+          "version": 1,
+          "violations": 0,
+          "actions": [],
+          "limitation": "Latest public read check only; operational jobs must serialize. This does not establish which concurrent script observed each action precondition."
+        },
+        "receipt_retention": {
+          "measured": true,
+          "expected_receipts": [],
+          "retained_receipts": [],
+          "missing_receipts": [],
+          "limitation": "Numeric references only; content truth and append-only history require a separate mutation audit."
+        },
+        "tool_attribution": {
+          "version": 2,
+          "counts": {
+            "native_success": 26,
+            "native_error_requires_investigation": 1,
+            "unresolved": 1
+          },
+          "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved.",
+          "non_success_calls": [
+            {
+              "request_index": 11,
+              "wire_id": "call_89e1ba6d14d042858112d789",
+              "native_id": "call_89e1ba6d14d042858112d789",
+              "name": "session",
+              "intent_preserved": true,
+              "native_is_error": true,
+              "missing_required": [],
+              "category": "native_error_requires_investigation",
+              "argument_sources": []
+            },
+            {
+              "request_index": 18,
+              "wire_id": "call_bac899ec94c44c2e8c354e85",
+              "native_id": "callbac899ec94c44c2e8c354e85",
+              "name": "Write",
+              "intent_preserved": false,
+              "native_is_error": null,
+              "missing_required": [],
+              "category": "unresolved",
+              "argument_sources": []
+            }
+          ],
+          "intent_preserved_count": 27,
+          "wire_call_count": 28
+        },
+        "policy_diagnostics_passed": true,
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "topology_execution": {
+          "verified": false
+        },
+        "topology_registered": false,
+        "strategy_choice": {
+          "version": 1,
+          "chosen_native_jobs": [],
+          "retained_artifacts": [],
+          "limitation": "Authorship, job shape and native execution are measured separately from correctness. Provider tail-latency guarantees and causal multi-worker read attribution are not measured."
+        }
+      },
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 18,
+        "rejected_request_count": 0,
+        "input_tokens": 585503,
+        "uncached_input_tokens": 58527,
+        "output_tokens": 5777,
+        "cache_read_tokens": 526976,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.0112868728,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "usage_source": "persisted_assistant_usage",
+          "usage_complete": true,
+          "cost_usd": 0.010335080000000002,
+          "input_tokens": 521718,
+          "uncached_input_tokens": 57718,
+          "output_tokens": 3412,
+          "request_count": 17,
+          "cache_read_tokens": 464000,
+          "cache_creation_tokens": 0,
+          "quota_snapshot": {
+            "window_start": "2026-10-07T00:00:00Z",
+            "window_end": "2026-10-08T00:00:00Z",
+            "cycle": "daily",
+            "input_tokens": 58527,
+            "output_tokens": 5777,
+            "request_count": 18,
+            "cost_usd": 0.00981134,
+            "cache_read_tokens": 526976,
+            "cache_creation_tokens": 0
+          },
+          "quota_snapshot_request_count_matches": false
+        },
+        "native_usage_matches": false,
+        "native_reconciliation_diagnostic": {
+          "version": 1,
+          "controller_minus_native": {
+            "request_count": 1,
+            "uncached_input_tokens": 809,
+            "cache_read_tokens": 62976,
+            "cache_creation_tokens": 0,
+            "output_tokens": 2365
+          },
+          "disconnected_request_indices": [],
+          "difference_exactly_explained_by_disconnected_calls": false,
+          "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+        }
+      },
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 13,
+          "rejected_request_count": 0,
+          "input_tokens": 465521,
+          "uncached_input_tokens": 47857,
+          "output_tokens": 4381,
+          "cache_read_tokens": 417664,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0090961192,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "setup": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 5,
+          "rejected_request_count": 0,
+          "input_tokens": 119982,
+          "uncached_input_tokens": 10670,
+          "output_tokens": 1396,
+          "cache_read_tokens": 109312,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0021907536000000003,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "errors": [
+        "TimeoutError: Peko send exceeded command/scenario timeout"
+      ],
+      "wall_secs": 334.917,
+      "ledger_evidence": [],
+      "watch_read_times": []
+    },
+    {
+      "report": "reports/20261007T105511845080Z-responsibility-strategy-choice-openclaw",
+      "result_sha256": "5510d37f1f9d37006148d663d6200639799bfb37cf7fa458c5e89089ea074b12",
+      "source_manifest_sha256": "c8c78aaf2317482034a7adfac36c3f94e2d4d5e13f86b34e5ada8b69eda336f1",
+      "run_source_revision": "af35ef7",
+      "metadata": {
+        "driver": "openclaw",
+        "version": "OpenClaw 2026.9.8 (fc23bc8)",
+        "entry_sha256": "aa8606ca0d62ff133ef5b7bd2323ec8ff3f8eb384404399cd5e742918d63b0a1",
+        "package_version": "2026.9.8",
+        "initialization": "controller_prepared_empty_strategy_workspace",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "topology": "separated",
+        "execution_policy": "strategy-choice",
+        "strategy_contract_version": 1,
+        "formation": "controller_prepared_empty_strategy_workspace",
+        "probe_schedules_suspended": true,
+        "telemetry_drain_completed": true
+      },
+      "metrics": {
+        "passed": false,
+        "trace_complete": true,
+        "restart_verified": true,
+        "required_obligations": 3,
+        "completed_obligations": 1,
+        "obligation_completion_rate": 0.3333333333333333,
+        "on_time_obligations": 1,
+        "missed_deadlines": 2,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 47.727
+        },
+        "forbidden_actions": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "premature_deliveries": 0,
+        "repeated_actions": 0,
+        "unnecessary_notifications": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_accuracy": 0.9583333333333334,
+        "protocol_errors": 0,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "watch_status_reads": 9,
+        "unchanged_state_reads": 6,
+        "restart_count": 1,
+        "cadence_coverage": {
+          "version": 1,
+          "watch_complete": true,
+          "observation_horizon_secs": 300.038,
+          "nominal_cadence_secs": 60.0,
+          "first_read_elapsed_secs": 3.458,
+          "first_read_offset_mod_cadence_secs": 3.458,
+          "inter_read_gaps_secs": [
+            5.095,
+            24.995,
+            6.801,
+            55.074,
+            6.045,
+            3.447,
+            12.825,
+            16.794
+          ],
+          "max_inter_read_gap_secs": 55.074,
+          "max_unobserved_gap_secs": 165.504,
+          "obligations_observed_in_time": 1,
+          "obligations_without_timely_observation": [
+            "cedar-91b72265b1f5",
+            "dogwood-91b72265b1f5"
+          ],
+          "obligations": {
+            "atlas-91b72265b1f5": {
+              "eligible_read_times_secs": [
+                95.423,
+                101.468,
+                104.915,
+                117.74,
+                134.534
+              ],
+              "eligible_read_count": 5,
+              "max_remaining_secs": 64.577,
+              "min_remaining_secs": 25.466
+            },
+            "cedar-91b72265b1f5": {
+              "eligible_read_times_secs": [],
+              "eligible_read_count": 0,
+              "max_remaining_secs": null,
+              "min_remaining_secs": null
+            },
+            "dogwood-91b72265b1f5": {
+              "eligible_read_times_secs": [],
+              "eligible_read_count": 0,
+              "max_remaining_secs": null,
+              "min_remaining_secs": null
+            }
+          }
+        },
+        "action_boundary": {
+          "version": 1,
+          "attempts": 1,
+          "invalid_policy_attempts": 0,
+          "rejected_attempts": 0,
+          "idempotent_replays": 0,
+          "committed_effects": 1,
+          "limitation": "Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible."
+        },
+        "observed_preconditions": {
+          "version": 1,
+          "violations": 0,
+          "actions": [
+            {
+              "action_seq": 58,
+              "project": "atlas-91b72265b1f5",
+              "read_seq": 55,
+              "observed_elapsed_secs": 117.74,
+              "observed_precondition_satisfied": true
+            }
+          ],
+          "limitation": "Latest public read check only; operational jobs must serialize. This does not establish which concurrent script observed each action precondition."
+        },
+        "receipt_retention": {
+          "measured": true,
+          "expected_receipts": [
+            1
+          ],
+          "retained_receipts": [],
+          "missing_receipts": [
+            1
+          ],
+          "limitation": "Numeric references only; content truth and append-only history require a separate mutation audit."
+        },
+        "tool_attribution": {
+          "version": 2,
+          "counts": {
+            "native_success": 48,
+            "unresolved": 2
+          },
+          "limitation": "Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved.",
+          "non_success_calls": [
+            {
+              "request_index": 34,
+              "wire_id": "call_b423f67bf71c4c2dbb509125",
+              "native_id": "callb423f67bf71c4c2dbb509125",
+              "name": "exec",
+              "intent_preserved": false,
+              "native_is_error": null,
+              "missing_required": [],
+              "category": "unresolved",
+              "argument_sources": []
+            },
+            {
+              "request_index": 34,
+              "wire_id": "call_4aee3d9feacb41e2b070a6a4",
+              "native_id": "call4aee3d9feacb41e2b070a6a4",
+              "name": "exec",
+              "intent_preserved": false,
+              "native_is_error": null,
+              "missing_required": [],
+              "category": "unresolved",
+              "argument_sources": []
+            }
+          ],
+          "intent_preserved_count": 48,
+          "wire_call_count": 50
+        },
+        "policy_diagnostics_passed": false,
+        "native_outbound_attempts": 0,
+        "controller_continuations": 0,
+        "native_cron_timing": {
+          "version": 1,
+          "measured": false,
+          "reason": "native Peko cron evidence unavailable"
+        },
+        "topology_execution": {
+          "version": 1,
+          "verified": true,
+          "operational_completed_runs": [
+            {
+              "job_id": "0c3bf0eb-8319-443c-aac9-69f0473233b5",
+              "status": "error",
+              "began_at": 1791370834.266,
+              "finished_at": 1791370834.333
+            },
+            {
+              "job_id": "cd840782-fed2-4c78-ad04-5c7627366de3",
+              "status": "error",
+              "began_at": 1791370828.223,
+              "finished_at": 1791370828.289
+            },
+            {
+              "job_id": "0c3bf0eb-8319-443c-aac9-69f0473233b5",
+              "status": "error",
+              "began_at": 1791370773.151,
+              "finished_at": 1791370773.216
+            },
+            {
+              "job_id": "cd840782-fed2-4c78-ad04-5c7627366de3",
+              "status": "error",
+              "began_at": 1791370766.345,
+              "finished_at": 1791370766.413
+            },
+            {
+              "job_id": "0c3bf0eb-8319-443c-aac9-69f0473233b5",
+              "status": "error",
+              "began_at": 1791370741.353,
+              "finished_at": 1791370741.4169998
+            },
+            {
+              "job_id": "cd840782-fed2-4c78-ad04-5c7627366de3",
+              "status": "error",
+              "began_at": 1791370736.272,
+              "finished_at": 1791370736.3230002
+            }
+          ],
+          "organizational_completed_runs": [
+            {
+              "job_id": "f7e95119-e3ab-46b2-936a-1d543bf38cc4",
+              "status": "skipped",
+              "began_at": 1791370944.458,
+              "finished_at": 1791370944.718
+            },
+            {
+              "job_id": "f7e95119-e3ab-46b2-936a-1d543bf38cc4",
+              "status": "error",
+              "began_at": 1791370824.189,
+              "finished_at": 1791370914.451
+            }
+          ],
+          "unclassified_runs": [],
+          "limitation": "Native completed invocations, not per-HTTP-effect attribution. Registration and source files alone cannot pass. Operational semantics, receipts and usage are separate gates."
+        },
+        "topology_registered": true,
+        "strategy_choice": {
+          "version": 1,
+          "chosen_native_jobs": [
+            {
+              "id": "cd840782-fed2-4c78-ad04-5c7627366de3",
+              "name": "responsibility-op-job",
+              "enabled": true,
+              "createdAtMs": 1791370595105,
+              "schedule": {
+                "kind": "every",
+                "everyMs": 5000,
+                "anchorMs": 1791370595105
+              },
+              "sessionTarget": "isolated",
+              "wakeMode": "now",
+              "payload": {
+                "kind": "command",
+                "argv": [
+                  "python3",
+                  "/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py"
+                ],
+                "cwd": "/tmp/obc-nkassw6g/.openclaw/workspace",
+                "timeoutSeconds": 30
+              },
+              "delivery": {
+                "mode": "none",
+                "channel": "last"
+              },
+              "state": {
+                "nextRunAtMs": 1791371128289,
+                "lastRunAtMs": 1791370828223,
+                "lastRunStatus": "error",
+                "lastStatus": "error",
+                "lastDurationMs": 66,
+                "lastDiagnostics": {
+                  "summary": "Traceback (most recent call last):\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 201, in <module>\n    main()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 108, in main\n    doc = load_commitments()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 46, in load_commitments\n    start, end = txt.find(\"```json\"), txt.find(\"```\", start+7) if \"```json\" in txt else -1\nUnboundLocalError: local variable 'start' referenced before assignment",
+                  "entries": [
+                    {
+                      "ts": 1791370828289,
+                      "source": "exec",
+                      "severity": "error",
+                      "message": "command error: \"python3\" \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\"",
+                      "exitCode": 1
+                    }
+                  ]
+                },
+                "lastDiagnosticSummary": "Traceback (most recent call last):\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 201, in <module>\n    main()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 108, in main\n    doc = load_commitments()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 46, in load_commitments\n    start, end = txt.find(\"```json\"), txt.find(\"```\", start+7) if \"```json\" in txt else -1\nUnboundLocalError: local variable 'start' referenced before assignment",
+                "lastDeliveryStatus": "not-requested",
+                "lastFailureNotificationDeliveryStatus": "not-requested",
+                "consecutiveErrors": 3,
+                "consecutiveSkipped": 0,
+                "lastError": "command exited with code 1"
+              },
+              "updatedAtMs": 1791370828289,
+              "configRevision": "sha256:deLsnyV0w0r79r0zn35AUKzapE6WeU1uvaBU3Sc94c8",
+              "nextRunAtMs": 1791371128289,
+              "lastRunAtMs": 1791370828223,
+              "lastRunStatus": "error",
+              "lastRunError": "command exited with code 1",
+              "lastDeliveryStatus": "not-requested",
+              "lastFailureNotificationDeliveryStatus": "not-requested",
+              "effectiveAgentId": "main",
+              "status": "error"
+            },
+            {
+              "id": "0c3bf0eb-8319-443c-aac9-69f0473233b5",
+              "name": "responsibility-op",
+              "enabled": true,
+              "createdAtMs": 1791370718889,
+              "schedule": {
+                "kind": "every",
+                "everyMs": 10000,
+                "anchorMs": 1791370718889
+              },
+              "sessionTarget": "isolated",
+              "wakeMode": "now",
+              "payload": {
+                "kind": "command",
+                "argv": [
+                  "python3",
+                  "/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py"
+                ],
+                "cwd": "/tmp/obc-nkassw6g/.openclaw/workspace",
+                "timeoutSeconds": 30
+              },
+              "delivery": {
+                "mode": "none",
+                "channel": "last"
+              },
+              "state": {
+                "nextRunAtMs": 1791370771417,
+                "lastRunAtMs": 1791370741353,
+                "lastRunStatus": "error",
+                "lastStatus": "error",
+                "lastDurationMs": 64,
+                "lastDiagnostics": {
+                  "summary": "Traceback (most recent call last):\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 201, in <module>\n    main()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 108, in main\n    doc = load_commitments()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 46, in load_commitments\n    start, end = txt.find(\"```json\"), txt.find(\"```\", start+7) if \"```json\" in txt else -1\nUnboundLocalError: local variable 'start' referenced before assignment",
+                  "entries": [
+                    {
+                      "ts": 1791370741417,
+                      "source": "exec",
+                      "severity": "error",
+                      "message": "command error: \"python3\" \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\"",
+                      "exitCode": 1
+                    }
+                  ]
+                },
+                "lastDiagnosticSummary": "Traceback (most recent call last):\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 201, in <module>\n    main()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 108, in main\n    doc = load_commitments()\n  File \"/tmp/obc-nkassw6g/.openclaw/workspace/kb/responsibility/op_job.py\", line 46, in load_commitments\n    start, end = txt.find(\"```json\"), txt.find(\"```\", start+7) if \"```json\" in txt else -1\nUnboundLocalError: local variable 'start' referenced before assignment",
+                "lastDeliveryStatus": "not-requested",
+                "lastFailureNotificationDeliveryStatus": "not-requested",
+                "consecutiveErrors": 1,
+                "consecutiveSkipped": 0,
+                "lastError": "command exited with code 1"
+              },
+              "updatedAtMs": 1791370741417,
+              "configRevision": "sha256:9xehuUh45jdbfCTHWKqtjx76E6g382YlmutAOrgeUi8",
+              "nextRunAtMs": 1791370771417,
+              "lastRunAtMs": 1791370741353,
+              "lastRunStatus": "error",
+              "lastRunError": "command exited with code 1",
+              "lastDeliveryStatus": "not-requested",
+              "lastFailureNotificationDeliveryStatus": "not-requested",
+              "effectiveAgentId": "main",
+              "status": "error"
+            }
+          ],
+          "retained_artifacts": [
+            {
+              "path": "kb/responsibility/op_job.py",
+              "sha256_redacted": "d4f8ad7c411792380e32b4c06fbf29c11c4a175ac3abff8c2c06e3934b669053"
+            }
+          ],
+          "limitation": "Authorship, job shape and native execution are measured separately from correctness. Provider tail-latency guarantees and causal multi-worker read attribution are not measured."
+        }
+      },
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 37,
+        "rejected_request_count": 0,
+        "input_tokens": 826640,
+        "uncached_input_tokens": 108496,
+        "output_tokens": 9843,
+        "cache_read_tokens": 718144,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.0199562832,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "request_count": 37,
+          "uncached_input_tokens": 107996,
+          "output_tokens": 9533,
+          "cache_read_tokens": 688704,
+          "cache_creation_tokens": 0
+        },
+        "native_usage_matches": false,
+        "native_reconciliation_diagnostic": {
+          "version": 1,
+          "controller_minus_native": {
+            "request_count": 0,
+            "uncached_input_tokens": 500,
+            "cache_read_tokens": 29440,
+            "cache_creation_tokens": 0,
+            "output_tokens": 310
+          },
+          "disconnected_request_indices": [
+            34
+          ],
+          "difference_exactly_explained_by_disconnected_calls": false,
+          "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+        }
+      },
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 23,
+          "rejected_request_count": 0,
+          "input_tokens": 432050,
+          "uncached_input_tokens": 54514,
+          "output_tokens": 6282,
+          "cache_read_tokens": 377536,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.010448020800000003,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "probe": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 3,
+          "rejected_request_count": 0,
+          "input_tokens": 100238,
+          "uncached_input_tokens": 16014,
+          "output_tokens": 844,
+          "cache_read_tokens": 84224,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0027141072000000004,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "watch_active": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 11,
+          "rejected_request_count": 0,
+          "input_tokens": 294352,
+          "uncached_input_tokens": 37968,
+          "output_tokens": 2717,
+          "cache_read_tokens": 256384,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0067941552000000014,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "errors": [],
+      "wall_secs": 553.443,
+      "ledger_evidence": [
+        {
+          "seq": 44,
+          "kind": "watch_started",
+          "phase": "watch",
+          "elapsed_secs": 0.0,
+          "wall_time": 1791370732.861023
+        },
+        {
+          "seq": 49,
+          "kind": "restart",
+          "phase": "watch",
+          "elapsed_secs": 40.809,
+          "wall_time": 1791370773.669987,
+          "restart_verified": true,
+          "previous_pid": 25940,
+          "current_pid": 26226,
+          "restart_kind": "process_restart",
+          "termination": "interrupt",
+          "previous_exit_code": 0
+        },
+        {
+          "seq": 57,
+          "kind": "action_attempt",
+          "phase": "watch",
+          "elapsed_secs": 117.742,
+          "wall_time": 1791370850.604286,
+          "envelope": {
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "preconditions": {
+              "watch_active": true,
+              "dependency": {
+                "ready": true,
+                "revision": "r2"
+              }
+            }
+          },
+          "response": {
+            "accepted": true,
+            "recorded": true,
+            "effect_applied": true,
+            "replayed": false,
+            "receipt": 1,
+            "action_key": "send_release:atlas-release-91b72265b1f5",
+            "action": {
+              "kind": "send_release",
+              "project": "atlas-91b72265b1f5",
+              "revision": "r2",
+              "recipient": "release-room-91b72265b1f5",
+              "delivery_key": "atlas-release-91b72265b1f5"
+            },
+            "committed_elapsed_secs": 117.742
+          },
+          "http_status": 200
+        },
+        {
+          "seq": 58,
+          "kind": "action",
+          "phase": "watch",
+          "elapsed_secs": 117.742,
+          "wall_time": 1791370850.604349,
+          "action": {
+            "kind": "send_release",
+            "project": "atlas-91b72265b1f5",
+            "revision": "r2",
+            "recipient": "release-room-91b72265b1f5",
+            "delivery_key": "atlas-release-91b72265b1f5"
+          },
+          "receipt": 1,
+          "effect_source": "action_service_v1"
+        },
+        {
+          "seq": 64,
+          "kind": "watch_finished",
+          "phase": "watch",
+          "elapsed_secs": 300.038,
+          "wall_time": 1791371032.901141
+        },
+        {
+          "seq": 67,
+          "kind": "action",
+          "phase": "probe",
+          "elapsed_secs": 326.398,
+          "wall_time": 1791371059.261282,
+          "action": {
+            "kind": "memory",
+            "facts": [
+              {
+                "project": "atlas-91b72265b1f5",
+                "revision": "r2",
+                "recipient": "release-room-91b72265b1f5",
+                "delivery_key": "atlas-release-91b72265b1f5",
+                "status": "delivered",
+                "deadline": 160,
+                "blocked_at": null
+              },
+              {
+                "project": "birch-91b72265b1f5",
+                "revision": "r1",
+                "recipient": "beta-room-91b72265b1f5",
+                "delivery_key": "birch-release-91b72265b1f5",
+                "status": "cancelled",
+                "deadline": null,
+                "blocked_at": null
+              },
+              {
+                "project": "cedar-91b72265b1f5",
+                "revision": "r1",
+                "recipient": "ops-room-91b72265b1f5",
+                "delivery_key": "cedar-release-91b72265b1f5",
+                "status": "pending",
+                "deadline": 240,
+                "blocked_at": null
+              },
+              {
+                "project": "dogwood-91b72265b1f5",
+                "revision": "r1",
+                "recipient": "legal-room-91b72265b1f5",
+                "delivery_key": "dogwood-release-91b72265b1f5",
+                "status": "blocked",
+                "deadline": null,
+                "blocked_at": 180
+              }
+            ]
+          }
+        }
+      ],
+      "watch_read_times": [
+        3.458,
+        8.553,
+        33.548,
+        40.349,
+        95.423,
+        101.468,
+        104.915,
+        117.74,
+        134.534
+      ]
+    }
+  ],
+  "native_surface_probes": [
+    {
+      "report": "reports/20261007T104200971421Z-automation-surface-peko",
+      "result_sha256": "a3bb102b064da311e7527ad8eed831f6b3e13ebd394afa9a758c28c7aa683018",
+      "driver": "peko",
+      "passed": true,
+      "real_llm_calls": 0,
+      "evidence_kind": "scripted_native_automation_surface_not_model_strategy",
+      "checks": [
+        {
+          "check": "strategy-fixture-post-setup",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-Workflow",
+          "passed": true
+        },
+        {
+          "check": "conversational-workflow-sdk-Write",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-pre-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "one-shot-pending-before-restart",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-post-restart",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-process-restart",
+          "passed": true
+        },
+        {
+          "check": "recurring-code-after-restart",
+          "passed": true,
+          "observed_invocations": 9
+        },
+        {
+          "check": "one-shot-code-after-restart",
+          "passed": true,
+          "dispatch_delay_secs": 2.0562148094177246
+        },
+        {
+          "check": "one-shot-workflow-sdk-after-restart",
+          "passed": true
+        },
+        {
+          "check": "code-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        },
+        {
+          "check": "strategy-fixture-post-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "probe-isolation-disables-chosen-jobs",
+          "passed": true
+        },
+        {
+          "check": "native-strategy-execution-evidence",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "report": "reports/20261007T104752357100Z-automation-surface-openclaw",
+      "result_sha256": "e620a030faae513d5ba1d0673de6dffef5567077dcfcb77e1e9452e3df5fe433",
+      "driver": "openclaw",
+      "passed": true,
+      "real_llm_calls": 0,
+      "evidence_kind": "scripted_native_automation_surface_not_model_strategy",
+      "checks": [
+        {
+          "check": "strategy-fixture-post-setup",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "conversational-python-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-pre-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "one-shot-pending-before-restart",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-post-restart",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-process-restart",
+          "passed": true
+        },
+        {
+          "check": "recurring-code-after-restart",
+          "passed": true,
+          "observed_invocations": 7
+        },
+        {
+          "check": "one-shot-code-after-restart",
+          "passed": true,
+          "dispatch_delay_secs": 0.0584111213684082
+        },
+        {
+          "check": "code-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        },
+        {
+          "check": "strategy-fixture-post-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "probe-isolation-disables-chosen-jobs",
+          "passed": true
+        },
+        {
+          "check": "native-strategy-execution-evidence",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "report": "reports/20261007T104200969945Z-automation-surface-openclaw",
+      "result_sha256": "be8a5f3c50f8517f3a18b96f1fbbbf5378ab8f069dd0e773ded541d59610efb4",
+      "driver": "openclaw",
+      "passed": false,
+      "real_llm_calls": 0,
+      "evidence_kind": "scripted_native_automation_surface_not_model_strategy",
+      "checks": [
+        {
+          "check": "strategy-fixture-post-setup",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "conversational-python-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-pre-watch",
+          "passed": false,
+          "errors": [
+            "expected declared independent organizational heartbeat"
+          ]
+        },
+        {
+          "check": "one-shot-pending-before-restart",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-post-restart",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-process-restart",
+          "passed": true
+        },
+        {
+          "check": "recurring-code-after-restart",
+          "passed": true,
+          "observed_invocations": 8
+        },
+        {
+          "check": "one-shot-code-after-restart",
+          "passed": true,
+          "dispatch_delay_secs": 0.059407949447631836
+        },
+        {
+          "check": "code-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        },
+        {
+          "check": "strategy-fixture-post-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "probe-isolation-disables-chosen-jobs",
+          "passed": true
+        },
+        {
+          "check": "native-strategy-execution-evidence",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "report": "reports/20261007T103134190429Z-automation-surface-openclaw",
+      "result_sha256": "41c4facea6e4c014560319db28387f69531fecedde5a46a47cdad0eb8bdf47ab",
+      "driver": "openclaw",
+      "passed": false,
+      "real_llm_calls": 0,
+      "evidence_kind": "scripted_native_automation_surface_not_model_strategy",
+      "checks": [
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "conversational-python-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "native-process-restart",
+          "passed": true
+        },
+        {
+          "check": "recurring-code-after-restart",
+          "passed": true,
+          "observed_invocations": 3
+        },
+        {
+          "check": "one-shot-code-after-restart",
+          "passed": true,
+          "dispatch_delay_secs": 0.05573701858520508
+        },
+        {
+          "check": "code-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        }
+      ],
+      "errors": [
+        "RuntimeError: OpenClaw automations failed (rc=1); see command-07.log"
+      ]
+    },
+    {
+      "report": "reports/20261007T111727360192Z-automation-surface-peko",
+      "result_sha256": "de2858430925c169abc0bc320e4af428ff30127a2983020d33dab2cd21478a53",
+      "driver": "peko",
+      "passed": true,
+      "real_llm_calls": 0,
+      "evidence_kind": "scripted_native_automation_surface_not_model_strategy",
+      "compiled_runtime_head": "1478067bf6f584fe55e9389fce5e2de8d505d051",
+      "metadata": {
+        "version": "0.1.0",
+        "cli_sha256": "e4d2fd1a4feb75ac36c6cc0d4a89a2b28ed0f005bf7be2f63de26ee35a8f424a",
+        "daemon_sha256": "43e7f3e4de8c314a93c68cd798d804561140202567a13319435972ee2aa9c3b2"
+      },
+      "source_manifest": {
+        "runner/responsibility_audit.py": "ed5f59827ac7e18c653be01f9dff6a9476873160895bb5b2cc75cd542ab10003",
+        "runner/responsibility_diagnostics.py": "4bf9673ac54e8fac3495d138b23b037eb52c84670ed1ef71199a7f5f947b26ba",
+        "runner/responsibility_topology.py": "686af7a5142b6dbadd985463fa9f0c86ba1b65ab4bde650cf2f232935e5f12c3",
+        "runner/responsibility_timing.py": "84bb1ac60565606f3a4982e8fe7931d03503a8f72cbe0a6193e253cf9eb45d5f",
+        "runner/responsibility_drivers.py": "37f0af036aa6aefd132200ed024d8214c028cc4cf0c3150243d613a1ac7cc9c5",
+        "runner/responsibility_surface_smoke.py": "87c4179a88b8f37eb104044c2eb22b08c3701dad126e54789816c54e138c7b5d",
+        "runner/responsibility_prepared.py": "6c65e0809358bb784987f18ae0e5a0e30fda163683c0a40e5cbb2efefc7a84f1",
+        "runner/responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+        "runner/responsibility_automation_smoke.py": "7cd214e935d79b144b7f813cf02ae52e36ad61240317072c84627426310bcff8",
+        "runner/responsibility_strategy.py": "ac3eb69425f141727e80e4b93d249f376ebb569561e790a31799ee74e7d0abef",
+        "runner/responsibility_simulator.py": "33bd2863cc60a5da5d9d19cfd408b60e3adb81bc42157e35c5ffd915fa458e74",
+        "runner/responsibility.py": "0ab804248dae3516bb1a77a1aa8be337b0337a8ba6c7f1945c19ab96ac5b00bd"
+      },
+      "checks": [
+        {
+          "check": "strategy-fixture-post-setup",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-session",
+          "passed": true
+        },
+        {
+          "check": "listed-trunk-address",
+          "passed": true
+        },
+        {
+          "check": "native-session",
+          "passed": true
+        },
+        {
+          "check": "native-session",
+          "passed": true
+        },
+        {
+          "check": "native-session",
+          "passed": true
+        },
+        {
+          "check": "native-Workflow",
+          "passed": true
+        },
+        {
+          "check": "conversational-workflow-sdk-Write",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-pre-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "one-shot-pending-before-restart",
+          "passed": true
+        },
+        {
+          "check": "strategy-fixture-post-restart",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "native-process-restart",
+          "passed": true
+        },
+        {
+          "check": "recurring-code-after-restart",
+          "passed": true,
+          "observed_invocations": 9
+        },
+        {
+          "check": "one-shot-code-after-restart",
+          "passed": true,
+          "dispatch_delay_secs": 2.0830609798431396
+        },
+        {
+          "check": "one-shot-workflow-sdk-after-restart",
+          "passed": true
+        },
+        {
+          "check": "code-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        },
+        {
+          "check": "strategy-fixture-post-watch",
+          "passed": true,
+          "errors": []
+        },
+        {
+          "check": "probe-isolation-disables-chosen-jobs",
+          "passed": true
+        },
+        {
+          "check": "native-strategy-execution-evidence",
+          "passed": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "Peko watch never started; its synthetic zero completion and memory scores are unmeasured execution, not three observed deadline failures.",
+    "OpenClaw Atlas effect came from direct supervisor Python execution, outside the intended organizational role. No chosen native operational job succeeded during the watch.",
+    "Native completed job evidence includes failed invocations and does not certify semantic success.",
+    "PAYG reference prices are not Token Plan deductions.",
+    "Neither native transcript usage equality gate passed; no scoring exceptions applied.",
+    "One seed and a 300-second watch cannot establish superiority, novelty or multi-day persistence."
+  ],
+  "trunk_address_fix": {
+    "pr": "https://github.com/ConekoAI/peko-runtime/pull/430",
+    "head": "1478067bf6f584fe55e9389fce5e2de8d505d051",
+    "status": "MERGED",
+    "library_tests_passed": 2758,
+    "ignored": 3,
+    "focused_regression": "session::session_runtime_impl::tests::listed_trunk_address_round_trips_through_session_reads",
+    "red_before_fix": true,
+    "green_after_fix": true,
+    "changes": "Trunk display path sess:/; read scopes accept root; mutation validation unchanged.",
+    "subsequent_to_frozen_live_runs": true,
+    "native_probe_passed": true,
+    "merge_commit": "0e193376c0f4ab440b126f354efc102696eb0af9",
+    "ci_run": "https://github.com/ConekoAI/peko-runtime/actions/runs/37612809579",
+    "ci_conclusion": "success"
+  },
+  "manual_role_audit": {
+    "evidence": "Persisted native tool arguments in both live samples; not phase-only read inference.",
+    "findings": [
+      "Both harnesses issued direct world reads from owner conversation.",
+      "OpenClaw slept 12 seconds during inactive-world inspection.",
+      "OpenClaw supervisor directly read world and executed operational Python twice, producing Atlas outside native operational scheduling."
+    ],
+    "automatic_role_separation_certified": false
+  },
+  "openclaw_recovery_diagnostic": {
+    "initial_active_code_failure": "UnboundLocalError: local variable start referenced before assignment",
+    "failed_native_operational_watch_invocations": 6,
+    "successful_native_operational_watch_invocations": 0,
+    "supervisor_direct_script_execution_elapsed_secs": [
+      117.74,
+      134.534
+    ],
+    "committed_atlas_elapsed_secs": 117.742,
+    "remaining_job_next_run_elapsed_secs": 395.428,
+    "supervisor_timeout_secs": 90,
+    "next_heartbeat_skip_reason": "requests-in-flight",
+    "receipt_log_missing": [
+      1
+    ],
+    "memory_error": "Dogwood deadline null rather than input deadline 240"
+  },
+  "interrupted_usage_diagnostics": {
+    "peko": {
+      "request_index": 18,
+      "controller_minus_native": {
+        "request_count": 1,
+        "uncached_input_tokens": 809,
+        "cache_read_tokens": 62976,
+        "cache_creation_tokens": 0,
+        "output_tokens": 2365
+      },
+      "token_and_request_delta_equal_call_usage": true,
+      "quota_counts_include_call": true,
+      "strict_gate_unchanged": true
+    },
+    "openclaw": {
+      "request_index": 34,
+      "token_delta_equals_call_usage": true,
+      "native_zero_usage_aborted_entry_timestamp": "2026-10-07T11:01:55.466Z",
+      "request_count_delta": 0,
+      "existing_whole_call_diagnostic_fully_reconciled": false,
+      "strict_gate_unchanged": true
+    }
+  },
+  "peko_context_growth": {
+    "first_owner_request_messages_json_bytes": 14727,
+    "request_17_messages_json_bytes": 179877,
+    "request_17_response_wall_secs": 39.406,
+    "limitation": "Serialized bytes and wall time, not tokens or pure model generation latency."
+  }
+}

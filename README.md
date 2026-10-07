@@ -175,6 +175,9 @@ one-shot jobs while preserving the existing obligations, budgets and scoring.
 It is separate from the historical fixed-worker trials. The zero-real-LLM
 `runner/responsibility_automation_smoke.py` verifies the native code/cron paths
 and empty strategy fixture before a live run.
+The [first MiMo strategy pilot](docs/RESPONSIBILITY_STRATEGY_MIMO_2026-10-07.md)
+retains one failed attempt per harness and separates setup, generated-code,
+native surface, scheduling recovery and accounting findings.
 
 `harnesses/<name>.sh <workdir> <prompt_file> <out_dir> <timeout_secs>`:
 
