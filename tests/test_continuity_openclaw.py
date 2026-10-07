@@ -121,7 +121,7 @@ class OpenClawTests(unittest.TestCase):
                 self.send_header('Content-Type', 'text/event-stream')
                 self.end_headers()
                 for event in ({'type':'message_start', 'message':{'usage':{'input_tokens':100,'output_tokens':0,'cache_read_input_tokens':200}}},
-                              {'type':'message_delta','usage':{'output_tokens':50}},
+                              {'type':'message_delta','delta':{'stop_reason':'max_tokens'},'usage':{'output_tokens':50}},
                               {'type':'message_stop'}):
                     self.wfile.write(('data: '+json.dumps(event)+'\n\n').encode())
         server = ThreadingHTTPServer(('127.0.0.1',0),Upstream)
@@ -143,12 +143,45 @@ class OpenClawTests(unittest.TestCase):
                 self.assertEqual(relay.telemetry()['output_tokens'],50)
                 self.assertEqual(relay.telemetry()['input_tokens'],300)
                 self.assertTrue(relay.telemetry()['usage_complete'])
+                self.assertEqual(relay.records[0]['upstream_stop_reason'],'max_tokens')
+                saved=json.loads((Path(temp)/'calls.jsonl').read_text().splitlines()[0])
+                self.assertEqual(saved['upstream_stop_reason'],'max_tokens')
                 self.assertNotIn('upstream-test-key',(Path(temp)/'calls.jsonl').read_text())
             finally:
                 relay.close()
                 server.shutdown()
                 server.server_close()
                 thread.join(timeout=2)
+
+    def test_nonstream_stop_reason_is_preserved_without_inferring_token_limit(self):
+        import threading
+        import time
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+        response={'stop_reason':'tool_use','usage':{'input_tokens':10,'output_tokens':4096},
+                  'content':[{'type':'tool_use','id':'empty','name':'Write','input':{}}]}
+        class Upstream(BaseHTTPRequestHandler):
+            def log_message(self,*_): pass
+            def do_POST(self):
+                self.rfile.read(int(self.headers['Content-Length']))
+                body=json.dumps(response).encode()
+                self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers()
+                self.wfile.write(body)
+        server=ThreadingHTTPServer(('127.0.0.1',0),Upstream)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        with tempfile.TemporaryDirectory() as temp:
+            relay=AnthropicRelay(f'http://127.0.0.1:{server.server_port}','test-only',
+                                Path(temp)/'calls.jsonl',time.monotonic()+20,.1)
+            try:
+                payload={'model':'mimo-v2.6-flash','max_tokens':4096,'stream':False}
+                request=urllib.request.Request(relay.url+'/v1/messages',data=json.dumps(payload).encode(),
+                                               headers={'x-api-key':relay.token})
+                with urllib.request.urlopen(request) as result:
+                    self.assertEqual(json.loads(result.read()),response)
+                self.assertTrue(relay.drain(2))
+                self.assertEqual(relay.records[0]['upstream_stop_reason'],'tool_use')
+                self.assertEqual(relay.records[0]['usage']['output_tokens'],4096)
+            finally:
+                relay.close();server.shutdown();server.server_close();thread.join(2)
 
     def test_native_export_omits_auth_tables_and_preserves_compressed_events(self):
         import base64

@@ -31,6 +31,22 @@ def merge_usage(target: dict, event: dict) -> bool:
     return event.get("type") == "message_stop"
 
 
+def capture_stop_reason(record: dict, event: dict):
+    """Retain protocol termination metadata, never infer it from token counts.
+
+    Unknown strings are not persisted: they could contain arbitrary values.
+    Missing reasons on historical or interrupted calls stay unmeasured.
+    """
+    reason = (event.get('stop_reason') or (event.get('delta') or {}).get('stop_reason')
+              or (event.get('message') or {}).get('stop_reason'))
+    if reason is not None:
+        if reason in ('end_turn', 'max_tokens', 'stop_sequence', 'tool_use', 'pause_turn',
+                      'refusal', 'model_context_window_exceeded'):
+            record['upstream_stop_reason'] = reason
+        else:
+            record['upstream_stop_reason_unrecognized'] = True
+
+
 def summarize_calls(records: list[dict]) -> dict:
     forwarded = [r for r in records if r.get("forwarded")]
     complete = bool(forwarded) and all(r.get("completed") and r.get("status") == 200
@@ -182,6 +198,7 @@ class AnthropicRelay:
                         if line.startswith(b"data: ") and line.strip() != b"data: [DONE]":
                             event = json.loads(line[6:])
                             record["completed"] = merge_usage(record["usage"], event) or record["completed"]
+                            capture_stop_reason(record, event)
                             stream_tools.event(event)
                         if not record.get("downstream_disconnected"):
                             try:
@@ -196,6 +213,7 @@ class AnthropicRelay:
                     if response.status == 200:
                         decoded = json.loads(data)
                         merge_usage(record["usage"], decoded)
+                        capture_stop_reason(record, decoded)
                         record["response_tool_calls"] = [tool_call(b, record["tool_catalog"])
                             for b in decoded.get("content", []) if b.get("type") == "tool_use"]
                         record["completed"] = True

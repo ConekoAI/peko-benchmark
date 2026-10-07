@@ -159,6 +159,10 @@ class StrategyTests(unittest.TestCase):
             workspace = Path(temp)/'workspace'; workspace.mkdir()
             (workspace/'workflows').mkdir()
             (workspace/'workflows/chosen.py').write_text('TOKEN_SENTINEL')
+            (workspace/'ops').mkdir()
+            (workspace/'ops/release.py').write_text('TOKEN_SENTINEL')
+            (workspace/'alternate').mkdir()
+            (workspace/'alternate/test_local.py').write_text('TOKEN_SENTINEL')
             (workspace/'.benchmark-sdk').mkdir()
             (workspace/'.benchmark-sdk/client.py').write_text('not authored')
             (workspace/'credentials').mkdir()
@@ -166,8 +170,10 @@ class StrategyTests(unittest.TestCase):
             out = Path(temp)/'out'; out.mkdir()
             files = strategy.retain_artifacts(SimpleNamespace(run_dir=out,
                 _redact=lambda text:text.replace('TOKEN_SENTINEL','[REDACTED]')),workspace)
-            self.assertEqual([f['path'] for f in files], ['workflows/chosen.py'])
+            self.assertEqual(sorted(f['path'] for f in files),
+                             ['alternate/test_local.py','ops/release.py','workflows/chosen.py'])
             self.assertEqual((out/'strategy-artifacts/workflows/chosen.py').read_text(),'[REDACTED]')
+            self.assertEqual((out/'strategy-artifacts/ops/release.py').read_text(),'[REDACTED]')
 
 
 if __name__ == '__main__':

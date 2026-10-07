@@ -172,10 +172,14 @@ def retain_artifacts(driver, workspace):
         rel = source.relative_to(workspace)
         if source.is_symlink() or not source.is_file() or '.benchmark-sdk' in rel.parts:
             continue
+        if set(rel.parts) & {'.git', 'node_modules', '.venv', 'credentials', 'vault', 'identity'}:
+            continue
         if source.suffix not in ('.py', '.sh', '.js', '.mjs', '.json'):
             continue
         # Keep authored procedures/data, never principal configuration/vaults.
-        if len(rel.parts) > 1 and rel.parts[0] not in ('workflows', 'kb', 'scripts'):
+        # Code may be saved anywhere in the workspace (Claw chose ops/).
+        # Restrict JSON data to authored procedure/note areas, not configs.
+        if source.suffix == '.json' and len(rel.parts) > 1 and rel.parts[0] not in ('workflows', 'kb', 'scripts', 'ops'):
             continue
         body = driver._redact(source.read_text(errors='replace'))
         target = driver.run_dir / 'strategy-artifacts' / rel

@@ -87,7 +87,12 @@ configured native heartbeat before starting the watch. Measurement isolation dis
 operational job before the memory probe. Native completed job history is required
 as execution evidence; source-file presence or an LLM claim is insufficient.
 Script/data artifacts are retained with hashes; bundled SDK and credentials are
-excluded. Peko timing measures the chosen operational job IDs, rather than only
+excluded. Code retention accepts any workspace directory, excluding dependency
+and credential areas; JSON data is limited to procedure/note areas. The first
+contract-2 OpenClaw pilot used `ops/`, which the original collector excluded.
+Its native transcript proves code writes, but its final file contents were not
+retained. This collection gap does not change that sample's timeout or create a
+strategy success. Peko timing measures the chosen operational job IDs, rather than only
 the historical `responsibility-monitor` label.
 
 Native job execution does not establish the origin of every HTTP effect. The
@@ -101,6 +106,12 @@ The short pilot provides an initial strategy-selection test, not multi-day
 maintenance evidence, a provider latency guarantee or a novelty claim. Keep
 setup/generation cost in total spend; moving reasoning into code must not make
 that cost disappear from the comparison.
+
+After the first contract-2 pair, the relay additionally records recognized
+`upstream_stop_reason` values for streamed and nonstreamed responses. It does
+not infer a stop reason from a token count equal to the output cap. Historical
+samples without this metadata remain unmeasured; incomplete calls and native
+usage differences still fail existing accounting gates.
 
 ## Commands
 
