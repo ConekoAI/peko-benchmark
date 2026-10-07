@@ -106,7 +106,7 @@ class DiagnosticsTests(unittest.TestCase):
             arm_peko(driver)
             self.assertTrue(verify_peko(json.loads(path.read_text()), sessions, 60)['verified'])
 
-    def test_claw_clock_preparation_uses_native_api_and_shared_offsets(self):
+    def test_claw_clock_preparation_respects_system_owned_heartbeat(self):
         from types import SimpleNamespace
         from responsibility_prepared import set_claw_due_times
         calls = []
@@ -114,15 +114,18 @@ class DiagnosticsTests(unittest.TestCase):
                          {'id': 'supervisor', 'payload': {'kind': 'heartbeat'}}]}
         def command(*args):
             if args[0] == 'automations': return json.dumps(jobs)
-            calls.append(json.loads(args[args.index('--params')+1])); return '{}'
-        driver = SimpleNamespace(sim=SimpleNamespace(spec={'cadence_secs': 60}), _command=command)
+            calls.append(args); return '{}'
+        driver = SimpleNamespace(sim=SimpleNamespace(spec={'cadence_secs': 60}), _command=command,
+                                 _stop_gateway=lambda: None, _start_gateway=lambda: None)
         with patch('responsibility_prepared.time.time', return_value=1000): set_claw_due_times(driver, True)
-        self.assertEqual([c['patch']['schedule']['anchorMs'] for c in calls], [1020000,1120000])
-        self.assertEqual([c['patch']['schedule']['everyMs'] for c in calls], [60000,120000])
-        self.assertTrue(all(set(c['patch']) == {'schedule'} for c in calls))
+        self.assertEqual(calls[0], ('config','set','agents.defaults.heartbeat.every','120s'))
+        params = json.loads(calls[1][calls[1].index('--params')+1])
+        self.assertEqual(params['id'], 'worker')
+        self.assertEqual(params['patch']['schedule'], {'kind':'every','everyMs':60000,'anchorMs':1020000})
         calls.clear()
         with patch('responsibility_prepared.time.time', return_value=1000): set_claw_due_times(driver, False)
-        self.assertEqual([c['patch']['schedule']['anchorMs'] for c in calls], [4600000,4600000])
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(json.loads(calls[0][calls[0].index('--params')+1])['patch']['schedule']['anchorMs'], 4600000)
 
     def test_policy_recall_requires_explicit_deadlines_thresholds_and_nulls(self):
         spec = load_spec(ROOT / 'scenarios/responsibility/pilot.toml', 1)

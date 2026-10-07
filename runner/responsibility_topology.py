@@ -158,14 +158,14 @@ def verify_peko(schedule, sessions, cadence):
             "supervisor_session_ids": [s["session_id"] for s in trunks]}
 
 
-def verify_claw(schedule, sessions, cadence):
+def verify_claw(schedule, sessions, cadence, require_supervisor=True):
     jobs = [j for j in job_list(schedule) if j.get("enabled") and not
             j.get("declarationKey", "").startswith(("memory-core:", "skill-collection-review:"))]
     monitors = [j for j in jobs if j.get("name") == "responsibility-monitor"]
     heartbeat = [j for j in jobs if j.get("payload", {}).get("kind") == "heartbeat"]
     errors = []
-    if len(jobs) != 2 or len(monitors) != 1 or len(heartbeat) != 1:
-        errors.append("expected one task job plus organizational heartbeat")
+    if len(jobs) != 1 + int(require_supervisor) or len(monitors) != 1 or len(heartbeat) != int(require_supervisor):
+        errors.append("expected one task job and the declared organizational heartbeat state")
     if monitors:
         j = monitors[0]
         if (j.get("payload", {}).get("kind") != "agentTurn"

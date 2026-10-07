@@ -93,19 +93,19 @@ def prepare_claw(driver, worker_prompt):
 
 
 def set_claw_due_times(driver, armed=False):
-    # The pinned runtime owns schedule persistence (currently SQLite).
-    # Use its native RPC surface rather than editing a legacy JSON path.
+    # Only the worker is client-owned. Native heartbeat jobs must be changed
+    # through configuration, not cron.update or storage mutation.
+    if armed:
+        driver._command('config', 'set', 'agents.defaults.heartbeat.every',
+                        f"{driver.sim.spec['cadence_secs'] * 2:g}s")
+        driver._stop_gateway()
+        driver._start_gateway()
     schedule = json.loads(driver._command('automations', 'list', '--all', '--json'))
     jobs = schedule if isinstance(schedule, list) else schedule.get('jobs', [])
-    now = int(time.time() * 1000)
-    matched = 0
-    for job in jobs:
-        if job.get('name') == 'responsibility-monitor' or job.get('payload', {}).get('kind') == 'heartbeat':
-            multiple = 1 if job.get('name') == 'responsibility-monitor' else 2
-            offset = (20_000 if multiple == 1 else int(driver.sim.spec['cadence_secs'] * 2000)) if armed else 3_600_000
-            params = {'id': job['id'], 'patch': {'schedule': {'kind': 'every',
-                      'everyMs': int(driver.sim.spec['cadence_secs'] * multiple * 1000), 'anchorMs': now + offset}}}
-            driver._command('gateway', 'call', 'cron.update', '--params', json.dumps(params), '--json')
-            matched += 1
-    if matched != 2:
-        raise ValueError('prepared clock requires one worker and one organizational heartbeat')
+    monitors = [j for j in jobs if j.get('name') == 'responsibility-monitor']
+    if len(monitors) != 1:
+        raise ValueError('prepared clock requires one client-owned worker')
+    offset = 20_000 if armed else 3_600_000
+    params = {'id': monitors[0]['id'], 'patch': {'schedule': {'kind': 'every',
+              'everyMs': int(driver.sim.spec['cadence_secs'] * 1000), 'anchorMs': int(time.time()*1000) + offset}}}
+    driver._command('gateway', 'call', 'cron.update', '--params', json.dumps(params), '--json')

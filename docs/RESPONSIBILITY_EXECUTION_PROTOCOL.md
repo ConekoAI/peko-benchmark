@@ -20,9 +20,13 @@ requirement through the normal conversation route.
 
 Prepared schedules are delayed until owner/review conversations finish, then
 armed with a first worker tick after 20 seconds and organizational supervision
-after 120 seconds (60-second worker cadence). The 20-second lead permits native readiness/registration checks before the task
-clock starts. Peko restarts its native daemon when arming; OpenClaw uses native Gateway
-cron.update calls. These are preparation, separate from the measured restart
+at a 120-second cadence (60-second worker cadence). Peko starts supervision
+120 seconds after arming; OpenClaw retains its native heartbeat phase, recorded
+in topology snapshots. Its system-owned heartbeat is disabled through native
+configuration during preparation and enabled through configuration when arming. The 20-second lead permits native readiness/registration checks before the task
+clock starts. Peko restarts its native daemon when arming; OpenClaw enables native heartbeat
+configuration and restarts its gateway, then uses cron.update for its client-owned
+worker only. No native storage paths or system-owned jobs are edited. These are preparation, separate from the measured restart
 at 35 seconds. Registration and actual execution remain required. Schema fixtures
 are pinned by the source manifest; registration failures are retained.
 

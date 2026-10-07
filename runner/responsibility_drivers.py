@@ -220,7 +220,7 @@ class ClawResponsibility(OpenClawDriver):
     def configure(self, config):
         cadence = self.sim.spec["cadence_secs"]
         config["agents"]["defaults"].update(thinkingDefault="off", heartbeat={
-            "every": f"{cadence * (2 if self.topology == 'separated' else 1):g}s" if self.mode == "supervisory" else "0m",
+            "every": f"{cadence * (2 if self.topology == 'separated' else 1):g}s" if self.mode == "supervisory" and self.formation != "prepared" else "0m",
             "session": "agent:main:responsibility", "target": "none",
             "prompt": supervisor_prompt(cadence) if self.topology == "separated" else monitor_prompt(self.sim.url, cadence),
             "timeoutSeconds": 90})
@@ -283,7 +283,8 @@ class ClawResponsibility(OpenClawDriver):
     def validate_topology(self, stage):
         schedule = json.loads(self._command("automations", "list", "--all", "--json"))
         sessions = json.loads(self._command("sessions", "--all-agents", "--json"))
-        check = verify_claw(schedule, sessions, self.sim.spec["cadence_secs"]) | {"stage": stage}
+        check = verify_claw(schedule, sessions, self.sim.spec["cadence_secs"],
+                            require_supervisor=not (self.formation == "prepared" and stage == "post-setup")) | {"stage": stage}
         self.topology_checks.append(check)
         (self.run_dir / f"topology-{stage}.json").write_text(self._redact(json.dumps(
             {"check": check, "schedule": schedule, "sessions": sessions}, indent=2)))
