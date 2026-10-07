@@ -182,6 +182,10 @@ after restart, with zero real LLM calls.
 The [first MiMo strategy pilot](docs/RESPONSIBILITY_STRATEGY_MIMO_2026-10-07.md)
 retains one failed attempt per harness and separates setup, generated-code,
 native surface, scheduling recovery and accounting findings.
+The [offline-preflight MiMo pilot](docs/RESPONSIBILITY_STRATEGY_PREFLIGHT_MIMO_2026-10-07.md)
+retains the fresh contract-2 pair: both setup phases timed out before a watch.
+It also records native recovery verification, an actual cron run-ID defect,
+and separate tiny protocol probes of output-limited tool arguments.
 
 `harnesses/<name>.sh <workdir> <prompt_file> <out_dir> <timeout_secs>`:
 

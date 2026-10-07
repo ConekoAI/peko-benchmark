@@ -1,0 +1,1212 @@
+{
+  "evidence_kind": "one_real_llm_strategy_contract_2_attempt_per_harness_with_separate_scripted_recovery_probes",
+  "date_utc": "2026-10-07",
+  "strategy_contract_version": 2,
+  "model": "mimo-v2.6-flash",
+  "serial_live_runs": true,
+  "run_source_revision": "5049603cdf719d333ce8dd5e3e7d22efcce2f207",
+  "runtime_build_source": "e2a908684ddbc0fac02b0e380854973e23ba6730",
+  "runtime_merge": "fb72cf8d4642b80b8b4c68568be5a8ebfef53645",
+  "runtime_pr": "https://github.com/ConekoAI/peko-runtime/pull/431",
+  "runtime_ci": {
+    "run_id": 37647796448,
+    "conclusion": "success",
+    "library_tests_passed": 2758,
+    "library_tests_ignored": 3,
+    "fmt": true,
+    "clippy_all_targets_deny_warnings": true,
+    "module_boundaries": true,
+    "workspace_deps": true,
+    "windows_and_integration_tiers": "skipped"
+  },
+  "benchmark_tests_after_diagnostic_fixes": 100,
+  "post_pilot_diagnostic_source_revision": "e618f60a23fe214d330a40d0806c830c342de56a",
+  "measurement_note": "Neither watch began. Operational completion/deadlines, memory and restart outcomes are unmeasured; raw fallback zeros and missed_deadlines=3 are not observed operational failures.",
+  "live_samples": [
+    {
+      "report": "reports/20261007T155806604012Z-responsibility-strategy-choice-peko",
+      "result_sha256": "9955a8b998d85b96c7208ab3c1e49f328e67842863ec57d4698efc4c205f6162",
+      "source_manifest_sha256": "608427e5351c2b97189aad3a654a4708639da6e5bf0a7f1284cae6c9c0f914bd",
+      "metadata": {
+        "driver": "peko",
+        "version": "0.1.0",
+        "cli_sha256": "d97d88d6c7573cfa195a351edbe83af3732bfb650409651bf9f83b85af44690a",
+        "daemon_sha256": "21c7a9f001208ef7056c9fdb2ecb21e93a238a6cbb6cf628854622b6dbb52941",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "telemetry_drain_completed": false
+      },
+      "errors": [
+        "TimeoutError: Peko send exceeded command/scenario timeout"
+      ],
+      "wall_secs": 318.886,
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": false,
+        "request_count": 24,
+        "rejected_request_count": 0,
+        "input_tokens": 871708,
+        "uncached_input_tokens": 74076,
+        "output_tokens": 11273,
+        "cache_read_tokens": 797632,
+        "cache_creation_tokens": 0,
+        "cost_usd": null,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "usage_source": "persisted_assistant_usage",
+          "usage_complete": true,
+          "cost_usd": 0.015585841600000002,
+          "input_tokens": 814640,
+          "uncached_input_tokens": 73968,
+          "output_tokens": 11273,
+          "request_count": 23,
+          "cache_read_tokens": 740672,
+          "cache_creation_tokens": 0,
+          "quota_snapshot": {
+            "window_start": "2026-10-07T00:00:00Z",
+            "window_end": "2026-10-08T00:00:00Z",
+            "cycle": "daily",
+            "input_tokens": 73968,
+            "output_tokens": 11273,
+            "request_count": 23,
+            "cost_usd": 0.013511960000000002,
+            "cache_read_tokens": 740672,
+            "cache_creation_tokens": 0
+          },
+          "quota_snapshot_request_count_matches": true
+        },
+        "native_usage_matches": false,
+        "native_reconciliation_diagnostic": {
+          "version": 1,
+          "controller_minus_native": null,
+          "disconnected_request_indices": [],
+          "difference_exactly_explained_by_disconnected_calls": false,
+          "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+        }
+      },
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": false,
+          "request_count": 18,
+          "rejected_request_count": 0,
+          "input_tokens": 723052,
+          "uncached_input_tokens": 45292,
+          "output_tokens": 9316,
+          "cache_read_tokens": 677760,
+          "cache_creation_tokens": 0,
+          "cost_usd": null,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "setup": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 6,
+          "rejected_request_count": 0,
+          "input_tokens": 148656,
+          "uncached_input_tokens": 28784,
+          "output_tokens": 1957,
+          "cache_read_tokens": 119872,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0049133616,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "strict_passed": false,
+      "watch_started": false,
+      "completed_obligations": null,
+      "missed_deadlines": null,
+      "memory_accuracy": null,
+      "restart_verified": null,
+      "wire_tool_calls": 49,
+      "native_intent_matches": 49,
+      "tool_attribution_counts": {
+        "native_success": 47,
+        "native_error_requires_investigation": 1,
+        "model_missing_required_argument": 1
+      },
+      "provider_response_durations": {
+        "by_phase": {
+          "conversation": {
+            "requests": 18,
+            "recorded_durations": 17,
+            "sum_response_wall_secs": 173.341,
+            "max_response_wall_secs": 51.749
+          },
+          "setup": {
+            "requests": 6,
+            "recorded_durations": 6,
+            "sum_response_wall_secs": 31.923,
+            "max_response_wall_secs": 12.612
+          }
+        },
+        "longest_recorded_calls": [
+          {
+            "index": 23,
+            "phase": "conversation",
+            "wall_secs": 51.749,
+            "output_tokens": 4096,
+            "completed": true
+          },
+          {
+            "index": 22,
+            "phase": "conversation",
+            "wall_secs": 22.284,
+            "output_tokens": 1599,
+            "completed": true
+          },
+          {
+            "index": 9,
+            "phase": "conversation",
+            "wall_secs": 12.862,
+            "output_tokens": 209,
+            "completed": true
+          },
+          {
+            "index": 4,
+            "phase": "setup",
+            "wall_secs": 12.612,
+            "output_tokens": 745,
+            "completed": true
+          },
+          {
+            "index": 19,
+            "phase": "conversation",
+            "wall_secs": 9.168,
+            "output_tokens": 533,
+            "completed": true
+          }
+        ],
+        "limitation": "Per-response relay durations include streaming and may overlap; sums are not scenario wall time or a model-only causal estimate."
+      },
+      "code_write_intents": [],
+      "retained_code_artifact_manifest": []
+    },
+    {
+      "report": "reports/20261007T160334604558Z-responsibility-strategy-choice-openclaw",
+      "result_sha256": "819d53b914bc69023b7a4340dd13a3970fb417a606d97f4b4250ac0e22ce92fa",
+      "source_manifest_sha256": "608427e5351c2b97189aad3a654a4708639da6e5bf0a7f1284cae6c9c0f914bd",
+      "metadata": {
+        "driver": "openclaw",
+        "version": "OpenClaw 2026.9.8 (fc23bc8)",
+        "package_version": "2026.9.8",
+        "entry_sha256": "aa8606ca0d62ff133ef5b7bd2323ec8ff3f8eb384404399cd5e742918d63b0a1",
+        "installation_lock_sha256": "f0aaf18317523f89b3de38599126fdf530f1f570992503320b75bd4850be4263",
+        "node_version": "v24.17.0",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "telemetry_drain_completed": true
+      },
+      "errors": [
+        "TimeoutError: OpenClaw agent exceeded command/scenario timeout"
+      ],
+      "wall_secs": 394.084,
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 33,
+        "rejected_request_count": 0,
+        "input_tokens": 911155,
+        "uncached_input_tokens": 90163,
+        "output_tokens": 23254,
+        "cache_read_tokens": 820992,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.021432717600000005,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "request_count": 33,
+          "uncached_input_tokens": 88867,
+          "output_tokens": 21892,
+          "cache_read_tokens": 780288,
+          "cache_creation_tokens": 0
+        },
+        "native_usage_matches": false,
+        "native_reconciliation_diagnostic": {
+          "version": 1,
+          "controller_minus_native": {
+            "request_count": 0,
+            "uncached_input_tokens": 1296,
+            "cache_read_tokens": 40704,
+            "cache_creation_tokens": 0,
+            "output_tokens": 1362
+          },
+          "disconnected_request_indices": [
+            33
+          ],
+          "difference_exactly_explained_by_disconnected_calls": false,
+          "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+        }
+      },
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 33,
+          "rejected_request_count": 0,
+          "input_tokens": 911155,
+          "uncached_input_tokens": 90163,
+          "output_tokens": 23254,
+          "cache_read_tokens": 820992,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.021432717600000005,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "strict_passed": false,
+      "watch_started": false,
+      "completed_obligations": null,
+      "missed_deadlines": null,
+      "memory_accuracy": null,
+      "restart_verified": null,
+      "wire_tool_calls": 42,
+      "native_intent_matches": 39,
+      "tool_attribution_counts": {
+        "native_success": 36,
+        "unresolved": 3,
+        "native_error_requires_investigation": 3
+      },
+      "provider_response_durations": {
+        "by_phase": {
+          "conversation": {
+            "requests": 33,
+            "recorded_durations": 33,
+            "sum_response_wall_secs": 369.883,
+            "max_response_wall_secs": 57.64
+          }
+        },
+        "longest_recorded_calls": [
+          {
+            "index": 4,
+            "phase": "conversation",
+            "wall_secs": 57.64,
+            "output_tokens": 3171,
+            "completed": true
+          },
+          {
+            "index": 19,
+            "phase": "conversation",
+            "wall_secs": 53.244,
+            "output_tokens": 4086,
+            "completed": true
+          },
+          {
+            "index": 8,
+            "phase": "conversation",
+            "wall_secs": 50.971,
+            "output_tokens": 4096,
+            "completed": true
+          },
+          {
+            "index": 5,
+            "phase": "conversation",
+            "wall_secs": 43.073,
+            "output_tokens": 4096,
+            "completed": true
+          },
+          {
+            "index": 30,
+            "phase": "conversation",
+            "wall_secs": 19.547,
+            "output_tokens": 1533,
+            "completed": true
+          }
+        ],
+        "limitation": "Per-response relay durations include streaming and may overlap; sums are not scenario wall time or a model-only causal estimate."
+      },
+      "code_write_intents": [
+        {
+          "tool_id": "call_e491951b05724b889ad039ab",
+          "path_suffix": "ops/test_release_job.py",
+          "initial_content_sha256": "4ca57936f9b08c668c47e3299d5ff05d565b1678ea6b6bed80c0b692e6b5b21e",
+          "source": "reports/20261007T160334604558Z-responsibility-strategy-choice-openclaw/runtime-traces/agents/main/agent/openclaw-agent.transcripts.jsonl",
+          "limitation": "Persisted initial tool intent; not a retained final file after later mutations."
+        },
+        {
+          "tool_id": "call_a4c541bb39734faa9b2467c5",
+          "path_suffix": "ops/release_job.py",
+          "initial_content_sha256": "fee6e0e7049d5c3562f68268d8797594d0b352cca8abf045ab11331dbddcb4b7",
+          "source": "reports/20261007T160334604558Z-responsibility-strategy-choice-openclaw/runtime-traces/agents/main/agent/openclaw-agent.transcripts.jsonl",
+          "limitation": "Persisted initial tool intent; not a retained final file after later mutations."
+        }
+      ],
+      "retained_code_artifact_manifest": []
+    }
+  ],
+  "native_probes": [
+    {
+      "report": "reports/20261007T155511557935Z-recovery-surface-peko",
+      "result_sha256": "f26e4ffa462a5c814770c6ca4fd8b55cdbc66eebbd6e377f5379aa522a4bb3e9",
+      "evidence_kind": "scripted_native_failure_recovery_not_model_strategy",
+      "real_llm_calls": 0,
+      "passed": true,
+      "check_count": 18,
+      "checks": [
+        {
+          "check": "native-Write",
+          "passed": true
+        },
+        {
+          "check": "native-CronCreate",
+          "passed": true
+        },
+        {
+          "check": "native-CronTrigger",
+          "passed": true
+        },
+        {
+          "check": "native-CronTrigger",
+          "passed": true
+        },
+        {
+          "check": "native-CronTrigger",
+          "passed": true
+        },
+        {
+          "check": "active-parser-native-failures",
+          "passed": true,
+          "statuses": [
+            "failed",
+            "failed",
+            "failed"
+          ]
+        },
+        {
+          "check": "trigger-ids-match-persisted-history",
+          "passed": true,
+          "returned_ids": [
+            "c2751c3d-4fbd-489d-96eb-0cff50e45267",
+            "c7a9a7f0-0970-49ab-ab46-7f5c91ab7cbb",
+            "de19fa5b-6c1e-40ab-8d9e-9e993f627146"
+          ]
+        },
+        {
+          "check": "native-CronHistory",
+          "passed": true
+        },
+        {
+          "check": "failure-eligibility-observed",
+          "passed": true
+        },
+        {
+          "check": "native-Write",
+          "passed": true
+        },
+        {
+          "check": "file-repair-does-not-reset-scheduler",
+          "passed": true
+        },
+        {
+          "check": "native-Bash",
+          "passed": true
+        },
+        {
+          "check": "offline-active-inactive-receipt-preflight",
+          "passed": true
+        },
+        {
+          "check": "native-CronUpdate",
+          "passed": true
+        },
+        {
+          "check": "failure-budget-reset",
+          "passed": true
+        },
+        {
+          "check": "native-restart",
+          "passed": true
+        },
+        {
+          "check": "scheduled-recovery-without-manual-success-fire",
+          "passed": true,
+          "markers": [
+            {
+              "marker": "RECOVERY_OK",
+              "wall_time": 1791388615.880127
+            },
+            {
+              "marker": "RECOVERY_OK",
+              "wall_time": 1791388620.924132
+            }
+          ]
+        },
+        {
+          "check": "recovery-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        }
+      ],
+      "native_snapshots": [
+        {
+          "stage": "failed",
+          "job": {
+            "id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+            "name": "recovery-code",
+            "enabled": false,
+            "schedule": {
+              "kind": "every",
+              "every_ms": 5000
+            },
+            "next_run": "2026-10-07T15:56:53.183303Z",
+            "consecutive_failures": 3,
+            "last_status": "failed"
+          },
+          "runs": [
+            {
+              "id": "c2751c3d-4fbd-489d-96eb-0cff50e45267",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:34.542731Z",
+              "finished_at": "2026-10-07T15:56:34.652992Z"
+            },
+            {
+              "id": "c7a9a7f0-0970-49ab-ab46-7f5c91ab7cbb",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:36.028865Z",
+              "finished_at": "2026-10-07T15:56:36.140784Z"
+            },
+            {
+              "id": "de19fa5b-6c1e-40ab-8d9e-9e993f627146",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:37.905062Z",
+              "finished_at": "2026-10-07T15:56:38.023074Z"
+            }
+          ]
+        },
+        {
+          "stage": "file-only-repair",
+          "job": {
+            "id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+            "name": "recovery-code",
+            "enabled": false,
+            "schedule": {
+              "kind": "every",
+              "every_ms": 5000
+            },
+            "next_run": "2026-10-07T15:56:53.183303Z",
+            "consecutive_failures": 3,
+            "last_status": "failed"
+          },
+          "runs": [
+            {
+              "id": "c2751c3d-4fbd-489d-96eb-0cff50e45267",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:34.542731Z",
+              "finished_at": "2026-10-07T15:56:34.652992Z"
+            },
+            {
+              "id": "c7a9a7f0-0970-49ab-ab46-7f5c91ab7cbb",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:36.028865Z",
+              "finished_at": "2026-10-07T15:56:36.140784Z"
+            },
+            {
+              "id": "de19fa5b-6c1e-40ab-8d9e-9e993f627146",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:37.905062Z",
+              "finished_at": "2026-10-07T15:56:38.023074Z"
+            }
+          ]
+        },
+        {
+          "stage": "re-enabled",
+          "job": {
+            "id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "every_ms": 5000
+            },
+            "next_run": "2026-10-07T15:56:53.183303Z",
+            "consecutive_failures": 0,
+            "last_status": "failed"
+          },
+          "runs": [
+            {
+              "id": "c2751c3d-4fbd-489d-96eb-0cff50e45267",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:34.542731Z",
+              "finished_at": "2026-10-07T15:56:34.652992Z"
+            },
+            {
+              "id": "c7a9a7f0-0970-49ab-ab46-7f5c91ab7cbb",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:36.028865Z",
+              "finished_at": "2026-10-07T15:56:36.140784Z"
+            },
+            {
+              "id": "de19fa5b-6c1e-40ab-8d9e-9e993f627146",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:37.905062Z",
+              "finished_at": "2026-10-07T15:56:38.023074Z"
+            }
+          ]
+        },
+        {
+          "stage": "scheduled-after-restart",
+          "job": {
+            "id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "every_ms": 5000
+            },
+            "next_run": "2026-10-07T15:57:03.183303Z",
+            "consecutive_failures": 0,
+            "last_status": "success"
+          },
+          "runs": [
+            {
+              "id": "c2751c3d-4fbd-489d-96eb-0cff50e45267",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:34.542731Z",
+              "finished_at": "2026-10-07T15:56:34.652992Z"
+            },
+            {
+              "id": "c7a9a7f0-0970-49ab-ab46-7f5c91ab7cbb",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:36.028865Z",
+              "finished_at": "2026-10-07T15:56:36.140784Z"
+            },
+            {
+              "id": "de19fa5b-6c1e-40ab-8d9e-9e993f627146",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "failed",
+              "started_at": "2026-10-07T15:56:37.905062Z",
+              "finished_at": "2026-10-07T15:56:38.023074Z"
+            },
+            {
+              "id": "19519e0f-649d-48d7-92af-19c09eab7fbb",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "success",
+              "started_at": "2026-10-07T15:56:55.850831Z",
+              "finished_at": "2026-10-07T15:56:55.964470Z"
+            },
+            {
+              "id": "d942138a-6378-47db-be61-790faa7a49c7",
+              "job_id": "cron_6a774ea731f94b0e8da1cf47f4281204",
+              "status": "success",
+              "started_at": "2026-10-07T15:57:00.853100Z",
+              "finished_at": "2026-10-07T15:57:00.972400Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report": "reports/20261007T154700739947Z-recovery-surface-openclaw",
+      "result_sha256": "9bc193378e8d6b9c6dfb8e825e5b527ceebfd61d4e1b053fc5b7ddcb76560d7c",
+      "evidence_kind": "scripted_native_failure_recovery_not_model_strategy",
+      "real_llm_calls": 0,
+      "passed": true,
+      "check_count": 18,
+      "checks": [
+        {
+          "check": "native-write",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "active-parser-native-failures",
+          "passed": true,
+          "statuses": [
+            "error",
+            "error",
+            "error"
+          ]
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "failure-eligibility-observed",
+          "passed": true
+        },
+        {
+          "check": "native-write",
+          "passed": true
+        },
+        {
+          "check": "file-repair-does-not-reset-scheduler",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "offline-active-inactive-receipt-preflight",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "same-enabled-edit-retains-next-due",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "native-exec",
+          "passed": true
+        },
+        {
+          "check": "failure-budget-reset",
+          "passed": true
+        },
+        {
+          "check": "pause-resume-rearms-next-due",
+          "passed": true
+        },
+        {
+          "check": "native-restart",
+          "passed": true
+        },
+        {
+          "check": "scheduled-recovery-without-manual-success-fire",
+          "passed": true,
+          "markers": [
+            {
+              "marker": "RECOVERY_OK",
+              "wall_time": 1791388157.70772
+            },
+            {
+              "marker": "RECOVERY_OK",
+              "wall_time": 1791388162.733672
+            }
+          ]
+        },
+        {
+          "check": "recovery-fires-without-model-request",
+          "passed": true,
+          "requests_during_wait": 0
+        }
+      ],
+      "native_snapshots": [
+        {
+          "stage": "failed",
+          "job": {
+            "id": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "everyMs": 5000,
+              "anchorMs": 1791388032485
+            },
+            "state": {
+              "nextRunAtMs": 1791388427641,
+              "lastRunAtMs": 1791388127615,
+              "lastRunStatus": "error",
+              "lastDurationMs": 26,
+              "consecutiveErrors": 3
+            }
+          },
+          "runs": [
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388127615,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388067582,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388037497,
+              "durationMs": 80
+            }
+          ]
+        },
+        {
+          "stage": "file-only-repair",
+          "job": {
+            "id": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "everyMs": 5000,
+              "anchorMs": 1791388032485
+            },
+            "state": {
+              "nextRunAtMs": 1791388427641,
+              "lastRunAtMs": 1791388127615,
+              "lastRunStatus": "error",
+              "lastDurationMs": 26,
+              "consecutiveErrors": 3
+            }
+          },
+          "runs": [
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388127615,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388067582,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388037497,
+              "durationMs": 80
+            }
+          ]
+        },
+        {
+          "stage": "same-enabled-edit",
+          "job": {
+            "id": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "everyMs": 5000,
+              "anchorMs": 1791388032485
+            },
+            "state": {
+              "nextRunAtMs": 1791388427641,
+              "lastRunAtMs": 1791388127615,
+              "lastRunStatus": "error",
+              "lastDurationMs": 26,
+              "consecutiveErrors": 0
+            }
+          },
+          "runs": [
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388127615,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388067582,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388037497,
+              "durationMs": 80
+            }
+          ]
+        },
+        {
+          "stage": "re-enabled",
+          "job": {
+            "id": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "everyMs": 5000,
+              "anchorMs": 1791388032485
+            },
+            "state": {
+              "nextRunAtMs": 1791388142485,
+              "lastRunAtMs": 1791388127615,
+              "lastRunStatus": "error",
+              "lastDurationMs": 26,
+              "consecutiveErrors": 0
+            }
+          },
+          "runs": [
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388127615,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388067582,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388037497,
+              "durationMs": 80
+            }
+          ]
+        },
+        {
+          "stage": "scheduled-after-restart",
+          "job": {
+            "id": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+            "name": "recovery-code",
+            "enabled": true,
+            "schedule": {
+              "kind": "every",
+              "everyMs": 5000,
+              "anchorMs": 1791388032485
+            },
+            "state": {
+              "nextRunAtMs": 1791388167695,
+              "lastRunAtMs": 1791388162695,
+              "lastRunStatus": "ok",
+              "lastDurationMs": 40,
+              "consecutiveErrors": 0
+            }
+          },
+          "runs": [
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "ok",
+              "runAtMs": 1791388162695,
+              "durationMs": 40
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "ok",
+              "runAtMs": 1791388157673,
+              "durationMs": 40
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388127615,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388067582,
+              "durationMs": 26
+            },
+            {
+              "jobId": "722d51bc-545e-4d70-b8ca-1527ba28ff77",
+              "status": "error",
+              "runAtMs": 1791388037497,
+              "durationMs": 80
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "retained_failed_native_probes": [
+    {
+      "report": "reports/20261007T153956860148Z-recovery-surface-peko",
+      "result_sha256": "4488dcf48365057e3246c8e55719422ed6a60eaffd8852cda1ade10d97d9bc42",
+      "errors": [
+        "AttributeError: 'dict' object has no attribute 'append'"
+      ],
+      "failed_checks": []
+    },
+    {
+      "report": "reports/20261007T153957871971Z-recovery-surface-openclaw",
+      "result_sha256": "c226633c60574052f8e813fdfda8783b6b9d5790a229e6704074598aa924acbe",
+      "errors": [
+        "AttributeError: 'dict' object has no attribute 'append'"
+      ],
+      "failed_checks": []
+    },
+    {
+      "report": "reports/20261007T154135068696Z-recovery-surface-peko",
+      "result_sha256": "7ca0e74ad5cc4331a5e8cf5fd39fe669e64520f77dceaa1aec9711ece3f1cdc1",
+      "errors": [],
+      "failed_checks": [
+        "active-parser-native-failures"
+      ]
+    },
+    {
+      "report": "reports/20261007T154114001329Z-recovery-surface-openclaw",
+      "result_sha256": "1d331fc1b9605423d1ae0908acfbb8a52465cafc5e09eba58823461a316f6e57",
+      "errors": [],
+      "failed_checks": [
+        "failure-eligibility-observed"
+      ]
+    },
+    {
+      "report": "reports/20261007T154304695208Z-recovery-surface-openclaw",
+      "result_sha256": "c7fd6d15f71a64aafc539174efe13a7906c81129be80af6724d0532edfd1a77d",
+      "errors": [],
+      "failed_checks": [
+        "scheduled-recovery-without-manual-success-fire"
+      ]
+    }
+  ],
+  "known_completed_call_payg_reference_usd_lower_bound": 0.0370185592,
+  "cost_limitation": "Peko call 24 did not finish or fully drain; this is a lower bound for known completed usage, not total billing or subscription credits.",
+  "post_pilot_diagnostic_fixes": [
+    "Capture recognized upstream stop reasons, without inferring them from output tokens.",
+    "Retain code under ops/ and other workspace folders; final Claw sources lost in this sample cannot be retroactively certified.",
+    "Tool attribution version 3 uses wire-based missing-key/unadvertised labels and preserves observed upstream stop reason; no scoring change."
+  ],
+  "legacy_attribution_label_note": "Frozen model_missing_required_argument means received wire input lacked required keys and native validation rejected it; it does not distinguish model generation errors from output truncation or provider conversion.",
+  "separate_protocol_probes": {
+    "report": "reports/20261007T162540718019Z-mimo-output-limit-protocol",
+    "result_sha256": "976f9966aeec989567b8712b2a6753295fd15a30955b8fd0500f3b36ba33c079",
+    "evidence_kind": "two_tiny_controller_api_termination_probes_not_harness_benchmarks",
+    "model": "mimo-v2.6-flash",
+    "real_requests": 2,
+    "max_output_tokens_per_request": 64,
+    "native_tools_executed": 0,
+    "probes": [
+      {
+        "protocol": "anthropic",
+        "http_status": 200,
+        "request": {
+          "model": "mimo-v2.6-flash",
+          "max_tokens": 64,
+          "stream": true,
+          "thinking": {
+            "type": "disabled"
+          },
+          "messages": [
+            {
+              "role": "user",
+              "content": "Call Write exactly once. file_path must be /tmp/protocol-probe-fictional.txt. content must be the full literal string formed by repeating ABCDEFGHIJKLMNOPQRSTUVWXYZ exactly 200 times. Do not abbreviate or summarize the content; put the expanded literal string in the tool arguments. No prose."
+            }
+          ],
+          "tools": [
+            {
+              "name": "Write",
+              "description": "Record a fictional text file; this probe never executes the tool.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "file_path": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file_path",
+                  "content"
+                ]
+              }
+            }
+          ],
+          "tool_choice": {
+            "type": "tool",
+            "name": "Write"
+          }
+        },
+        "wall_secs": 3.032,
+        "event_count": 5,
+        "stop_reasons": [
+          "max_tokens"
+        ],
+        "finish_reasons": [],
+        "usage": [
+          {
+            "input_tokens": 171,
+            "output_tokens": 64
+          }
+        ],
+        "tool_blocks": [
+          {
+            "type": "tool_use",
+            "id": "call_97d9c64ed2324c37b2002cec",
+            "name": "Write",
+            "input": {}
+          }
+        ],
+        "argument_fragment_count": 0,
+        "combined_argument_bytes": 0,
+        "combined_argument_json_valid": null,
+        "request_sha256": "126f606ca1fcf66e96fca437d388fda070189a327e8b525463f5e126e81f5e1e"
+      },
+      {
+        "protocol": "openai",
+        "http_status": 200,
+        "request": {
+          "model": "mimo-v2.6-flash",
+          "max_tokens": 64,
+          "stream": true,
+          "thinking": {
+            "type": "disabled"
+          },
+          "messages": [
+            {
+              "role": "user",
+              "content": "Call Write exactly once. file_path must be /tmp/protocol-probe-fictional.txt. content must be the full literal string formed by repeating ABCDEFGHIJKLMNOPQRSTUVWXYZ exactly 200 times. Do not abbreviate or summarize the content; put the expanded literal string in the tool arguments. No prose."
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "Write",
+                "description": "Record a fictional text file; this probe never executes the tool.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "file_path": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file_path",
+                    "content"
+                  ]
+                }
+              }
+            }
+          ],
+          "tool_choice": {
+            "type": "function",
+            "function": {
+              "name": "Write"
+            }
+          }
+        },
+        "wall_secs": 2.356,
+        "event_count": 17,
+        "stop_reasons": [],
+        "finish_reasons": [
+          "length"
+        ],
+        "usage": [
+          {
+            "completion_tokens": 64,
+            "prompt_tokens": 171,
+            "total_tokens": 235,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            }
+          }
+        ],
+        "tool_blocks": [],
+        "argument_fragment_count": 13,
+        "combined_argument_bytes": 1077,
+        "combined_argument_json_valid": false,
+        "request_sha256": "b2f4caa5ecbf305b897d8dca30c5b0aa708bb9e2e5e5fc16d40b04fc3630b803"
+      }
+    ],
+    "interpretation": "Reproduces output-limit empty Anthropic input / incomplete OpenAI arguments. Historical empty writes coincided with 4096 output, but their upstream stop reason was not retained; no retroactive causal certification.",
+    "primary_protocol_reference": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  "termination_runtime_fault": {
+    "source": "peko-rs/providers/src/adapters/anthropic.rs",
+    "pr": "https://github.com/ConekoAI/peko-runtime/pull/432",
+    "head_source": "dd759e6a10e07cd19ca8696750e18f59e8201bf9",
+    "merge_commit": "25ce2b0d37a4846217f48c54652e6cc639457321",
+    "ci": {
+      "run_id": 37653115916,
+      "conclusion": "success",
+      "head_sha": "dd759e6a10e07cd19ca8696750e18f59e8201bf9",
+      "linux_unit": "success",
+      "module_boundaries": "success",
+      "workspace_deps": "success",
+      "windows_mock_and_real_llm_tiers": "skipped"
+    },
+    "local_validation": {
+      "workspace_library_passed": 2760,
+      "ignored": 3,
+      "fmt": true,
+      "clippy_all_targets_deny_warnings": true,
+      "module_boundaries": true,
+      "workspace_deps": true
+    },
+    "rebuilt_debug_binary_sha256": {
+      "peko": "d365478d0a0b5627252327b7bfe6a35f3d960508682d360e26f5a0b0d20b7170",
+      "peko-daemon": "f52fffdb36d3573c90283920720d937fe391e709c65f80ac91e3e505330c2178"
+    },
+    "confirmed_fault": "Nested message_delta.delta.stop_reason ignored, usage early return skips top-level reason, terminal message_stop unconditionally emits Stop.",
+    "regression_failed_before_fix": true,
+    "provider_library_tests_after_fix": 239,
+    "behavioral_limit": "Fix preserves termination metadata; existing engine tool-validation/retry behavior is unchanged.",
+    "historical_pilot_source_unchanged": true
+  },
+  "remaining_experiment_limitations": [
+    "Both watches never began; setup cost is currently confounded with unattended performance.",
+    "Broad SDK/history exploration and overlarge generated tests consumed the 180-second owner/review allowance.",
+    "Direct world/receipt reads during owner/review violated their organizational role.",
+    "Final Claw ops/ code was lost by an artifact collector exclusion; initial intents cannot certify final worker behavior.",
+    "No explicit agent-loop recovery policy for output-truncated tool calls was added by the termination metadata fix."
+  ]
+}
