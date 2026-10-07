@@ -112,6 +112,11 @@ After the first contract-2 pair, the relay additionally records recognized
 not infer a stop reason from a token count equal to the output cap. Historical
 samples without this metadata remain unmeasured; incomplete calls and native
 usage differences still fail existing accounting gates.
+Tool-attribution version 3 names missing required keys and unadvertised calls
+as wire observations and carries the observed upstream stop reason separately.
+Earlier `model_missing_required_argument` labels establish that received input
+lacked required keys; they do not establish model incompetence rather than
+truncation or provider conversion. Historical reports are unchanged.
 
 ## Commands
 

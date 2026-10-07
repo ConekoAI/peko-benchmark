@@ -43,7 +43,15 @@ class SurfaceTests(unittest.TestCase):
             call={'id':'c1','name':'Edit','arguments_sha256':digest({'command':'test'}),
                   'advertised':True,'missing_required':['file_path'],'arguments_complete':True}
             rows=[{'index':1,'response_tool_calls':[call]}]
-            self.assertEqual(attribution(root,rows)['calls'][0]['category'],'model_missing_required_argument')
+            proof=attribution(root,rows)
+            self.assertEqual(proof['version'],3)
+            self.assertEqual(proof['calls'][0]['category'],'wire_missing_required_argument')
+            self.assertIsNone(proof['calls'][0]['upstream_stop_reason'])
+            rows[0]['upstream_stop_reason']='max_tokens'
+            capped=attribution(root,rows)['calls'][0]
+            self.assertEqual(capped['category'],'wire_missing_required_argument')
+            self.assertEqual(capped['upstream_stop_reason'],'max_tokens')
+            self.assertTrue(capped['intent_preserved'])
             native[2]['content'][0]['is_error']=False
             (root/'runtime-traces/session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in native))
             self.assertEqual(attribution(root,rows)['calls'][0]['category'],'accepted_noncanonical_arguments')

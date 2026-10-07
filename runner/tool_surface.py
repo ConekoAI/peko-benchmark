@@ -70,6 +70,8 @@ def attribution(run_dir, records):
 
     Root required keys are a partial schema check, not full JSON Schema validation.
     Tool IDs may be normalized; name AND argument hash must still match.
+    Missing wire arguments do not establish whether generation, truncation or
+    provider conversion caused them. Preserve observed termination separately.
     """
     from collections import Counter
     from pathlib import Path
@@ -108,13 +110,14 @@ def attribution(run_dir, records):
             error=outcomes.get(native_id)
             substituted = bool(intent and intent['arguments_sha256'] != call.get('arguments_sha256') and hashes.get(intent['arguments_sha256']))
             category=('native_arguments_substituted' if substituted else 'unresolved' if not identical or error is None or not call.get('arguments_complete',True) else
-                      'model_missing_required_argument' if error and call.get('advertised') and call.get('missing_required') else
+                      'wire_missing_required_argument' if error and call.get('advertised') and call.get('missing_required') else
                       'accepted_noncanonical_arguments' if call.get('advertised') and call.get('missing_required') else
-                      'unadvertised_model_tool_choice' if not call.get('advertised') else
+                      'unadvertised_wire_tool_choice' if not call.get('advertised') else
                       'native_error_requires_investigation' if error else 'native_success')
             evidence.append({'request_index':record['index'],'wire_id':wire_id,'native_id':native_id,
                              'name':call.get('name'),'intent_preserved':identical,'native_is_error':error,
                              'missing_required':call.get('missing_required'),'category':category,
+                             'upstream_stop_reason':record.get('upstream_stop_reason'),
                              'argument_sources':hashes.get(intent['arguments_sha256'],[]) if substituted else []})
-    return {'version':2,'counts':dict(Counter(e['category'] for e in evidence)), 'calls':evidence,
-            'limitation':'Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved.'}
+    return {'version':3,'counts':dict(Counter(e['category'] for e in evidence)), 'calls':evidence,
+            'limitation':'Checks root required keys and persisted dispatch results; missing wire keys do not distinguish model errors from output limits or provider conversion. Conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved.'}
