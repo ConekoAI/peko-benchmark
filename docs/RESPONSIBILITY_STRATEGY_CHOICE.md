@@ -49,7 +49,9 @@ enforce hidden owner thresholds. An authored script must preserve those rules.
 
 Registration verification accepts code jobs and one-shots instead of insisting
 on a fixed Agent job. Startup arms only organizational supervision and preserves
-the model's operational job times. Measurement isolation disables every chosen
+the model's operational job times. OpenClaw HTTP readiness precedes asynchronous
+heartbeat declaration reconciliation; arming waits up to 20 seconds for the
+configured native heartbeat before starting the watch. Measurement isolation disables every chosen
 operational job before the memory probe. Native completed job history is required
 as execution evidence; source-file presence or an LLM claim is insufficient.
 Script/data artifacts are retained with hashes; bundled SDK and credentials are

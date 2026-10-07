@@ -117,6 +117,20 @@ def set_claw_due_times(driver, armed=False):
                         f"{driver.sim.spec['cadence_secs'] * 2:g}s")
         driver._stop_gateway()
         driver._start_gateway()
+        # HTTP readiness precedes asynchronous native declaration reconciliation.
+        # Wait for the configured heartbeat without changing model-owned jobs.
+        wanted = int(driver.sim.spec['cadence_secs'] * 2000)
+        deadline = time.monotonic() + 20
+        while True:
+            snapshot = json.loads(driver._command('automations', 'list', '--all', '--json'))
+            jobs = snapshot if isinstance(snapshot, list) else snapshot.get('jobs', [])
+            heartbeat = [j for j in jobs if j.get('payload', {}).get('kind') == 'heartbeat'
+                         and j.get('enabled') and j.get('schedule', {}).get('everyMs') == wanted]
+            if len(heartbeat) == 1:
+                break
+            if time.monotonic() >= deadline:
+                raise TimeoutError('configured organizational heartbeat was not reconciled before watch')
+            time.sleep(.2)
     if strategy_selected(driver.sim.spec):
         return  # Model owns operational job shapes, cadence and anchors.
     schedule = json.loads(driver._command('automations', 'list', '--all', '--json'))

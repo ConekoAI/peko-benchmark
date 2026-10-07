@@ -113,7 +113,8 @@ class DiagnosticsTests(unittest.TestCase):
         from responsibility_prepared import set_claw_due_times
         calls = []
         jobs = {'jobs': [{'id': 'worker', 'name': 'responsibility-monitor', 'payload': {'kind': 'agentTurn'}},
-                         {'id': 'supervisor', 'payload': {'kind': 'heartbeat'}}]}
+                         {'id': 'supervisor', 'enabled': True, 'payload': {'kind': 'heartbeat'},
+                          'schedule': {'everyMs': 120000}}]}
         def command(*args):
             if args[0] == 'automations': return json.dumps(jobs)
             calls.append(args); return '{}'

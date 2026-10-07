@@ -10,11 +10,29 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'runner'))
 import responsibility_strategy as strategy
 from responsibility import contract
-from responsibility_prepared import arm_peko, pause_claw_for_probe, empty_notes
+from responsibility_prepared import arm_peko, pause_claw_for_probe, empty_notes, set_claw_due_times
 from responsibility_drivers import prepared_worker_prompt
 
 
 class StrategyTests(unittest.TestCase):
+    def test_claw_arm_waits_for_native_heartbeat_reconciliation(self):
+        pages = iter([{'jobs':[]}, {'jobs':[{'enabled':True,'payload':{'kind':'heartbeat'},
+                                          'schedule':{'everyMs':120000}}]}])
+        commands = []
+        def command(*args):
+            commands.append(args)
+            return json.dumps(next(pages)) if args[0] == 'automations' else ''
+        driver = SimpleNamespace(sim=SimpleNamespace(spec={'execution_policy':'strategy-choice','cadence_secs':60}),
+            _command=command, _stop_gateway=lambda:None, _start_gateway=lambda:None)
+        with patch('responsibility_prepared.time.sleep') as sleep:
+            set_claw_due_times(driver, armed=True)
+        self.assertEqual(sleep.call_count, 1)
+        self.assertFalse(any(c[:2] == ('gateway','call') for c in commands))
+        driver._command = lambda *args: json.dumps({'jobs':[]})
+        with patch('responsibility_prepared.time.monotonic', side_effect=[0,21]):
+            with self.assertRaises(TimeoutError):
+                set_claw_due_times(driver, armed=True)
+
     def test_claw_native_history_paginates_and_refuses_nonadvancing_cursor(self):
         pages = iter([{'entries':[{'runId':'one'}], 'hasMore':True, 'nextOffset':200},
                       {'entries':[{'runId':'two'}], 'hasMore':False}])
