@@ -327,6 +327,11 @@ class ResponsibilityTests(unittest.TestCase):
         self.assertFalse(result["verified"])
         self.assertEqual(result["nonworker_operational_tool_calls"], 1)
 
+    def test_journal_prose_and_wrong_tool_are_not_operational_http_intents(self):
+        from responsibility_topology import direct_http_endpoints
+        self.assertEqual(direct_http_endpoints("cat >> journal.md <<'EOF'\nNo /world GET or /actions POST.\nEOF"),set())
+        self.assertEqual(direct_http_endpoints("curl -sS --data '{\"note\":\"/world\"}' http://localhost/actions"),{'/actions'})
+
     def test_common_policy_is_applied_at_wire_and_usage_has_phase(self):
         import threading
         import time

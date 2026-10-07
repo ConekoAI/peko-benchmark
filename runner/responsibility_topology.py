@@ -6,6 +6,8 @@ the controller only verifies their registration and retained execution evidence.
 from __future__ import annotations
 
 import json
+import shlex
+from urllib.parse import urlparse
 from pathlib import Path
 
 from responsibility_audit import timestamp
@@ -184,6 +186,21 @@ def verify_claw(schedule, sessions, cadence, require_supervisor=True):
                                        if s.get("key") == "agent:main:responsibility"]}
 
 
+def direct_http_endpoints(command):
+    """Direct curl URL arguments only; journal prose is not an HTTP intent.
+
+    Complex shell forms remain outside the declared direct-command contract.
+    """
+    try:
+        tokens=shlex.split(command)
+    except ValueError:
+        return set()
+    if not tokens or Path(tokens[0]).name != 'curl':
+        return set()
+    return {urlparse(t).path for t in tokens[1:]
+            if t.startswith(('http://','https://')) and urlparse(t).path in ('/world','/actions')}
+
+
 def execution_evidence(run_dir: Path, start, end, identities):
     """Audit native tool intents by session, not model claims or simulator scores."""
     worker = set(identities.get("worker_session_ids", []))
@@ -209,12 +226,12 @@ def execution_evidence(run_dir: Path, start, end, identities):
                 if isinstance(args, str):
                     args = json.loads(args)
                 cmd = str(args.get("command", ""))
-                if block.get("type") not in {"tool_call", "toolCall"} or not any(
-                        endpoint in cmd for endpoint in ("/world", "/actions")):
+                endpoints=direct_http_endpoints(cmd) if block.get("name") in ("Bash", "exec") else set()
+                if block.get("type") not in {"tool_call", "toolCall"} or not endpoints:
                     continue
                 key = block.get("id") or json.dumps(block, sort_keys=True)
                 found[key] = {"time": at, "session_id": sid, "lane": lane,
-                              "world": "/world" in cmd, "actions": "/actions" in cmd}
+                              "world": "/world" in endpoints, "actions": "/actions" in endpoints}
     intents = list(found.values())
     return {"worker_assistant_messages": len(activity["worker"]),
             "supervisor_assistant_messages": len(activity["supervisor"]),
@@ -224,4 +241,4 @@ def execution_evidence(run_dir: Path, start, end, identities):
             "verified": bool(activity["worker"] and activity["supervisor"])
                         and any(i["world"] and i["lane"] == "worker" for i in intents)
                         and not any(i["lane"] != "worker" for i in intents),
-            "limitation": "Native command intents, not attribution of every HTTP side effect; no scripts/loops allowed."}
+            "version": 2, "limitation": "Direct native curl URL arguments, not attribution of every HTTP side effect; complex commands/scripts require separate investigation."}

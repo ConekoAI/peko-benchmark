@@ -49,3 +49,17 @@ class SurfaceTests(unittest.TestCase):
             self.assertEqual(attribution(root,rows)['calls'][0]['category'],'accepted_noncanonical_arguments')
             call['arguments_sha256']=digest({'command':'changed'})
             self.assertEqual(attribution(root,rows)['calls'][0]['category'],'unresolved')
+
+    def test_cross_stream_arguments_are_not_attributed_to_model(self):
+        import tempfile
+        from tool_surface import attribution,digest
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/'runtime-traces').mkdir()
+            native=[{'role':'assistant','content':[{'type':'tool_call','id':'read','name':'Read','arguments':{'command':'journal'}}]},
+                    {'role':'user','content':[{'type':'tool_result','tool_call_id':'read','is_error':True}]}]
+            (root/'runtime-traces/session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in native))
+            calls=[{'index':1,'response_tool_calls':[{'id':'bash','name':'Bash','arguments_sha256':digest({'command':'journal'}),'advertised':True,'missing_required':[]}]},
+                   {'index':2,'response_tool_calls':[{'id':'read','name':'Read','arguments_sha256':digest({'file_path':'table'}),'advertised':True,'missing_required':[]}]}]
+            proof=attribution(root,calls)['calls'][1]
+            self.assertEqual(proof['category'],'native_arguments_substituted')
+            self.assertEqual(proof['argument_sources'],[{'request_index':1,'id':'bash','name':'Bash'}])

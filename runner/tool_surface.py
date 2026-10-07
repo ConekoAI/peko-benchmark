@@ -75,6 +75,10 @@ def attribution(run_dir, records):
     from pathlib import Path
     import re
     native, outcomes = {}, {}
+    hashes = {}
+    for record in records:
+        for call in record.get("response_tool_calls", []):
+            hashes.setdefault(call.get("arguments_sha256"), []).append({"request_index":record["index"], "id":call.get("id"), "name":call.get("name")})
     for path in (Path(run_dir)/'runtime-traces').rglob('*.jsonl'):
         for line in path.read_text().splitlines():
             row=json.loads(line)
@@ -102,13 +106,15 @@ def attribution(run_dir, records):
             identical=bool(intent and intent['name']==call.get('name') and
                            intent['arguments_sha256']==call.get('arguments_sha256'))
             error=outcomes.get(native_id)
-            category=('unresolved' if not identical or error is None or not call.get('arguments_complete',True) else
+            substituted = bool(intent and intent['arguments_sha256'] != call.get('arguments_sha256') and hashes.get(intent['arguments_sha256']))
+            category=('native_arguments_substituted' if substituted else 'unresolved' if not identical or error is None or not call.get('arguments_complete',True) else
                       'model_missing_required_argument' if error and call.get('advertised') and call.get('missing_required') else
                       'accepted_noncanonical_arguments' if call.get('advertised') and call.get('missing_required') else
                       'unadvertised_model_tool_choice' if not call.get('advertised') else
                       'native_error_requires_investigation' if error else 'native_success')
             evidence.append({'request_index':record['index'],'wire_id':wire_id,'native_id':native_id,
                              'name':call.get('name'),'intent_preserved':identical,'native_is_error':error,
-                             'missing_required':call.get('missing_required'),'category':category})
-    return {'version':1,'counts':dict(Counter(e['category'] for e in evidence)), 'calls':evidence,
+                             'missing_required':call.get('missing_required'),'category':category,
+                             'argument_sources':hashes.get(intent['arguments_sha256'],[]) if substituted else []})
+    return {'version':2,'counts':dict(Counter(e['category'] for e in evidence)), 'calls':evidence,
             'limitation':'Checks root required keys and persisted dispatch results; conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved.'}
