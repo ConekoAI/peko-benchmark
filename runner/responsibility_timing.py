@@ -24,6 +24,8 @@ def native_cron_timing(run_dir: Path, start: float, end: float):
             required = ('scheduled_at', 'finished_at', 'next_run_at', 'skipped_interval_slots', 'duration_ms')
             if not all(k in detail for k in required):
                 continue
+            if detail.get('status') == 'running' or detail.get('finished_at') is None:
+                continue
             finish = timestamp(detail['finished_at'])
             began = finish - detail['duration_ms'] / 1000
             if finish < start or began > end:

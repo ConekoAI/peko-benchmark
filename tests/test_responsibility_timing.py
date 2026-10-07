@@ -44,6 +44,17 @@ class NativeTimingTests(unittest.TestCase):
             self.fixture(root, {'run_id': 'done', 'job_id': 'worker', 'status': 'success', 'duration_ms': 60759})
             self.assertFalse(native_cron_timing(root, 90, 200)['measured'])
 
+    def test_async_wait_end_is_not_measured_as_task_completion(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            self.fixture(root, {'run_id': 'open', 'job_id': 'worker', 'job_name': 'responsibility-monitor',
+                                'status': 'running', 'scheduled_at': 100, 'finished_at': None,
+                                'wait_finished_at': 190, 'next_run_at': 220, 'duration_ms': 90000,
+                                'skipped_interval_slots': 1})
+            result = native_cron_timing(root, 90, 200)
+            self.assertFalse(result['measured'])
+            self.assertEqual(result['open_runs_at_snapshot'], ['open'])
+
     def test_lean_worker_keeps_durable_writes_and_no_extra_polling(self):
         prompt = task_monitor_prompt('http://127.0.0.1:1234', 60, True)
         for fragment in ('one model response', 'runtime may serialize', 'Keep exact payloads and receipts',
