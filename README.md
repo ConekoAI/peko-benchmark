@@ -217,6 +217,11 @@ installation or git repo initialization).
 - Native/provider token reconciliation and phase cost capture are implemented
   for the MiMo continuity and responsibility adapters.
 
-The [contract 8 execution protocol](docs/RESPONSIBILITY_EXECUTION_PROTOCOL.md)
+The [contract 9 execution protocol](docs/RESPONSIBILITY_EXECUTION_PROTOCOL.md)
 separates prepared organization from model formation, preserves a distinct memory-probe
 allowance, and adds observed-precondition and receipt-retention diagnostics.
+
+The [prepared execution pilots](docs/RESPONSIBILITY_PREPARED_MIMO_2026-10-07.md)
+verified native organization and restart progress, but both completed only one
+obligation on time. They also exposed action/state divergence, tool-selection
+failure, native timeouts and probe-interface issues; all failures are retained.

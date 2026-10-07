@@ -140,3 +140,35 @@ class DiagnosticsTests(unittest.TestCase):
         self.assertEqual(score(spec, rows, {}, True)['memory_facts_correct'], 23)
         del facts[0]['blocked_at']
         self.assertEqual(score(spec, rows, {}, True)['memory_facts_correct'], 22)
+
+    def test_memory_probe_example_contains_every_scored_policy_key(self):
+        from types import SimpleNamespace
+        from responsibility import memory_probe_prompt
+        spec = load_spec(ROOT / 'scenarios/responsibility/pilot.toml', 1)
+        spec['measure_memory_policy'] = True
+        prompt = memory_probe_prompt(SimpleNamespace(spec=spec, url='http://example.invalid'))
+        self.assertIn('"deadline": null', prompt); self.assertIn('"blocked_at": null', prompt)
+        self.assertIn('Do not omit these keys', prompt)
+
+    def test_probe_suspension_preserves_peko_jobs_history_and_due_times(self):
+        from types import SimpleNamespace
+        from responsibility_prepared import pause_peko_for_probe, pause_claw_for_probe
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/'.peko/data/principals/bench/cron/schedule.toml'; path.parent.mkdir(parents=True)
+            schedule = {'jobs':[{'id':'worker','enabled':True,'next_run':'future'}],'runs':[{'status':'success'}]}
+            path.write_text(json.dumps(schedule)); calls=[]
+            driver=SimpleNamespace(temp=SimpleNamespace(name=folder),principal='bench',metadata={},
+                _stop_owned_daemon=lambda: None,_ready=lambda: None,_command=lambda *a: calls.append(a))
+            pause_peko_for_probe(driver)
+            updated=json.loads(path.read_text());self.assertFalse(updated['jobs'][0]['enabled'])
+            self.assertEqual(updated['jobs'][0]['next_run'],'future');self.assertEqual(updated['runs'],schedule['runs'])
+            self.assertTrue(driver.metadata['probe_schedules_suspended'])
+        calls=[]
+        def command(*args):
+            calls.append(args)
+            return json.dumps({'jobs':[{'id':'w','name':'responsibility-monitor'},{'id':'h','payload':{'kind':'heartbeat'}}]}) if args[:2]==('automations','list') else '{}'
+        driver=SimpleNamespace(metadata={},_command=command,_stop_gateway=lambda:None,_start_gateway=lambda:None)
+        pause_claw_for_probe(driver)
+        self.assertIn(('config','set','agents.defaults.heartbeat.every','0m'),calls)
+        self.assertIn(('automations','edit','w','--disable'),calls)
+        self.assertFalse(any(a[:2]==('automations','edit') and a[2]=='h' for a in calls))

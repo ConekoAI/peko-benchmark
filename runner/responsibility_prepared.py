@@ -109,3 +109,25 @@ def set_claw_due_times(driver, armed=False):
     params = {'id': monitors[0]['id'], 'patch': {'schedule': {'kind': 'every',
               'everyMs': int(driver.sim.spec['cadence_secs'] * 1000), 'anchorMs': int(time.time()*1000) + offset}}}
     driver._command('gateway', 'call', 'cron.update', '--params', json.dumps(params), '--json')
+
+
+def pause_peko_for_probe(driver):
+    driver._stop_owned_daemon()
+    root = Path(driver.temp.name) / '.peko/data/principals' / driver.principal
+    path = next(root.rglob('cron/schedule.toml')); schedule = json.loads(path.read_text())
+    for job in schedule['jobs']:
+        job['enabled'] = False
+    path.write_text(json.dumps(schedule, indent=2))
+    driver._command('daemon', 'start', '--interval', '5'); driver._ready()
+    driver.metadata['probe_schedules_suspended'] = True
+
+
+def pause_claw_for_probe(driver):
+    driver._command('config', 'set', 'agents.defaults.heartbeat.every', '0m')
+    schedule = json.loads(driver._command('automations', 'list', '--all', '--json'))
+    jobs = schedule if isinstance(schedule, list) else schedule.get('jobs', [])
+    for job in jobs:
+        if job.get('name') == 'responsibility-monitor':
+            driver._command('automations', 'edit', job['id'], '--disable')
+    driver._stop_gateway(); driver._start_gateway()
+    driver.metadata['probe_schedules_suspended'] = True

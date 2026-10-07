@@ -66,6 +66,20 @@ def messages(sim):
     ]
 
 
+def memory_probe_prompt(sim):
+    fields = {"project": "...", "revision": "...", "recipient": "...",
+              "delivery_key": "...", "status": "delivered|cancelled|blocked|pending"}
+    policy = ""
+    if sim.spec.get("measure_memory_policy"):
+        fields.update(deadline=None, blocked_at=None)
+        policy = ("For deadline and blocked_at, replace null with the owner's numeric seconds when specified; "
+                  "retain null only where that policy was unspecified. Do not omit these keys. ")
+    return (contract(sim) + "MEMORY_PROBE: The watch is over. Do not deliver or request input. "
+            "From retained requirements and receipts, POST exactly once to /actions an object with this schema: "
+            + json.dumps({"kind": "memory", "facts": [fields]}) + ". " + policy
+            + "Include every commitment; report actual state and do not invent receipts. Then finish quietly.")
+
+
 def settled_telemetry(relay, telemetry):
     """Refresh observed counters after shutdown; never infer missing usage."""
     result = telemetry | relay.telemetry()
@@ -131,13 +145,10 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
         sim.phase = "probe"
         if spec.get("topology") == "separated":
             driver.validate_topology("post-watch")
-        policy_fields = (" Include deadline and blocked_at as numeric seconds for every project; "
-                         "use null where the owner specified no such policy. " if spec.get("measure_memory_policy") else "")
-        reply = driver.conversation(contract(sim) + policy_fields + "MEMORY_PROBE: The watch is over. Do not deliver or request input. "
-            "From retained requirements and receipts, POST exactly once to /actions an object "
-            '{"kind":"memory","facts":[{"project":"...","revision":"...","recipient":"...",'
-            '"delivery_key":"...","status":"delivered|cancelled|blocked|pending"}]}. '
-            "Include every commitment; report actual state and do not invent receipts. Then finish quietly.")
+        if hasattr(driver, "pause_for_probe"):
+            driver.pause_for_probe()
+            sim.record("measurement_isolation", native_schedules_suspended=True)
+        reply = driver.conversation(memory_probe_prompt(sim))
         sim.record("reply", step="memory-probe", text=reply)
     except Exception as exc:
         errors.append(f"{type(exc).__name__}: {exc}")

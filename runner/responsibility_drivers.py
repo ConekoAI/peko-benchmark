@@ -10,7 +10,7 @@ from continuity_openclaw import OpenClawDriver, final_reply
 from continuity_peko import PekoDriver
 from continuity_proxy import AnthropicRelay
 from continuity_usage import reconcile_usage
-from responsibility_prepared import prepare_peko, prepare_claw, arm_peko, set_claw_due_times
+from responsibility_prepared import prepare_peko, prepare_claw, arm_peko, set_claw_due_times, pause_peko_for_probe, pause_claw_for_probe
 from prompt_profile import PromptProfiler
 from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
                                      verify_claw, verify_peko, task_paths,
@@ -19,7 +19,7 @@ from responsibility_topology import (claw_setup, peko_setup, supervisor_prompt,
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000,
           "probe_allowance": {"request_limit": 8, "output_limit": 6000, "budget_usd": .01}}
-API_CONTRACT_VERSION = 3
+API_CONTRACT_VERSION = 4
 
 
 def action_contract(url):
@@ -147,6 +147,9 @@ class PekoResponsibility(PekoDriver):
     def begin_watch(self):
         if self.formation == "prepared":
             arm_peko(self)
+
+    def pause_for_probe(self):
+        pause_peko_for_probe(self)
 
     def phase(self):
         return phase_for(self.sim)
@@ -292,6 +295,9 @@ class ClawResponsibility(OpenClawDriver):
         if not check["verified"]:
             raise ValueError("separated topology registration failed: " + "; ".join(check["errors"]))
         return check
+
+    def pause_for_probe(self):
+        pause_claw_for_probe(self)
 
     def turn(self, message):
         return self.conversation(message)

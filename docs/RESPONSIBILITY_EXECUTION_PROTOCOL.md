@@ -1,4 +1,4 @@
-# Responsibility execution protocol — contract 8
+# Responsibility execution protocol — contract 9
 
 This stabilization protocol separates organization formation from execution. It
 is not a new result or evidence of superiority. Contract 7 scores stay frozen.
@@ -41,8 +41,14 @@ and the supplied PAYG reference cap per harness. Probe requests have a separate
 8-request, 6,000-output-token, $0.01 reference allowance. This allowance does not
 restore operating calls, hide rejections, or retroactively rescue deadlines.
 All requests and costs, including probe, remain in aggregate/native accounting.
-The probe phase includes any native work that overlaps it; it is not a promise
-that the owner receives all eight requests. Reference amounts are not actual
+After the watch and post-watch topology snapshot, the controller disables
+native schedules and restarts the owned runtime before sending the memory
+probe. This declared measurement intervention is recorded outside the watch;
+it cannot rescue missed obligations. It prevents background tasks from spending
+the probe allowance. Any interrupted usage remains unknown; suspension does not
+repair accounting. The policy keys are present in the example JSON schema.
+Contract 8 pilots lacked this isolation and showed the old four-field example;
+those results remain frozen and policy omissions are not evidence of forgetting. Reference amounts are not actual
 Token Plan deductions. Peko's native cost backstop includes the probe allowance.
 
 ## Diagnostics
@@ -58,7 +64,7 @@ Token Plan deductions. Peko's native cost backstop includes the probe allowance.
 - Memory measurement explicitly distinguishes missing probes from invalid
   probes and valid measured facts. Missing measurement is not forgetting.
 
-Contract 8 CLI runs require these diagnostics for a pass, and the memory probe
+Contract 9 CLI runs require these diagnostics for a pass, and the memory probe
 also measures explicit deadline and blocked_at values (null where unspecified):
 24 facts rather than 16. These requirements are explicit scenario flags; replay
 of older scenarios retains its old grade. A missing receipt file is unmeasured
