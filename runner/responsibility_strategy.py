@@ -170,7 +170,7 @@ def retain_artifacts(driver, workspace):
     files = []
     for source in Path(workspace).rglob('*'):
         rel = source.relative_to(workspace)
-        if source.is_symlink() or not source.is_file() or '.benchmark-sdk' in rel.parts:
+        if source.is_symlink() or not source.is_file() or set(rel.parts) & {'.benchmark-sdk','.benchmark-fixture'}:
             continue
         if set(rel.parts) & {'.git', 'node_modules', '.venv', 'credentials', 'vault', 'identity'}:
             continue

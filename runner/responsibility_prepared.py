@@ -13,6 +13,7 @@ from pathlib import Path
 from responsibility_topology import task_paths, handoff_prompt, supervisor_prompt
 from responsibility_strategy import selected as strategy_selected, supervisor as strategy_supervisor, provision_sdk, capabilities
 from responsibility_strategy import handoff as strategy_handoff
+import responsibility_compact as compact
 
 
 def empty_notes(workspace: Path, worker_prompt: str, strategy=False):
@@ -28,8 +29,13 @@ def prepare_peko(driver, worker_prompt):
     root = home / 'data/principals' / driver.principal
     workspace = home / 'principals' / driver.principal
     empty_notes(workspace, worker_prompt, strategy_selected(driver.sim.spec))
+    if compact.selected(driver.sim.spec):
+        driver.metadata['offline_fixture_manifest']=compact.provision(workspace)
+        (workspace/'kb/responsibility/commitments.md').write_text('{"obligations":[]}\n')
     if strategy_selected(driver.sim.spec):
-        (workspace / 'NATIVE_AUTOMATION.md').write_text(capabilities('peko', workspace))
+        (workspace / 'NATIVE_AUTOMATION.md').write_text(
+            compact.capabilities('peko',workspace,url=driver.sim.url) if compact.selected(driver.sim.spec)
+            else capabilities('peko', workspace))
     roles = workspace / 'roles'; roles.mkdir(exist_ok=True)
     (roles / 'release-watch.md').write_text('---\nname: release-watch\ndescription: Periodic release responsibility worker\n---\n' + worker_prompt)
     indices = list(root.rglob('sessions.json'))
@@ -69,8 +75,9 @@ def prepare_peko(driver, worker_prompt):
                             'wake_on_completion': False, 'timeout_secs': 90})]
     if strategy_selected(driver.sim.spec):
         schedule['jobs'] = schedule['jobs'][:1]
-        sdk = Path(driver.config_env['PEKO_WORKFLOW_SDK_SOURCE'])
-        driver.metadata['workflow_sdk_manifest'] = provision_sdk(workspace, sdk)
+        if not compact.selected(driver.sim.spec):
+            sdk = Path(driver.config_env['PEKO_WORKFLOW_SDK_SOURCE'])
+            driver.metadata['workflow_sdk_manifest'] = provision_sdk(workspace, sdk)
     schedules[0].write_text(json.dumps(schedule, indent=2))
     driver._command('daemon', 'start', '--interval', '5'); driver._ready()
     driver.metadata['formation'] = ('controller_prepared_empty_strategy_workspace' if strategy_selected(driver.sim.spec)
@@ -93,8 +100,13 @@ def arm_peko(driver):
 
 def prepare_claw(driver, worker_prompt):
     empty_notes(driver.workspace, worker_prompt, strategy_selected(driver.sim.spec))
+    if compact.selected(driver.sim.spec):
+        driver.metadata['offline_fixture_manifest']=compact.provision(driver.workspace)
+        (driver.workspace/'kb/responsibility/commitments.md').write_text('{"obligations":[]}\n')
     if strategy_selected(driver.sim.spec):
-        (driver.workspace / 'NATIVE_AUTOMATION.md').write_text(capabilities('openclaw', driver.workspace, driver.node, driver.entry))
+        (driver.workspace / 'NATIVE_AUTOMATION.md').write_text(
+            compact.capabilities('openclaw',driver.workspace,driver.node,driver.entry,url=driver.sim.url)
+            if compact.selected(driver.sim.spec) else capabilities('openclaw', driver.workspace, driver.node, driver.entry))
     (driver.workspace / 'BOOTSTRAP.md').unlink(missing_ok=True)
     (driver.workspace / 'IDENTITY.md').write_text('# Responsibility Bench\nConcise release coordinator.\n')
     (driver.workspace / 'USER.md').write_text('# User\nThe benchmark owner supplies requirements in chat.\n')

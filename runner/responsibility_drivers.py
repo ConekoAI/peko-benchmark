@@ -71,6 +71,9 @@ def task_monitor_prompt(url, cadence, guarded=False):
 
 
 def prepared_worker_prompt(sim):
+    import responsibility_compact as compact
+    if compact.selected(sim.spec):
+        return compact.contract(sim.url) + action_contract(sim.url, bool(sim.action_service))
     if strategy.selected(sim.spec):
         return strategy.contract(sim.url, sim.spec['cadence_secs'], sim.spec['duration_secs'],
                                  action_contract(sim.url, bool(sim.action_service)) + state_contract())
@@ -102,7 +105,8 @@ class PekoResponsibility(PekoDriver):
             or k.startswith("PEKO_MODEL_") or k.startswith("PEKO_CACHE_READ_")
             or k in ("PEKO_CONTEXT_WINDOW", "PEKO_COST_BASIS", "PEKO_API_FORMAT")}
         self.config_env.update(PEKO_API_KEY=self.relay.token, PEKO_MAX_OUTPUT_TOKENS="4096")
-        if strategy.selected(self.sim.spec):
+        import responsibility_compact as compact
+        if strategy.selected(self.sim.spec) and not compact.selected(self.sim.spec):
             sdk = Path(os.environ.get('PEKO_WORKFLOW_SDK_SOURCE',
                 str(Path(self.binary or self.config_env['PEKO_BIN']).resolve().parents[2] / 'sdks/python/peko_workflow/src/peko_workflow')))
             if not (sdk / 'client.py').is_file():
@@ -182,8 +186,10 @@ class PekoResponsibility(PekoDriver):
 
     def conversation(self, message, review=False):
         if strategy.selected(self.sim.spec):
+            import responsibility_compact as compact
             workspace = Path(self.temp.name) / '.peko/principals' / self.principal
-            message += '\n' + strategy.capabilities('peko', workspace)
+            message += '\n' + (compact.capabilities('peko',workspace,url=self.sim.url)
+                               if compact.selected(self.sim.spec) else strategy.capabilities('peko',workspace))
         if not review:
             return self.turn(message)
         # A separate group conversation under the same principal. The owner
@@ -192,7 +198,7 @@ class PekoResponsibility(PekoDriver):
                       "--id", "group:bench-review", "--json")
         self._command("channel", "invite", "group:bench-review", self.principal, "user:local", "--json")
         self._command("send", "group:bench-review", message)
-        until = min(self.deadline, time.monotonic() + 90)
+        until = min(self.deadline, time.monotonic() + (180 if self.sim.spec.get('formation_profile')=='compact-v1' else 90))
         while time.monotonic() < until:
             snapshot = json.loads(self._command("channel", "peek", "group:bench-review", "--json"))
             # Store-level group events preserve the native conversation evidence.
@@ -324,7 +330,8 @@ class ClawResponsibility(OpenClawDriver):
     def validate_topology(self, stage):
         schedule = json.loads(self._command("automations", "list", "--all", "--json"))
         sessions = json.loads(self._command("sessions", "--all-agents", "--json"))
-        check = (strategy.verify('openclaw', schedule, sessions, self.sim.spec['cadence_secs'], stage)
+        validation_stage=('post-setup' if self.sim.spec.get('formation_profile')=='compact-v1' and stage=='formation' else stage)
+        check = (strategy.verify('openclaw', schedule, sessions, self.sim.spec['cadence_secs'], validation_stage)
                  if strategy.selected(self.sim.spec) else verify_claw(schedule, sessions, self.sim.spec["cadence_secs"],
                             require_supervisor=not (self.formation == "prepared" and stage == "post-setup"))) | {"stage": stage}
         if strategy.selected(self.sim.spec) and stage == 'post-watch':
@@ -346,7 +353,10 @@ class ClawResponsibility(OpenClawDriver):
 
     def conversation(self, message, review=False):
         prompt = Path(self.temp.name) / "event.txt"
-        prompt.write_text(message + ('\n' + strategy.capabilities('openclaw', self.workspace, self.node, self.entry)
+        import responsibility_compact as compact
+        capabilities=(compact.capabilities('openclaw',self.workspace,self.node,self.entry,url=self.sim.url)
+                      if compact.selected(self.sim.spec) else strategy.capabilities('openclaw',self.workspace,self.node,self.entry))
+        prompt.write_text(message + ('\n' + capabilities
                                     if strategy.selected(self.sim.spec) else ''))
         key = "agent:main:review" if review else "agent:main:responsibility"
         return final_reply(json.loads(self._command("agent", "--session-key", key,

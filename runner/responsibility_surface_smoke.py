@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 class ScriptedProvider:
     def __init__(self):
         self.steps, self.calls, self.results, self.catalogs = [], [], {}, []
+        self.stop_reasons = []  # Optional scripted terminal reason, never live-provider feedback.
         self.lock = threading.Lock()
         provider = self
         class Handler(BaseHTTPRequestHandler):
@@ -48,6 +49,8 @@ class ScriptedProvider:
                            'model': payload['model'], 'content': [block],
                            'stop_reason': 'tool_use' if block['type'] == 'tool_use' else 'end_turn',
                            'stop_sequence': None, 'usage': {'input_tokens': 10, 'output_tokens': 5}}
+                if provider.stop_reasons:
+                    message['stop_reason'] = provider.stop_reasons.pop(0)
                 if payload.get('stream'):
                     start = dict(message, content=[], stop_reason=None)
                     initial = dict(block, input={}) if block['type'] == 'tool_use' else dict(block, text='')

@@ -105,6 +105,7 @@ runner/continuity_proxy.py  # Anthropic accounting relay; optional common wire p
 runner/responsibility.py  # native unattended watch and continuation controls
 runner/responsibility_simulator.py  # shared dependency world and action ledger
 runner/responsibility_drivers.py  # native cron/heartbeat adapters
+runner/responsibility_formation.py  # compact setup diagnostic; unattended metrics unmeasured
 runner/responsibility_audit.py  # audit native messaging attempts during watch
 runner/prompt_profile.py  # opt-in private request fingerprints and JSON sizes
 runner/profile_usage.py  # offline phase usage and prompt-profile analysis
@@ -168,6 +169,10 @@ Optional `setup.sh <task_dir> <workdir>` replaces the default
 installation or git repo initialization).
 
 ## Harness contract
+
+The [compact formation diagnostic](docs/RESPONSIBILITY_COMPACT_FORMATION.md)
+isolates requirement retention, worker validation and native registration with
+a shared fictional HTTP fixture. It leaves unattended metrics unmeasured.
 
 The responsibility [strategy-choice track](docs/RESPONSIBILITY_STRATEGY_CHOICE.md)
 lets each harness author native workflows, choose operational cadence and use

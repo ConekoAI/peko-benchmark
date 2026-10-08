@@ -165,6 +165,8 @@ class StrategyTests(unittest.TestCase):
             (workspace/'alternate/test_local.py').write_text('TOKEN_SENTINEL')
             (workspace/'.benchmark-sdk').mkdir()
             (workspace/'.benchmark-sdk/client.py').write_text('not authored')
+            (workspace/'.benchmark-fixture').mkdir()
+            (workspace/'.benchmark-fixture/responsibility_offline_fixture.py').write_text('provided fixture')
             (workspace/'credentials').mkdir()
             (workspace/'credentials/vault.json').write_text('SECRET')
             out = Path(temp)/'out'; out.mkdir()
