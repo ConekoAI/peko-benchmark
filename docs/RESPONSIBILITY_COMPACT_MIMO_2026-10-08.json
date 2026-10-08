@@ -1,0 +1,1425 @@
+{
+  "evidence_kind": "compact_formation_pair_2026_10_08_not_unattended_score",
+  "benchmark_commit": "fd1f7f1cfc6a0b1b51832e4664309e51a0719918",
+  "runtime_build_commit": "cd161f6052350126aa37d01ce2bff005c74da322",
+  "runtime_merge_commit": "9042a92440d3bdbf1e37d8eef0b20e7362dbf51e",
+  "runtime_pr": "https://github.com/ConekoAI/peko-runtime/pull/433",
+  "runtime_ci": {
+    "run": 37716511278,
+    "conclusion": "success",
+    "linux": "success",
+    "boundaries": "success",
+    "workspace_deps": "success",
+    "windows": "skipped",
+    "mock_integration": "skipped",
+    "real_integration": "skipped"
+  },
+  "validation": {
+    "library_passed": 2762,
+    "library_ignored": 3,
+    "benchmark_tests_passed": 105,
+    "fmt": "passed",
+    "clippy": "passed",
+    "module_boundaries": "passed",
+    "workspace_deps": "passed"
+  },
+  "native_probes": {
+    "peko": {
+      "report_id": "20261008T021352743145Z-compact-surface-peko",
+      "result_sha256": "1e67485310204df948da95c992418d55df5c1921e37b943b3fafad1cfce81abb",
+      "passed": true,
+      "real_llm_calls": 0,
+      "checks": [
+        {
+          "tool": "Write",
+          "passed": true
+        },
+        {
+          "check": "native-empty-write-output-limit-continuation",
+          "passed": true
+        },
+        {
+          "tool": "Write",
+          "passed": true
+        },
+        {
+          "tool": "Bash",
+          "passed": true
+        },
+        {
+          "check": "supplied-fictional-fixture-through-native-shell",
+          "passed": true
+        },
+        {
+          "tool": "CronCreate",
+          "passed": true
+        },
+        {
+          "check": "native-scheduled-worker-reaches-inactive-live-world-without-llm",
+          "passed": true
+        }
+      ],
+      "formation_gate_passed": true
+    },
+    "openclaw": {
+      "report_id": "20261008T021440142219Z-compact-surface-openclaw",
+      "result_sha256": "fb96e2302afeefa7b244e9296da483b94102bba14791e55b866877d1c2761aac",
+      "passed": true,
+      "real_llm_calls": 0,
+      "checks": [
+        {
+          "tool": "write",
+          "passed": true
+        },
+        {
+          "tool": "write",
+          "passed": true
+        },
+        {
+          "tool": "exec",
+          "passed": true
+        },
+        {
+          "check": "supplied-fictional-fixture-through-native-shell",
+          "passed": true
+        },
+        {
+          "tool": "exec",
+          "passed": true
+        },
+        {
+          "check": "native-scheduled-worker-reaches-inactive-live-world-without-llm",
+          "passed": true
+        }
+      ],
+      "formation_gate_passed": true
+    }
+  },
+  "pilots": {
+    "peko": {
+      "report_id": "20261008T021640509612Z-responsibility-formation-peko",
+      "result_sha256": "f2079792363d607b8ade74ba621de20e9d8597fdabdcd5488fbc663131a8726a",
+      "evidence_hashes": {
+        "result.json": "f2079792363d607b8ade74ba621de20e9d8597fdabdcd5488fbc663131a8726a",
+        "source-manifest.json": "c2ebf0231d844d1b52a63107fd7c9e9c83dbd44d66df9f3b0517720b1338bf80",
+        "build-provenance.json": "cfe6c36c927a163d366976181a189bb03421b2dd0b74cb3a31e6bdcc090bdd69",
+        "provider-calls.jsonl": "07c752468d1948d0c7516e5a9dd05ab1a0354285892b4035893f723c3b01eeba",
+        "strategy-artifacts.json": "709f178565303bcaf5d688d04a683cee81cc7e8283731ce82a7eb0e741da13de",
+        "post-run-offline-diagnostic.json": "06592d51aeff445b0e89e8f462541992d11e7efa55e1c71be9be826399d14268"
+      },
+      "errors": [
+        "TimeoutError: Peko send exceeded command/scenario timeout"
+      ],
+      "formation_succeeded": false,
+      "measurement_valid": false,
+      "passed": false,
+      "phases": [
+        {
+          "phase": "accept",
+          "wall_secs": 180.01,
+          "completed": false
+        }
+      ],
+      "wall_secs": 327.142,
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": false,
+        "request_count": 18,
+        "rejected_request_count": 0,
+        "input_tokens": 434853,
+        "uncached_input_tokens": 46437,
+        "output_tokens": 4268,
+        "cache_read_tokens": 388416,
+        "cache_creation_tokens": 0,
+        "cost_usd": null,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "usage_source": "persisted_assistant_usage",
+          "usage_complete": true,
+          "cost_usd": 0.0087837848,
+          "input_tokens": 434853,
+          "uncached_input_tokens": 46437,
+          "output_tokens": 4268,
+          "request_count": 17,
+          "cache_read_tokens": 388416,
+          "cache_creation_tokens": 0,
+          "quota_snapshot": {
+            "window_start": "2026-10-08T00:00:00Z",
+            "window_end": "2026-10-09T00:00:00Z",
+            "cycle": "daily",
+            "input_tokens": 46437,
+            "output_tokens": 4268,
+            "request_count": 17,
+            "cost_usd": 0.00769622,
+            "cache_read_tokens": 388416,
+            "cache_creation_tokens": 0
+          },
+          "quota_snapshot_request_count_matches": true
+        },
+        "native_usage_matches": false,
+        "native_reconciliation_diagnostic": {
+          "version": 1,
+          "controller_minus_native": null,
+          "disconnected_request_indices": [],
+          "difference_exactly_explained_by_disconnected_calls": false,
+          "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+        }
+      },
+      "known_reference_cost_floor_usd": 0.0087837848,
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": false,
+          "request_count": 11,
+          "rejected_request_count": 0,
+          "input_tokens": 260842,
+          "uncached_input_tokens": 17834,
+          "output_tokens": 2350,
+          "cache_read_tokens": 243008,
+          "cache_creation_tokens": 0,
+          "cost_usd": null,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        },
+        "setup": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 7,
+          "rejected_request_count": 0,
+          "input_tokens": 174011,
+          "uncached_input_tokens": 28603,
+          "output_tokens": 1918,
+          "cache_read_tokens": 145408,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.004948602400000001,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "upstream_stop_reasons": {
+        "tool_use": 16,
+        "end_turn": 1,
+        "unobserved": 1
+      },
+      "completed_provider_response_wall_secs": 94.64,
+      "tool_attribution": {
+        "version": 3,
+        "counts": {
+          "native_success": 29
+        },
+        "calls": [
+          {
+            "request_index": 1,
+            "wire_id": "call_ee799b0ea4e64d7ca453e1f3",
+            "native_id": "call_ee799b0ea4e64d7ca453e1f3",
+            "name": "Read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 1,
+            "wire_id": "call_95229e4c20f1479cba6e505f",
+            "native_id": "call_95229e4c20f1479cba6e505f",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 1,
+            "wire_id": "call_c6c79db79d744e5a9c6daa29",
+            "native_id": "call_c6c79db79d744e5a9c6daa29",
+            "name": "CronList",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 2,
+            "wire_id": "call_6817b9aee06b442a9eab8a36",
+            "native_id": "call_6817b9aee06b442a9eab8a36",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 2,
+            "wire_id": "call_8761a36e4d034816909cc6e1",
+            "native_id": "call_8761a36e4d034816909cc6e1",
+            "name": "Read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 3,
+            "wire_id": "call_ffc9749f1bc34dfcb300e9b5",
+            "native_id": "call_ffc9749f1bc34dfcb300e9b5",
+            "name": "Read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 3,
+            "wire_id": "call_d5d379bcf5ad41e185ad3623",
+            "native_id": "call_d5d379bcf5ad41e185ad3623",
+            "name": "Read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 4,
+            "wire_id": "call_07fdbbaa364f4ca6a5f359f8",
+            "native_id": "call_07fdbbaa364f4ca6a5f359f8",
+            "name": "Edit",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 4,
+            "wire_id": "call_910efe88757c4051a6a30c75",
+            "native_id": "call_910efe88757c4051a6a30c75",
+            "name": "Edit",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 4,
+            "wire_id": "call_7facd9f57a6943e191c614b5",
+            "native_id": "call_7facd9f57a6943e191c614b5",
+            "name": "CronUpdate",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 5,
+            "wire_id": "call_077c85a7927549ae9d2e4a26",
+            "native_id": "call_077c85a7927549ae9d2e4a26",
+            "name": "Write",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 5,
+            "wire_id": "call_e4d7540d02cb4db2af030b29",
+            "native_id": "call_e4d7540d02cb4db2af030b29",
+            "name": "Write",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 5,
+            "wire_id": "call_adae9a4547ac478196376718",
+            "native_id": "call_adae9a4547ac478196376718",
+            "name": "CronList",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 6,
+            "wire_id": "call_f0cf5a7372904a5c9db3c1ab",
+            "native_id": "call_f0cf5a7372904a5c9db3c1ab",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 8,
+            "wire_id": "call_c39df3e338454db6a5d39a99",
+            "native_id": "call_c39df3e338454db6a5d39a99",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 8,
+            "wire_id": "call_6f0f09ce012a45d3a89538b6",
+            "native_id": "call_6f0f09ce012a45d3a89538b6",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 9,
+            "wire_id": "call_cbea832ca0d94a5e8179626e",
+            "native_id": "call_cbea832ca0d94a5e8179626e",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 9,
+            "wire_id": "call_3c9588762208439b8b7a226e",
+            "native_id": "call_3c9588762208439b8b7a226e",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 10,
+            "wire_id": "call_201a0b59997243dab98448eb",
+            "native_id": "call_201a0b59997243dab98448eb",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 10,
+            "wire_id": "call_e853fbcef091405eb84e0de4",
+            "native_id": "call_e853fbcef091405eb84e0de4",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 11,
+            "wire_id": "call_a6db7a80831149b68339be45",
+            "native_id": "call_a6db7a80831149b68339be45",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 11,
+            "wire_id": "call_f194f8073ea94033887ded4c",
+            "native_id": "call_f194f8073ea94033887ded4c",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 12,
+            "wire_id": "call_cee56bfb99294edc9ac89703",
+            "native_id": "call_cee56bfb99294edc9ac89703",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 12,
+            "wire_id": "call_d5ea01773773403da112887b",
+            "native_id": "call_d5ea01773773403da112887b",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 13,
+            "wire_id": "call_9a8b2a0a8b07421d8c790cad",
+            "native_id": "call_9a8b2a0a8b07421d8c790cad",
+            "name": "Write",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 14,
+            "wire_id": "call_16e46b10ce9747c4b04d77d2",
+            "native_id": "call_16e46b10ce9747c4b04d77d2",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 15,
+            "wire_id": "call_5375ef54962747b8974aff64",
+            "native_id": "call_5375ef54962747b8974aff64",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 16,
+            "wire_id": "call_c3638475305b4241a7fe567f",
+            "native_id": "call_c3638475305b4241a7fe567f",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 17,
+            "wire_id": "call_298d9e8102e040069e85992b",
+            "native_id": "call_298d9e8102e040069e85992b",
+            "name": "Bash",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          }
+        ],
+        "limitation": "Checks root required keys and persisted dispatch results; missing wire keys do not distinguish model errors from output limits or provider conversion. Conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved."
+      },
+      "enabled_operational_jobs": 0,
+      "retained_worker_sha256": "b69ebca36982d8675a24b39413292c95f8e85e29d4781e4c538a6ff0ed61109d",
+      "worker_lines": 169,
+      "post_run_fixture": {
+        "fixture_version": 1,
+        "fictional_only": true,
+        "passed": false,
+        "cases": [
+          {
+            "case": "inactive",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "not_ready",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "wrong_revision",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "cancelled",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "past_deadline",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "accepted_and_quiet",
+            "passed": false,
+            "error": "matching release receipt missing",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "rejected",
+            "passed": false,
+            "error": "rejection case was not exercised correctly",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "reconcile_committed",
+            "passed": false,
+            "error": "accepted/reconciled delivery remains pending",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "uncertain_write",
+            "passed": false,
+            "error": "matching release receipt missing",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              },
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "blocked_threshold",
+            "passed": false,
+            "error": "blocked input missing",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              },
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          }
+        ]
+      },
+      "canonical_obligation_count": 0,
+      "native_metadata": {
+        "driver": "peko",
+        "model": "mimo-v2.6-flash",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "base_url": "https://token-plan-cn.xiaomimimo.com/anthropic",
+        "model_config": {
+          "id": "mimo-v2.6-flash",
+          "displayName": "mimo-v2.6-flash",
+          "templateId": null,
+          "modelId": "mimo-v2.6-flash",
+          "apiFormat": "anthropic_messages",
+          "baseUrl": "http://127.0.0.1:63935",
+          "contextWindow": 1048576,
+          "maxOutputTokens": 4096,
+          "requiresKey": true,
+          "enabled": true,
+          "credentialId": "92eaa8b0-a627-4606-8741-ade5234e2837",
+          "spec": {
+            "imageInput": false,
+            "audioInput": false,
+            "toolSupport": "function_calling",
+            "streaming": true,
+            "thinking": "optional",
+            "jsonMode": false,
+            "decisions": false,
+            "pricing": {
+              "input_per_million": 0.14,
+              "output_per_million": 0.28
+            }
+          }
+        },
+        "pricing_hint": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28
+        },
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "version": "0.1.0",
+        "budget_usd": 0.05,
+        "cli_sha256": "82c8fd7c7bebb1a6631a2271bd27e025cefb4c4e0efd402d68d2a76fbd7ed452",
+        "daemon_sha256": "127526dd695e9c3e84a61de9551da9bf0ff651a563a64a0d7724fd59ac25fcf5",
+        "restart_kind": "process_restart",
+        "initialization": "defined_purpose_native_genesis",
+        "initialization_completed": true,
+        "offline_fixture_manifest": {
+          "responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+          "responsibility_offline_fixture.py": "98922a23e4887c61b17b5feed58fb7dd1f3bb75cb3597e52e00a7aefa46abbf3"
+        },
+        "formation": "controller_prepared_empty_strategy_workspace",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "continuation_mode": "supervisory",
+        "cadence_secs": 60,
+        "api_contract_version": 11,
+        "topology": "separated",
+        "action_mode": "guarded",
+        "action_service_version": null,
+        "execution_policy": "strategy-choice",
+        "strategy_contract_version": 2,
+        "topology_checks": [
+          {
+            "version": 2,
+            "verified": true,
+            "errors": [],
+            "operational_jobs": [],
+            "supervisor_session_ids": [
+              "4e103e47-138e-5cf2-9bad-e875fdc370c7"
+            ],
+            "worker_session_ids": [],
+            "limitation": "Registration proves native scheduling shape, not code correctness or execution.",
+            "stage": "post-setup"
+          }
+        ],
+        "telemetry_drain_completed": false
+      },
+      "watch_started": false,
+      "unattended_metrics": {
+        "completion": null,
+        "deadlines": null,
+        "memory": null,
+        "restart": null,
+        "quietness": null
+      }
+    },
+    "openclaw": {
+      "report_id": "20261008T022248082304Z-responsibility-formation-openclaw",
+      "result_sha256": "77ffcabb3f1eb596679298f0bf4fdbcf651376db1ee7a1529a6d6730d24b0615",
+      "evidence_hashes": {
+        "result.json": "77ffcabb3f1eb596679298f0bf4fdbcf651376db1ee7a1529a6d6730d24b0615",
+        "source-manifest.json": "c2ebf0231d844d1b52a63107fd7c9e9c83dbd44d66df9f3b0517720b1338bf80",
+        "build-provenance.json": "c1acc0f872f56bea7eb49eb91e5c87791aad31f373a09da62190a5c571c8fa9f",
+        "provider-calls.jsonl": "253520ab58dfdcd20698ffeefe495669d02b3c1dff0789afef14f045f68f53a2",
+        "strategy-artifacts.json": "f56b111cd6c8ce9d11e9afe41bd104ef64a597d2bdbfa8e5e751f1c992fa3ba5",
+        "post-run-offline-diagnostic.json": "b7b915d12e866273285c0d8f6a6c9e92011c19774d89e7d968db0e6d8ec360db",
+        "post-run-trace-redaction-diagnostic.json": "5147461b52490ef7f8188bf23ab40439ee4707e8ab88eee0b79a5476e0ade0aa"
+      },
+      "errors": [
+        "TimeoutError: OpenClaw agent exceeded command/scenario timeout"
+      ],
+      "formation_succeeded": false,
+      "measurement_valid": false,
+      "passed": false,
+      "phases": [
+        {
+          "phase": "accept",
+          "wall_secs": 182.042,
+          "completed": false
+        }
+      ],
+      "wall_secs": 195.178,
+      "usage": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 14,
+        "rejected_request_count": 0,
+        "input_tokens": 263570,
+        "uncached_input_tokens": 27026,
+        "output_tokens": 3637,
+        "cache_read_tokens": 236544,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.0054643232,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        },
+        "native_usage": {
+          "request_count": 14,
+          "uncached_input_tokens": 26018,
+          "output_tokens": 3319,
+          "cache_read_tokens": 215744,
+          "cache_creation_tokens": 0
+        },
+        "native_usage_matches": false,
+        "native_reconciliation_diagnostic": {
+          "version": 1,
+          "controller_minus_native": {
+            "request_count": 0,
+            "uncached_input_tokens": 1008,
+            "cache_read_tokens": 20800,
+            "cache_creation_tokens": 0,
+            "output_tokens": 318
+          },
+          "disconnected_request_indices": [
+            14
+          ],
+          "difference_exactly_explained_by_disconnected_calls": false,
+          "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; this does not change the native equality or full-pass gate."
+        }
+      },
+      "known_reference_cost_floor_usd": 0.0054643232,
+      "phase_usage": {
+        "conversation": {
+          "usage_source": "controller_observed_anthropic_usage",
+          "usage_complete": true,
+          "request_count": 14,
+          "rejected_request_count": 0,
+          "input_tokens": 263570,
+          "uncached_input_tokens": 27026,
+          "output_tokens": 3637,
+          "cache_read_tokens": 236544,
+          "cache_creation_tokens": 0,
+          "cost_usd": 0.0054643232,
+          "cost_basis": "payg_reference_not_subscription_charge",
+          "pricing": {
+            "input_per_million": 0.14,
+            "output_per_million": 0.28,
+            "cache_read_per_million": 0.0028
+          }
+        }
+      },
+      "upstream_stop_reasons": {
+        "tool_use": 14
+      },
+      "completed_provider_response_wall_secs": 180.825,
+      "tool_attribution": {
+        "version": 3,
+        "counts": {
+          "native_success": 17,
+          "unresolved": 2
+        },
+        "calls": [
+          {
+            "request_index": 1,
+            "wire_id": "call_99e5ce0f5ecc48ea802bf7a1",
+            "native_id": "call_99e5ce0f5ecc48ea802bf7a1",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 1,
+            "wire_id": "call_482487327eb94e0c981808b9",
+            "native_id": "call_482487327eb94e0c981808b9",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 2,
+            "wire_id": "call_aad588dfd5fd400eb56cd89b",
+            "native_id": "call_aad588dfd5fd400eb56cd89b",
+            "name": "read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 2,
+            "wire_id": "call_ad5728bf21c740709c88478e",
+            "native_id": "call_ad5728bf21c740709c88478e",
+            "name": "read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 2,
+            "wire_id": "call_c900ed01155f47b3af689b57",
+            "native_id": "call_c900ed01155f47b3af689b57",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 3,
+            "wire_id": "call_7c4f3eb831d94f73bea119af",
+            "native_id": "call_7c4f3eb831d94f73bea119af",
+            "name": "read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 3,
+            "wire_id": "call_f94a22b755134a5daf682b21",
+            "native_id": "call_f94a22b755134a5daf682b21",
+            "name": "read",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 4,
+            "wire_id": "call_175b64e0f5224fe1b565bd68",
+            "native_id": "call_175b64e0f5224fe1b565bd68",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 4,
+            "wire_id": "call_e35fc7d469f24ff98b4f09ad",
+            "native_id": "call_e35fc7d469f24ff98b4f09ad",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 5,
+            "wire_id": "call_64d6abdd601c40058e016cb7",
+            "native_id": "call_64d6abdd601c40058e016cb7",
+            "name": "exec",
+            "intent_preserved": false,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "unresolved",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 6,
+            "wire_id": "call_697aefb742de4dfcabac7cd1",
+            "native_id": "call_697aefb742de4dfcabac7cd1",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 7,
+            "wire_id": "call_889bba16ff9c4065b4f34973",
+            "native_id": "call_889bba16ff9c4065b4f34973",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 8,
+            "wire_id": "call_4071dd5e272c41f18d77b665",
+            "native_id": "call_4071dd5e272c41f18d77b665",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 9,
+            "wire_id": "call_9f766fedc61c420794e15c6a",
+            "native_id": "call_9f766fedc61c420794e15c6a",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 10,
+            "wire_id": "call_c5048d7a4db74e5780b8993d",
+            "native_id": "call_c5048d7a4db74e5780b8993d",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 11,
+            "wire_id": "call_58bbf71ab1884c998a08e60d",
+            "native_id": "call_58bbf71ab1884c998a08e60d",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 12,
+            "wire_id": "call_8bf785357adc4f76afdf96b1",
+            "native_id": "call_8bf785357adc4f76afdf96b1",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 13,
+            "wire_id": "call_a6840ead160a43ad96ed6722",
+            "native_id": "call_a6840ead160a43ad96ed6722",
+            "name": "exec",
+            "intent_preserved": true,
+            "native_is_error": false,
+            "missing_required": [],
+            "category": "native_success",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          },
+          {
+            "request_index": 14,
+            "wire_id": "call_01d829623a7949cba357d76c",
+            "native_id": "call01d829623a7949cba357d76c",
+            "name": "exec",
+            "intent_preserved": false,
+            "native_is_error": null,
+            "missing_required": [],
+            "category": "unresolved",
+            "upstream_stop_reason": "tool_use",
+            "argument_sources": []
+          }
+        ],
+        "limitation": "Checks root required keys and persisted dispatch results; missing wire keys do not distinguish model errors from output limits or provider conversion. Conditional/value constraints, side-effect truth and all advertised tools require further proof. Historical runs without wire evidence stay unresolved."
+      },
+      "enabled_operational_jobs": 0,
+      "retained_worker_sha256": "c52ffe7ca1ee618e88d09ff0373232e9c83351c96821c57d7d5f1577febee1ec",
+      "worker_lines": 188,
+      "post_run_fixture": {
+        "fixture_version": 1,
+        "fictional_only": true,
+        "passed": false,
+        "cases": [
+          {
+            "case": "inactive",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "not_ready",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "wrong_revision",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "cancelled",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "past_deadline",
+            "passed": true,
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "accepted_and_quiet",
+            "passed": false,
+            "error": "matching release receipt missing",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "rejected",
+            "passed": false,
+            "error": "rejection case was not exercised correctly",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "reconcile_committed",
+            "passed": false,
+            "error": "accepted/reconciled delivery remains pending",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "uncertain_write",
+            "passed": false,
+            "error": "matching release receipt missing",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              },
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          },
+          {
+            "case": "blocked_threshold",
+            "passed": false,
+            "error": "blocked input missing",
+            "invocations": [
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              },
+              {
+                "returncode": 0,
+                "stderr_tail": ""
+              }
+            ],
+            "attempts": 0
+          }
+        ]
+      },
+      "canonical_obligation_count": 4,
+      "native_metadata": {
+        "driver": "openclaw",
+        "model": "mimo-benchmark/mimo-v2.6-flash",
+        "wire_model": "mimo-v2.6-flash",
+        "api_format": "anthropic_messages",
+        "base_url": "https://token-plan-cn.xiaomimimo.com/anthropic",
+        "version": "OpenClaw 2026.9.8 (fc23bc8)",
+        "node_version": "v24.17.0",
+        "entry_sha256": "aa8606ca0d62ff133ef5b7bd2323ec8ff3f8eb384404399cd5e742918d63b0a1",
+        "package_version": "2026.9.8",
+        "budget_usd": 0.05,
+        "budget_enforcement": "controller_relay_between_calls",
+        "initialization": "controller_prepared_empty_strategy_workspace",
+        "initialization_completed": true,
+        "restart_kind": "process_restart",
+        "thinking": "OpenClaw default; effective wire field captured per call",
+        "heartbeat": "native default cadence; short event-driven scenario",
+        "model_config": {
+          "gateway": {
+            "mode": "local",
+            "port": 64658,
+            "bind": "loopback",
+            "auth": {
+              "mode": "token",
+              "token": "${OPENCLAW_GATEWAY_TOKEN}"
+            }
+          },
+          "agents": {
+            "defaults": {
+              "workspace": "/tmp/obc-14w9jodw/.openclaw/workspace",
+              "model": {
+                "primary": "mimo-benchmark/mimo-v2.6-flash",
+                "fallbacks": []
+              },
+              "models": {
+                "mimo-benchmark/mimo-v2.6-flash": {
+                  "params": {
+                    "maxTokens": 4096
+                  }
+                }
+              },
+              "timeoutSeconds": 180,
+              "thinkingDefault": "off",
+              "heartbeat": {
+                "every": "0m",
+                "session": "agent:main:responsibility",
+                "target": "none",
+                "prompt": "Internal organizational supervision. Review native jobs, saved procedures and shared responsibility notes; read NATIVE_AUTOMATION.md for the verified scheduling/recovery interface. Repair missing or failed organization when useful. Operational automation owns dependency inspection, effects and receipts. Do not GET /world or POST /actions yourself. Do not duplicate healthy task execution. Preserve accepted owner revisions, cancellation and thresholds. After a code repair run its offline self-test, restore native job eligibility, and inspect its next due time and terminal history; editing a file alone does not clear disablement/backoff. Do not execute the operational procedure yourself or force a live task fire. If its next due time cannot meet retained deadlines, replace the task job through native scheduling, disabling/removing the old job to prevent duplicate execution. Keep quiet when organization is healthy. ",
+                "timeoutSeconds": 90
+              }
+            }
+          },
+          "models": {
+            "mode": "replace",
+            "providers": {
+              "mimo-benchmark": {
+                "baseUrl": "http://127.0.0.1:64657",
+                "api": "anthropic-messages",
+                "apiKey": "${OPENCLAW_BENCH_PROVIDER_TOKEN}",
+                "models": [
+                  {
+                    "id": "mimo-v2.6-flash",
+                    "name": "MiMo v2.6 Flash benchmark",
+                    "reasoning": true,
+                    "input": [
+                      "text"
+                    ],
+                    "contextWindow": 1048576,
+                    "maxTokens": 8192,
+                    "cost": {
+                      "input": 0.14,
+                      "output": 0.28,
+                      "cacheRead": 0.0028,
+                      "cacheWrite": 0
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "tools": {
+            "exec": {
+              "host": "gateway",
+              "security": "full",
+              "ask": "off"
+            }
+          }
+        },
+        "npm_integrity": "sha512-G+JkNUhtpDE3cXR4AEi2NyyG9fqI/T2WUSl8ZnR8AATH8Dh1kC3qYFL7wwPoZtgHiP/cszA86PEiE0PDysxb9Q==",
+        "installation_lock_sha256": "f0aaf18317523f89b3de38599126fdf530f1f570992503320b75bd4850be4263",
+        "common_wire_policy": {
+          "max_tokens": 4096,
+          "thinking": {
+            "type": "disabled"
+          },
+          "request_limit": 60,
+          "output_limit": 30000,
+          "probe_allowance": {
+            "request_limit": 8,
+            "output_limit": 6000,
+            "budget_usd": 0.01
+          }
+        },
+        "continuation_mode": "supervisory",
+        "cadence_secs": 60,
+        "api_contract_version": 11,
+        "topology": "separated",
+        "action_mode": "guarded",
+        "action_service_version": null,
+        "execution_policy": "strategy-choice",
+        "strategy_contract_version": 2,
+        "offline_fixture_manifest": {
+          "responsibility_action_service.py": "b45c33b99bb134b3d7098dd2497c50d52ff6b8a200f449a429177ec1c2ebc5ef",
+          "responsibility_offline_fixture.py": "98922a23e4887c61b17b5feed58fb7dd1f3bb75cb3597e52e00a7aefa46abbf3"
+        },
+        "formation": "controller_prepared_empty_strategy_workspace",
+        "persona_bootstrap_completed": true,
+        "topology_checks": [
+          {
+            "version": 2,
+            "verified": true,
+            "errors": [],
+            "operational_jobs": [],
+            "supervisor_session_ids": [],
+            "worker_session_ids": [],
+            "limitation": "Registration proves native scheduling shape, not code correctness or execution.",
+            "stage": "post-setup"
+          }
+        ],
+        "telemetry_drain_completed": true
+      },
+      "watch_started": false,
+      "unattended_metrics": {
+        "completion": null,
+        "deadlines": null,
+        "memory": null,
+        "restart": null,
+        "quietness": null
+      }
+    }
+  },
+  "initial_probe_collector_issue": {
+    "report_id": "20261008T021104106746Z-compact-surface-peko",
+    "result_sha256": "747e2ab199deeffc93aae635481e9c7ed501cada34296276f6fbfe1ad17d69cd",
+    "real_llm_calls": 0,
+    "cause": "False-negative fixture output checker searched nested JSON as plain text; native shell and final formation gate passed. Checker now decodes nested tool output; historical result unchanged."
+  },
+  "limitations": [
+    "One serial attempt per harness, one seed, no reruns or watch.",
+    "Native probes use controller-authored certification code, not model-authored strategies.",
+    "Post-run fictional checks receive no model feedback and do not change the frozen result.",
+    "No output-limit recovery occurred in this live pair; the native scripted HTTP probe exercised it.",
+    "Provider response durations include response acquisition and generation; separate network/queue/prefill/decode times are not recorded.",
+    "Incomplete Peko upstream usage prevents a total cost; reference dollars are not Token Plan credits.",
+    "OpenClaw trace redaction explains one specific hash mismatch; the raw collector remains unchanged."
+  ],
+  "known_pair_reference_cost_floor_usd": 0.014248107999999999
+}

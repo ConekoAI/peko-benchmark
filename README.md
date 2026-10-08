@@ -173,6 +173,9 @@ installation or git repo initialization).
 The [compact formation diagnostic](docs/RESPONSIBILITY_COMPACT_FORMATION.md)
 isolates requirement retention, worker validation and native registration with
 a shared fictional HTTP fixture. It leaves unattended metrics unmeasured.
+The [first compact MiMo pair](docs/RESPONSIBILITY_COMPACT_MIMO_2026-10-08.md)
+retains two setup timeouts and separates upstream response time, unfinished
+workers, native reachability and transcript redaction.
 
 The responsibility [strategy-choice track](docs/RESPONSIBILITY_STRATEGY_CHOICE.md)
 lets each harness author native workflows, choose operational cadence and use
