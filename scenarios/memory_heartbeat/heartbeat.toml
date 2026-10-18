@@ -1,0 +1,58 @@
+name = "attention-heartbeat"
+description = """ADR-083 quiet ticks and ADR-084 check-ins on live principals sharing one daemon.
+Real wall clock at the default 10-minute keepalive cadence; the hourly floor is not compressed."""
+duration_min = 180
+# Keepalive first fires are staggered so debug "attention fire runs" lines map to one principal.
+first_fire_min = 5
+stagger_secs = 20
+
+# Same seed and the same owner/peer traffic for every observed principal.
+# `when` is the keepalive's fire rule; "seeded" keeps the runtime's own job untouched.
+[[principals]]
+name = "attn"
+display = "Attn Bot"
+goals = ["Keep the studio's vendor invoices paid on time", "Plan the November team offsite"]
+when = "seeded"
+
+[[principals]]
+name = "always"
+display = "Always Bot"
+goals = ["Keep the studio's vendor invoices paid on time", "Plan the November team offsite"]
+when = "always"
+
+[[principals]]
+name = "lean"
+display = "Lean Bot"
+goals = []
+when = "seeded"
+
+# Posts only through `peko channel post` (no model call); its own jobs are disabled.
+[peer]
+name = "peer"
+display = "Peer Bot"
+
+[[events]]
+at_min = 2
+kind = "owner_dm"
+text = """Please come back to the Harbor Print quote later: add a plan step "Follow up on the Harbor Print quote" with checkAt 45m. Do nothing else about it now. Reply in one line."""
+
+[[events]]
+at_min = 25
+kind = "peer_post"
+text = "Heads-up: the shared vendor list moved to the studio drive under /finance/vendors."
+
+[[events]]
+at_min = 80
+kind = "peer_post"
+text = "Harbor Print says the paper stock for the brochure is back in stock."
+
+[[events]]
+at_min = 100
+kind = "failing_job"
+# A Send job pinned to a model id the catalog cannot resolve: it fails without a model call.
+model = "missing-model-for-failure-probe"
+
+[[events]]
+at_min = 150
+kind = "peer_post"
+text = "Reminder: the courier pickup window changed to 15:00-17:00."

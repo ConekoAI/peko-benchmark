@@ -65,6 +65,18 @@ has preserved tool intent and exact usage reconciliation, but still fails due to
 an altered owner threshold and a provider response exceeding deadline headroom.
 Native interval skips are now audited. Further live samples remain deferred.
 
+The [memory and heartbeat evaluation](docs/MEMORY_HEARTBEAT_MIMO_2026-10-16.md)
+measured the nightly memory pass, its source and reviewer gates, attention-gated
+keepalives and plan check-ins on live MiMo principals. The pass and check-ins work;
+the gates held or deleted correct owner facts without catching a plant; goal plans
+keep the attention heartbeat awake; and a multi-principal daemon misroutes trunk turns.
+The [post-fix re-run](docs/MEMORY_HEARTBEAT_FIXES_MIMO_2026-10-17.md) confirms the
+trunk-inbox, whole-write gate and in-place cron fixes. It finds that channel read marks
+are still shared across principals, and that the reviewer still blocks nightly writes.
+[Round 3](docs/MEMORY_HEARTBEAT_ROUND3_MIMO_2026-10-18.md) confirms per-principal read
+marks and a working reviewer. Plan steps now keep every heartbeat awake, and the
+principals throttle themselves to 30 minutes instead.
+
 ## Methodology (read before trusting a number)
 
 1. **Same model, same task, same grader — different harness.** The model is
@@ -110,9 +122,15 @@ runner/responsibility_audit.py  # audit native messaging attempts during watch
 runner/prompt_profile.py  # opt-in private request fingerprints and JSON sizes
 runner/profile_usage.py  # offline phase usage and prompt-profile analysis
 runner/memory_path_probe.py  # short native shared-memory write/read diagnostic
+runner/memory_heartbeat.py  # attention heartbeat (ADR-083/084) and nightly memory pass/gates (ADR-080/085)
+runner/memory_heartbeat_peko.py  # multi-principal isolated daemon with labelled relay accounting
+runner/memory_heartbeat_memory.py  # scripted owner/guest days and forced nightly passes
+runner/memory_heartbeat_report.py  # run directories -> one JSON evidence file
+runner/memory_review_probe.py  # direct replay of the ADR-085 reviewer request shape
 profiles/        # explicit provider configuration for continuity pilots
 scenarios/continuity/ # sequential events; controller-owned expected actions
 scenarios/responsibility/ # shared world timeline; controller-owned oracle
+scenarios/memory_heartbeat/ # heartbeat timeline; owner/guest scripts and memory oracle
 tests/          # offline grader mutation checks + adapter contracts
 reports/         # one directory per benchmark run (gitignored)
 ```

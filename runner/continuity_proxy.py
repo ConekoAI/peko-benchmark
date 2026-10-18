@@ -84,6 +84,13 @@ class AnthropicRelay:
         self.policy = policy
         self.phase = phase or (lambda: "continuity")
         self.profiler = PromptProfiler() if profile_prompt else None
+        # Optional payload -> label dict (no prompt text) merged into each record.
+        self.classify = None
+        # Opt-in diagnostic: keep request and response text for these labelled
+        # call kinds only (e.g. short reviewer calls over fictional fixtures).
+        self.capture_kinds: set[str] = set()
+        # Per labelled call kind output caps above the default 8192 (opt-in).
+        self.max_tokens_caps: dict[str, int] = {}
         relay = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -122,7 +129,7 @@ class AnthropicRelay:
         requested = {k: payload.get(k) for k in ("max_tokens", "thinking", "temperature")}
         # Optional, explicit common decoding policy for matched responsibility
         # runs. Default continuity traffic is still forwarded unchanged.
-        if self.policy and payload.get("model") == "mimo-v2.6-flash":
+        if self.policy and "max_tokens" in self.policy and payload.get("model") == "mimo-v2.6-flash":
             payload["max_tokens"] = self.policy["max_tokens"]
             payload["thinking"] = self.policy["thinking"]
             payload.pop("temperature", None)
@@ -134,6 +141,10 @@ class AnthropicRelay:
                   "stream": payload.get("stream"), "started_at": time.time(),
                   "phase": self.phase(), "requested_decoding": requested,
                   "tool_catalog": catalog(payload), "request_tool_results": results(payload)}
+        if self.classify:
+            record.update(self.classify(payload))
+        if record.get("call_kind") in self.capture_kinds:
+            record["captured_request"] = {"system": payload.get("system"), "messages": payload.get("messages")}
         stream_tools = StreamTools(record["tool_catalog"])
         with self.lock:
             probe_policy = (self.policy or {}).get("probe_allowance")
@@ -155,7 +166,7 @@ class AnthropicRelay:
                 reason = "measurement ended"
             elif payload.get("model") != "mimo-v2.6-flash":
                 reason = "unexpected model"
-            elif isinstance(payload.get("max_tokens"), bool) or not isinstance(payload.get("max_tokens"), int) or not 0 < payload["max_tokens"] <= 8192:
+            elif isinstance(payload.get("max_tokens"), bool) or not isinstance(payload.get("max_tokens"), int) or not 0 < payload["max_tokens"] <= self.max_tokens_caps.get(record.get("call_kind"), 8192):
                 reason = "output cap must be at most 8192"
             elif time.monotonic() >= self.deadline:
                 reason = "scenario deadline reached"
@@ -216,6 +227,10 @@ class AnthropicRelay:
                         capture_stop_reason(record, decoded)
                         record["response_tool_calls"] = [tool_call(b, record["tool_catalog"])
                             for b in decoded.get("content", []) if b.get("type") == "tool_use"]
+                        if record.get("call_kind") in self.capture_kinds:
+                            record["captured_response"] = [
+                                {"type": b.get("type"), "text": b.get("text") or b.get("thinking")}
+                                for b in decoded.get("content", [])]
                         record["completed"] = True
                     handler.wfile.write(data)
                     handler.wfile.flush()
