@@ -274,7 +274,25 @@ class MultiPeko(PekoDriver):
         started = time.time()
         prompt = Path(self.temp.name) / "event.txt"
         prompt.write_text(message)
-        self._command("send", name, "--file", str(prompt), "--wait")
+        timed_out = False
+        # A DM turn can outlive the CLI's wait; it keeps running in the daemon,
+        # and the next send is refused until it ends. Wait it out (round 4).
+        for _ in range(60):
+            try:
+                self._command("send", name, "--file", str(prompt), "--wait")
+                break
+            except TimeoutError:
+                timed_out = True
+                break
+            except RuntimeError:
+                last = self.run_dir / f"command-{self.command_index:02}.log"
+                if "active run in flight" not in last.read_text():
+                    raise
+                time.sleep(15)
+        else:
+            raise RuntimeError(f"{name}: session stayed busy for 15 minutes")
+        if timed_out:
+            return {"text": None, "timed_out": True, "secs": round(time.time() - started, 1)}
         log = json.loads(self._command("log", name, "--limit", "1", "--json"))
         reply = (log.get("messages") or [{}])[0]
         return {"text": reply.get("text"), "id": reply.get("id"),

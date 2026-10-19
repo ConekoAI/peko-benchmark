@@ -23,6 +23,75 @@ ROOT = Path(__file__).resolve().parent.parent
 MARKER = "[memory] Daily memory maintenance. The runtime supplies the current brief"
 
 
+RETRY_MARK = "Your previous answer could not be read."
+LINE_RE = re.compile(r"^Line (\d+): ", re.M)
+
+
+def review_claims(prompt: str) -> int:
+    """Claims in an ADR-085 review prompt: `Line N:` headers outside evidence."""
+    outside = re.sub(r"<<<.*?>>>", "", prompt, flags=re.S)
+    return len(LINE_RE.findall(outside))
+
+
+def parse_review(answer: str, count: int) -> list[str | None]:
+    """Python port of peko-runtime `memory_gate::parse_review` (37777bd6):
+    one finding per claim (`supported` / `unsupported`), None if unchecked."""
+    checks: list[str | None] = [None] * count
+    for raw in answer.splitlines():
+        line = raw.strip().lstrip("-* ")
+        if line.lower().startswith("line "):
+            line = line[5:]
+        if line.startswith("<"):
+            if ">" not in line:
+                continue
+            label, rest = line[1:].split(">", 1)
+            if label.strip().isdigit():
+                slot = int(label.strip()) - 1
+            else:
+                slot = next((i for i, c in enumerate(checks) if c is None), None)
+        else:
+            digits = re.match(r"\d*", line).group(0)
+            if not digits:
+                continue
+            slot, rest = int(digits) - 1, line[len(digits):]
+        if slot is None or not 0 <= slot < count:
+            continue
+        rest = rest.lstrip(":.) ").strip().lower()
+        if rest.startswith("unsupported"):
+            checks[slot] = "unsupported"
+        elif rest.startswith("supported"):
+            checks[slot] = "supported"
+    return checks
+
+
+def reviewer_answers(calls: list[dict]) -> list[dict]:
+    """Each reviewer call: claims, parsed findings, whether it was the
+    runtime's retry (#481: format restated; or a cut-off retry at 4x budget)."""
+    out = []
+    for r in calls:
+        if r.get("call_kind") != "memory_review":
+            continue
+        msgs = (r.get("captured_request") or {}).get("messages") or []
+        prompt = "".join(b.get("text", "") for m in msgs if m.get("role") == "user"
+                         for b in (m["content"] if isinstance(m["content"], list) else [{"text": m["content"]}]))
+        answer = "".join((b.get("text") or "") for b in r.get("captured_response") or [] if b.get("type") == "text")
+        count = review_claims(prompt)
+        checks = parse_review(answer, count)
+        prev = out[-1] if out and out[-1]["principal"] == r.get("principal") else None
+        malformed_retry = RETRY_MARK in prompt
+        cutoff_retry = bool(prev and prev["claims"] == count and prev["max_tokens"]
+                            and (r.get("max_tokens") or 0) >= 4 * prev["max_tokens"])
+        out.append({"index": r.get("index"), "principal": r.get("principal"), "phase": r.get("phase"),
+                    "claims": count, "max_tokens": r.get("max_tokens"), "stop": r.get("upstream_stop_reason"),
+                    "output_tokens": (r.get("usage") or {}).get("output_tokens"),
+                    "retry": "malformed" if malformed_retry else "cut_off" if cutoff_retry else None,
+                    "supported": checks.count("supported"), "unsupported": checks.count("unsupported"),
+                    "unchecked": checks.count(None),
+                    "malformed": count > 0 and checks.count(None) > 0,
+                    "answer_excerpt": answer[:400]})
+    return out
+
+
 def ledger_rows(principal_dir: Path) -> list[dict]:
     rows = []
     for path in sorted(principal_dir.rglob("ledger/*.jsonl")):
@@ -156,7 +225,16 @@ def memory_digest(rep_dir: Path) -> dict:
                 "memory_entries_truncated": p.get("memory_entries_truncated"),
                 "physical_lines": p.get("physical_lines"),
                 "memory_bytes": p.get("memory_bytes"), "conventions_bytes": p.get("conventions_bytes"),
-                "dream_files": p.get("dream_files"), "journal_files": p.get("journal_files")}
+                "dream_files": p.get("dream_files"), "journal_files": p.get("journal_files"),
+                "plants": p.get("plants"),
+                "day": {"plants": (p.get("day") or {}).get("plants"),
+                        "hot_added": (p.get("day") or {}).get("hot_added"),
+                        "held": [{"reason": h["reason"], "line": h["line"]} for h in (p.get("day") or {}).get("held", [])]}}
+        raw = next((n for n in json.loads((rep_dir / "result.json").read_text()).get("nights", [])
+                    if n["night"] == night["night"]), {})
+        row["adversary_channel"] = [
+            {"author": e.get("author") or e.get("sender") or e.get("from"), "text": e.get("text") or e.get("body")}
+            for e in (raw.get("adversary_channel") or []) if isinstance(e, dict)]
         nights.append(row)
     by_phase = {k: {f: v.get(f) for f in ("request_count", "input_tokens", "output_tokens", "cost_usd")}
                 for k, v in ((result.get("usage") or {}).get("by_phase") or {}).items()}
@@ -164,7 +242,7 @@ def memory_digest(rep_dir: Path) -> dict:
             "memory_review_overrides": result.get("memory_review_overrides", {}),
             "genesis_plans": result.get("genesis_plans"),
             "memory_job_after_genesis": result.get("memory_job_after_genesis"),
-            "nights": nights, "reviewer_calls": reviews,
+            "nights": nights, "reviewer_calls": reviews, "reviewer_answers": reviewer_answers(calls),
             "reviewer_usage": summarize_calls([r for r in calls if r.get("call_kind") == "memory_review"]),
             "usage_by_phase": by_phase, "usage_total": (result.get("usage") or {}).get("total")}
 
@@ -197,6 +275,15 @@ def main(argv: list[str]) -> int:
             probe = json.loads((run / "result.json").read_text())
             evidence["reviewer_probe"] = {"run": run.name, "model": probe.get("model"),
                                           "peko_budget": probe.get("peko_budget"), "rows": probe.get("rows")}
+            continue
+        if run.name.endswith("-memory-plant-probe"):
+            probe = json.loads((run / "result.json").read_text())
+            usage = [r.get("usage") or {} for r in probe["rows"]]
+            evidence["reviewer_plant_probe"] = {
+                "run": run.name, "model": probe.get("model"), "runtime": probe.get("runtime"),
+                "claims": probe.get("claims"), "rows": probe.get("rows"),
+                "reference_cost_usd": round(sum(u.get("input_tokens", 0) * .14 + u.get("output_tokens", 0) * .28
+                                                + u.get("cache_read_input_tokens", 0) * .0028 for u in usage) / 1e6, 5)}
             continue
         reps = sorted(run.glob("rep*")) or [run]
         for rep in reps:

@@ -76,6 +76,13 @@ are still shared across principals, and that the reviewer still blocks nightly w
 [Round 3](docs/MEMORY_HEARTBEAT_ROUND3_MIMO_2026-10-18.md) confirms per-principal read
 marks and a working reviewer. Plan steps now keep every heartbeat awake, and the
 principals throttle themselves to 30 minutes instead.
+[Round 4](docs/MEMORY_HEARTBEAT_ROUND4_MIMO_2026-10-18.md) adds an adversarial venue
+guest that relays false "your owner said" preferences and commitments. No plant reached
+hot memory, and no pass offered one; the model filed them as unconfirmed. A direct
+reviewer replay caught 20 of 20 plant lines, half of them with forged owner-DM sources. With #480, attention-gated
+principals had 10 quiet ticks of 18, kept the 10-minute cadence, and saw peer posts in
+30–370 s. Two runtime defects were found: a stream timeout not retried, and `ChannelSend`
+rejecting the reply ids `ChannelRead` shows.
 
 ## Methodology (read before trusting a number)
 
@@ -126,7 +133,7 @@ runner/memory_heartbeat.py  # attention heartbeat (ADR-083/084) and nightly memo
 runner/memory_heartbeat_peko.py  # multi-principal isolated daemon with labelled relay accounting
 runner/memory_heartbeat_memory.py  # scripted owner/guest days and forced nightly passes
 runner/memory_heartbeat_report.py  # run directories -> one JSON evidence file
-runner/memory_review_probe.py  # direct replay of the ADR-085 reviewer request shape
+runner/memory_review_probe.py  # direct replay of the ADR-085 reviewer request shape (--plants: round-4 plant lines)
 profiles/        # explicit provider configuration for continuity pilots
 scenarios/continuity/ # sequential events; controller-owned expected actions
 scenarios/responsibility/ # shared world timeline; controller-owned oracle
