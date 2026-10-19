@@ -16,6 +16,13 @@ from responsibility_strategy import handoff as strategy_handoff
 import responsibility_compact as compact
 
 
+# ADR-078: a job runs under its creator's acting-for stamp; unstamped
+# non-seeded jobs are refused at fire time. Prepared jobs are owner-authored
+# organization in the principal's internal tree, as a trunk-created job was.
+OWNER_INTERNAL_STAMP = {'actor': 'user:local:local', 'name': 'local', 'trust': 'owner',
+                        'compartment': {'kind': 'internal'}, 'origin': {'kind': 'ingress'}}
+
+
 def empty_notes(workspace: Path, worker_prompt: str, strategy=False):
     folder = workspace / 'kb/responsibility'; folder.mkdir(parents=True, exist_ok=True)
     (folder / 'commitments.md').write_text('# Shared requirements\n\nNo commitments received yet.\n')
@@ -67,7 +74,7 @@ def prepare_peko(driver, worker_prompt):
                 'schedule': {'kind': 'every', 'every_ms': int(cadence * multiple * 1000)},
                 'created_at': stamp.isoformat(), 'next_run': (stamp + dt.timedelta(seconds=3600)).isoformat(),
                 'delete_after_run': False, 'enabled': True, 'run_count': 0, 'consecutive_failures': 0,
-                'origin_session': trunk['session_id'], **action}
+                'origin_session': trunk['session_id'], 'created_by': OWNER_INTERNAL_STAMP, **action}
     schedule['jobs'] = [job('organization-supervisor', 2, {'kind': 'send', 'message': (
                             strategy_supervisor(cadence) if strategy_selected(driver.sim.spec) else supervisor_prompt(cadence))}),
                         job('responsibility-monitor', 1, {'kind': 'spawn_tool', 'tool_name': 'Agent',

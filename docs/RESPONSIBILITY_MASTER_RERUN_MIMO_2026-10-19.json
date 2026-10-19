@@ -1,0 +1,910 @@
+{
+  "evidence_kind": "prepared_execution_rerun_n3",
+  "runs": [
+    {
+      "report_id": "20261019T054809788592Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 537.353,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 21.867,
+          "cedar-91b72265b1f5": 64.835
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 7,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        28.769,
+        33.559,
+        50.251,
+        88.875,
+        149.584,
+        210.586,
+        268.466
+      ],
+      "max_read_gap_secs": 61.002,
+      "actions": [
+        {
+          "elapsed_secs": 91.964,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 154.128,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 214.964,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 154.128,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "premature"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 56,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 203659,
+        "cache_read_tokens": 1337984,
+        "output_tokens": 11458,
+        "cost_usd": 0.03546685520000001,
+        "usage_complete": true,
+        "native_cost_usd": 0.0352342816,
+        "native_request_count": 53,
+        "native_usage_matches": false
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 10,
+          "output_tokens": 1714,
+          "cost_usd": 0.008489409600000001,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 1346,
+          "cost_usd": 0.0027362888,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 7,
+          "output_tokens": 2749,
+          "cost_usd": 0.005821183200000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 25,
+          "output_tokens": 5072,
+          "cost_usd": 0.0153481608,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 10,
+          "output_tokens": 577,
+          "cost_usd": 0.0030718128,
+          "usage_complete": true
+        }
+      }
+    },
+    {
+      "report_id": "20261019T055756014468Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 540.015,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 37.836,
+          "cedar-91b72265b1f5": 27.722
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 4,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        29.999,
+        101.792,
+        157.989,
+        266.555
+      ],
+      "max_read_gap_secs": 108.566,
+      "actions": [
+        {
+          "elapsed_secs": 107.994,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 177.791,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 49,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 146167,
+        "cache_read_tokens": 1233984,
+        "output_tokens": 13019,
+        "cost_usd": 0.0275638552,
+        "usage_complete": true,
+        "native_cost_usd": 0.0269754128,
+        "native_request_count": 45,
+        "native_usage_matches": false
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 10,
+          "output_tokens": 1963,
+          "cost_usd": 0.008031452800000002,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 943,
+          "cost_usd": 0.0024754128,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 7,
+          "output_tokens": 2343,
+          "cost_usd": 0.003040632,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 16,
+          "output_tokens": 5037,
+          "cost_usd": 0.008657471200000003,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 12,
+          "output_tokens": 2733,
+          "cost_usd": 0.0053588864,
+          "usage_complete": true
+        }
+      }
+    },
+    {
+      "report_id": "20261019T060842637977Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [
+        "ValueError: separated topology registration failed: expected exactly one task job plus retained keepalive"
+      ],
+      "wall_secs": 504.757,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 17.142,
+          "cedar-91b72265b1f5": 8.433
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 0,
+        "memory_facts_total": 24,
+        "memory_measurement": "unmeasured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 4,
+        "restart_verified": true,
+        "topology_registered": false,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        30.096,
+        50.344,
+        84.023,
+        153.777
+      ],
+      "max_read_gap_secs": 69.754,
+      "actions": [
+        {
+          "elapsed_secs": 87.265,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 158.572,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 43,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 98350,
+        "cache_read_tokens": 993984,
+        "output_tokens": 5950,
+        "cost_usd": 0.018218155200000002,
+        "usage_complete": true,
+        "native_cost_usd": 0.01807624,
+        "native_request_count": 41,
+        "native_usage_matches": false
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 10,
+          "output_tokens": 1515,
+          "cost_usd": 0.004093572,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 5,
+          "output_tokens": 1232,
+          "cost_usd": 0.0020657112,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 22,
+          "output_tokens": 2863,
+          "cost_usd": 0.010588580800000002,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 6,
+          "output_tokens": 340,
+          "cost_usd": 0.0014702912000000002,
+          "usage_complete": true
+        }
+      }
+    },
+    {
+      "report_id": "20261019T054809788515Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 421.862,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 25.527,
+          "cedar-91b72265b1f5": 8.092
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 3,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [
+        28.792,
+        89.785,
+        153.528
+      ],
+      "max_read_gap_secs": 63.743,
+      "actions": [
+        {
+          "elapsed_secs": 95.544,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 158.253,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 26,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 64130,
+        "cache_read_tokens": 353408,
+        "output_tokens": 4367,
+        "cost_usd": 0.011190502400000002,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 25,
+        "native_usage_matches": false
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 7,
+          "output_tokens": 1669,
+          "cost_usd": 0.0034752984000000005,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 990,
+          "cost_usd": 0.0010893512,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 10,
+          "output_tokens": 1465,
+          "cost_usd": 0.0035749056,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 5,
+          "output_tokens": 243,
+          "cost_usd": 0.0030509472,
+          "usage_complete": true
+        }
+      }
+    },
+    {
+      "report_id": "20261019T055756014469Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 416.207,
+      "metrics": {
+        "passed": true,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 13.59,
+          "cedar-91b72265b1f5": 55.676
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        25.255,
+        81.395,
+        142.403,
+        201.733,
+        260.842
+      ],
+      "max_read_gap_secs": 61.008,
+      "actions": [
+        {
+          "elapsed_secs": 83.694,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 205.685,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 205.686,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 205.685,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 205.685
+      },
+      "usage": {
+        "request_count": 32,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 91985,
+        "cache_read_tokens": 452864,
+        "output_tokens": 5342,
+        "cost_usd": 0.0156416792,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 32,
+        "native_usage_matches": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1405,
+          "cost_usd": 0.0041630176,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 1065,
+          "cost_usd": 0.0023475200000000005,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 13,
+          "output_tokens": 2347,
+          "cost_usd": 0.0048636616,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 7,
+          "output_tokens": 525,
+          "cost_usd": 0.004267480000000001,
+          "usage_complete": true
+        }
+      }
+    },
+    {
+      "report_id": "20261019T060842637977Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 444.455,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 18.058,
+          "cedar-91b72265b1f5": 55.005
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        31.3,
+        83.34,
+        143.813,
+        202.353,
+        265.113
+      ],
+      "max_read_gap_secs": 62.76,
+      "actions": [
+        {
+          "elapsed_secs": 88.064,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 205.119,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 40,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 112482,
+        "cache_read_tokens": 597632,
+        "output_tokens": 5016,
+        "cost_usd": 0.018825329600000006,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 40,
+        "native_usage_matches": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1466,
+          "cost_usd": 0.0046240824,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 6,
+          "output_tokens": 1010,
+          "cost_usd": 0.0025950568000000004,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 17,
+          "output_tokens": 1978,
+          "cost_usd": 0.0082855808,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 9,
+          "output_tokens": 562,
+          "cost_usd": 0.0033206096,
+          "usage_complete": true
+        }
+      }
+    }
+  ],
+  "date": "2026-10-19",
+  "contract_version": 11,
+  "track": "--formation prepared --topology separated --mode supervisory --action-mode raw --execution-policy fixed-worker",
+  "seed": 1,
+  "model": "mimo-v2.6-flash (Token Plan anthropic endpoint), thinking disabled, 4096 max output",
+  "budget": {
+    "operating_cap_usd_per_run": 0.1,
+    "probe_allowance_usd": 0.01,
+    "request_limit": 60,
+    "output_limit": 30000
+  },
+  "runtime_commit": "1116c8304be66008efe78f464d733e879b3a3f9c",
+  "runtime_note": "Task named 37777bd6; master had advanced by #482 (retry on client deadline) and #483 (ChannelSend msg_id parent). Debug build of the tip.",
+  "openclaw_version": "2026.9.8 (fc23bc8), Node v24.17.0",
+  "benchmark_base_commit": "97edf83 plus uncommitted adapter-drift fixes listed below; rep 1 manifest differs from reps 2-3 only by runner/responsibility_rerun_report.py (aggregator, not run-time code)",
+  "pairing": "Each rep ran one Peko and one OpenClaw trial concurrently in isolated homes against the same upstream.",
+  "summary": {
+    "peko": {
+      "runs": 3,
+      "full_gate_passes": 0,
+      "obligations_on_time": "6/9",
+      "on_time_per_run": [
+        2,
+        2,
+        2
+      ],
+      "repeated_actions_per_run": [
+        0,
+        0,
+        0
+      ],
+      "forbidden_actions_per_run": [
+        1,
+        0,
+        0
+      ],
+      "quiet_window_actions_per_run": [
+        0,
+        0,
+        0
+      ],
+      "escalation_first_valid_secs_per_run": [
+        null,
+        null,
+        null
+      ],
+      "escalation_attempts_per_run": [
+        [
+          154.128
+        ],
+        [],
+        []
+      ],
+      "memory_per_run": [
+        "24/24",
+        "23/24",
+        "unmeasured"
+      ],
+      "watch_idle_requests_per_run": [
+        10,
+        12,
+        6
+      ],
+      "watch_idle_cost_usd_per_run": [
+        0.0030718128,
+        0.0053588864,
+        0.0014702912000000002
+      ],
+      "cost_usd_per_run": [
+        0.03546685520000001,
+        0.0275638552,
+        0.018218155200000002
+      ],
+      "cost_usd_total": 0.08124886560000001,
+      "requests_per_run": [
+        56,
+        49,
+        43
+      ]
+    },
+    "openclaw": {
+      "runs": 3,
+      "full_gate_passes": 1,
+      "obligations_on_time": "7/9",
+      "on_time_per_run": [
+        2,
+        3,
+        2
+      ],
+      "repeated_actions_per_run": [
+        0,
+        0,
+        0
+      ],
+      "forbidden_actions_per_run": [
+        0,
+        0,
+        0
+      ],
+      "quiet_window_actions_per_run": [
+        0,
+        0,
+        0
+      ],
+      "escalation_first_valid_secs_per_run": [
+        null,
+        205.685,
+        null
+      ],
+      "escalation_attempts_per_run": [
+        [],
+        [
+          205.685
+        ],
+        []
+      ],
+      "memory_per_run": [
+        "22/24",
+        "24/24",
+        "24/24"
+      ],
+      "watch_idle_requests_per_run": [
+        5,
+        7,
+        9
+      ],
+      "watch_idle_cost_usd_per_run": [
+        0.0030509472,
+        0.004267480000000001,
+        0.0033206096
+      ],
+      "cost_usd_per_run": [
+        0.011190502400000002,
+        0.0156416792,
+        0.018825329600000006
+      ],
+      "cost_usd_total": 0.04565751120000001,
+      "requests_per_run": [
+        26,
+        32,
+        40
+      ]
+    }
+  },
+  "baselines": {
+    "oct7_prepared_pilot": {
+      "doc": "RESPONSIBILITY_PREPARED_MIMO_2026-10-07.md",
+      "contract": 8,
+      "runtime": "8279f3fc",
+      "peko": {
+        "on_time": 1,
+        "repeated": 1,
+        "forbidden": 3,
+        "quiet_window_actions": 2,
+        "memory": "16/24"
+      },
+      "openclaw": {
+        "on_time": 1,
+        "repeated": 0,
+        "forbidden": 0,
+        "quiet_window_actions": 1,
+        "memory": "16/24"
+      }
+    },
+    "oct7_handoff_pilot": {
+      "doc": "RESPONSIBILITY_HANDOFF_MIMO_2026-10-07.md",
+      "contract": 6,
+      "formation": "model",
+      "runtime": "fe2074b0",
+      "peko": {
+        "full_gate": false,
+        "on_time": 3,
+        "repeated": 2,
+        "quiet_window_actions": 1,
+        "memory": "unavailable (request limit)",
+        "cost_usd": 0.0342819792
+      },
+      "openclaw": {
+        "full_gate": true,
+        "on_time": 3,
+        "repeated": 0,
+        "quiet_window_actions": 0,
+        "memory": "16/16",
+        "cost_usd": 0.0347396728
+      }
+    }
+  },
+  "peko_failure_classification": [
+    {
+      "report_id": "20261019T054809788592Z-responsibility-peko",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Worker read /world at 149.584 s (Dogwood not ready) and POSTed request_input at 154.128 s, before the owner threshold of 180 s; the canonical table and later probe both retained blocked_at=180, and the next tick (~210 s) was inside the window."
+    },
+    {
+      "report_id": "20261019T055756014468Z-responsibility-peko",
+      "missed": "dogwood",
+      "class": "harness",
+      "contributing": [
+        "provider latency",
+        "model (fabricated receipt)"
+      ],
+      "evidence": "Worker turns took 87.8 s and 63.0 s against a 60 s interval; the turn started at 141.9 s made five model round trips (about 4-20 s each, concurrent with a 51 s supervisor call) and ended ~4.9 s after the 200 s slot, which Peko skips without catch-up. No read occurred between 157.989 s and 266.555 s, so the 180-240 s window was never observed. At 266.555 s the worker then appended receipt \"21\" for a request_input it never POSTed and reported firing it; the probe consequently reported blocked_at=240 (23/24)."
+    },
+    {
+      "report_id": "20261019T060842637977Z-responsibility-peko",
+      "missed": "dogwood",
+      "class": "model",
+      "contributing": [
+        "benchmark (prepared genesis goal persists in principal intent)"
+      ],
+      "evidence": "At ~151 s the organizational supervisor deleted both prepared cron jobs, calling them duplicates of an imagined native worker schedule. No further world reads. Post-watch topology verification then failed and the run aborted before the memory probe (memory unmeasured, not forgotten). The persistent goal text includes the genesis-only clause \"do not create task sessions or schedules\"."
+    }
+  ],
+  "openclaw_failure_notes": [
+    {
+      "report_id": "20261019T054809788515Z-responsibility-openclaw",
+      "missed": "dogwood",
+      "class": "harness",
+      "evidence": "Worker runs overran; both heartbeats skipped as cron-in-progress; no read between 153.528 s and the end of the watch. Topology execution unverified (no supervisor turn). Memory 22/24 (Dogwood status pending, blocked_at null)."
+    },
+    {
+      "report_id": "20261019T060842637977Z-responsibility-openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Reads at 202.353 s and 265.113 s observed Dogwood blocked inside/after its window; no request_input was sent."
+    }
+  ],
+  "adapter_drift_fixed": [
+    "Runtime #434/#435 folded CronCreate/CronTrigger/CronHistory/CronUpdate and session into action-dispatched Cron and Session tools: smoke scripted calls mapped via native_call().",
+    "Agent no longer accepts timeout_secs: removed from the surface smoke worker call.",
+    "ADR-072/082: group bindings wake only on a human root post that @mentions the principal: Peko review post now starts with @responsibility-bench.",
+    "ADR-078: cron jobs without created_by (other than seeded jobs) are refused at fire time: prepared jobs now carry an owner stamp in the internal compartment."
+  ],
+  "adapter_drift_not_fixed": [
+    "Model-facing prompts of the strategy-choice, model-formation and compact tracks still name CronCreate/CronUpdate/CronList/CronHistory/CronDelete and state that Cron update cannot change cadence (false since #477). These tracks were not run; changing them is a contract change."
+  ],
+  "findings": [
+    "Peko review group runs are stamped untrusted (group conversation ceiling) even though the owner is the only human; the ADR-078 policy reviewer allowed 1, denied 3 and held 1 read of kb/responsibility notes for owner approval across the three runs. No commitment was corrupted, but this differs from Oct 7 and from OpenClaw review sessions.",
+    "Peko native-accounting mismatch is fully explained: per run, controller minus quota equals interrupted streams (restart/probe pause); quota minus persisted transcript usage equals policy-reviewer calls (non-streaming, 300 max tokens, temperature 0). The benchmark reconciliation reads only transcript usage, so the strict native-equality gate cannot pass for Peko when the review group triggers policy review. Benchmark issue, not a runtime metering defect.",
+    "Receipt-retention diagnostics compare numeric receipt references only; Peko rep 2 invented receipt 21, which collided with the memory probe's genuine receipt 21 and went undetected.",
+    "In Peko rep 1 a scheduled supervisor deleted a hot-memory proposal from kb/inbox that the ADR-085 gate had filed for the owner (the runtime context invites \"reject it by deleting the file\")."
+  ]
+}

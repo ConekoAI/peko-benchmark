@@ -197,7 +197,9 @@ class PekoResponsibility(PekoDriver):
         self._command("channel", "create", self.principal, "Review conversation",
                       "--id", "group:bench-review", "--json")
         self._command("channel", "invite", "group:bench-review", self.principal, "user:local", "--json")
-        self._command("send", "group:bench-review", message)
+        # ADR-072/082: a group binding wakes on a human root post that
+        # @mentions the principal (default `mention` policy); address it natively.
+        self._command("send", "group:bench-review", f"@{self.principal} " + message)
         until = min(self.deadline, time.monotonic() + (180 if self.sim.spec.get('formation_profile')=='compact-v1' else 90))
         while time.monotonic() < until:
             snapshot = json.loads(self._command("channel", "peek", "group:bench-review", "--json"))

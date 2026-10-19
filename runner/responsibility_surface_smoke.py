@@ -21,6 +21,18 @@ from tool_surface import catalog, tool_call
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def native_call(tool, args):
+    """Map historical Peko tool names onto action-dispatched domain tools.
+
+    Runtime PRs #434/#435 folded CronCreate/CronTrigger/... into `Cron` and
+    `session` into `Session`. Returns (check label, wire tool, wire args)."""
+    if tool.startswith('Cron') and tool != 'Cron':
+        return tool, 'Cron', {'action': tool[4:].lower(), **args}
+    if tool == 'session':
+        return tool, 'Session', args
+    return tool, tool, args
+
+
 class ScriptedProvider:
     def __init__(self):
         self.steps, self.calls, self.results, self.catalogs = [], [], {}, []
@@ -145,8 +157,7 @@ def run(driver_name, out):
             role.parent.mkdir(parents=True,exist_ok=True)
             role.write_text('---\nname: surface-worker\n---\nExecute supplied probes, then finish.')
             provider.steps.extend([('Agent',{'action':'new','path':'/surface-worker','role':'surface-worker',
-                                             'prompt':'SCRIPTED_SURFACE_WORKER: run the supplied probes then finish.',
-                                             'timeout_secs':30}),
+                                             'prompt':'SCRIPTED_SURFACE_WORKER: run the supplied probes then finish.'}),
                                    (read,{file_field:str(target)}),
                                    (shell,{'command':f'curl -sS --max-time 10 {url}/world'})])
             driver.turn('SCRIPTED_SURFACE_PROBE: run the supplied persistent child probe.')

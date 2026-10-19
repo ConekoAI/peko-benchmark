@@ -16,7 +16,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from continuity_peko import PekoDriver
-from responsibility_surface_smoke import ScriptedProvider, SmokeClaw
+from responsibility_surface_smoke import ScriptedProvider, SmokeClaw, native_call
 from responsibility_prepared import prepare_peko, prepare_claw
 import responsibility_strategy as strategy
 
@@ -57,14 +57,15 @@ def run(name, out):
     checks, errors, metadata, snapshots = [], [], {}, []
 
     def invoke(tool, args):
+        label, tool, args = native_call(tool, args)
         provider.steps.append((tool,args))
         driver.turn('SCRIPTED_RECOVERY_SURFACE: execute supplied call and finish.')
         call = provider.calls[-1]
         result = provider.results.get(call['id'],{})
-        checks.append({'check':'native-'+tool,'passed':bool(result) and not result.get('is_error',False),
+        checks.append({'check':'native-'+label,'passed':bool(result) and not result.get('is_error',False),
                        'wire_call':call,'native_result':result})
         if not checks[-1]['passed']:
-            raise ValueError('native repair tool failed: '+tool)
+            raise ValueError('native repair tool failed: '+label)
         return result
 
     def state():

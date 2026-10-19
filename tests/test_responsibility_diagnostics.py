@@ -105,6 +105,10 @@ class DiagnosticsTests(unittest.TestCase):
             self.assertEqual(child['message_count'], 0); self.assertEqual(child['total_input_tokens'], 0)
             self.assertEqual(index.with_name(child['transcript_file']).read_text(), '')
             self.assertEqual(schedule['runs'], [])
+            # ADR-078 refuses unstamped non-seeded jobs at fire time.
+            for job in schedule['jobs']:
+                self.assertEqual(job['created_by']['trust'], 'owner')
+                self.assertEqual(job['created_by']['compartment'], {'kind': 'internal'})
             arm_peko(driver)
             self.assertTrue(verify_peko(json.loads(path.read_text()), sessions, 60)['verified'])
 

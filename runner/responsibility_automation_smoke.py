@@ -16,7 +16,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from continuity_peko import PekoDriver
-from responsibility_surface_smoke import ScriptedProvider, SmokeClaw
+from responsibility_surface_smoke import ScriptedProvider, SmokeClaw, native_call
 import responsibility_strategy as strategy
 from responsibility_prepared import prepare_peko, prepare_claw, arm_peko, set_claw_due_times, pause_peko_for_probe, pause_claw_for_probe
 
@@ -49,11 +49,12 @@ def run(name, out):
         (out/f'topology-{stage}.json').write_text(driver._redact(json.dumps({'schedule':schedule,'sessions':sessions,'check':check},indent=2)))
 
     def invoke(tool, args):
+        label, tool, args = native_call(tool, args)
         provider.steps.append((tool, args))
         driver.turn('SCRIPTED_AUTOMATION_SURFACE: execute supplied tool call and finish.')
         call = provider.calls[-1]
         result = provider.results.get(call['id'], {})
-        checks.append({'check':'native-' + tool, 'passed':bool(result) and not result.get('is_error', False),
+        checks.append({'check':'native-' + label, 'passed':bool(result) and not result.get('is_error', False),
                        'wire_call':call, 'native_result':result})
         return result
 

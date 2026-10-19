@@ -64,6 +64,10 @@ The [worker-duration follow-up](docs/RESPONSIBILITY_LEAN_WORKER_MIMO_2026-10-07.
 has preserved tool intent and exact usage reconciliation, but still fails due to
 an altered owner threshold and a provider response exceeding deadline headroom.
 Native interval skips are now audited. Further live samples remain deferred.
+The [master rerun](docs/RESPONSIBILITY_MASTER_RERUN_MIMO_2026-10-19.md) repeats
+the prepared track at n=3 after ADR-078 to ADR-085. OpenClaw met 7/9 obligations
+on time with one full pass; Peko met 6/9 with none. Every miss was the blocked
+input request, and Peko's three misses have three different causes.
 
 The [memory and heartbeat evaluation](docs/MEMORY_HEARTBEAT_MIMO_2026-10-16.md)
 measured the nightly memory pass, its source and reviewer gates, attention-gated

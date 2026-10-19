@@ -9,7 +9,7 @@ import shlex
 import sys
 import time
 from pathlib import Path
-from responsibility_surface_smoke import ScriptedProvider
+from responsibility_surface_smoke import ScriptedProvider, native_call
 from responsibility_drivers import PekoResponsibility, ClawResponsibility
 from responsibility_simulator import Simulator, load_spec
 from responsibility_formation import gate
@@ -50,12 +50,13 @@ def run(name,out):
     checks=[];errors=[];metadata={};result_gate=None
 
     def invoke(tool,args):
+        label,tool,args=native_call(tool,args)
         provider.steps.append((tool,args))
         driver.conversation('SCRIPTED_COMPACT_SURFACE: execute the supplied call and finish.')
         call=provider.calls[-1];result=provider.results.get(call['id'],{})
         passed=bool(result) and not result.get('is_error',False)
-        checks.append({'tool':tool,'passed':passed,'wire_call':call,'native_result':result})
-        if not passed: raise ValueError('native compact surface failed: '+tool)
+        checks.append({'tool':label,'passed':passed,'wire_call':call,'native_result':result})
+        if not passed: raise ValueError('native compact surface failed: '+label)
         return result
 
     try:
