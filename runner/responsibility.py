@@ -16,7 +16,7 @@ from responsibility_action_service import VERSION as ACTION_SERVICE_VERSION
 from responsibility_drivers import ClawResponsibility, PekoResponsibility, action_contract, state_contract
 from responsibility_simulator import Simulator, load_spec, score
 from responsibility_audit import native_outbound_attempts
-from responsibility_diagnostics import observed_preconditions, retained_receipts
+from responsibility_diagnostics import observed_preconditions, retained_receipts, retained_receipts_by_content
 from responsibility_timing import native_cron_timing
 from responsibility_topology import execution_evidence, task_paths, handoff_prompt, direct_action_prompt
 import responsibility_strategy as strategy
@@ -111,7 +111,58 @@ def settled_telemetry(relay, telemetry):
         "difference_exactly_explained_by_disconnected_calls": explained,
         "limitation": "Diagnostic only. Consumed upstream endings may not reach native accounting; "
                       "this does not change the native equality or full-pass gate."}
+    result["native_usage_reconciliation"] = reconcile_native(result, subset if interrupted else None)
+    result["native_usage_reconciled"] = result["native_usage_reconciliation"]["reconciled"]
     return result
+
+
+USAGE_KEYS = ("request_count", "uncached_input_tokens", "cache_read_tokens",
+              "cache_creation_tokens", "output_tokens")
+QUOTA_KEYS = {"request_count": "request_count", "uncached_input_tokens": "input_tokens",
+              "cache_read_tokens": "cache_read_tokens", "cache_creation_tokens": "cache_creation_tokens",
+              "output_tokens": "output_tokens"}
+
+
+def reconcile_native(result, interrupted):
+    """Contract 12: explain controller-minus-native usage from recorded evidence.
+
+    Layer 1 (transport): controller usage minus the runtime's metered total
+    must equal the complete usage of calls whose downstream disconnected
+    (restart or probe pause). Peko's metered total is its persisted quota
+    state; OpenClaw's is its native session usage.
+    Layer 2 (runtime-internal calls, Peko): quota minus transcript usage must
+    be policy-reviewer calls. Their count comes from the runtime's own
+    `policy.review` audit events (reviews that could not run are excluded:
+    nothing was charged); their tokens are the quota delta, which no
+    transcript records. Any other difference stays unexplained.
+    """
+    native = result.get("native_usage") or {}
+    quota = native.get("quota_snapshot")
+    reviews = native.get("policy_review_events")
+    # OpenClaw's transcript total carries no completeness flag; Peko's does.
+    known = (result.get("usage_complete", False) and native.get("usage_complete", True) is True
+             and all(isinstance(result.get(k), int) and isinstance(native.get(k), int) for k in USAGE_KEYS))
+    out = {"version": 2, "reconciled": False, "layers": {}}
+    if not known:
+        out["reason"] = "controller or native usage incomplete"
+        return out
+    metered = native
+    if isinstance(quota, dict) and all(isinstance(quota.get(QUOTA_KEYS[k]), int) for k in USAGE_KEYS):
+        metered = {k: quota[QUOTA_KEYS[k]] for k in USAGE_KEYS}
+        internal = {k: metered[k] - native[k] for k in USAGE_KEYS}
+        charged = sum(1 for e in reviews or [] if e.get("charged"))
+        out["layers"]["runtime_internal"] = {
+            "quota_minus_transcript": internal, "policy_review_events_charged": charged,
+            "explained": reviews is not None and internal["request_count"] == charged
+                         and all(v >= 0 for v in internal.values()),
+            "evidence": "count: policy.review audit events; tokens: quota delta"}
+    transport = {k: result[k] - metered[k] for k in USAGE_KEYS}
+    expected = {k: (interrupted or {}).get(k, 0) for k in USAGE_KEYS}
+    out["layers"]["transport"] = {"controller_minus_metered": transport, "interrupted_calls": expected,
+                                  "explained": transport == expected
+                                  and (interrupted is None or interrupted.get("usage_complete", False))}
+    out["reconciled"] = all(layer["explained"] for layer in out["layers"].values())
+    return out
 
 
 def execute(spec, driver_name, mode, budget, timeout, run_dir):
@@ -214,11 +265,13 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
             'limitation':'Caller-declared checks do not enforce hidden owner policy. Invalid attempts stay visible.'}
         metrics['passed'] = metrics['passed'] and invalid == 0
     metrics["observed_preconditions"] = observed_preconditions(spec, sim.rows)
-    metrics["receipt_retention"] = retained_receipts(run_dir, sim.rows)
+    metrics["receipt_retention"] = (retained_receipts_by_content(run_dir, sim.rows)
+                                    if spec.get("receipt_content_match") else retained_receipts(run_dir, sim.rows))
     metrics["tool_attribution"] = attribution(run_dir, driver.relay.records if driver.relay else [])
     metrics["policy_diagnostics_passed"] = (metrics["observed_preconditions"]["violations"] == 0
         and metrics["receipt_retention"].get("measured", False)
-        and not metrics["receipt_retention"].get("missing_receipts"))
+        and not metrics["receipt_retention"].get("missing_receipts")
+        and not metrics["receipt_retention"].get("contradicted_claims"))
     if spec.get("require_policy_diagnostics"):
         metrics["passed"] = metrics["passed"] and metrics["policy_diagnostics_passed"]
     starts = [r["wall_time"] for r in sim.rows if r["kind"] == "watch_started"]
@@ -229,7 +282,8 @@ def execute(spec, driver_name, mode, budget, timeout, run_dir):
     metrics["controller_continuations"] = sum(bool(r.get("controller_continuation")) for r in sim.rows)
     metrics["passed"] = (metrics["passed"] and not errors and not outbound
                          and not metrics["quiet_window_actions"] and telemetry.get("usage_complete", False)
-                         and telemetry.get("native_usage_matches", False))
+                         and telemetry.get("native_usage_reconciled" if spec.get("reconcile_runtime_calls")
+                                           else "native_usage_matches", False))
     if spec.get("topology") == "separated":
         checks = metadata.get("topology_checks", [])
         chosen = {j['id']:j for c in checks for j in c.get('operational_jobs', [])} if strategy.selected(spec) else None
@@ -300,6 +354,9 @@ def main():
     spec['execution_policy'] = args.execution_policy
     spec["measure_memory_policy"] = True
     spec["require_policy_diagnostics"] = True
+    # Contract 12: content-matched receipts and runtime-call-aware accounting.
+    spec["receipt_content_match"] = True
+    spec["reconcile_runtime_calls"] = True
     if args.formation == "prepared" and args.topology != "separated":
         parser.error("prepared formation requires separated topology")
     if args.timeout_secs < spec["duration_secs"] + 300:

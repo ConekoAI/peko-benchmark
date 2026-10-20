@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 from responsibility_audit import timestamp
 
-VERSION = 2
+VERSION = 3
 
 
 def preflight():
@@ -83,20 +83,21 @@ def capabilities(driver_name, workspace, node=None, entry=None):
     if driver_name == 'peko':
         sdk = Path(workspace) / '.benchmark-sdk'
         return ('Native execution: Write Python files under the principal workflows/ directory, then use '
-                'Workflow path=<relative .py file> args=<string array>. CronCreate tool=Workflow '
+                'Workflow path=<relative .py file> args=<string array>. Cron action=create tool=Workflow '
                 'params={path:<file>,args:<array>} interval_ms=<milliseconds> schedules code without a scheduler '
-                'LLM call. CronCreate tool=Bash params={command:<command>} schedules another executable. '
-                'For reasoning use CronCreate tool=Agent with a persistent task session. CronCreate delay=<duration> '
+                'LLM call. Cron action=create tool=Bash params={command:<command>} schedules another executable. '
+                'For reasoning use Cron action=create tool=Agent with a persistent task session. Cron action=create delay=<duration> '
                 'or at=<RFC3339> creates a one-shot; jobs delete after firing, including failed fires. '
                 'wake_on_completion=false avoids unsolicited supervisor wakes. Daemon polling is five seconds '
                 'in this fixture. Workflow scripts receive PEKO_WORKSPACE and identity/run-token environment. '
                 f'The stdlib peko_workflow SDK is provisioned at {sdk}; explicitly insert this directory into '
                 'sys.path before importing peko_workflow. Use absolute file_path for Read/Write/Edit callbacks. '
                 'SDK tools.call invokes native tools, including ModelCall when reasoning is needed. '
-                'CronHistory id/label reads terminal outcomes; CronList shows next_run_at. CronUpdate id/label '
+                'Cron action=history id/label reads terminal outcomes; Cron action=list shows next_run_at. Cron action=update id/label '
                 'enabled=true resets the failure budget, but does not change the scheduled next_run. Three '
-                'consecutive errors disable a job in this fixture. To change cadence delete and recreate the '
-                'task job with CronDelete/CronCreate; preserve requirements and uncertain-write reconciliation. '
+                'consecutive errors disable a job in this fixture. To change cadence, Cron action=update id/label '
+                'interval_ms=<milliseconds> retunes the job in place (same id; next_run recomputed from now); '
+                'a tool job\'s params cannot be updated. Preserve requirements and uncertain-write reconciliation. '
                 'Use Bash to run your offline self-test. The facts in this message and canonical notes are '
                 'sufficient for task setup; avoid broad session/history/SDK exploration unless resolving an error. ')
     cli = f'{node} {entry}'

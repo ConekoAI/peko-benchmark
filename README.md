@@ -68,6 +68,12 @@ The [master rerun](docs/RESPONSIBILITY_MASTER_RERUN_MIMO_2026-10-19.md) repeats
 the prepared track at n=3 after ADR-078 to ADR-085. OpenClaw met 7/9 obligations
 on time with one full pass; Peko met 6/9 with none. Every miss was the blocked
 input request, and Peko's three misses have three different causes.
+[Rerun 2](docs/RESPONSIBILITY_MASTER_RERUN2_MIMO_2026-10-20.md) fixes those
+biases (contract 12) and runs n=5 per harness on each of 2 seeds on `b7bc5493`.
+Peko met 19/30 obligations with its first two full passes; OpenClaw met 21/30
+with none. OpenClaw nearly always delivered the releases but escalated the
+blocked input only 2/10 times. Peko lost runs to an untrusted review route and a
+cron-timeout chain. #484's catch-up never fired.
 
 The [memory and heartbeat evaluation](docs/MEMORY_HEARTBEAT_MIMO_2026-10-16.md)
 measured the nightly memory pass, its source and reviewer gates, attention-gated

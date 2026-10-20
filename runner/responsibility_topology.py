@@ -15,7 +15,7 @@ from responsibility_audit import timestamp
 
 WORKER_PATH = "/release-watch"
 WORKER_KEY = "agent:main:release-watch"
-SEPARATED_CONTRACT_VERSION = 11
+SEPARATED_CONTRACT_VERSION = 12
 
 
 def direct_action_prompt(url):
@@ -91,15 +91,15 @@ def peko_setup(url, cadence, worker_prompt):
             "role release-watch, prompt: read only kb/responsibility/commitments.md, acknowledge the assignment "
             "and finish; no GET, POST, discovery scans, or role/journal edits during initialization. "
             "WAIT for that initialization to complete BEFORE registering its recurring job; do not call Agent "
-            "and CronCreate together. Retain organizational keepalive independently of tasks: "
-            "CronCreate label=organization-supervisor "
+            "and Cron together. Retain organizational keepalive independently of tasks: "
+            "Cron action=create label=organization-supervisor "
             f"interval_ms={int(cadence * 2000)} message="
             + supervisor_prompt(cadence)
-            + " Once that organizational Send is registered, CronDelete id=keepalive to remove only the old "
-            "10-minute default. CronUpdate cannot change cadence or message; use the create/delete tools. "
+            + " Once that organizational Send is registered, Cron action=delete id=keepalive to remove only the old "
+            "10-minute default. (Cron action=update can also change a recurring job's interval_ms or message in place.) "
             "Write this division and the following handoff rules into shared memory/conventions: "
             + handoff_prompt()
-            + "Create exactly one additional recurring CronCreate label=responsibility-monitor "
+            + "Create exactly one additional recurring Cron action=create label=responsibility-monitor "
             f"interval_ms={int(cadence * 1000)} tool=Agent params={{action:new,path:/release-watch,"
             "role:release-watch,prompt:<the following worker instruction>}, wake_on_completion=false, "
             "timeout_secs=90. This invokes the persistent task session directly; do not use a trunk message "

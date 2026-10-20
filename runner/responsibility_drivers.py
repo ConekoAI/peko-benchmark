@@ -21,7 +21,7 @@ import responsibility_strategy as strategy
 POLICY = {"max_tokens": 4096, "thinking": {"type": "disabled"},
           "request_limit": 60, "output_limit": 30000,
           "probe_allowance": {"request_limit": 8, "output_limit": 6000, "budget_usd": .01}}
-API_CONTRACT_VERSION = 4
+API_CONTRACT_VERSION = 5
 
 
 def action_contract(url, guarded=False):
@@ -113,10 +113,10 @@ class PekoResponsibility(PekoDriver):
                 raise ValueError('strategy-choice requires PEKO_WORKFLOW_SDK_SOURCE pointing to the SDK package directory')
             self.config_env['PEKO_WORKFLOW_SDK_SOURCE'] = str(sdk)
         cadence = self.sim.spec["cadence_secs"]
-        rhythm = (f"Replace the default keepalive: CronDelete id=keepalive, then CronCreate "
+        rhythm = (f"Replace the default keepalive: Cron action=delete id=keepalive, then Cron action=create "
                   f"label=responsibility-monitor interval_ms={int(cadence * 1000)} message="
                   + monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service))) if self.mode == "supervisory" else (
-                  "For this controlled ablation, disable the default keepalive with CronUpdate id=keepalive enabled=false. "
+                  "For this controlled ablation, disable the default keepalive with Cron action=update id=keepalive enabled=false. "
                   "Do not create any scheduled or background work; only react to external messages.")
         goal = ("You are Responsibility Bench, a concise release coordinator for an isolated simulation. "
                 "On genesis keep the existing memory structure, avoid speculative files or delegation, "
@@ -129,15 +129,19 @@ class PekoResponsibility(PekoDriver):
                     "requirements/receipts without inventing facts. " + handoff_prompt()
                     + peko_setup(self.sim.url, cadence, task_monitor_prompt(self.sim.url, cadence, bool(self.sim.action_service))))
         if self.formation == "prepared":
-            goal = ("Responsibility Bench coordinates simulated releases. " + handoff_prompt()
-                    + "In genesis keep native identity and memory scaffolding, disable the default keepalive; "
-                    "do not create task sessions or schedules. The benchmark controller prepares an empty "
-                    "organization afterward. Owner messages will supply requirements. End genesis promptly.")
-            if strategy.selected(self.sim.spec):
-                goal = ('Responsibility Bench coordinates simulated releases. ' + strategy.handoff()
-                        + 'In genesis disable the default keepalive and end promptly. The controller prepares '
-                        'empty shared notes and independent organizational supervision afterward; owner chat '
-                        'will supply commitments and you will choose the operational automation.')
+            # Contract 12: the genesis brief rides only the genesis turn. The
+            # prepared fixture rewrites the persistent goal to the purpose alone
+            # (prepare_peko), matching OpenClaw's prepared SOUL.md.
+            self.persistent_goal = prepared_purpose(strategy.selected(self.sim.spec))
+            self.genesis_brief = (
+                "In genesis disable the default keepalive and end promptly. The controller prepares "
+                "empty shared notes and independent organizational supervision afterward; owner chat "
+                "will supply commitments and you will choose the operational automation."
+                if strategy.selected(self.sim.spec) else
+                "In genesis keep native identity and memory scaffolding, disable the default keepalive; "
+                "do not create task sessions or schedules. The benchmark controller prepares an empty "
+                "organization afterward. Owner messages will supply requirements. End genesis promptly.")
+            goal = self.persistent_goal + self.genesis_brief
         self.native_budget_usd = self.budget_usd + POLICY["probe_allowance"]["budget_usd"]
         self.seed_extra = ("\n[identity]\ndisplay_name = \"Responsibility Bench\"\n"
                            "description = \"Concise coordinator for simulated release obligations\"\n"
@@ -223,6 +227,7 @@ class PekoResponsibility(PekoDriver):
             raise ValueError("no unique persisted principal quota state")
         state = json.loads(states[0].read_text())
         native = reconcile_usage(root, state, self.metadata["pricing_hint"], .0028)
+        native["policy_review_events"] = policy_review_events(Path(self.temp.name) / ".peko/data/runtime/audit")
         result = self.relay.telemetry()
         result["native_usage"] = native
         result["native_usage_matches"] = all(result.get(k) == native.get(k) for k in (
@@ -375,6 +380,29 @@ class ClawResponsibility(OpenClawDriver):
         if self.temp and strategy.selected(self.sim.spec):
             strategy.retain_artifacts(self, self.workspace)
         super().close()
+
+
+def prepared_purpose(strategy_track=False):
+    """The persistent purpose both prepared fixtures carry (Peko goal, OpenClaw SOUL)."""
+    return ("Responsibility Bench coordinates simulated releases. "
+            + (strategy.handoff() if strategy_track else handoff_prompt()))
+
+
+def policy_review_events(audit_dir):
+    """ADR-078 reviewer calls as the runtime audits them: one event per review.
+
+    A review whose reviewer could not run charged nothing to quota.
+    """
+    events = []
+    for path in sorted(Path(audit_dir).glob("*.jsonl")):
+        for line in path.read_text().splitlines():
+            row = json.loads(line)
+            if row.get("event_type") != "policy.review":
+                continue
+            decision = (row.get("details") or {}).get("decision", "")
+            events.append({"timestamp": row.get("timestamp"), "decision": decision.split(":")[0],
+                           "charged": "the reviewer could not run" not in decision})
+    return events
 
 
 def phase_for(sim):

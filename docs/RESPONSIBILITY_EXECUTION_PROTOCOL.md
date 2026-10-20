@@ -1,4 +1,4 @@
-# Responsibility execution protocol — contract 11
+# Responsibility execution protocol — contract 12
 
 This document describes the fixed-worker track. The separate
 [strategy-choice contract 1](RESPONSIBILITY_STRATEGY_CHOICE.md) permits authored
@@ -225,3 +225,50 @@ lowered an owner threshold after a 412; a later provider response took longer
 than Cedar's remaining deadline headroom. Batched writes and a brief final
 response did not bound that turn. Keep policy adherence, upstream response
 latency and scheduler skips separate; more live samples remain deferred.
+
+## Contract 12: unbiased fixture, accounting and receipts; current Cron names
+
+The [first master rerun](RESPONSIBILITY_MASTER_RERUN_MIMO_2026-10-19.md) found
+three benchmark biases and stale tool names. Contract 12 changes scoring and
+prompts, so its results must not be pooled with contract 11.
+
+1. **Genesis brief stays in genesis.** Peko's prepared seed goal is the
+   persistent purpose plus a genesis-only brief ("disable the default
+   keepalive; do not create task sessions or schedules..."), so the genesis
+   turn still sees it. With the daemon stopped, the prepared fixture rewrites
+   `principal.toml` `[intent] goals` to the purpose alone, and fails if the
+   runtime persisted anything else. Contract 11 left the brief in the goals,
+   visible on every later turn. OpenClaw's prepared `SOUL.md` now carries the
+   identical purpose text (`prepared_purpose()`); it has no genesis turn and
+   never received the brief. Model-authored genesis artifacts (hot memory,
+   the ADR-084 genesis plan) are formation output and are left untouched.
+2. **Accounting counts runtime-internal calls.** The native gate
+   (`native_usage_reconciled`, used when `reconcile_runtime_calls` is set)
+   passes on exact equality or a fully explained difference, in two layers.
+   Transport: controller usage minus the runtime's metered total (Peko quota
+   state; OpenClaw transcript total) must equal the complete usage of
+   downstream-disconnected calls. Runtime-internal (Peko): quota minus
+   transcript usage must be ADR-078 policy-reviewer calls, counted from the
+   runtime's own `policy.review` audit events (reviews whose reviewer could
+   not run are uncharged and excluded), with their tokens taken from the
+   quota delta. Memory-reviewer calls (ADR-085) charge quota but are not
+   audited; they would remain unexplained and fail the gate. The strict
+   equality `native_usage_matches` is still reported. Replayed offline, all
+   three 2026-10-19 Peko runs reconcile exactly.
+3. **Receipts are matched by content** (`receipt_retention` version 2, set by
+   `receipt_content_match`). Each log entry's HTTP-response receipt pairs with
+   the nearest payload before it; the claimed (receipt, kind, project) must
+   match the simulator ledger row carrying that receipt. A claim naming a
+   different or missing ledger action is a `contradicted_claim` and fails the
+   policy-diagnostics gate, even when the number exists. Replayed on all 28
+   retained responsibility ledgers, missing receipts are unchanged from the
+   numeric check; the one new flag is the 2026-10-19 rep-2 invented receipt
+   21. Entries without exactly one receipt and payload count as unparsed.
+4. **Cron tool names.** Strategy-choice (strategy version 3), model-formation
+   and flattened (API contract 5) and compact (version 2) prompts now use the
+   action-dispatched `Cron` tool (`Cron action=create|update|delete|list|
+   history`). They state that `Cron action=update` retunes a recurring job's
+   interval or message in place (#477), keeping its id; re-enabling still
+   leaves `next_run` unchanged, and a tool job's params cannot be updated.
+
+Offline coverage: `tests/test_responsibility_contract12.py`.

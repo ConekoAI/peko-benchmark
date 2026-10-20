@@ -44,6 +44,34 @@ def actions(ledger):
             if r.get("kind") == "action" and r.get("action", {}).get("kind") != "memory"]
 
 
+def native_worker_runs(path, ledger):
+    """Peko worker cron results during the run, as elapsed watch seconds.
+
+    `catch_up` (runtime #484) marks a successful run that overran its slot;
+    the job then runs once more right away. Absent in older runtimes.
+    """
+    import datetime as dt
+    starts = [r["wall_time"] for r in ledger if r.get("kind") == "watch_started"]
+    audits = sorted((path / "runtime-traces").rglob("audit/*.jsonl"))
+    if not starts or not audits:
+        return None
+    def at(text):
+        return round(dt.datetime.fromisoformat(text.replace("Z", "+00:00")).timestamp() - starts[0], 3) if text else None
+    runs = []
+    for audit in audits:
+        for line in audit.read_text().splitlines():
+            row = json.loads(line)
+            d = row.get("details") or {}
+            if row.get("event_type") == "cron.result" and d.get("job_name") == "responsibility-monitor":
+                runs.append({"scheduled_secs": at(d.get("scheduled_at")), "finished_secs": at(d.get("finished_at")),
+                             "duration_secs": round(d["duration_ms"] / 1000, 3) if d.get("duration_ms") else None,
+                             "status": d.get("status"), "catch_up": d.get("catch_up"),
+                             "skipped_interval_slots": d.get("skipped_interval_slots")})
+    runs.sort(key=lambda r: r["scheduled_secs"] if r["scheduled_secs"] is not None else 1e9)
+    return {"runs": runs, "catch_ups": sum(bool(r["catch_up"]) for r in runs),
+            "catch_up_field_present": any("catch_up" in r and r["catch_up"] is not None for r in runs)}
+
+
 def run(path):
     result = json.loads((path / "result.json").read_text())
     spec = json.loads((path / "scenario.json").read_text())
@@ -58,12 +86,18 @@ def run(path):
             "metrics": {k: metrics.get(k) for k in KEEP},
             "observed_precondition_violations": (metrics.get("observed_preconditions") or {}).get("violations"),
             "missing_receipts": (metrics.get("receipt_retention") or {}).get("missing_receipts"),
+            "contradicted_receipt_claims": (metrics.get("receipt_retention") or {}).get("contradicted_claims"),
+            "receipt_retention_version": (metrics.get("receipt_retention") or {}).get("version", 1),
+            "contract_version": result["metadata"].get("api_contract_version"),
+            "seed": result.get("seed"),
+            "native_worker_cron": native_worker_runs(path, ledger),
             "topology_execution_verified": (metrics.get("topology_execution") or {}).get("verified"),
             "watch_reads_elapsed_secs": reads, "max_read_gap_secs": max(gaps) if gaps else None,
             "actions": actions(ledger), "escalation": escalation(ledger, spec),
             "usage": {k: usage.get(k) for k in USAGE} | {
                 "native_cost_usd": native.get("cost_usd"), "native_request_count": native.get("request_count"),
-                "native_usage_matches": usage.get("native_usage_matches")},
+                "native_usage_matches": usage.get("native_usage_matches"),
+                "native_usage_reconciled": usage.get("native_usage_reconciled")},
             "phase_usage": {p: {k: v.get(k) for k in ("request_count", "output_tokens", "cost_usd", "usage_complete")}
                             for p, v in (result.get("phase_usage") or {}).items()}}
 

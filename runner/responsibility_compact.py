@@ -5,7 +5,7 @@ import shlex
 import shutil
 from pathlib import Path
 
-VERSION = 1
+VERSION = 2
 
 
 def selected(spec):
@@ -53,9 +53,9 @@ def capabilities(driver, workspace, node=None, entry=None, url='<LIVE_URL>'):
     args=['--base-url',url,'--workspace',str(workspace)]
     if driver == 'peko':
         return (f'Workspace {workspace}. Write {workspace}/workflows/watch.py. '
-                f'Use Bash for the offline fixture. CronCreate tool=Workflow params={json.dumps({"path":"watch.py","args":args})} '
+                f'Use Bash for the offline fixture. Cron action=create tool=Workflow params={json.dumps({"path":"watch.py","args":args})} '
                 'interval_ms=10000 wake_on_completion=false schedules this worker. '
-                'CronList/CronHistory inspect jobs. Python uses only stdlib; no SDK exploration is needed. ')
+                'Cron action=list and action=history inspect jobs. Python uses only stdlib; no SDK exploration is needed. ')
     cli=shlex.join([str(node),str(entry)])
     argv=shlex.quote(json.dumps(["python3",str(workspace/"workflows/watch.py")]+args))
     return (f'Workspace {workspace}. Native CLI {cli}. Use exec for files/fixture and '

@@ -30,6 +30,27 @@ def empty_notes(workspace: Path, worker_prompt: str, strategy=False):
     (workspace / 'RESPONSIBILITY.md').write_text((strategy_handoff() if strategy else task_paths() + handoff_prompt()) + '\n' + worker_prompt)
 
 
+def retire_genesis_brief(driver, path: Path):
+    """Contract 12: keep the genesis-only brief out of the persistent goals.
+
+    The seed's goal is purpose + genesis brief so the genesis turn sees the
+    brief; afterwards (daemon stopped) the goal becomes the purpose alone.
+    Fails loudly rather than guessing if the runtime rewrote the goal.
+    """
+    brief = getattr(driver, 'genesis_brief', None)
+    if not brief:
+        return
+    raw = path.read_text()
+    goals = tomllib.loads(raw).get('intent', {}).get('goals')
+    if goals != [driver.persistent_goal + brief] or raw.count(brief) != 1:
+        raise ValueError('prepared fixture: persisted goal is not the seeded purpose + genesis brief')
+    raw = raw.replace(brief, '')
+    if tomllib.loads(raw).get('intent', {}).get('goals') != [driver.persistent_goal]:
+        raise ValueError('prepared fixture: genesis brief removal changed the purpose')
+    path.write_text(raw)
+    driver.metadata['genesis_brief_retired'] = True
+
+
 def prepare_peko(driver, worker_prompt):
     driver._stop_owned_daemon()
     home = Path(driver.temp.name) / '.peko'
@@ -43,6 +64,7 @@ def prepare_peko(driver, worker_prompt):
         (workspace / 'NATIVE_AUTOMATION.md').write_text(
             compact.capabilities('peko',workspace,url=driver.sim.url) if compact.selected(driver.sim.spec)
             else capabilities('peko', workspace))
+    retire_genesis_brief(driver, workspace / 'principal.toml')
     roles = workspace / 'roles'; roles.mkdir(exist_ok=True)
     (roles / 'release-watch.md').write_text('---\nname: release-watch\ndescription: Periodic release responsibility worker\n---\n' + worker_prompt)
     indices = list(root.rglob('sessions.json'))
@@ -117,8 +139,9 @@ def prepare_claw(driver, worker_prompt):
     (driver.workspace / 'BOOTSTRAP.md').unlink(missing_ok=True)
     (driver.workspace / 'IDENTITY.md').write_text('# Responsibility Bench\nConcise release coordinator.\n')
     (driver.workspace / 'USER.md').write_text('# User\nThe benchmark owner supplies requirements in chat.\n')
-    (driver.workspace / 'SOUL.md').write_text('# Purpose\nOrganize responsibility workers and preserve shared requirements.\n'
-                                          + (strategy_handoff() if strategy_selected(driver.sim.spec) else handoff_prompt()))
+    # Contract 12: the same persistent purpose Peko's prepared goal carries.
+    from responsibility_drivers import prepared_purpose
+    (driver.workspace / 'SOUL.md').write_text('# Purpose\n' + prepared_purpose(strategy_selected(driver.sim.spec)) + '\n')
     driver._command('agents', 'set-identity', '--agent', 'main', '--workspace', str(driver.workspace),
                     '--name', 'Responsibility Bench', '--theme', 'Concise release coordinator', '--emoji', '📋')
     if strategy_selected(driver.sim.spec):
