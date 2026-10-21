@@ -74,6 +74,12 @@ Peko met 19/30 obligations with its first two full passes; OpenClaw met 21/30
 with none. OpenClaw nearly always delivered the releases but escalated the
 blocked input only 2/10 times. Peko lost runs to an untrusted review route and a
 cron-timeout chain. #484's catch-up never fired.
+[Rerun 3](docs/RESPONSIBILITY_MASTER_RERUN3_MIMO_2026-10-21.md) keeps contract 12
+on runtime `13dced92` (#485 timeout abort, #486 owner-only groups and seeded-job
+guard). Review runs now stamp as owner, and no worker was disabled. Peko met
+21/30 obligations with one full pass, made possible by a #484 catch-up; OpenClaw
+met 21/30 with none. The remaining misses are model errors on both sides, plus
+two Peko provider-latency outliers.
 
 The [memory and heartbeat evaluation](docs/MEMORY_HEARTBEAT_MIMO_2026-10-16.md)
 measured the nightly memory pass, its source and reviewer gates, attention-gated

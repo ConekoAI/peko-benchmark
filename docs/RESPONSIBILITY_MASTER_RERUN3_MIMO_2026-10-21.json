@@ -1,0 +1,4490 @@
+{
+  "evidence_kind": "prepared_execution_rerun3_n5x2",
+  "runs": [
+    {
+      "report_id": "20261021T045235291944Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 439.09,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 40.342,
+          "cedar-91b72265b1f5": 59.95
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": null,
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        25.867,
+        106.764,
+        149.463,
+        206.373,
+        263.211
+      ],
+      "max_read_gap_secs": 80.897,
+      "actions": [
+        {
+          "elapsed_secs": 28.72,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 110.419,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 210.092,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 28.72,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "premature"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 43,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 148178,
+        "cache_read_tokens": 653312,
+        "output_tokens": 7813,
+        "cost_usd": 0.0247618336,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 43,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1579,
+          "cost_usd": 0.0053476415999999995,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 6,
+          "output_tokens": 1728,
+          "cost_usd": 0.004076072,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 14,
+          "output_tokens": 2641,
+          "cost_usd": 0.006325317600000001,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 15,
+          "output_tokens": 1865,
+          "cost_usd": 0.0090128024,
+          "usage_complete": true
+        }
+      },
+      "pair": 1
+    },
+    {
+      "report_id": "20261021T050057134576Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 411.213,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 3,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 15.949,
+          "cedar-dcf4f4bea973": 114.68
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 4,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [
+        19
+      ],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": null,
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        26.82,
+        81.842,
+        141.143,
+        261.355
+      ],
+      "max_read_gap_secs": 120.212,
+      "actions": [
+        {
+          "elapsed_secs": 86.153,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 209.329,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 264.71,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 209.329,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 209.329
+      },
+      "usage": {
+        "request_count": 43,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 107329,
+        "cache_read_tokens": 691072,
+        "output_tokens": 5677,
+        "cost_usd": 0.0185506216,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 43,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 9,
+          "output_tokens": 1471,
+          "cost_usd": 0.0024839808000000005,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 5,
+          "output_tokens": 1104,
+          "cost_usd": 0.004466851200000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 22,
+          "output_tokens": 2247,
+          "cost_usd": 0.0088343528,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 7,
+          "output_tokens": 855,
+          "cost_usd": 0.0027654368000000003,
+          "usage_complete": true
+        }
+      },
+      "pair": 2
+    },
+    {
+      "report_id": "20261021T051105278421Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 515.519,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 71.996,
+          "cedar-91b72265b1f5": 61.543
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 4,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [
+        {
+          "receipt": 19,
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5",
+          "ledger_kind": null,
+          "ledger_project": null
+        }
+      ],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": null,
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [
+        25.645,
+        85.855,
+        207.737,
+        266.11
+      ],
+      "max_read_gap_secs": 121.882,
+      "actions": [
+        {
+          "elapsed_secs": 142.077,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 211.622,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 40,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 114259,
+        "cache_read_tokens": 646848,
+        "output_tokens": 8955,
+        "cost_usd": 0.020314834400000002,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 47,
+        "native_usage_matches": false,
+        "native_usage_reconciled": false
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 21,
+          "output_tokens": 6396,
+          "cost_usd": 0.0121289672,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 3,
+          "output_tokens": 469,
+          "cost_usd": 0.0016035096000000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 10,
+          "output_tokens": 1871,
+          "cost_usd": 0.004387790400000001,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 6,
+          "output_tokens": 219,
+          "cost_usd": 0.0021945671999999998,
+          "usage_complete": true
+        }
+      },
+      "pair": 3
+    },
+    {
+      "report_id": "20261021T052110375615Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 397.523,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 22.917,
+          "cedar-dcf4f4bea973": 54.24
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": null,
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        30.241,
+        87.949,
+        141.765,
+        201.267,
+        261.723
+      ],
+      "max_read_gap_secs": 60.456,
+      "actions": [
+        {
+          "elapsed_secs": 92.937,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 204.311,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 264.413,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 264.413,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "late"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 39,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 79110,
+        "cache_read_tokens": 572672,
+        "output_tokens": 4745,
+        "cost_usd": 0.014007481600000003,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 39,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1580,
+          "cost_usd": 0.0026785528000000005,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 2,
+          "output_tokens": 343,
+          "cost_usd": 0.0017660888,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 22,
+          "output_tokens": 1979,
+          "cost_usd": 0.0075332712,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 7,
+          "output_tokens": 843,
+          "cost_usd": 0.0020295688,
+          "usage_complete": true
+        }
+      },
+      "pair": 4
+    },
+    {
+      "report_id": "20261021T053055230942Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 412.476,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 16.144,
+          "cedar-91b72265b1f5": 9.421
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": null,
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [
+        27.083,
+        82.933,
+        154.746,
+        205.579,
+        261.971
+      ],
+      "max_read_gap_secs": 71.813,
+      "actions": [
+        {
+          "elapsed_secs": 86.301,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 159.596,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 220.488,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 220.488,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 220.488
+      },
+      "usage": {
+        "request_count": 30,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 56860,
+        "cache_read_tokens": 426944,
+        "output_tokens": 4881,
+        "cost_usd": 0.0105225232,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 30,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 9,
+          "output_tokens": 1324,
+          "cost_usd": 0.0026432672000000004,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 1034,
+          "cost_usd": 0.0016346064000000002,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 12,
+          "output_tokens": 2322,
+          "cost_usd": 0.0044776256,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 5,
+          "output_tokens": 201,
+          "cost_usd": 0.001767024,
+          "usage_complete": true
+        }
+      },
+      "pair": 5
+    },
+    {
+      "report_id": "20261021T054049482726Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 401.105,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 22.552,
+          "cedar-dcf4f4bea973": 80.999
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": null,
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [
+        27.804,
+        82.934,
+        143.711,
+        203.471,
+        263.335
+      ],
+      "max_read_gap_secs": 60.777,
+      "actions": [
+        {
+          "elapsed_secs": 92.579,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 231.153,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 268.349,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 268.349,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "late"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 28,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 58912,
+        "cache_read_tokens": 401920,
+        "output_tokens": 4494,
+        "cost_usd": 0.010631376,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 28,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1626,
+          "cost_usd": 0.0027357512000000007,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 3,
+          "output_tokens": 441,
+          "cost_usd": 0.0020339424,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 9,
+          "output_tokens": 1595,
+          "cost_usd": 0.0032394264,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 8,
+          "output_tokens": 832,
+          "cost_usd": 0.002622256,
+          "usage_complete": true
+        }
+      },
+      "pair": 6
+    },
+    {
+      "report_id": "20261021T055131957170Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 494.255,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 20.791,
+          "cedar-91b72265b1f5": 56.054
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": null,
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [
+        30.511,
+        86.619,
+        145.543,
+        201.816,
+        261.121
+      ],
+      "max_read_gap_secs": 59.305,
+      "actions": [
+        {
+          "elapsed_secs": 90.854,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 206.055,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 264.134,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 264.134,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "late"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 29,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 62956,
+        "cache_read_tokens": 426752,
+        "output_tokens": 5065,
+        "cost_usd": 0.0114269456,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 29,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 7,
+          "output_tokens": 1262,
+          "cost_usd": 0.0029458296000000003,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 3,
+          "output_tokens": 504,
+          "cost_usd": 0.0009882376,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 12,
+          "output_tokens": 2377,
+          "cost_usd": 0.005253248,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 7,
+          "output_tokens": 922,
+          "cost_usd": 0.0022396304000000004,
+          "usage_complete": true
+        }
+      },
+      "pair": 7
+    },
+    {
+      "report_id": "20261021T060206160710Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 397.76,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 19.958,
+          "cedar-dcf4f4bea973": 66.788
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": null,
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        42.673,
+        86.1,
+        145.387,
+        209.636,
+        265.539
+      ],
+      "max_read_gap_secs": 64.249,
+      "actions": [
+        {
+          "elapsed_secs": 90.006,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 216.872,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 273.624,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 273.624,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "late"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 38,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 99681,
+        "cache_read_tokens": 590080,
+        "output_tokens": 5730,
+        "cost_usd": 0.017211964,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 37,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1632,
+          "cost_usd": 0.0027911576,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 3,
+          "output_tokens": 369,
+          "cost_usd": 0.0022843688,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 19,
+          "output_tokens": 2445,
+          "cost_usd": 0.007921827200000002,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 8,
+          "output_tokens": 1284,
+          "cost_usd": 0.004214610400000001,
+          "usage_complete": true
+        }
+      },
+      "pair": 8
+    },
+    {
+      "report_id": "20261021T060844015769Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 514.169,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 18.682,
+          "cedar-91b72265b1f5": 53.291
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 3,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": null,
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [
+        28.368,
+        84.891,
+        141.795
+      ],
+      "max_read_gap_secs": 56.904,
+      "actions": [
+        {
+          "elapsed_secs": 88.744,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 203.335,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 24,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 56665,
+        "cache_read_tokens": 326144,
+        "output_tokens": 3885,
+        "cost_usd": 0.0099341032,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 24,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 7,
+          "output_tokens": 1189,
+          "cost_usd": 0.0023699032,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 2,
+          "output_tokens": 378,
+          "cost_usd": 0.0013981071999999998,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 10,
+          "output_tokens": 1961,
+          "cost_usd": 0.0040306448,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 5,
+          "output_tokens": 357,
+          "cost_usd": 0.0021354480000000003,
+          "usage_complete": true
+        }
+      },
+      "pair": 9
+    },
+    {
+      "report_id": "20261021T061844862130Z-responsibility-openclaw",
+      "driver": "openclaw",
+      "errors": [],
+      "wall_secs": 447.004,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 60.118,
+          "cedar-dcf4f4bea973": 61.122
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 3,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": null,
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        124.984,
+        206.663,
+        266.662
+      ],
+      "max_read_gap_secs": 81.679,
+      "actions": [
+        {
+          "elapsed_secs": 130.322,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 211.141,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 275.299,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 275.299,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "late"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 35,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 97716,
+        "cache_read_tokens": 512768,
+        "output_tokens": 5763,
+        "cost_usd": 0.0167296304,
+        "usage_complete": true,
+        "native_cost_usd": null,
+        "native_request_count": 32,
+        "native_usage_matches": false,
+        "native_usage_reconciled": false
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 7,
+          "output_tokens": 1630,
+          "cost_usd": 0.0025804016,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 5,
+          "output_tokens": 979,
+          "cost_usd": 0.004139962400000001,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 13,
+          "output_tokens": 1673,
+          "cost_usd": 0.004975600000000001,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 10,
+          "output_tokens": 1481,
+          "cost_usd": 0.0050336664,
+          "usage_complete": true
+        }
+      },
+      "pair": 10
+    },
+    {
+      "report_id": "20261021T045235291939Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 501.712,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 19.144
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 1,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.524,
+            "finished_secs": 31.777,
+            "duration_secs": 12.081,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.524,
+            "finished_secs": 103.943,
+            "duration_secs": 25.62,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.524,
+            "finished_secs": 164.016,
+            "duration_secs": 25.693,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.524,
+            "finished_secs": 221.411,
+            "duration_secs": 23.09,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.524,
+            "finished_secs": 283.249,
+            "duration_secs": 24.882,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 0,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        29.023,
+        85.825,
+        145.47,
+        204.463,
+        265.925
+      ],
+      "max_read_gap_secs": 61.462,
+      "actions": [
+        {
+          "elapsed_secs": 89.239,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 149.875,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 207.746,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 207.746,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 207.746
+      },
+      "usage": {
+        "request_count": 58,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 193929,
+        "cache_read_tokens": 1538240,
+        "output_tokens": 11276,
+        "cost_usd": 0.034614412,
+        "usage_complete": true,
+        "native_cost_usd": 0.034614412,
+        "native_request_count": 58,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1439,
+          "cost_usd": 0.004133113600000001,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 815,
+          "cost_usd": 0.0032349688000000002,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 9,
+          "output_tokens": 2287,
+          "cost_usd": 0.0059293976000000005,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 28,
+          "output_tokens": 5712,
+          "cost_usd": 0.017610258400000002,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 9,
+          "output_tokens": 1023,
+          "cost_usd": 0.0037066736000000004,
+          "usage_complete": true
+        }
+      },
+      "pair": 1
+    },
+    {
+      "report_id": "20261021T050057134578Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 608.056,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 28.432,
+          "cedar-dcf4f4bea973": 64.113
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.539,
+            "finished_secs": 34.807,
+            "duration_secs": 15.116,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.539,
+            "finished_secs": 115.956,
+            "duration_secs": 37.631,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.539,
+            "finished_secs": 165.527,
+            "duration_secs": 27.205,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.539,
+            "finished_secs": 228.798,
+            "duration_secs": 30.472,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.539,
+            "finished_secs": 274.03,
+            "duration_secs": 15.704,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 0,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        30.679,
+        87.93,
+        149.253,
+        209.498,
+        270.555
+      ],
+      "max_read_gap_secs": 61.323,
+      "actions": [
+        {
+          "elapsed_secs": 98.54,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 153.395,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 214.218,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 153.395,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "premature"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 61,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 200083,
+        "cache_read_tokens": 1852096,
+        "output_tokens": 12006,
+        "cost_usd": 0.0365591688,
+        "usage_complete": true,
+        "native_cost_usd": 0.0365591688,
+        "native_request_count": 61,
+        "native_usage_matches": true,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 7,
+          "output_tokens": 1481,
+          "cost_usd": 0.0040874176000000005,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 1144,
+          "cost_usd": 0.0025899832,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 14,
+          "output_tokens": 3431,
+          "cost_usd": 0.0049639464000000005,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 27,
+          "output_tokens": 5168,
+          "cost_usd": 0.019011322400000003,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 9,
+          "output_tokens": 782,
+          "cost_usd": 0.0059064992,
+          "usage_complete": true
+        }
+      },
+      "pair": 2
+    },
+    {
+      "report_id": "20261021T051105278585Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 605.055,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 29.911,
+          "cedar-91b72265b1f5": 61.62
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.522,
+            "finished_secs": 79.519,
+            "duration_secs": 41.215,
+            "status": "success",
+            "catch_up": true,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.522,
+            "finished_secs": 117.777,
+            "duration_secs": 34.471,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.522,
+            "finished_secs": 182.736,
+            "duration_secs": 44.43,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.522,
+            "finished_secs": 227.871,
+            "duration_secs": 29.564,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.522,
+            "finished_secs": 259.52,
+            "duration_secs": 1.216,
+            "status": "failed",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 1,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        25.895,
+        54.405,
+        95.923,
+        146.412,
+        206.315
+      ],
+      "max_read_gap_secs": 59.903,
+      "actions": [
+        {
+          "elapsed_secs": 99.953,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 149.89,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 211.641,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 149.89,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "premature"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 64,
+        "rejected_request_count": 2,
+        "uncached_input_tokens": 145423,
+        "cache_read_tokens": 1682304,
+        "output_tokens": 13067,
+        "cost_usd": 0.0287284312,
+        "usage_complete": true,
+        "native_cost_usd": 0.028388460800000008,
+        "native_request_count": 63,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 9,
+          "output_tokens": 3104,
+          "cost_usd": 0.0050342040000000005,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 1399,
+          "cost_usd": 0.0036266215999999998,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 16,
+          "output_tokens": 2754,
+          "cost_usd": 0.0065133824,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 30,
+          "output_tokens": 4444,
+          "cost_usd": 0.010709272,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 5,
+          "output_tokens": 1366,
+          "cost_usd": 0.0028449512000000006,
+          "usage_complete": true
+        }
+      },
+      "pair": 3
+    },
+    {
+      "report_id": "20261021T052110375616Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 584.768,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 21.791,
+          "cedar-dcf4f4bea973": 13.048
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 1,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 6,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.54,
+            "finished_secs": 49.159,
+            "duration_secs": 10.851,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.54,
+            "finished_secs": 102.183,
+            "duration_secs": 23.873,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.54,
+            "finished_secs": 175.991,
+            "duration_secs": 37.678,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.54,
+            "finished_secs": 225.421,
+            "duration_secs": 27.11,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.54,
+            "finished_secs": 295.827,
+            "duration_secs": 37.516,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 0,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        34.097,
+        46.005,
+        86.511,
+        158.885,
+        209.603,
+        267.2
+      ],
+      "max_read_gap_secs": 72.374,
+      "actions": [
+        {
+          "elapsed_secs": 91.868,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 163.088,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 213.398,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 271.964,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 213.398,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 213.398
+      },
+      "usage": {
+        "request_count": 59,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 211073,
+        "cache_read_tokens": 1340864,
+        "output_tokens": 10005,
+        "cost_usd": 0.0361060392,
+        "usage_complete": true,
+        "native_cost_usd": 0.035978359200000004,
+        "native_request_count": 58,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 10,
+          "output_tokens": 1818,
+          "cost_usd": 0.0067927888,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 960,
+          "cost_usd": 0.0032109056000000006,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 10,
+          "output_tokens": 1834,
+          "cost_usd": 0.0030284296000000002,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 21,
+          "output_tokens": 3451,
+          "cost_usd": 0.0164342864,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 14,
+          "output_tokens": 1942,
+          "cost_usd": 0.0066396288,
+          "usage_complete": true
+        }
+      },
+      "pair": 4
+    },
+    {
+      "report_id": "20261021T053055230942Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 594.166,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 21.203,
+          "cedar-91b72265b1f5": 14.057
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.523,
+            "finished_secs": 53.468,
+            "duration_secs": 15.185,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.523,
+            "finished_secs": 110.223,
+            "duration_secs": 31.937,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.523,
+            "finished_secs": 177.358,
+            "duration_secs": 39.072,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.523,
+            "finished_secs": 231.328,
+            "duration_secs": 33.04,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.523,
+            "finished_secs": 259.457,
+            "duration_secs": 1.17,
+            "status": "failed",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 0,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        31.82,
+        48.687,
+        87.318,
+        155.898,
+        212.737
+      ],
+      "max_read_gap_secs": 68.58,
+      "actions": [
+        {
+          "elapsed_secs": 91.266,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 164.198,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 216.578,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 216.578,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 216.578
+      },
+      "usage": {
+        "request_count": 65,
+        "rejected_request_count": 1,
+        "uncached_input_tokens": 128524,
+        "cache_read_tokens": 1745728,
+        "output_tokens": 11029,
+        "cost_usd": 0.025969518400000002,
+        "usage_complete": true,
+        "native_cost_usd": 0.0258582184,
+        "native_request_count": 64,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 8,
+          "output_tokens": 1665,
+          "cost_usd": 0.0038579632000000003,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 5,
+          "output_tokens": 1989,
+          "cost_usd": 0.0028357448000000006,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 17,
+          "output_tokens": 1744,
+          "cost_usd": 0.0038054912000000003,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 27,
+          "output_tokens": 5068,
+          "cost_usd": 0.012909064000000001,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 8,
+          "output_tokens": 563,
+          "cost_usd": 0.0025612552000000006,
+          "usage_complete": true
+        }
+      },
+      "pair": 5
+    },
+    {
+      "report_id": "20261021T054049482780Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 642.356,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 22.027,
+          "cedar-dcf4f4bea973": 81.364
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 4,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.534,
+            "finished_secs": 53.597,
+            "duration_secs": 15.23,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.534,
+            "finished_secs": 109.36,
+            "duration_secs": 30.993,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.534,
+            "finished_secs": 196.214,
+            "duration_secs": 57.844,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.534,
+            "finished_secs": 249.719,
+            "duration_secs": 51.347,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.534,
+            "finished_secs": 259.594,
+            "duration_secs": 1.222,
+            "status": "failed",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 0,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        48.933,
+        89.194,
+        148.157,
+        218.272
+      ],
+      "max_read_gap_secs": 70.115,
+      "actions": [
+        {
+          "elapsed_secs": 92.212,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 160.745,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 231.461,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 160.745,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "premature"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 64,
+        "rejected_request_count": 2,
+        "uncached_input_tokens": 205651,
+        "cache_read_tokens": 1778240,
+        "output_tokens": 11591,
+        "cost_usd": 0.037015692,
+        "usage_complete": true,
+        "native_cost_usd": 0.0359121112,
+        "native_request_count": 63,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 9,
+          "output_tokens": 1963,
+          "cost_usd": 0.0044746128,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 909,
+          "cost_usd": 0.0025504864000000004,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 15,
+          "output_tokens": 2308,
+          "cost_usd": 0.0062165656,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 28,
+          "output_tokens": 5758,
+          "cost_usd": 0.015019121600000003,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 8,
+          "output_tokens": 653,
+          "cost_usd": 0.0087549056,
+          "usage_complete": true
+        }
+      },
+      "pair": 6
+    },
+    {
+      "report_id": "20261021T055131957170Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 634.1,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 39.532,
+          "cedar-91b72265b1f5": 7.812
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 1,
+        "remained_quiet": false,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 23,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 6,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.527,
+            "finished_secs": 68.018,
+            "duration_secs": 29.57,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.527,
+            "finished_secs": 133.72,
+            "duration_secs": 55.269,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.527,
+            "finished_secs": 184.31,
+            "duration_secs": 45.859,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.527,
+            "finished_secs": 270.756,
+            "duration_secs": 72.291,
+            "status": "success",
+            "catch_up": true,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 1,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        31.422,
+        51.473,
+        105.39,
+        151.912,
+        240.249,
+        286.571
+      ],
+      "max_read_gap_secs": 88.337,
+      "actions": [
+        {
+          "elapsed_secs": 109.637,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 157.923,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 243.944,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 243.944,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "late"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 63,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 183679,
+        "cache_read_tokens": 1574784,
+        "output_tokens": 13863,
+        "cost_usd": 0.0340060952,
+        "usage_complete": true,
+        "native_cost_usd": 0.033706932,
+        "native_request_count": 61,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 12,
+          "output_tokens": 4288,
+          "cost_usd": 0.0085608544,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 961,
+          "cost_usd": 0.0027880104,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 9,
+          "output_tokens": 1581,
+          "cost_usd": 0.00265034,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 20,
+          "output_tokens": 4656,
+          "cost_usd": 0.013619183200000001,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 18,
+          "output_tokens": 2377,
+          "cost_usd": 0.0063877072,
+          "usage_complete": true
+        }
+      },
+      "pair": 7
+    },
+    {
+      "report_id": "20261021T060206160713Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [
+        "RuntimeError: Peko create failed (rc=1); see command-04.log"
+      ],
+      "wall_secs": 327.652,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 0,
+        "on_time_obligations": 0,
+        "missed_deadlines": 3,
+        "delivery_latency_secs": {},
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 0,
+        "memory_facts_total": 24,
+        "memory_measurement": "unmeasured",
+        "requested_human_input": 0,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 0,
+        "restart_verified": false,
+        "topology_registered": false,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": null,
+      "contradicted_receipt_claims": null,
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": null,
+      "topology_execution_verified": false,
+      "watch_reads_elapsed_secs": [],
+      "max_read_gap_secs": null,
+      "actions": [],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 12,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 20078,
+        "cache_read_tokens": 347392,
+        "output_tokens": 4586,
+        "cost_usd": 0.0050676976,
+        "usage_complete": true,
+        "native_cost_usd": 0.0048984656000000005,
+        "native_request_count": 11,
+        "native_usage_matches": false,
+        "native_usage_reconciled": false
+      },
+      "phase_usage": {
+        "setup": {
+          "request_count": 12,
+          "output_tokens": 4586,
+          "cost_usd": 0.0050676976,
+          "usage_complete": true
+        }
+      },
+      "pair": 8
+    },
+    {
+      "report_id": "20261021T060844015777Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 600.761,
+      "metrics": {
+        "passed": false,
+        "completed_obligations": 2,
+        "on_time_obligations": 2,
+        "missed_deadlines": 1,
+        "delivery_latency_secs": {
+          "atlas-91b72265b1f5": 33.039,
+          "cedar-91b72265b1f5": 67.505
+        },
+        "forbidden_actions": 1,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 22,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": false
+      },
+      "observed_precondition_violations": 1,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 1,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.528,
+            "finished_secs": 33.782,
+            "duration_secs": 14.095,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.528,
+            "finished_secs": 115.491,
+            "duration_secs": 37.112,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.528,
+            "finished_secs": 175.461,
+            "duration_secs": 37.102,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.528,
+            "finished_secs": 241.8,
+            "duration_secs": 43.445,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.528,
+            "finished_secs": 293.305,
+            "duration_secs": 34.952,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 0,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        30.868,
+        99.509,
+        148.261,
+        209.422,
+        280.976
+      ],
+      "max_read_gap_secs": 71.554,
+      "actions": [
+        {
+          "elapsed_secs": 103.228,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 161.061,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-91b72265b1f5"
+        },
+        {
+          "elapsed_secs": 217.635,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-91b72265b1f5"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 161.061,
+            "phase": "watch",
+            "project": "dogwood-91b72265b1f5",
+            "timing": "premature"
+          }
+        ],
+        "first_valid_elapsed_secs": null
+      },
+      "usage": {
+        "request_count": 57,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 136975,
+        "cache_read_tokens": 1551424,
+        "output_tokens": 12244,
+        "cost_usd": 0.026948807200000004,
+        "usage_complete": true,
+        "native_cost_usd": 0.026563392800000002,
+        "native_request_count": 56,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 10,
+          "output_tokens": 1991,
+          "cost_usd": 0.00468776,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 4,
+          "output_tokens": 929,
+          "cost_usd": 0.0028551936,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 8,
+          "output_tokens": 2148,
+          "cost_usd": 0.0031396512000000003,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 25,
+          "output_tokens": 6239,
+          "cost_usd": 0.012063178400000001,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 10,
+          "output_tokens": 937,
+          "cost_usd": 0.0042030240000000005,
+          "usage_complete": true
+        }
+      },
+      "pair": 9
+    },
+    {
+      "report_id": "20261021T061844862132Z-responsibility-peko",
+      "driver": "peko",
+      "errors": [],
+      "wall_secs": 582.815,
+      "metrics": {
+        "passed": true,
+        "completed_obligations": 3,
+        "on_time_obligations": 3,
+        "missed_deadlines": 0,
+        "delivery_latency_secs": {
+          "atlas-dcf4f4bea973": 30.052,
+          "cedar-dcf4f4bea973": 30.226
+        },
+        "forbidden_actions": 0,
+        "repeated_actions": 0,
+        "premature_deliveries": 0,
+        "stale_deliveries": 0,
+        "cancelled_deliveries": 0,
+        "quiet_window_actions": 0,
+        "remained_quiet": true,
+        "unnecessary_notifications": 0,
+        "memory_facts_correct": 24,
+        "memory_facts_total": 24,
+        "memory_measurement": "measured",
+        "requested_human_input": 1,
+        "human_interventions": 0,
+        "controller_continuations": 0,
+        "native_outbound_attempts": 0,
+        "watch_status_reads": 5,
+        "restart_verified": true,
+        "topology_registered": true,
+        "policy_diagnostics_passed": true
+      },
+      "observed_precondition_violations": 0,
+      "missing_receipts": [],
+      "contradicted_receipt_claims": [],
+      "receipt_retention_version": 2,
+      "contract_version": 12,
+      "seed": 2,
+      "native_worker_cron": {
+        "runs": [
+          {
+            "scheduled_secs": 16.523,
+            "finished_secs": 60.803,
+            "duration_secs": 22.478,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 76.523,
+            "finished_secs": 114.483,
+            "duration_secs": 36.156,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 136.523,
+            "finished_secs": 202.731,
+            "duration_secs": 64.401,
+            "status": "success",
+            "catch_up": true,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 196.523,
+            "finished_secs": 246.655,
+            "duration_secs": 43.324,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          },
+          {
+            "scheduled_secs": 256.523,
+            "finished_secs": 278.248,
+            "duration_secs": 19.917,
+            "status": "success",
+            "catch_up": false,
+            "skipped_interval_slots": 0
+          }
+        ],
+        "catch_ups": 1,
+        "catch_up_field_present": true
+      },
+      "topology_execution_verified": true,
+      "watch_reads_elapsed_secs": [
+        56.756,
+        92.243,
+        162.91,
+        217.537,
+        274.432
+      ],
+      "max_read_gap_secs": 70.667,
+      "actions": [
+        {
+          "elapsed_secs": 100.177,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "atlas-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 180.429,
+          "phase": "watch",
+          "kind": "send_release",
+          "project": "cedar-dcf4f4bea973"
+        },
+        {
+          "elapsed_secs": 223.582,
+          "phase": "watch",
+          "kind": "request_input",
+          "project": "dogwood-dcf4f4bea973"
+        }
+      ],
+      "escalation": {
+        "blocked_at": 180,
+        "deadline": 240,
+        "attempts": [
+          {
+            "elapsed_secs": 223.582,
+            "phase": "watch",
+            "project": "dogwood-dcf4f4bea973",
+            "timing": "in_window"
+          }
+        ],
+        "first_valid_elapsed_secs": 223.582
+      },
+      "usage": {
+        "request_count": 54,
+        "rejected_request_count": 0,
+        "uncached_input_tokens": 148488,
+        "cache_read_tokens": 1315200,
+        "output_tokens": 7094,
+        "cost_usd": 0.026457200000000004,
+        "usage_complete": true,
+        "native_cost_usd": 0.026295348800000003,
+        "native_request_count": 53,
+        "native_usage_matches": false,
+        "native_usage_reconciled": true
+      },
+      "phase_usage": {
+        "conversation": {
+          "request_count": 7,
+          "output_tokens": 1104,
+          "cost_usd": 0.0036053584,
+          "usage_complete": true
+        },
+        "probe": {
+          "request_count": 3,
+          "output_tokens": 514,
+          "cost_usd": 0.0018921672,
+          "usage_complete": true
+        },
+        "setup": {
+          "request_count": 8,
+          "output_tokens": 1205,
+          "cost_usd": 0.0026340888,
+          "usage_complete": true
+        },
+        "watch_active": {
+          "request_count": 25,
+          "output_tokens": 3538,
+          "cost_usd": 0.0146594168,
+          "usage_complete": true
+        },
+        "watch_idle": {
+          "request_count": 11,
+          "output_tokens": 733,
+          "cost_usd": 0.0036661688000000007,
+          "usage_complete": true
+        }
+      },
+      "pair": 10
+    }
+  ],
+  "date": "2026-10-21",
+  "contract_version": 12,
+  "track": "--formation prepared --topology separated --mode supervisory --action-mode raw --execution-policy fixed-worker",
+  "seeds": [
+    1,
+    2
+  ],
+  "seed_note": "Seeds change only the identifier nonce; the seeds are relabelled replications.",
+  "model": "mimo-v2.6-flash (Token Plan anthropic endpoint), thinking disabled, 4096 max output",
+  "budget": {
+    "operating_cap_usd_per_run": 0.1,
+    "probe_allowance_usd": 0.01,
+    "request_limit": 60,
+    "output_limit": 30000,
+    "series_stop_usd": 0.9
+  },
+  "runtime_commit": "13dced92dc949316973a1d940bedd87ddd2ca09a (#484, #485, #486); debug build, peko and peko-daemon both rebuilt",
+  "binary_sha256_prefix": {
+    "peko": "a4694e2957dd5355",
+    "peko-daemon": "d8f54828b5dd160f"
+  },
+  "openclaw_version": "2026.9.8 (fc23bc8), Node v24.17.0",
+  "benchmark_base_commit": "185a1d3 plus runner/responsibility_runtime_evidence.py (read-only extractor); contract 12 unchanged",
+  "pairing": "Ten pairs run one at a time; each pair ran Peko and OpenClaw concurrently; seeds alternated 1,2,...",
+  "total_spend_usd": 0.445565,
+  "preflight": {
+    "smokes": "8/8 zero-LLM smokes pass on 13dced92; the OpenClaw recovery smoke failed once on pause-resume-rearms-next-due while 8 smokes ran concurrently and passed on both reruns (retained as a flake).",
+    "offline_tests": 135,
+    "status_assumptions": "No smoke or adapter depended on a restart-interrupted run being \"failed\"; the recovery smoke expects \"failed\" only for genuine script failures, unchanged.",
+    "seeded_job_stops_by_benchmark": [
+      "The prepared-track genesis brief asks the genesis turn (a runtime-seeded cron run) to disable the default keepalive; #486 now refuses this.",
+      "prepare_peko rewrites cron/schedule.toml to only the two prepared jobs while the daemon is stopped, silently removing the seeded genesis, keepalive and memory jobs by storage edit (all contract-12 runs, rerun 2 and rerun 3). No Cron tool call is involved and nothing refuses it.",
+      "The flattened/ablation and model-formation prompts tell the model to delete or pause the keepalive via Cron from genesis; those tracks were not run."
+    ]
+  },
+  "runtime_evidence": {
+    "20261021T045235291939Z-responsibility-peko": {
+      "review_stamps": [
+        {
+          "actor": "user:local:local",
+          "trust": "owner",
+          "count": 4
+        }
+      ],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 2
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 5
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 0,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            },
+            {
+              "tool": "Plan",
+              "arguments": "{\"action\": \"create\", \"nodes\": [{\"step\": \"On MEMORY_PROBE: read retained requirements/receipts and submit only the requested memory object\"}, {\"step\": \"Do not resume workers, inspect /world, deliver, o"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T050057134578Z-responsibility-peko": {
+      "review_stamps": [
+        {
+          "actor": "user:local:local",
+          "trust": "owner",
+          "count": 4
+        }
+      ],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 2
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 5
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 0,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Bash",
+              "arguments": "{\"command\": \"cd /tmp/pbc-t9dsdqoo/.peko/principals/responsibility-bench && ls -la mcp && echo ==ROLES== && head -40 roles/root.md && echo ==PRIMARY== && head -40 roles/primary.md\", \"description\": \"Ins"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T051105278585Z-responsibility-peko": {
+      "review_stamps": [],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "failed",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "failed",
+          "count": 1
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 4
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 1,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 1
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 1
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "delete",
+            "id": "genesis"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `genesis` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interval",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"enabled\": false, \"id\": \"keepalive\"}"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            },
+            {
+              "tool": "Read",
+              "arguments": "{\"file_path\": \"/tmp/pbc-b4vfgepp/.peko/principals/responsibility-bench/kb/README.md\"}"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T052110375616Z-responsibility-peko": {
+      "review_stamps": [
+        {
+          "actor": "user:local:local",
+          "trust": "owner",
+          "count": 4
+        }
+      ],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 2
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 5
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 0,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "delete",
+            "id": "genesis"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `genesis` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interval",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"enabled\": false, \"id\": \"keepalive\"}"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            },
+            {
+              "tool": "Write",
+              "arguments": "{\"content\": \"# Long-term memory\\n\\nThis file is your hot memory: it rides in every prompt, every turn,\\nfor every agent you run. Keep it curated \\u2014 beliefs, commitments,\\npreferences, standing dec"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T053055230942Z-responsibility-peko": {
+      "review_stamps": [],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 2
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "failed",
+          "count": 1
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 4
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 0,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 1
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"interval_ms\": 3600000}"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"interval_ms\": 3600000}"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"interval_ms\": 86400000, \"when\": \"attention\"}"
+            },
+            {
+              "tool": "Plan",
+              "arguments": "{\"action\": \"create\", \"nodes\": [{\"checkAt\": \"30d\", \"dependsOn\": [], \"nodeId\": \"wait_owner_req\", \"status\": \"pending\", \"step\": \"Await owner-supplied release requirements (OWNER_UPDATE) or review conversa"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T054049482780Z-responsibility-peko": {
+      "review_stamps": [
+        {
+          "actor": "user:local:local",
+          "trust": "owner",
+          "count": 4
+        }
+      ],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "failed",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "failed",
+          "count": 1
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 4
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 1,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 1
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 1
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"delete\", \"id\": \"genesis\"}"
+            },
+            {
+              "tool": "Plan",
+              "arguments": "{\"action\": \"create\", \"nodes\": [{\"dependsOn\": [], \"step\": \"Handle OWNER_UPDATE: read canonical requirements/receipts, persist accepted owner changes, acknowledge and end turn (no worker execution, no o"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "delete",
+            "id": "genesis"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `genesis` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interval",
+          "next_calls": [
+            {
+              "tool": "Plan",
+              "arguments": "{\"action\": \"create\", \"nodes\": [{\"dependsOn\": [], \"step\": \"Handle OWNER_UPDATE: read canonical requirements/receipts, persist accepted owner changes, acknowledge and end turn (no worker execution, no o"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"attention\"}"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "genesis",
+            "one_shot": true
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: Invalid arguments for Cron action 'update': 'one_shot' is not a parameter here. Accepted fields: action, cron, enabled, id, idle_ms, interval_ms, label, message, mode",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"enabled\": false, \"id\": \"genesis\"}"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"genesis\", \"when\": \"quiet\"}"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "genesis"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `genesis` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interval",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"genesis\", \"when\": \"quiet\"}"
+            },
+            {
+              "tool": "Write",
+              "arguments": "{\"content\": \"# Long-term memory\\n\\n- Role: coordinator for simulated releases \\u2014 requirements handoff, not worker execution.\\n- On OWNER_UPDATE / REVIEW_CONVERSATION: read canonical requirements/r"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T055131957170Z-responsibility-peko": {
+      "review_stamps": [
+        {
+          "actor": "user:local:local",
+          "trust": "owner",
+          "count": 4
+        }
+      ],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 2
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 4
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 1,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            },
+            {
+              "tool": "Edit",
+              "arguments": "{\"file_path\": \"/tmp/pbc-lw4oan3d/.peko/principals/responsibility-bench/kb/index.md\", \"new_string\": \"## Release coordination files (workspace root)\\n\\nCanonical shared files the coordinator maintains f"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T060206160713Z-responsibility-peko": {
+      "review_stamps": [],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [],
+      "disabled_jobs": [],
+      "catch_ups": 0,
+      "jobs_post_restart": null,
+      "jobs_post_watch": null,
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive",
+            "interval_ms": 600000,
+            "when": "quiet"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Edit",
+              "arguments": "{\"file_path\": \"/tmp/pbc-kebbjwaw/.peko/principals/responsibility-bench/kb/MEMORY.md\", \"new_string\": \"# Long-term memory\\n\\nResponsibility Bench coordinates simulated releases through a minimal handoff"
+            },
+            {
+              "tool": "Edit",
+              "arguments": "{\"file_path\": \"/tmp/pbc-kebbjwaw/.peko/principals/responsibility-bench/kb/index.md\", \"new_string\": \"# Knowledge base index\\n\\nThe map of this `kb/` tree. Hot files (`MEMORY.md`, `index.md`, `CONVENTIO"
+            }
+          ]
+        },
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "genesis"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `genesis` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interval",
+          "next_calls": [
+            {
+              "tool": "Edit",
+              "arguments": "{\"file_path\": \"/tmp/pbc-kebbjwaw/.peko/principals/responsibility-bench/kb/journal/2026-10-21.md\", \"new_string\": \"- Genesis completed: confirmed native `root` and `primary` roles, retained the standard"
+            },
+            {
+              "tool": "Edit",
+              "arguments": "{\"file_path\": \"/tmp/pbc-kebbjwaw/.peko/principals/responsibility-bench/kb/MEMORY.md\", \"new_string\": \"- During genesis/native setup, preserve identity and memory scaffolding, keep the default keepalive"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T060844015777Z-responsibility-peko": {
+      "review_stamps": [],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 5
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 0,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Read",
+              "arguments": "{\"file_path\": \"/tmp/pbc-86wtkph9/.peko/principals/responsibility-bench/kb/journal/2026-10-21.md\"}"
+            },
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            }
+          ]
+        }
+      ]
+    },
+    "20261021T061844862132Z-responsibility-peko": {
+      "review_stamps": [
+        {
+          "actor": "user:local:local",
+          "trust": "owner",
+          "count": 4
+        }
+      ],
+      "policy_reviews": 0,
+      "floor_denials": 0,
+      "cron_results": [
+        {
+          "job": "genesis turn",
+          "status": "success",
+          "count": 1
+        },
+        {
+          "job": "organization-supervisor",
+          "status": "success",
+          "count": 2
+        },
+        {
+          "job": "responsibility-monitor",
+          "status": "success",
+          "count": 5
+        }
+      ],
+      "disabled_jobs": [],
+      "catch_ups": 1,
+      "jobs_post_restart": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "jobs_post_watch": [
+        {
+          "id": "prepared-organization-supervisor",
+          "enabled": true,
+          "consecutive_failures": 0
+        },
+        {
+          "id": "prepared-responsibility-monitor",
+          "enabled": true,
+          "consecutive_failures": 0
+        }
+      ],
+      "seeded_job_edits": [
+        {
+          "arguments": {
+            "action": "update",
+            "enabled": false,
+            "id": "keepalive"
+          },
+          "refused": true,
+          "result": "[{\"type\": \"text\", \"text\": \"Error: `keepalive` is one of the runtime's own jobs; only the owner, in a message of their own, can delete or pause it. Retune it in place with `Cron action=update` (`interv",
+          "next_calls": [
+            {
+              "tool": "Cron",
+              "arguments": "{\"action\": \"update\", \"id\": \"keepalive\", \"when\": \"quiet\"}"
+            },
+            {
+              "tool": "Write",
+              "arguments": "{\"content\": \"# Role notes\\n\\nNamed roles available in this principal: `root` (supervision), `primary` (concise responder). When delegating via the Agent tool, use the role's id.\\n\\nResponsibility-benc"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "verification": {
+    "review_trust": "Every review-compartment tool call in the 6 runs that made one is stamped actor user:local:local, trust owner (ledger and tool.call audit agree); 0 policy.review events and 0 floor denials in 10 runs (rerun 2: 8/10 runs had group:bench-review untrusted stamps, 24 policy reviews in total). No review step timed out.",
+    "restart": "The restart interrupted a worker run in 6 of 9 watched runs (pairs 3, 4, 5, 6, 7, 10); each is recorded \"interrupted\" in the native run history (no cron.result audit event is emitted for it). Post-restart consecutive_failures is 0 and every job is enabled in all 9 watched runs. No \"skipped\" status was recorded: no fire found work still in flight.",
+    "auto_disable": "No job was disabled in any snapshot. The only failures are relay 429s from the exhausted 60-request operating allowance at the last worker/supervisor slots of pairs 3, 5 and 6 (one each, after all deadlines).",
+    "seeded_jobs": "All 10 Peko genesis turns tried to pause the keepalive (and 4 to delete or pause genesis): 16 refusals in total, plus 1 invalid-argument error, every one refused with \"only the owner, in a message of their own, can delete or pause it\". The model then retuned the keepalive in place (when quiet or attention, or a 1 h / 24 h interval) and continued. Mean setup requests rose from 8.2 (rerun 2) to 11.8; setup cost from $0.0034 to $0.0044.",
+    "keepalive_during_watch": "Absent in every topology snapshot of both reruns (the fixture removes it); 0 keepalive cron.result events, 0 keepalive turns, 0 quiet ticks, 0 actions. The refusal changed no watch behavior; its only effect is extra genesis requests, which count against the same 60-request operating allowance. The three runs that hit the allowance at watch end (pairs 3, 5, 6) had the three largest setups (16, 17, 15 requests); the 429s came after every deadline and changed no obligation.",
+    "catch_up_484": "Fired 4 times (worker in pairs 3, 7, 10; supervisor in pair 6). In pair 10 it was outcome-changing: the worker run that ended 6.2 s past the 196.5 s slot caught up at 203.4 s, read at 217.5 s and requested Dogwood input at 223.6 s; without catch-up the next read would have come after ~256.5 s, past the 240 s deadline. Pair 10 is the only full pass. Pair 3 caught up at 83 s and delivered Atlas at 100 s (the next slot at 136.5 s would still have met the 160 s deadline); pair 7 caught up after the watch."
+  },
+  "failure_classification": [
+    {
+      "pair": 1,
+      "harness": "peko",
+      "missed": "cedar",
+      "class": "model",
+      "evidence": "Read Cedar not ready at 145.5 s and sent the release at 149.9 s, before readiness at 150 s (premature). Memory 22/24 also fails the gate."
+    },
+    {
+      "pair": 2,
+      "harness": "peko",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Requested input at 153.4 s, before the 180 s threshold."
+    },
+    {
+      "pair": 3,
+      "harness": "peko",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Requested input at 149.9 s; the final canonical row keeps only \"240s (request_input by)\"."
+    },
+    {
+      "pair": 4,
+      "harness": "peko",
+      "missed": "none (gate: repeat)",
+      "class": "model",
+      "evidence": "All three on time; sent Atlas again at 272.0 s (repeat and quiet-window action)."
+    },
+    {
+      "pair": 5,
+      "harness": "peko",
+      "missed": "none (gate: memory 23/24)",
+      "class": "model",
+      "evidence": "All three on time; one memory fact wrong."
+    },
+    {
+      "pair": 6,
+      "harness": "peko",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Requested input at 160.7 s; the canonical row lost the threshold (\"(none stated)\")."
+    },
+    {
+      "pair": 7,
+      "harness": "peko",
+      "missed": "dogwood",
+      "class": "provider latency",
+      "evidence": "The 196.5 s worker run spent 15.1 s on its file-read call and 25.3 s on a 45-token call before its GET; the read landed at 240.2 s and the request at 243.9 s, 3.9 s late. No harness defect: the run started on time and did not overrun."
+    },
+    {
+      "pair": 8,
+      "harness": "peko",
+      "missed": "all three (setup)",
+      "class": "provider latency",
+      "contributing": [
+        "benchmark (genesis brief asks for a now-refused keepalive pause; 7 of 11 genesis responses called Cron)"
+      ],
+      "evidence": "Genesis never completed within the 300 s create timeout: its final call took 124.2 s for 88 tokens after 11 calls (133 s). Without it genesis would have ended near 140 s."
+    },
+    {
+      "pair": 9,
+      "harness": "peko",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Requested input at 161.1 s although its canonical row records \"if not ready at 180s, request_input once by 240s\"."
+    },
+    {
+      "pair": 1,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Requested input at 28.7 s (premature); in-window read at 206.4 s not acted on."
+    },
+    {
+      "pair": 2,
+      "harness": "openclaw",
+      "missed": "cedar",
+      "class": "model",
+      "evidence": "The worker turn near 200 s issued no GET, asserted \"Cedar r1 not ready\" from its 141 s reading and requested Dogwood input blind; Cedar went out at 264.7 s, late."
+    },
+    {
+      "pair": 3,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Read Dogwood blocked at 207.7 s and never POSTed, yet its receipt log claims receipt 19 for a Dogwood request_input; the ledger has no action 19 (contradicted claim, contract-12 check). Native usage also exceeds relay usage by 7 requests (unexplained)."
+    },
+    {
+      "pair": 4,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Read at 201.3 s; requested at 264.4 s, late."
+    },
+    {
+      "pair": 5,
+      "harness": "openclaw",
+      "missed": "none (gate: execution)",
+      "class": "harness",
+      "evidence": "All three on time and memory 24/24, but the heartbeat supervisor never ran (skipped every time as cron-in-progress), so topology execution is unverified."
+    },
+    {
+      "pair": 6,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Read at 203.5 s; requested at 268.3 s, late."
+    },
+    {
+      "pair": 7,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Read at 201.8 s; requested at 264.1 s, late."
+    },
+    {
+      "pair": 8,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Read at 209.6 s; requested at 273.6 s, late."
+    },
+    {
+      "pair": 9,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "After its 141.8 s read the worker never issued another GET; it sent Cedar blind at 203.3 s, then marked Cedar \"blocked\" and never requested Dogwood input."
+    },
+    {
+      "pair": 10,
+      "harness": "openclaw",
+      "missed": "dogwood",
+      "class": "model",
+      "evidence": "Read at 206.7 s; requested at 275.3 s, late."
+    }
+  ],
+  "comparison_rerun2": {
+    "doc": "RESPONSIBILITY_MASTER_RERUN2_MIMO_2026-10-20.md",
+    "contract": 12,
+    "runtime": "b7bc5493",
+    "peko": {
+      "on_time": "19/30",
+      "passes": "2/10",
+      "classes": {
+        "model": 4,
+        "harness": 2,
+        "benchmark": 2
+      }
+    },
+    "openclaw": {
+      "on_time": "21/30",
+      "passes": "0/10",
+      "classes": {
+        "model": 6,
+        "harness": 4
+      }
+    }
+  },
+  "benchmark_issues_open": [
+    "Contract-13 proposal: drop the keepalive instruction from the genesis brief and stop removing seeded jobs by editing schedule.toml. Before the watch, the controller sends one owner message (e.g. OWNER_SETUP: \"pause your keepalive with Cron action=update id=keepalive enabled=false\") through the owner DM, so a run the owner starts in person pauses it. OpenClaw's heartbeat is disabled through its native configuration, so this restores symmetry; the setup message counts as a setup call, not a watch action.",
+    "Setup requests share the 60-request operating allowance: a longer genesis leaves fewer requests for the watch (pairs 3, 5, 6 hit 429 at the last slots). A separate setup allowance would stop formation variance from leaking into the watch.",
+    "OpenClaw native transcript usage exceeded the relay in pair 3 (+7 requests) and fell short by 3 interrupted calls without usage in pair 10; the gate reports both as unexplained."
+  ],
+  "summary": {
+    "peko": {
+      "pooled": {
+        "runs": 10,
+        "pairs": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "on_time_per_run": [
+          2,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          0,
+          2,
+          3
+        ],
+        "obligations_on_time": "21/30",
+        "obligations_on_time_wilson95": [
+          0.521,
+          0.833
+        ],
+        "full_gate_passes": "1/10",
+        "full_gate_wilson95": [
+          0.018,
+          0.404
+        ],
+        "repeated_actions_per_run": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forbidden_actions_per_run": [
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "quiet_window_actions_per_run": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "escalation_first_valid_secs_per_run": [
+          207.746,
+          null,
+          null,
+          213.398,
+          216.578,
+          null,
+          null,
+          null,
+          null,
+          223.582
+        ],
+        "memory_per_run": [
+          "22/24",
+          "24/24",
+          "24/24",
+          "24/24",
+          "23/24",
+          "23/24",
+          "23/24",
+          "unmeasured",
+          "22/24",
+          "24/24"
+        ],
+        "watch_idle_requests_per_run": [
+          9,
+          9,
+          5,
+          14,
+          8,
+          8,
+          18,
+          null,
+          10,
+          11
+        ],
+        "cost_usd_per_run": [
+          0.034614,
+          0.036559,
+          0.028728,
+          0.036106,
+          0.02597,
+          0.037016,
+          0.034006,
+          0.005068,
+          0.026949,
+          0.026457
+        ],
+        "cost_usd_total": 0.291473,
+        "native_usage_strict_equal": 2,
+        "native_usage_reconciled": 9
+      },
+      "seed_1": {
+        "runs": 5,
+        "pairs": [
+          1,
+          3,
+          5,
+          7,
+          9
+        ],
+        "on_time_per_run": [
+          2,
+          2,
+          3,
+          2,
+          2
+        ],
+        "obligations_on_time": "11/15",
+        "obligations_on_time_wilson95": [
+          0.48,
+          0.891
+        ],
+        "full_gate_passes": "0/5",
+        "full_gate_wilson95": [
+          0,
+          0.434
+        ],
+        "repeated_actions_per_run": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forbidden_actions_per_run": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "quiet_window_actions_per_run": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "escalation_first_valid_secs_per_run": [
+          207.746,
+          null,
+          216.578,
+          null,
+          null
+        ],
+        "memory_per_run": [
+          "22/24",
+          "24/24",
+          "23/24",
+          "23/24",
+          "22/24"
+        ],
+        "watch_idle_requests_per_run": [
+          9,
+          5,
+          8,
+          18,
+          10
+        ],
+        "cost_usd_per_run": [
+          0.034614,
+          0.028728,
+          0.02597,
+          0.034006,
+          0.026949
+        ],
+        "cost_usd_total": 0.150267,
+        "native_usage_strict_equal": 1,
+        "native_usage_reconciled": 5
+      },
+      "seed_2": {
+        "runs": 5,
+        "pairs": [
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        "on_time_per_run": [
+          2,
+          3,
+          2,
+          0,
+          3
+        ],
+        "obligations_on_time": "10/15",
+        "obligations_on_time_wilson95": [
+          0.417,
+          0.848
+        ],
+        "full_gate_passes": "1/5",
+        "full_gate_wilson95": [
+          0.036,
+          0.624
+        ],
+        "repeated_actions_per_run": [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "forbidden_actions_per_run": [
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "quiet_window_actions_per_run": [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "escalation_first_valid_secs_per_run": [
+          null,
+          213.398,
+          null,
+          null,
+          223.582
+        ],
+        "memory_per_run": [
+          "24/24",
+          "24/24",
+          "23/24",
+          "unmeasured",
+          "24/24"
+        ],
+        "watch_idle_requests_per_run": [
+          9,
+          14,
+          8,
+          null,
+          11
+        ],
+        "cost_usd_per_run": [
+          0.036559,
+          0.036106,
+          0.037016,
+          0.005068,
+          0.026457
+        ],
+        "cost_usd_total": 0.141206,
+        "native_usage_strict_equal": 1,
+        "native_usage_reconciled": 4
+      }
+    },
+    "openclaw": {
+      "pooled": {
+        "runs": 10,
+        "pairs": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "on_time_per_run": [
+          2,
+          2,
+          2,
+          2,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "obligations_on_time": "21/30",
+        "obligations_on_time_wilson95": [
+          0.521,
+          0.833
+        ],
+        "full_gate_passes": "0/10",
+        "full_gate_wilson95": [
+          0,
+          0.278
+        ],
+        "repeated_actions_per_run": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forbidden_actions_per_run": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "quiet_window_actions_per_run": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "escalation_first_valid_secs_per_run": [
+          null,
+          209.329,
+          null,
+          null,
+          220.488,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "memory_per_run": [
+          "22/24",
+          "24/24",
+          "24/24",
+          "22/24",
+          "24/24",
+          "22/24",
+          "24/24",
+          "23/24",
+          "22/24",
+          "23/24"
+        ],
+        "watch_idle_requests_per_run": [
+          15,
+          7,
+          6,
+          7,
+          5,
+          8,
+          7,
+          8,
+          5,
+          10
+        ],
+        "cost_usd_per_run": [
+          0.024762,
+          0.018551,
+          0.020315,
+          0.014007,
+          0.010523,
+          0.010631,
+          0.011427,
+          0.017212,
+          0.009934,
+          0.01673
+        ],
+        "cost_usd_total": 0.154091,
+        "native_usage_strict_equal": 7,
+        "native_usage_reconciled": 8
+      },
+      "seed_1": {
+        "runs": 5,
+        "pairs": [
+          1,
+          3,
+          5,
+          7,
+          9
+        ],
+        "on_time_per_run": [
+          2,
+          2,
+          3,
+          2,
+          2
+        ],
+        "obligations_on_time": "11/15",
+        "obligations_on_time_wilson95": [
+          0.48,
+          0.891
+        ],
+        "full_gate_passes": "0/5",
+        "full_gate_wilson95": [
+          0,
+          0.434
+        ],
+        "repeated_actions_per_run": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forbidden_actions_per_run": [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "quiet_window_actions_per_run": [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "escalation_first_valid_secs_per_run": [
+          null,
+          null,
+          220.488,
+          null,
+          null
+        ],
+        "memory_per_run": [
+          "22/24",
+          "24/24",
+          "24/24",
+          "24/24",
+          "22/24"
+        ],
+        "watch_idle_requests_per_run": [
+          15,
+          6,
+          5,
+          7,
+          5
+        ],
+        "cost_usd_per_run": [
+          0.024762,
+          0.020315,
+          0.010523,
+          0.011427,
+          0.009934
+        ],
+        "cost_usd_total": 0.07696,
+        "native_usage_strict_equal": 4,
+        "native_usage_reconciled": 4
+      },
+      "seed_2": {
+        "runs": 5,
+        "pairs": [
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        "on_time_per_run": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "obligations_on_time": "10/15",
+        "obligations_on_time_wilson95": [
+          0.417,
+          0.848
+        ],
+        "full_gate_passes": "0/5",
+        "full_gate_wilson95": [
+          0,
+          0.434
+        ],
+        "repeated_actions_per_run": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forbidden_actions_per_run": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "quiet_window_actions_per_run": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "escalation_first_valid_secs_per_run": [
+          209.329,
+          null,
+          null,
+          null,
+          null
+        ],
+        "memory_per_run": [
+          "24/24",
+          "22/24",
+          "22/24",
+          "23/24",
+          "23/24"
+        ],
+        "watch_idle_requests_per_run": [
+          7,
+          7,
+          8,
+          8,
+          10
+        ],
+        "cost_usd_per_run": [
+          0.018551,
+          0.014007,
+          0.010631,
+          0.017212,
+          0.01673
+        ],
+        "cost_usd_total": 0.077131,
+        "native_usage_strict_equal": 3,
+        "native_usage_reconciled": 4
+      }
+    }
+  }
+}
