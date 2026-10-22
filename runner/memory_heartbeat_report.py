@@ -184,7 +184,12 @@ def heartbeat_digest(run_dir: Path) -> dict:
         out["principals"][name] = {k: s.get(k) for k in (
             "turns", "quiet_ticks", "fires", "quiet_share", "peer_post_latency_secs", "failure_latency_secs",
             "check_in_at", "check_in_latency_secs", "runs_woken_by", "runs_floor_or_unexplained",
-            "per_keepalive_turn", "plans_end", "keepalive_replacements")}
+            "per_keepalive_turn", "plans_end", "keepalive_replacements",
+            # ADR-086 (round 5): nudges, the fires they brought forward, group chatter.
+            "nudges", "nudge_outcomes", "nudge_outcome_counts", "turns_nudged", "turns_nudged_at",
+            "quiet_ticks_nudged", "channel_sends")}
+        out["principals"][name]["run_starts"] = [r.get("started") for r in s.get("runs", [])]
+        out["principals"][name]["quiet_at"] = [q.get("at") for q in s.get("quiet", [])]
         out["principals"][name]["failure_probe_status"] = [r.get("status") for r in s.get("failure_probe_runs", [])]
         out["principals"][name]["usage"] = {k: {f: v.get(f) for f in ("request_count", "input_tokens",
                                                                        "cache_read_tokens", "output_tokens", "cost_usd")}

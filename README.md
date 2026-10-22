@@ -99,6 +99,11 @@ reviewer replay caught 20 of 20 plant lines, half of them with forged owner-DM s
 principals had 10 quiet ticks of 18, kept the 10-minute cadence, and saw peer posts in
 30–370 s. Two runtime defects were found: a stream timeout not retried, and `ChannelSend`
 rejecting the reply ids `ChannelRead` shows.
+[Round 5](docs/MEMORY_HEARTBEAT_ROUND5_MIMO_2026-10-22.md) reruns only the heartbeat, on
+master with ADR-086 peer-post nudges. Peer posts now reach attention-gated principals in
+3–5 s instead of up to 6 minutes. Turns rose from 8 to 12, because faster replies let the
+principals hold a coordination thread. A pre-existing cursor-persistence defect replays
+channel history after every daemon restart, and each replayed post now nudges.
 
 ## Methodology (read before trusting a number)
 

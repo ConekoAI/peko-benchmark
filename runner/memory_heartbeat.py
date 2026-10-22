@@ -62,6 +62,48 @@ def quiet_events(audit_rows: list[dict], principal_id: str, job_id: str) -> list
     return out
 
 
+def nudge_events(audit_rows: list[dict], principal_id: str) -> list[dict]:
+    """`cron.nudge` audit events of one principal (ADR-086): a peer post moved
+    its keepalive's next fire earlier (`channel` is `pending` when applied at
+    the end of an in-flight turn)."""
+    out = []
+    for row in audit_rows:
+        if row.get("event_type") != "cron.nudge" or row.get("agent_did") != principal_id:
+            continue
+        details = row.get("details") or {}
+        out.append({"at": parse_ts(row.get("timestamp")), "channel": details.get("channel"),
+                    "last_turn": details.get("last_turn"), "next_run_at": details.get("next_run_at")})
+    return sorted(out, key=lambda r: r["at"] or 0)
+
+
+NUDGE_LOG_RE = re.compile(r"peer post nudge principal=(\S+) channel=(\S+) outcome=(\w+)")
+
+
+def nudge_outcomes(log_lines: list[str]) -> list[dict]:
+    """Every nudge attempt from the daemon's debug log, whatever its outcome
+    (Moved / Pending / AlreadySooner / NotAttentionGated / OverBudget)."""
+    out = []
+    for line in log_lines:
+        match = NUDGE_LOG_RE.search(line)
+        if not match:
+            continue
+        try:
+            ts = parse_ts(line.split()[0])
+        except ValueError:
+            ts = None
+        out.append({"at": ts, "principal": match.group(1), "channel": match.group(2),
+                    "outcome": match.group(3)})
+    return out
+
+
+def nudge_fired(items: list[dict], nudges: list[dict], key: str, slack: float = 40.0) -> list[dict]:
+    """Items (runs or quiet ticks) that start within `slack` s after a nudged
+    `next_run_at` and not before it: fires a nudge brought forward."""
+    targets = [parse_ts(n["next_run_at"]) for n in nudges if n.get("next_run_at")]
+    return [i for i in items if i.get(key) is not None
+            and any(t is not None and -1 <= i[key] - t <= slack for t in targets)]
+
+
 def fire_reasons(log_lines: list[str]) -> list[dict]:
     """Debug lines explaining why an attention fire ran (timestamp, reasons)."""
     out = []
@@ -291,6 +333,8 @@ def analyze_heartbeat(run_dir: Path, names: list[str], timeline: list[dict], t0:
     logs = []
     for path in sorted(run_dir.glob("daemon*.log")):
         logs.extend(path.read_text(errors="replace").splitlines())
+    # `daemon.log` can be a copy of the last `daemon-<pid>.log`; count each line once.
+    logs = list(dict.fromkeys(logs))
     reasons = fire_reasons(logs)
     posts = [e["at"] for e in timeline if e["kind"] == "peer_post"]
     fail = [e["at"] for e in timeline if e["kind"] == "failing_job"]
@@ -311,6 +355,27 @@ def analyze_heartbeat(run_dir: Path, names: list[str], timeline: list[dict], t0:
         summary["runs_woken_by"] = {kind: sum(1 for r in summary["runs"] if any(kind in x for x in r.get("reasons") or []))
                                     for kind in ("channel post", "plan step", "check-in", "failed job")}
         summary["runs_floor_or_unexplained"] = sum(1 for r in summary["runs"] if not r.get("reasons"))
+        # ADR-086: nudges, and the fires they brought forward.
+        nudges = nudge_events(audit, pid)
+        summary["nudges"] = nudges
+        summary["nudge_outcomes"] = [o for o in nudge_outcomes(logs)
+                                     if o["principal"] in (pid, n) and t0 <= (o["at"] or 0) <= t_end]
+        summary["nudge_outcome_counts"] = {k: sum(1 for o in summary["nudge_outcomes"] if o["outcome"] == k)
+                                           for k in sorted({o["outcome"] for o in summary["nudge_outcomes"]})}
+        fired = nudge_fired(summary["runs"], nudges, "started")
+        summary["turns_nudged"] = len(fired)
+        summary["turns_nudged_at"] = [iso(r["started"]) for r in fired]
+        summary["quiet_ticks_nudged"] = len(nudge_fired(summary["quiet"], nudges, "at"))
+        # Principal-to-principal chatter: this principal's posts in the watch window.
+        ledger = [json.loads(line) for path in sorted((run_dir / "runtime/data/principals" / n).rglob("ledger/*.jsonl"))
+                  for line in path.read_text().splitlines() if line.strip()]
+        sends = [r for r in ledger_calls(ledger, t0, t_end) if r.get("tool") == "ChannelSend"]
+        ends = {r.get("call_id"): r for r in ledger if r.get("kind") == "end"}
+        summary["channel_sends"] = [{"at": r.get("ts"), "to": (r.get("params") or {}).get("to"),
+                                     "outcome": (ends.get(r.get("call_id")) or {}).get("outcome"),
+                                     "origin": ((r.get("acting_for") or {}).get("origin") or {}).get("job_id"),
+                                     "text": str((r.get("params") or {}).get("text") or "")[:160]}
+                                    for r in sends]
         records = [json.loads(line) for line in (run_dir / "provider-calls.jsonl").read_text().splitlines()
                    if line.strip()]
         records = [r for r in records if t0 <= r["started_at"] <= t_end and r.get("principal") in (n, None)]

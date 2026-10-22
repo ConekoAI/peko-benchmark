@@ -141,6 +141,22 @@ class HeartbeatAnalysisTests(unittest.TestCase):
         self.assertEqual((stats['open_steps'], stats['snoozed_steps'], stats['awake_steps']), (3, 1, 2))
 
 
+class NudgeTests(unittest.TestCase):
+    def test_nudge_log_and_fired_turns(self):
+        from memory_heartbeat import nudge_outcomes, nudge_fired
+        lines = ['2026-10-22T01:00:00.5Z DEBUG peko_core::daemon::cron_engine::nudge: peer post nudge '
+                 'principal=prin_a channel=group:studio-ops outcome=Moved(2026-10-22T01:02:00Z)',
+                 '2026-10-22T01:00:01Z DEBUG peko_core::daemon::cron_engine::nudge: peer post nudge '
+                 'principal=prin_b channel=group:studio-ops outcome=OverBudget',
+                 'unrelated line']
+        rows = nudge_outcomes(lines)
+        self.assertEqual([(r['principal'], r['outcome']) for r in rows], [('prin_a', 'Moved'), ('prin_b', 'OverBudget')])
+        target = parse_ts('2026-10-22T01:02:00Z')
+        runs = [{'started': target + 12}, {'started': target - 30}, {'started': target + 600}]
+        fired = nudge_fired(runs, [{'next_run_at': '2026-10-22T01:02:00Z'}], 'started')
+        self.assertEqual(fired, [{'started': target + 12}])
+
+
 class MemoryGradeTests(unittest.TestCase):
     def setUp(self):
         self.items = tomllib.loads((SCENARIOS / 'memory.toml').read_text())['items']

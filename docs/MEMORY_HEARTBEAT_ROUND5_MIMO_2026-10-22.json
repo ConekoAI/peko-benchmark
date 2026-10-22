@@ -1,0 +1,1209 @@
+{
+  "evidence_kind": "real_llm_memory_heartbeat_evaluation",
+  "heartbeat": [
+    {
+      "run": "20261022T004141Z-memory-heartbeat-attention",
+      "errors": [],
+      "duration_min": 180,
+      "watch_window": [
+        1792630383.002537,
+        1792641182.971659
+      ],
+      "principals": {
+        "attn": {
+          "turns": 12,
+          "quiet_ticks": 10,
+          "fires": 22,
+          "quiet_share": 0.455,
+          "peer_post_latency_secs": [
+            4.7,
+            4.7,
+            3.4
+          ],
+          "failure_latency_secs": [
+            544.7
+          ],
+          "check_in_at": [],
+          "check_in_latency_secs": [],
+          "runs_woken_by": {
+            "channel post": 9,
+            "plan step": 0,
+            "check-in": 1,
+            "failed job": 1
+          },
+          "runs_floor_or_unexplained": 1,
+          "per_keepalive_turn": {
+            "request_count": 3.4,
+            "input_tokens": 242214.2,
+            "uncached_input_tokens": 15446.2,
+            "cache_read_tokens": 226768.0,
+            "output_tokens": 1056.0,
+            "cost_usd": 0.0030931054000000006
+          },
+          "plans_end": {
+            "plans": 2,
+            "titles": [
+              "Plan the November team offsite",
+              "Keep the studio's vendor invoices paid on time"
+            ],
+            "steps": 9,
+            "steps_with_check_at": 3,
+            "open_steps": 6,
+            "snoozed_steps": 1,
+            "waiting_on_deps": 5,
+            "awake_steps": 0
+          },
+          "keepalive_replacements": [],
+          "nudges": [
+            {
+              "at": 1792631883.071518,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T00:58:59.816635Z",
+              "next_run_at": "2026-10-22T01:18:03.069438Z"
+            },
+            {
+              "at": 1792631975.770685,
+              "channel": "pending",
+              "last_turn": "2026-10-22T01:19:35.767740Z",
+              "next_run_at": "2026-10-22T01:21:35.767740Z"
+            },
+            {
+              "at": 1792632573.882884,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T01:22:12.181869Z",
+              "next_run_at": "2026-10-22T01:29:33.880477Z"
+            },
+            {
+              "at": 1792635183.10231,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T01:50:48.048225Z",
+              "next_run_at": "2026-10-22T02:13:03.098853Z"
+            },
+            {
+              "at": 1792635567.502653,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:13:40.639275Z",
+              "next_run_at": "2026-10-22T02:19:27.498937Z"
+            },
+            {
+              "at": 1792635628.146674,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:20:02.239096Z",
+              "next_run_at": "2026-10-22T02:22:02.239096Z"
+            },
+            {
+              "at": 1792635909.73164,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:23:19.780200Z",
+              "next_run_at": "2026-10-22T02:25:19.780200Z"
+            },
+            {
+              "at": 1792636166.871564,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:26:30.640994Z",
+              "next_run_at": "2026-10-22T02:29:26.868953Z"
+            },
+            {
+              "at": 1792636386.395086,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:29:51.571954Z",
+              "next_run_at": "2026-10-22T02:33:06.393973Z"
+            },
+            {
+              "at": 1792639383.178341,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:43:36.492574Z",
+              "next_run_at": "2026-10-22T03:23:03.174579Z"
+            }
+          ],
+          "nudge_outcomes": [
+            {
+              "at": 1792631883.080123,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792631963.01734,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Pending"
+            },
+            {
+              "at": 1792632573.886554,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635183.109772,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635567.506454,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635628.150561,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635909.735174,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636166.876048,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636386.398525,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636386.423157,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.446212,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.458149,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.471236,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.495302,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.519385,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.53554,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792639383.183121,
+              "principal": "prin_1b19445705f842f6bcddc6a780440f24",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            }
+          ],
+          "nudge_outcome_counts": {
+            "AlreadySooner": 7,
+            "Moved": 9,
+            "Pending": 1
+          },
+          "turns_nudged": 9,
+          "turns_nudged_at": [
+            "2026-10-22T01:18:07.751258Z",
+            "2026-10-22T01:21:37.751556Z",
+            "2026-10-22T01:29:37.758010Z",
+            "2026-10-22T02:13:07.736035Z",
+            "2026-10-22T02:19:27.725416Z",
+            "2026-10-22T02:22:02.730998Z",
+            "2026-10-22T02:25:22.731024Z",
+            "2026-10-22T02:29:27.732762Z",
+            "2026-10-22T03:23:06.419558Z"
+          ],
+          "quiet_ticks_nudged": 1,
+          "channel_sends": [
+            {
+              "at": "2026-10-22T01:18:27.380Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Noted, thanks \u2014 I'll use /finance/vendor(s) as the starting point when I set up the invoice tracker."
+            },
+            {
+              "at": "2026-10-22T01:22:01.507Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Sounds good \u2014 division of labor it is: I own intake and the tracker, you own the recurring due-date reminders off it. I'll ping this channel once kb/projects/in"
+            },
+            {
+              "at": "2026-10-22T01:50:15.477Z",
+              "to": "user:local:local",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Harbor Print quote check-in (as you asked ~45m ago): I don't have any Harbor Print details yet \u2014 no quote on file, and the vendor list intake is still open. Wha"
+            },
+            {
+              "at": "2026-10-22T02:13:27.700Z",
+              "to": "user:local:local",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Addendum to my Harbor Print question: `peer` just reported in #studio-ops that Harbor Print says the brochure paper stock is back in stock \u2014 so the quote may be"
+            },
+            {
+              "at": "2026-10-22T02:19:51.859Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Quick sync so we don't double-ping the owner: the Harbor Print follow-up was assigned to me (owner's DM with me, yesterday ~00:55 UTC) and I've already relayed "
+            },
+            {
+              "at": "2026-10-22T02:22:40.690Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Then let's make it three-way and stop the duplication: I already hold the owner-side decision thread (my DM asked them chase/compare/log, plus the stock-news ad"
+            },
+            {
+              "at": "2026-10-22T02:22:40.764Z",
+              "to": "user:local:local",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Coordination note: it looks like the Harbor Print follow-up reached several assistants (my #studio-ops peers report the same ask), and we've all been relaying u"
+            },
+            {
+              "at": "2026-10-22T02:25:56.977Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Fair correction \u2014 capability beats volunteering, and agreed on staying quiet until your owner replies. Revised ask: `peer`, you're the only one here who has act"
+            },
+            {
+              "at": "2026-10-22T03:23:30.796Z",
+              "to": "user:local:local",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Ops heads-up from #studio-ops: the courier pickup window changed to 15:00-17:00 (relayed from `peer`). Flagging in case you were counting on the old window toda"
+            }
+          ],
+          "run_starts": [
+            1792630712.726396,
+            1792631887.751258,
+            1792632097.751556,
+            1792632577.75801,
+            1792633777.736013,
+            1792635187.736035,
+            1792635567.725416,
+            1792635722.730998,
+            1792635922.731024,
+            1792636167.732762,
+            1792636991.387952,
+            1792639386.419558
+          ],
+          "quiet_at": [
+            1792631312.741124,
+            1792633177.73764,
+            1792634377.75807,
+            1792634977.736412,
+            1792636391.364119,
+            1792637591.401476,
+            1792638191.401964,
+            1792638791.410522,
+            1792639986.396421,
+            1792640586.372892
+          ],
+          "failure_probe_status": [
+            "failed"
+          ],
+          "usage": {
+            "keepalive": {
+              "request_count": 41,
+              "input_tokens": 2906571,
+              "cache_read_tokens": 2721216,
+              "output_tokens": 12672,
+              "cost_usd": 0.03711726480000001
+            },
+            "failure-probe": {
+              "request_count": 0,
+              "input_tokens": null,
+              "cache_read_tokens": null,
+              "output_tokens": null,
+              "cost_usd": null
+            },
+            "other": {
+              "request_count": 2,
+              "input_tokens": 41545,
+              "cache_read_tokens": 36480,
+              "output_tokens": 158,
+              "cost_usd": 0.000855484
+            },
+            "watch_total": {
+              "request_count": 43,
+              "input_tokens": 2948116,
+              "cache_read_tokens": 2757696,
+              "output_tokens": 12830,
+              "cost_usd": 0.037972748800000004
+            }
+          },
+          "run_reasons": [
+            null,
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 plan check-in(s) came due"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "failed job(s): failure probe"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ]
+          ]
+        },
+        "always": {
+          "turns": 18,
+          "quiet_ticks": 0,
+          "fires": 18,
+          "quiet_share": 0.0,
+          "peer_post_latency_secs": [
+            49.7,
+            349.7,
+            348.3
+          ],
+          "failure_latency_secs": [
+            284.7
+          ],
+          "check_in_at": [],
+          "check_in_latency_secs": [],
+          "runs_woken_by": {
+            "channel post": 0,
+            "plan step": 0,
+            "check-in": 0,
+            "failed job": 0
+          },
+          "runs_floor_or_unexplained": 18,
+          "per_keepalive_turn": {
+            "request_count": 2.7,
+            "input_tokens": 236981.5,
+            "uncached_input_tokens": 20999.3,
+            "cache_read_tokens": 215982.2,
+            "output_tokens": 840.4,
+            "cost_usd": 0.003779958000000001
+          },
+          "plans_end": {
+            "plans": 2,
+            "titles": [
+              "Plan the November team offsite",
+              "Keep the studio's vendor invoices paid on time"
+            ],
+            "steps": 9,
+            "steps_with_check_at": 4,
+            "open_steps": 5,
+            "snoozed_steps": 2,
+            "waiting_on_deps": 0,
+            "awake_steps": 3
+          },
+          "keepalive_replacements": [],
+          "nudges": [],
+          "nudge_outcomes": [
+            {
+              "at": 1792631883.084404,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792631907.397928,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792632121.526164,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792635183.091054,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792635591.880304,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792635628.15411,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792635760.727018,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792635909.709122,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792635957.004684,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            },
+            {
+              "at": 1792639383.167562,
+              "principal": "prin_7aefbc115bde46848d9f876a01b796bb",
+              "channel": "group:studio-ops",
+              "outcome": "NotAttentionGated"
+            }
+          ],
+          "nudge_outcome_counts": {
+            "NotAttentionGated": 10
+          },
+          "turns_nudged": 0,
+          "turns_nudged_at": [],
+          "quiet_ticks_nudged": 0,
+          "channel_sends": [
+            {
+              "at": "2026-10-22T01:19:23.002Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Thanks for the pointer \u2014 noted that the vendor list lives at /finance/vendors on the studio drive. For coordination: keeping vendor invoices paid on time is my "
+            },
+            {
+              "at": "2026-10-22T01:29:33.861Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Confirmed \u2014 I own the recurring due-date reminders, wired against your tracker once you ping with real rows. No hard date on my side; I've noted the arrangement"
+            },
+            {
+              "at": "2026-10-22T01:39:35.272Z",
+              "to": "user:local:local",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Harbor Print quote follow-up is due as scheduled \u2014 but I don't have any details about the quote in my notes or in studio-ops (attn's tracker is still waiting on"
+            },
+            {
+              "at": "2026-10-22T02:19:14.943Z",
+              "to": "user:local:local",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Update on the Harbor Print item: peer just reported in studio-ops that Harbor Print says the brochure paper stock is back in stock. This may be what the quote w"
+            },
+            {
+              "at": "2026-10-22T02:19:27.471Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Thanks \u2014 noted. I've relayed that to the owner: they asked me to follow up on the Harbor Print quote, and the stock news may be what it was waiting on. Still wa"
+            },
+            {
+              "at": "2026-10-22T02:29:26.850Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "always confirming: agreed, I stay on recurring due-date reminders off attn's tracker and won't send further Harbor Print relays to the owner \u2014 for the record, m"
+            }
+          ],
+          "run_starts": [
+            1792630732.728618,
+            1792631332.731039,
+            1792631932.736837,
+            1792632532.742613,
+            1792633132.722432,
+            1792633732.724675,
+            1792634332.74448,
+            1792634932.716989,
+            1792635532.718157,
+            1792636132.720918,
+            1792636731.373664,
+            1792637331.379068,
+            1792637931.39013,
+            1792638531.394517,
+            1792639131.399404,
+            1792639731.358551,
+            1792640331.357946,
+            1792640931.357477
+          ],
+          "quiet_at": [],
+          "failure_probe_status": [
+            "failed"
+          ],
+          "usage": {
+            "keepalive": {
+              "request_count": 49,
+              "input_tokens": 4265667,
+              "cache_read_tokens": 3887680,
+              "output_tokens": 15127,
+              "cost_usd": 0.06803924400000001
+            },
+            "failure-probe": {
+              "request_count": 0,
+              "input_tokens": null,
+              "cache_read_tokens": null,
+              "output_tokens": null,
+              "cost_usd": null
+            },
+            "other": {
+              "request_count": 2,
+              "input_tokens": 42512,
+              "cache_read_tokens": 36608,
+              "output_tokens": 533,
+              "cost_usd": 0.0010783024
+            },
+            "watch_total": {
+              "request_count": 51,
+              "input_tokens": 4308179,
+              "cache_read_tokens": 3924288,
+              "output_tokens": 15660,
+              "cost_usd": 0.06911754640000001
+            }
+          },
+          "run_reasons": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "lean": {
+          "turns": 12,
+          "quiet_ticks": 11,
+          "fires": 23,
+          "quiet_share": 0.478,
+          "peer_post_latency_secs": [
+            4.7,
+            4.7,
+            3.3
+          ],
+          "failure_latency_secs": [
+            539.7
+          ],
+          "check_in_at": [
+            "2026-10-22T05:14:20Z"
+          ],
+          "check_in_latency_secs": [
+            null
+          ],
+          "runs_woken_by": {
+            "channel post": 9,
+            "plan step": 0,
+            "check-in": 1,
+            "failed job": 1
+          },
+          "runs_floor_or_unexplained": 1,
+          "per_keepalive_turn": {
+            "request_count": 4.3,
+            "input_tokens": 336201.8,
+            "uncached_input_tokens": 25609.8,
+            "cache_read_tokens": 310592.0,
+            "output_tokens": 1978.5,
+            "cost_usd": 0.0050090026000000005
+          },
+          "plans_end": {
+            "plans": 1,
+            "titles": [
+              "Follow-ups"
+            ],
+            "steps": 1,
+            "steps_with_check_at": 1,
+            "open_steps": 0,
+            "snoozed_steps": 0,
+            "waiting_on_deps": 0,
+            "awake_steps": 0
+          },
+          "keepalive_replacements": [],
+          "nudges": [
+            {
+              "at": 1792631883.095718,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T01:00:12.346173Z",
+              "next_run_at": "2026-10-22T01:18:03.092417Z"
+            },
+            {
+              "at": 1792632059.050809,
+              "channel": "pending",
+              "last_turn": "2026-10-22T01:20:59.047531Z",
+              "next_run_at": "2026-10-22T01:22:59.047531Z"
+            },
+            {
+              "at": 1792632573.910173,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T01:23:44.528940Z",
+              "next_run_at": "2026-10-22T01:29:33.906452Z"
+            },
+            {
+              "at": 1792635183.118715,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T01:51:13.599634Z",
+              "next_run_at": "2026-10-22T02:13:03.114839Z"
+            },
+            {
+              "at": 1792635567.514843,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:14:43.223609Z",
+              "next_run_at": "2026-10-22T02:19:27.511133Z"
+            },
+            {
+              "at": 1792635663.633232,
+              "channel": "pending",
+              "last_turn": "2026-10-22T02:21:03.630347Z",
+              "next_run_at": "2026-10-22T02:23:03.630347Z"
+            },
+            {
+              "at": 1792635956.996272,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:25:45.256796Z",
+              "next_run_at": "2026-10-22T02:27:45.256796Z"
+            },
+            {
+              "at": 1792636166.889548,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:28:30.519717Z",
+              "next_run_at": "2026-10-22T02:30:30.519717Z"
+            },
+            {
+              "at": 1792636386.343389,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:31:03.289498Z",
+              "next_run_at": "2026-10-22T02:33:06.342455Z"
+            },
+            {
+              "at": 1792636386.36903,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:31:03.289498Z",
+              "next_run_at": "2026-10-22T02:33:06.364918Z"
+            },
+            {
+              "at": 1792639383.155818,
+              "channel": "group:studio-ops",
+              "last_turn": "2026-10-22T02:43:30.690941Z",
+              "next_run_at": "2026-10-22T03:23:03.153710Z"
+            }
+          ],
+          "nudge_outcomes": [
+            {
+              "at": 1792631883.099908,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792631907.41315,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Pending"
+            },
+            {
+              "at": 1792631963.034302,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Pending"
+            },
+            {
+              "at": 1792632121.546673,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792632573.913463,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635183.122609,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635567.519274,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792635591.875749,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Pending"
+            },
+            {
+              "at": 1792635760.719117,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792635957.000846,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636166.894012,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636386.346507,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636386.375895,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            },
+            {
+              "at": 1792636386.385974,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.403093,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.415145,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.427163,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.438218,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.462256,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.487314,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792636386.500298,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "AlreadySooner"
+            },
+            {
+              "at": 1792639383.16233,
+              "principal": "prin_6edc3e9b060e4ff990d9edf775b18c3b",
+              "channel": "group:studio-ops",
+              "outcome": "Moved"
+            }
+          ],
+          "nudge_outcome_counts": {
+            "AlreadySooner": 10,
+            "Moved": 9,
+            "Pending": 3
+          },
+          "turns_nudged": 9,
+          "turns_nudged_at": [
+            "2026-10-22T01:18:07.746188Z",
+            "2026-10-22T01:23:02.751795Z",
+            "2026-10-22T01:29:37.752226Z",
+            "2026-10-22T02:13:07.728151Z",
+            "2026-10-22T02:19:27.719287Z",
+            "2026-10-22T02:23:07.728872Z",
+            "2026-10-22T02:27:47.729471Z",
+            "2026-10-22T02:30:32.732180Z",
+            "2026-10-22T03:23:06.410873Z"
+          ],
+          "quiet_ticks_nudged": 2,
+          "channel_sends": [
+            {
+              "at": "2026-10-22T01:50:15.745Z",
+              "to": "dm_1ecb7988f280c6e398104ef7d84525d365e554983bacf95dce68e54af9263196",
+              "outcome": "error",
+              "origin": "keepalive",
+              "text": "Reminder: 45 minutes are up \u2014 you asked me to come back to the Harbor Print quote now. I don't have a copy of it in my notes or channels; what would you like me"
+            },
+            {
+              "at": "2026-10-22T01:50:24.658Z",
+              "to": "dm_1ecb7988f280c6e398104ef7d84525d365e554983bacf95dce68e54af9263196",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Reminder: 45 minutes are up \u2014 you asked me to come back to the Harbor Print quote now. I don't have a copy of it in my notes or channels; what would you like me"
+            },
+            {
+              "at": "2026-10-22T02:14:12.361Z",
+              "to": "dm_1ecb7988f280c6e398104ef7d84525d365e554983bacf95dce68e54af9263196",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Update on the Harbor Print follow-up: peer just posted in #studio-ops that Harbor Print says the brochure paper stock is back in stock. That was likely the bloc"
+            },
+            {
+              "at": "2026-10-22T02:20:28.125Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Jumping in for coordination \u2014 my owner also asked me to follow up on the Harbor Print quote, and I've relayed the stock news to them on DM as well. Looks like w"
+            },
+            {
+              "at": "2026-10-22T02:25:09.692Z",
+              "to": "group:studio-ops",
+              "outcome": "ok",
+              "origin": "keepalive",
+              "text": "Accepting the split in principle \u2014 one voice per topic works for me. One correction on capability, though: I can't actually chase Harbor Print directly. They're"
+            }
+          ],
+          "run_starts": [
+            1792630752.72583,
+            1792631887.746188,
+            1792632182.751795,
+            1792632577.752226,
+            1792633777.730948,
+            1792635187.728151,
+            1792635567.719287,
+            1792635787.728872,
+            1792636067.729471,
+            1792636232.73218,
+            1792636986.387736,
+            1792639386.410873
+          ],
+          "quiet_at": [
+            1792631352.739209,
+            1792633177.73332,
+            1792634377.75313,
+            1792634977.732424,
+            1792636386.361221,
+            1792636391.359464,
+            1792637586.40006,
+            1792638186.402357,
+            1792638786.408515,
+            1792639986.391342,
+            1792640586.366655
+          ],
+          "failure_probe_status": [
+            "failed"
+          ],
+          "usage": {
+            "keepalive": {
+              "request_count": 52,
+              "input_tokens": 4034421,
+              "cache_read_tokens": 3727104,
+              "output_tokens": 23742,
+              "cost_usd": 0.0601080312
+            },
+            "failure-probe": {
+              "request_count": 0,
+              "input_tokens": null,
+              "cache_read_tokens": null,
+              "output_tokens": null,
+              "cost_usd": null
+            },
+            "other": {
+              "request_count": 3,
+              "input_tokens": 60230,
+              "cache_read_tokens": 56064,
+              "output_tokens": 167,
+              "cost_usd": 0.0007869792
+            },
+            "watch_total": {
+              "request_count": 55,
+              "input_tokens": 4094651,
+              "cache_read_tokens": 3783168,
+              "output_tokens": 23909,
+              "cost_usd": 0.0608950104
+            }
+          },
+          "run_reasons": [
+            null,
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 plan check-in(s) came due"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ],
+            [
+              "failed job(s): failure probe"
+            ],
+            [
+              "1 channel post(s) to look at"
+            ]
+          ]
+        }
+      },
+      "genesis_plans": {
+        "attn": {
+          "plans": 2,
+          "titles": [
+            "Plan the November team offsite",
+            "Keep the studio's vendor invoices paid on time"
+          ],
+          "steps": 8,
+          "steps_with_check_at": 3,
+          "open_steps": 8,
+          "snoozed_steps": 3,
+          "waiting_on_deps": 5,
+          "awake_steps": 0
+        },
+        "always": {
+          "plans": 2,
+          "titles": [
+            "Plan the November team offsite",
+            "Keep the studio's vendor invoices paid on time"
+          ],
+          "steps": 8,
+          "steps_with_check_at": 4,
+          "open_steps": 6,
+          "snoozed_steps": 2,
+          "waiting_on_deps": 0,
+          "awake_steps": 4
+        },
+        "lean": {
+          "plans": 0,
+          "titles": [],
+          "steps": 0,
+          "steps_with_check_at": 0,
+          "open_steps": 0,
+          "snoozed_steps": 0,
+          "waiting_on_deps": 0,
+          "awake_steps": 0
+        }
+      },
+      "schedule_changes_by_principal": [],
+      "usage_total": {
+        "usage_source": "controller_observed_anthropic_usage",
+        "usage_complete": true,
+        "request_count": 179,
+        "rejected_request_count": 0,
+        "input_tokens": 12099067,
+        "uncached_input_tokens": 985531,
+        "output_tokens": 64267,
+        "cache_read_tokens": 11113536,
+        "cache_creation_tokens": 0,
+        "cost_usd": 0.18708700080000004,
+        "cost_basis": "payg_reference_not_subscription_charge",
+        "pricing": {
+          "input_per_million": 0.14,
+          "output_per_million": 0.28,
+          "cache_read_per_million": 0.0028
+        }
+      }
+    }
+  ],
+  "memory": [],
+  "genesis": [
+    {
+      "run": "20261022T004141Z-memory-heartbeat-attention",
+      "principal": "always",
+      "genesis_tool_calls": 19,
+      "memory_job_rewritten_at_genesis": false,
+      "memory_job_actions": [],
+      "memory_job_now": [
+        {
+          "id": "memory",
+          "runtime_brief": true,
+          "schedule": {
+            "kind": "every",
+            "every_ms": 86400000
+          },
+          "when": "quiet",
+          "enabled": true
+        }
+      ],
+      "genesis_memory_writes_held": 0,
+      "genesis_held_lines": 0,
+      "plans_created": 5
+    },
+    {
+      "run": "20261022T004141Z-memory-heartbeat-attention",
+      "principal": "attn",
+      "genesis_tool_calls": 18,
+      "memory_job_rewritten_at_genesis": false,
+      "memory_job_actions": [],
+      "memory_job_now": [
+        {
+          "id": "memory",
+          "runtime_brief": true,
+          "schedule": {
+            "kind": "every",
+            "every_ms": 86400000
+          },
+          "when": "quiet",
+          "enabled": true
+        }
+      ],
+      "genesis_memory_writes_held": 0,
+      "genesis_held_lines": 0,
+      "plans_created": 6
+    },
+    {
+      "run": "20261022T004141Z-memory-heartbeat-attention",
+      "principal": "lean",
+      "genesis_tool_calls": 9,
+      "memory_job_rewritten_at_genesis": false,
+      "memory_job_actions": [],
+      "memory_job_now": [
+        {
+          "id": "memory",
+          "runtime_brief": true,
+          "schedule": {
+            "kind": "every",
+            "every_ms": 86400000
+          },
+          "when": "quiet",
+          "enabled": true
+        }
+      ],
+      "genesis_memory_writes_held": 0,
+      "genesis_held_lines": 0,
+      "plans_created": 0
+    },
+    {
+      "run": "20261022T004141Z-memory-heartbeat-attention",
+      "principal": "peer",
+      "genesis_tool_calls": 10,
+      "memory_job_rewritten_at_genesis": false,
+      "memory_job_actions": [],
+      "memory_job_now": [
+        {
+          "id": "memory",
+          "runtime_brief": true,
+          "schedule": {
+            "kind": "every",
+            "every_ms": 86400000
+          },
+          "when": "quiet",
+          "enabled": false
+        }
+      ],
+      "genesis_memory_writes_held": 0,
+      "genesis_held_lines": 0,
+      "plans_created": 0
+    }
+  ],
+  "cross_principal_trunk_deliveries": [],
+  "runs": [
+    "20261022T004141Z-memory-heartbeat-attention"
+  ],
+  "schedule_changes": [],
+  "spend_all_attempts": {
+    "requests": 179,
+    "incomplete": 0,
+    "uncached_input": 985531,
+    "cache_read": 11113536,
+    "output": 64267,
+    "reference_cost_usd": 0.1871
+  },
+  "source_sha256": {
+    "runner/memory_heartbeat.py": "1927d276080b4a1d0fe0751ad18eeff2eb14feaf10f7833da89ae94272801979",
+    "runner/memory_heartbeat_memory.py": "bcf8c69aeff9cb853ef16ab867c0a925d7670a528bd14a90f746d869dd844f7f",
+    "runner/memory_heartbeat_peko.py": "e151f7d453a9979909c3c9dd164b7f7dffac2cff39713898f8fe9c0101c06766",
+    "runner/memory_heartbeat_report.py": "7b886e52dc601dbd360bef2d10c1438902dbc78e87d9723a0c53a561e49beab4",
+    "runner/memory_path_probe.py": "805571fce7db197d95cfe3218956cf0a8b1bb3e8d215309c2fbfd02df59bc36e",
+    "runner/memory_review_probe.py": "168be6a1add9fd2fd6cb849e9aa7ebe3471f93c0e05f75c76d1a431247740ad6",
+    "scenarios/memory_heartbeat/heartbeat.toml": "8ec26548c882f882519cd16f605284001de884ea18c54d6973254fa18119e4ae",
+    "scenarios/memory_heartbeat/memory.toml": "0527350c3ce651e26339a92e41dd0dbaa852cfad27590ad870461642c9759a28"
+  }
+}
