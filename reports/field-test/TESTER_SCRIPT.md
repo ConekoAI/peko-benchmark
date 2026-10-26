@@ -23,7 +23,7 @@ computer. You'll set one up and use it, by following Peko's own guides:
 
 ### 1. Install Peko
 Follow *Getting Started → 1. Install*. Peko has only test releases so far,
-so add `--version 0.1.0-rc.4` as the guide's note explains.
+so add `--version 0.1.0-rc.5` as the guide's note explains.
 **Done when** `peko --version` prints a version.
 
 ### 2. Connect your model

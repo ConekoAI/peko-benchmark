@@ -6,13 +6,8 @@ hands off the keyboard and record what you see.
 ## Before the session (15 min)
 
 - [ ] **The release exists and passed its smoke job.**
-  `gh release view v0.1.0-rc.4` lists four archives. The release run's
+  `gh release view v0.1.0-rc.5` lists four archives. The release run's
   `smoke` jobs are green.
-- [ ] **The installer fix is in.** ConekoAI/peko-runtime#509 is merged on
-  `master`; the guide's `curl` command fetches `install.sh` from `master`.
-  Before #509, `--install-dir ~/.local/bin` into a directory that didn't
-  exist asked for `sudo` and installed nothing. If you run the session
-  before it merges, that is a known P1: record it if it happens.
 - [ ] **The machine is clean.** `command -v peko` prints nothing, and
   `~/.peko` doesn't exist. `curl` is installed. Note the OS and version,
   the CPU (Apple silicon, Intel, x86_64 or arm64) and the terminal app.
@@ -40,12 +35,12 @@ error (a screenshot or copy), what they expected, and what they did next.
 
 | # | Task | Done when | Watch for (seen in our own runs) |
 |---|---|---|---|
-| 1 | Install | `peko --version` prints a version | Where `--version 0.1.0-rc.4` goes (`bash -s -- --version …`). The `sudo` prompt for `/usr/local/bin`. `command not found` after `--install-dir`. |
+| 1 | Install | `peko --version` prints a version | Where `--version 0.1.0-rc.5` goes (`bash -s -- --version …`). The `sudo` prompt for `/usr/local/bin`. `command not found` after `--install-dir`. |
 | 2 | Connect the model | `model test` says *Connection successful* | The multi-line command with `\`. Quoting the key. A slow first reply: the test waits 30 s. |
 | 3 | Create the peko | *is alive* | `create` waits 1–2 min for the first turn. Do they think it hung? The `Genesis: …` lines are jargon. |
 | 4 | Talk to it | Three answers, and they're in `peko log` | The reply streams. `peko log` timestamps and truncation; are its lines readable? |
 | 5 | Remember | It recalls the name and the like in a new message | Whether it says it saved them. It should recall without being reminded. |
-| 6 | Reminder | The reminder appears in the conversation | It appears only in the conversation; there's no system notification. Do they find it (`peko log`, or `peko log --watch`)? Note the due time and the arrival time; about a minute late is normal. On `v0.1.0-rc.4` there are two known P2s; note how the tester reacts rather than filing them again: the reminder line starts with a raw key (`📨 [did:key:…]`), and the peko then posts its own bookkeeping ("Reminder delivered… One-shot job fired…"). ConekoAI/peko-runtime#510 fixes both; on a candidate that includes it, either one is a regression. |
+| 6 | Reminder | The reminder appears in the conversation | It appears only in the conversation; there's no system notification. Do they find it (`peko log`, or `peko log --watch`)? Note the due time and the arrival time; about a minute late is normal. Expect one clean line (for example "💧 Reminder: drink some water!"). A raw key on it (`📨 [did:key:…]`), or a second message about the job ("Reminder delivered… One-shot job fired…"), is a regression of ConekoAI/peko-runtime#510: file it as P2. |
 | 7 | Skill | The answer follows the skill | Pasting the `cat > … <<'EOF'` block, and the `W=…` line before it. Does the peko use the skill unprompted? |
 | 8 | Back up (optional) | A `.peko` file exists in their folder | Where the file lands. |
 

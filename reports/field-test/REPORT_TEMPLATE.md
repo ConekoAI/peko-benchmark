@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| **Release** | `v0.1.0-rc.4` (commit `…`) |
+| **Release** | `v0.1.0-rc.5` (commit `…`) |
 | **Tester** | Initials. Background in one line, e.g. "accountant, uses a laptop daily, has never opened a terminal". |
 | **Observer** | Name |
 | **Machine** | OS and version, CPU (Apple silicon / Intel / x86_64 / arm64), terminal app |

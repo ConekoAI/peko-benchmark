@@ -28,7 +28,7 @@ release candidate, or none was found.
 
 ## The session at a glance
 
-- **Release:** `v0.1.0-rc.4`, or the newest candidate if a later one exists.
+- **Release:** `v0.1.0-rc.5`, or the newest candidate if a later one exists.
   Use the same release for the whole session.
 - **People:** a tester who has never used Peko and doesn't write code for a
   living, and an observer who knows Peko.
@@ -49,8 +49,8 @@ macOS arm64, MiMo v2.6 Flash, a throwaway home) passed every task.
   arrived about a minute late.
 - **What it found:** the installer bug fixed in ConekoAI/peko-runtime#509
   (a missing `--install-dir` installed nothing), and the two reminder P2s
-  listed in the checklist. Those are fixed in ConekoAI/peko-runtime#510,
-  which reaches testers with the next release candidate.
+  listed in the checklist. #509 fixed `install.sh` on `master`. #510 fixed
+  the reminder P2s, and `v0.1.0-rc.5` is the first candidate to carry it.
 
 ## The model card
 
