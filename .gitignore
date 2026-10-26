@@ -5,6 +5,8 @@ reports/*/
 # Historical field-test reports migrated from peko-runtime scripts/e2e are
 # curated artifacts, not run output — keep them tracked.
 !reports/field-history/
+# The field-test kit and the reports filed with it (peko-runtime MVP gate 5).
+!reports/field-test/
 
 __pycache__/
 *.pyc
