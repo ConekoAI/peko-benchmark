@@ -49,7 +49,8 @@ macOS arm64, MiMo v2.6 Flash, a throwaway home) passed every task.
   arrived about a minute late.
 - **What it found:** the installer bug fixed in ConekoAI/peko-runtime#509
   (a missing `--install-dir` installed nothing), and the two reminder P2s
-  listed in the checklist.
+  listed in the checklist. Those are fixed in ConekoAI/peko-runtime#510,
+  which reaches testers with the next release candidate.
 
 ## The model card
 
