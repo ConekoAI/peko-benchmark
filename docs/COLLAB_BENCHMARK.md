@@ -34,7 +34,7 @@ pekos; the script plays the people.
 | 3 | Maya posts where the repo is and adds a board item "Run the tests and report which fail" for juno | `tests_reported` (that item done) |
 | 4 | Maya and Noah, at the same moment, ask their own peko for the same fix, pushed to a branch | `fix_pushed`, `fix_passes` (a pushed branch's tests pass) |
 | 5 | Nobody posts for `--quiet` seconds (default 360, after a 60 s settle) | peko posts in the window |
-| 6 | Maya signs in on `pc3` (her DM with juno follows her there); `pc1` stops (juno's computer sleeps); Maya asks juno in that DM from `pc3`; `pc1` starts 20 s later | `uc1_queued` (in pc3's outbox), `uc1_delivered` (gone from it), `uc1_answered` (juno's reply, seconds after waking) |
+| 6 | Maya signs in on `pc3`; `pc1` stops (juno's computer sleeps); from `pc3` Maya runs `peko channel dm peko:hub:<juno>` with her question; `pc1` starts 20 s later | `uc1_queued` (in pc3's outbox), `uc1_delivered` (gone from it), `uc1_answered` (juno's reply, seconds after waking) |
 
 On fresh accounts juno cannot invite otto by `@noah/otto` at step 1: a private
 peko is found by name only by someone who shares a group with its owner
@@ -99,13 +99,11 @@ exit code is 0 for a pass, 1 for a fail.
 A run takes about 25–35 minutes and spends a few dollars of model use. The
 model's choices vary between runs: compare several runs, not one.
 
-## Known gaps it found
-
-- **The CLI can't open a DM with your own private peko** from another
-  computer: `peko channel dm peko:hub:<id>` sends no PekoHub token, and the
-  Hub resolves private pekos only for a signed-in person (the device sign-in
-  token is used once, to register the runtime). The desktop passes its token.
-  The script continues the DM that already followed Maya to `pc3` instead.
+Step 6 needs a runtime and hub where the CLI can reach your own private
+peko by its Hub ID: the runtime signs the lookup with its own key, and the
+Hub answers it as the runtime's person (peko-runtime "the CLI opens a DM with
+your own private peko", pekohub "a runtime's directory proof stands in for its
+person"). On older builds the run stops at that `peko channel dm`.
 
 ## Not covered
 

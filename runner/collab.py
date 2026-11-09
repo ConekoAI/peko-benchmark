@@ -520,19 +520,16 @@ def main() -> int:
 
         # 6. Use case 1: juno's computer sleeps; Maya asks from another one.
         if not args.skip_uc1:
-            # Maya's DM with juno: the same id on each of her computers, and
-            # it follows her to pc3 when pc3 signs in (ADR-095).
-            dm = next(c for c in channel_ids(pc1.run("channel", "ls", "juno", "--json"))
-                      if c.startswith("dm_"))
             pc3 = Runtime("pc3", run_dir, hub, key)
             runtimes.append(pc3)
             pc3.setup(maya_token)
-            if wait_for(lambda: (pc3.channels_dir() / dm).is_dir(), 90, 3) is None:
-                raise RuntimeError("Maya's DM with juno did not follow her to pc3")
+            juno = hub.peko("juno")
             pc1.stop()
             wait_for(lambda: hub.peko("juno").get("status") == "offline", 120, 3)
             asked_at = now()
-            pc3.run("channel", "post", dm, "me", ASK_WHILE_ASLEEP)
+            # From the CLI, by juno's PekoHub ID: pc3 has no PekoHub token of
+            # Maya's, so its runtime vouches for her (pekohub PekoRuntime proof).
+            pc3.run("channel", "dm", f"peko:hub:{juno['hub_id']}", ASK_WHILE_ASLEEP)
             step("uc1_queued", wait_for(lambda: any(ASK_WHILE_ASLEEP in t for t in pc3.outbox_texts()), 30, 2))
             time.sleep(20)
             wake = time.monotonic()

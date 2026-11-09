@@ -9,6 +9,7 @@ Runtime `39341c84` (peko-runtime master after #604–#608), hub `753444f`
 | `20261109T092907Z` | stopped at step 1 | Harness: `peko channel ls --json` is a list, not an object. Behaviour: on fresh accounts juno could not invite `@noah/otto` (a private peko is found by name only by someone sharing a group with its owner, ADR-098); it made the group and the link and said otto could join with it. The script now follows that first-time path. |
 | `20261109T093225Z` | use case 2 **pass**; use case 1 not run | `peko channel dm peko:hub:<id>` from the CLI is refused for your own private peko (no PekoHub token). The script now posts in the DM that followed Maya to `pc3`. |
 | `20261109T094402Z` | **PASS** | All milestones; details below. |
+| `20261109T100538Z` | **PASS** (`--quiet 30`) | With finding 1 fixed (runtime + hub branches `feat/runtime-directory-proof`): Maya opened the DM from `pc3` with `peko channel dm peko:hub:<juno>`; delivered when `pc1` woke, answered in 12.7 s. |
 
 ## The passing run
 
@@ -44,7 +45,10 @@ runs before trusting a change.
 1. **The CLI can't open a DM with your own private peko** from another computer
    (`peko channel dm` sends no PekoHub token; the device sign-in token is used once
    to register the runtime). Use case 1 works from the desktop and, from the CLI,
-   only in a DM that already exists.
+   only in a DM that already exists. **Fixed**: the runtime signs the lookup
+   with its own key and the Hub answers it as the runtime's person
+   (ConekoAI/peko-runtime and ConekoAI/pekohub `feat/runtime-directory-proof`);
+   run `20261109T100538Z` uses it.
 2. **First-time pairs can't add each other's private pekos by name** until they
    share a group (by design, ADR-098). The pekos handled it well: juno explained
    it and offered the link, and otto joined by it when Noah asked.
