@@ -523,13 +523,13 @@ def main() -> int:
             pc3 = Runtime("pc3", run_dir, hub, key)
             runtimes.append(pc3)
             pc3.setup(maya_token)
-            juno = hub.peko("juno")
             pc1.stop()
             wait_for(lambda: hub.peko("juno").get("status") == "offline", 120, 3)
             asked_at = now()
-            # From the CLI, by juno's PekoHub ID: pc3 has no PekoHub token of
-            # Maya's, so its runtime vouches for her (pekohub PekoRuntime proof).
-            pc3.run("channel", "dm", f"peko:hub:{juno['hub_id']}", ASK_WHILE_ASLEEP)
+            # From the CLI, by juno's name: pc3 has no PekoHub token of Maya's,
+            # so its runtime vouches for her (pekohub PekoRuntime proof), and
+            # PekoHub finds a private peko by name for its owner.
+            pc3.run("channel", "dm", "@maya/juno", ASK_WHILE_ASLEEP)
             step("uc1_queued", wait_for(lambda: any(ASK_WHILE_ASLEEP in t for t in pc3.outbox_texts()), 30, 2))
             time.sleep(20)
             wake = time.monotonic()
