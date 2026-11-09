@@ -9,6 +9,12 @@ This repo measures capability and carries the historical field-test reports.
 Runtime unit/integration tests answer "did this specific fix hold?"; this repo
 answers "can the harness actually do the work, and where does it fall over?"
 
+The [collaboration benchmark](docs/COLLAB_BENCHMARK.md) scripts the two core
+use cases end to end on a fresh PekoHub: two people and their pekos fix a bug
+through a group with a board, then one asks their peko while its computer is
+asleep. It scores milestones, chattiness and loops, duplicate work, and whether
+every computer sees the same board.
+
 The [continuity benchmark](docs/CONTINUITY_BENCHMARK.md) adds a separate multi-turn
 pilot: accept commitments, revise/cancel them, restart the daemon, then act on
 dependency events without stale or duplicate deliveries. It measures continuity
@@ -155,6 +161,8 @@ runner/memory_heartbeat_peko.py  # multi-principal isolated daemon with labelled
 runner/memory_heartbeat_memory.py  # scripted owner/guest days and forced nightly passes
 runner/memory_heartbeat_report.py  # run directories -> one JSON evidence file
 runner/memory_review_probe.py  # direct replay of the ADR-085 reviewer request shape (--plants: round-4 plant lines)
+runner/collab.py  # the two core use cases scripted: group + board on a repo, a sleeping host
+runner/collab_score.py  # its grader (posts per human post, loops, duplicates, board agreement)
 profiles/        # explicit provider configuration for continuity pilots
 scenarios/continuity/ # sequential events; controller-owned expected actions
 scenarios/responsibility/ # shared world timeline; controller-owned oracle
