@@ -1,20 +1,27 @@
 # Observer checklist
 
 You run the session and write the report; the tester drives. Keep your
-hands off the keyboard and record what you see.
+hands off the keyboard and record what you see. This checklist is for the
+human session on Peko Desktop. The agent's command-line run has its own
+short section at the end.
 
 ## Before the session (15 min)
 
-- [ ] **The release exists and passed its smoke job.**
-  `gh release view v0.1.0-rc.5` lists four archives. The release run's
-  `smoke` jobs are green.
-- [ ] **The machine is clean.** `command -v peko` prints nothing, and
-  `~/.peko` doesn't exist. `curl` is installed. Note the OS and version,
-  the CPU (Apple silicon, Intel, x86_64 or arm64) and the terminal app.
+- [ ] **The desktop release is published, not a draft.**
+  `gh release view v0.1.0-rc.6 -R ConekoAI/peko-desktop` shows the
+  installers, and the page opens in a browser that isn't signed in to
+  GitHub.
+- [ ] **The machine is clean.** Peko Desktop isn't installed and has never
+  run here, `command -v peko` prints nothing, and `~/.peko` doesn't exist.
+  The app shows its welcome steps only when no peko exists, and it
+  remembers having shown them; deleting `~/.peko` doesn't reset that. A
+  fresh user account is the simplest clean machine. Note the OS and
+  version and the CPU (Apple silicon, Intel, x64).
 - [ ] **The model card is ready** (see the kit's README). The key works:
-  try it on another machine, or trust a recent `peko model test`.
-- [ ] **Both guides are open** in the tester's browser on GitHub (links on
-  the tester script). Nothing else is open.
+  try it on another machine first.
+- [ ] **The release page is open** in the tester's browser:
+  `https://github.com/ConekoAI/peko-desktop/releases/tag/v0.1.0-rc.6`.
+  Nothing else is open.
 - [ ] **The tester agrees** to being observed and to their conversation
   being summarised in the report. Ask before recording the screen. Ask them
   not to share anything private with the peko.
@@ -22,44 +29,47 @@ hands off the keyboard and record what you see.
 
 ## While they work
 
-**Intervention rule.** Intervene only when the tester is stuck, has tried the
-guide's *Troubleshooting* section, and two minutes have passed, or when they
-ask. Give the smallest hint that unblocks them, and write down the task,
-the time and exactly what you said. A task that needed a hint is
-**Hinted**, not **Done**.
+**Intervention rule.** Intervene only when the tester is stuck, has looked
+around the app for two minutes, or when they ask. Give the smallest hint
+that unblocks them, and write down the task, the time and exactly what you
+said. A task that needed a hint is **Hinted**, not **Done**.
 
-**For every problem, record** the command they typed, the exact output or
-error (a screenshot or copy), what they expected, and what they did next.
+**For every problem, record** what they clicked or typed, the exact message
+on screen (a screenshot), what they expected, and what they did next.
 
 ### Per task
 
-| # | Task | Done when | Watch for (seen in our own runs) |
+| # | Task | Done when | Watch for |
 |---|---|---|---|
-| 1 | Install | `peko --version` prints a version | Where `--version 0.1.0-rc.5` goes (`bash -s -- --version …`). The `sudo` prompt for `/usr/local/bin`. `command not found` after `--install-dir`. |
-| 2 | Connect the model | `model test` says *Connection successful* | The multi-line command with `\`. Quoting the key. A slow first reply: the test waits 30 s. |
-| 3 | Create the peko | *is alive* | `create` waits 1–2 min for the first turn. Do they think it hung? The `Genesis: …` lines are jargon. |
-| 4 | Talk to it | Three answers, and they're in `peko log` | The reply streams. `peko log` timestamps and truncation; are its lines readable? |
-| 5 | Remember | It recalls the name and the like in a new message | Whether it says it saved them. It should recall without being reminded. |
-| 6 | Reminder | The reminder appears in the conversation | It appears only in the conversation; there's no system notification. Do they find it (`peko log`, or `peko log --watch`)? Note the due time and the arrival time; about a minute late is normal. Expect one clean line (for example "💧 Reminder: drink some water!"). A raw key on it (`📨 [did:key:…]`), or a second message about the job ("Reminder delivered… One-shot job fired…"), is a regression of ConekoAI/peko-runtime#510: file it as P2. |
-| 7 | Skill | The answer follows the skill | Pasting the `cat > … <<'EOF'` block, and the `W=…` line before it. Does the peko use the skill unprompted? |
-| 8 | Back up (optional) | A `.peko` file exists in their folder | Where the file lands. |
+| 1 | Install the app | A window says *Welcome to Peko* | Which of the nine files they pick, and whether the names tell them (`aarch64` / `x64`; `.dmg`, `.msi`, `-setup.exe`, `.AppImage`, `.deb`, `.rpm`; the two `.app.tar.gz` files are not installers). **The app is not signed.** macOS refuses a downloaded copy ("can't be opened" or "is damaged"); Windows SmartScreen warns. Record the exact wording and what they do. Needing you to get past it is a P1 at least; if they'd have stopped for good, call it P0. |
+| 2 | Connect the model | The step changes to *Name your peko* | The form asks for a base URL and a key, then offers the endpoint's own list of models. Do they find the card's model in it? Do they need the API format, and can they find where to set it? What does a wrong key say? |
+| 3 | Create the peko | The app says the peko is awake | Creating takes a minute or more. Does the app show it's working? Do they think it hung? |
+| 4 | Talk to it | Three answers | The suggested first messages. Does the reply appear as it's written? Anything on screen they can't name (ids, paths, tool names)? |
+| 5 | Reminder | They've seen the reminder | Note the due time, the arrival time, and how they noticed: a system notification, a mark on the app, or only on coming back. Did the system ask to allow notifications, and when? About a minute late is normal. A reminder that arrives but goes unnoticed for the five minutes is a P1. One that never arrives is a P0. |
+| 6 | Close and come back | Earlier messages are readable | Quit, not just close the window. Does the app come back to the conversation? Any error while it starts up? On macOS, does reopening hit the unsigned-app warning again? |
+| 7 | Look around (optional) | Found the peko's profile and where models are added | Where they look first. What they think PekoHub and signing in are for. |
 
-Between tasks, glance at `peko daemon status` from a second terminal if you
-can do it without disturbing them. A daemon that stopped on its own is a P0.
+Signing in to PekoHub is not part of the session. If the tester signs in on
+their own, let them, and note what they expected from it.
+
+Once, while the app is open, check from a terminal yourself (the tester
+never sees one): `pgrep -fl peko-daemon`, or `Get-Process peko-daemon` on
+Windows. No daemon while the app is open is a P0. After the tester quits in
+task 6, check again: a daemon still running after the app has quit is a P2.
 
 ## Classify every finding
 
 | Level | Meaning | Examples |
 |---|---|---|
-| **P0** | Blocks the core loop (the gate's definition). | Can't install; can't converse; a message or reminder is lost (it never arrives, or a reply vanishes from the log); the daemon crashes or stops. A skill that never reaches the peko at all. |
-| **P1** | The task needed a hint, or the output would make a real user give up or do the wrong thing. | A misleading error; a step the guide doesn't explain; a reminder more than 5 minutes late. |
-| **P2** | Friction: slow, confusing or ugly, but the tester got through alone. | Jargon in output; a long wait with no feedback. |
+| **P0** | Blocks the core loop (the gate's definition). | Can't install or open the app; can't converse; a message or reminder is lost (it never arrives, or a reply vanishes from the conversation); the app or its daemon crashes or stops. |
+| **P1** | The task needed a hint, or what's on screen would make a real user give up or do the wrong thing. | A misleading error; a step the app doesn't explain; a reminder more than 5 minutes late, or one that arrives unnoticed. |
+| **P2** | Friction: slow, confusing or ugly, but the tester got through alone. | Jargon on screen; a long wait with no feedback. |
 | **P3** | Polish and wishes. | Wording; nice-to-haves the tester mentions. |
 
-The model's own judgment is not a runtime bug, for example a reply that is
-correct but poorly phrased. Record it as P3, unless the runtime gave the
-model wrong or empty input (for example, empty tool results). That is a P0
-or P1 by its effect.
+The model's own judgment is not a Peko bug, for example a reply that is
+correct but poorly phrased. Record it as P3, unless Peko gave the model
+wrong or empty input (for example, empty tool results). That is a P0 or P1
+by its effect.
 
 ## Debrief (5 min)
 
@@ -75,13 +85,16 @@ Ask, and write down the answers in their words:
 
 From the test machine, before cleanup:
 
+- Screenshots of the conversation and of every error. Summarise the
+  conversation in the report; don't commit it.
+- The app's version, from its About screen.
+- The daemon's warnings:
+
 ```bash
-peko --version
-peko daemon status
-peko list
-peko log <their-peko> --limit 50 > field-test-log.txt   # their conversation; summarise, don't commit
 grep -E " (ERROR|WARN) " ~/.peko/logs/daemon.log | tail -50 > field-test-daemon-warnings.txt
 ```
+
+On Windows the log is `%USERPROFILE%\.peko\logs\daemon.log`.
 
 Attach the warnings to the report, after removing anything personal. Don't
 attach the vault, `models.toml`, or anything that could contain the key.
@@ -91,22 +104,92 @@ attach the vault, `models.toml`, or anything that could contain the key.
 The test machine holds the observer's key in Peko's vault. When the evidence
 is collected:
 
+1. Quit the app and check no `peko-daemon` is left running.
+2. Uninstall Peko Desktop the system's own way: drag it from Applications to
+   the Trash, use *Installed apps* on Windows, `apt remove` / `dnf remove`,
+   or delete the AppImage.
+3. Delete Peko's data:
+
 ```bash
-peko daemon stop
 rm -rf ~/.peko
 rm -rf "$HOME/Library/Application Support/peko"     # macOS data directory
 rm -rf ~/.local/share/peko                          # Linux data directory
-sudo rm -f /usr/local/bin/peko /usr/local/bin/peko-daemon   # or the --install-dir they used
-sudo rm -f /etc/systemd/system/peko@.service        # Linux with systemd only
 ```
 
+```powershell
+Remove-Item -Recurse -Force "$env:USERPROFILE\.peko", "$env:APPDATA\peko"
+```
+
+4. The app keeps a little state of its own outside `~/.peko`, in the
+   system's per-user app data under the name `com.pekobot.desktop`. Delete
+   that folder too if the machine will host another session.
+
 Rotate the key afterwards if the machine isn't yours.
+
+## The agent's command-line run
+
+No one watches this run live. Before it:
+
+- [ ] `gh release view v0.1.0-rc.6 -R ConekoAI/peko-runtime` lists five
+  archives, and the release run's `smoke` jobs are green.
+- [ ] The container or throwaway home is clean: `command -v peko` prints
+  nothing, `~/.peko` doesn't exist, and there is no checkout of any Peko
+  repository in it.
+- [ ] The agent starts with `AGENT_BRIEF.md` (below its line, model card
+  filled in) as its whole brief and the key in `PEKO_TEST_KEY`. It has no
+  memory or notes about Peko. Don't add steps, commands or links, and
+  don't answer its questions about Peko during the run.
+
+After it, check each result yourself on the machine, then read the whole
+transcript. The agent's summary is a claim, not evidence.
+
+| # | Asked for | Check it yourself |
+|---|---|---|
+| 0 | Install rc.6 | `peko --version` prints `0.1.0-rc.6`; `peko-daemon` sits beside `peko` in `~/.local/bin`. |
+| 1 | A peko | `peko list` shows it. |
+| 2 | Three exchanges | `peko log <name>` has three questions and three answers. |
+| 3 | Remembers Sam and hiking | The recall is in the log, in a later message than the telling. `kb/MEMORY.md` in the peko's workspace mentions them. |
+| 4 | Reminder | One reminder line in the log, at most about a minute after it was due. The agent's two times match the log. |
+| 5 | Haiku skill | A skill file exists in the peko's workspace, and the haiku in the log ends with `-- peko`. |
+| 6 | A job on the machine | `notes/today.md` exists in the peko's workspace with three ideas, written by the peko (the tool ledger shows the write: `peko audit ledger <name>`), not by the agent. |
+| 7 | Backup | The `.peko` file exists where the agent says. |
+| 8 | Restart | The daemon's start time is after the stop, and the answer naming Sam is after that. |
+
+Mark each one:
+
+- **Done:** the result holds, and the agent got there from help text,
+  messages and docs with at most one failed attempt.
+- **Hinted:** the result holds, but only after several failed attempts, a
+  guess, a workaround (such as writing a file the peko should have
+  written), or reading source code. Say which.
+- **Failed** or **Skipped.**
+
+What to pull out of the transcript:
+
+- **Every failed command** before the working one, with its output. Was the
+  error message enough to find the fix?
+- **Where it looked.** `--help` at which level, which doc pages, in what
+  order. A page it needed and didn't find is a finding about the docs'
+  layout.
+- **Guesses**, right or wrong. A right guess still means the help didn't
+  say.
+- **Rule breaks:** source code read, repository cloned, key printed. Record
+  them; the run still counts, but the tasks it touched are **Hinted**.
+- **Waits.** Did it take `create`'s 1 to 2 minutes for a hang and kill it?
+  Did it poll for the reminder sensibly?
+
+Classify findings with the table above. The finding is what Peko made hard,
+however smoothly the agent recovered. Known from earlier runs: `model test`
+waits 30 s; a reminder about a minute late is normal; a raw key on the
+reminder line (`📨 [did:key:…]`) or a second message about the job is a
+regression of ConekoAI/peko-runtime#510 (P2).
 
 ## File the report
 
 1. Copy `REPORT_TEMPLATE.md` to `YYYY-MM-DD-<tester-initials>.md` in this
    folder and fill it in the same day.
-2. Open an issue in `ConekoAI/peko-runtime` for every P0 and P1, and link
-   each one from the report.
+2. Open an issue for every P0 and P1, in `ConekoAI/peko-desktop` for the
+   app or `ConekoAI/peko-runtime` for the runtime and command line, and
+   link each one from the report.
 3. Commit the report to peko-benchmark, and update gate 5 in
    `peko-runtime/docs/MVP_GATE.md` with its link and the P0 count.
