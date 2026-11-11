@@ -145,7 +145,7 @@ transcript. The agent's summary is a claim, not evidence.
 
 | # | Asked for | Check it yourself |
 |---|---|---|
-| 0 | Install rc.6 | `peko --version` prints `0.1.0-rc.6`; `peko-daemon` sits beside `peko` in `~/.local/bin`. |
+| 0 | Install rc.6 | `peko` and `peko-daemon` sit side by side in `~/.local/bin`, and the transcript shows the rc.6 archive being downloaded (its SHA-256 is in the release notes). `peko --version` prints only `0.1.0` on a candidate, so it can't confirm which one. |
 | 1 | A peko | `peko list` shows it. |
 | 2 | Three exchanges | `peko log <name>` has three questions and three answers. |
 | 3 | Remembers Sam and hiking | The recall is in the log, in a later message than the telling. `kb/MEMORY.md` in the peko's workspace mentions them. |
@@ -177,6 +177,11 @@ What to pull out of the transcript:
   them; the run still counts, but the tasks it touched are **Hinted**.
 - **Waits.** Did it take `create`'s 1 to 2 minutes for a hang and kill it?
   Did it poll for the reminder sensibly?
+
+Collect `ERROR` and `WARN` lines from `~/.peko/logs/daemon.log` as for the
+human session, knowing that the restart in goal 8 erased everything before
+it: starting the daemon truncates the log. `peko audit tail` reads the
+audit files, which are kept.
 
 Classify findings with the table above. The finding is what Peko made hard,
 however smoothly the agent recovered. Known from earlier runs: `model test`
