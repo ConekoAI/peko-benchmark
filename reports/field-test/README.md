@@ -69,6 +69,11 @@ and verified on a new release candidate, or none was found.
   report's agent section. Using `--help` is the expected path. What gets
   recorded is every command that failed before one worked, every guess,
   and any look at source code.
+- **On macOS,** Peko keeps its vault key in the keychain, and a headless
+  agent can't answer the system's prompt. A Linux container avoids it. On a
+  Mac, either let the prompt count as a finding, or set
+  `PEKO_UNLOCK_METHOD=passphrase` and `PEKO_MASTER_PASSPHRASE` in the
+  agent's environment and say so in the report.
 - **Runs:** one is enough for the gate. Agents vary from run to run, so a
   second run, or a second agent, shows which stumbles are Peko's.
 
@@ -82,8 +87,11 @@ The command-line loop was dry-run by a developer following the guides on `v0.1.0
   (a missing `--install-dir` installed nothing), and two reminder P2s fixed
   in #510. `v0.1.0-rc.5` is the first candidate to carry both.
 
-Nothing has been dry-run on `v0.1.0-rc.6`, and the desktop tasks have never
-been dry-run. Do the desktop one yourself, on a machine or user account
+The agent brief was tried once on `v0.1.0-rc.6` (2026-11-11, a Haiku agent
+in a throwaway home on macOS): all eight goals reached, one of them hinted,
+four P2 findings, no P0. See
+[2026-11-11-agent-trial.md](2026-11-11-agent-trial.md). The desktop tasks
+have never been dry-run. Do the desktop one yourself, on a machine or user account
 where the app has never run, before the session.
 
 ## The model card
