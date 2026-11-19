@@ -34,7 +34,7 @@ pekos; the script plays the people.
 | 3 | Maya posts where the repo is and adds a board item "Run the tests and report which fail" for juno | `tests_reported` (that item done) |
 | 4 | Maya and Noah, at the same moment, ask their own peko for the same fix, pushed to a branch | `fix_pushed`, `fix_passes` (a pushed branch's tests pass) |
 | 5 | Nobody posts for `--quiet` seconds (default 360, after a 60 s settle) | peko posts in the window |
-| 6 | Maya signs in on `pc3`; `pc1` stops (juno's computer sleeps); from `pc3` Maya runs `peko channel dm @maya/juno` with her question; `pc1` starts 20 s later | `uc1_queued` (in pc3's outbox), `uc1_delivered` (gone from it), `uc1_answered` (juno's reply, seconds after waking) |
+| 6 | Maya signs in on `pc3` and joins it to her account with a code from `pc1` (`peko device add` / `peko device join`); `pc1` stops (juno's computer sleeps); from `pc3` Maya runs `peko channel dm @maya/juno` with her question; `pc1` starts 20 s later | `uc1_queued` (in pc3's outbox), `uc1_delivered` (gone from it), `uc1_answered` (juno's reply, seconds after waking) |
 
 On fresh accounts juno cannot invite otto by `@noah/otto` at step 1: a private
 peko is found by name only by someone who shares a group with its owner
