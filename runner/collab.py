@@ -294,6 +294,38 @@ class Runtime:
         if proc.returncode:
             raise RuntimeError(f"{self.name}: sign-in failed")
 
+    def add_device(self, other: "Runtime"):
+        """Put `other` on this account's device list: this computer shows a
+        code, the other joins with it (runtime ADR-111). A PekoHub sign-in
+        alone adds nothing, and a computer that is not on the list is not
+        taken as its owner."""
+        proc = subprocess.Popen([str(PEKO_BIN), "device", "add"], env=self.env, cwd=self.home,
+                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                stdin=subprocess.DEVNULL, text=True)
+        seen, code = [], None
+        deadline = time.monotonic() + 60
+        while time.monotonic() < deadline and code is None:
+            line = proc.stdout.readline()
+            if not line:
+                break
+            seen.append(line)
+            match = re.search(r"\b([A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4})\b", line)
+            if match:
+                code = match.group(1)
+        if code is None:
+            proc.kill()
+            self.log.write("$ peko device add\n" + "".join(seen))
+            raise RuntimeError(f"{self.name}: no code from device add")
+        try:
+            other.run("device", "join", code, timeout=180)
+        finally:
+            try:
+                rest, _ = proc.communicate(timeout=60)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                rest, _ = proc.communicate()
+            self.log.write("$ peko device add\n" + "".join(seen).replace(code, "[code]") + rest)
+
     def start(self):
         self.run("daemon", "start")
 
@@ -523,6 +555,9 @@ def main() -> int:
             pc3 = Runtime("pc3", run_dir, hub, key)
             runtimes.append(pc3)
             pc3.setup(maya_token)
+            # Her second computer joins her account with a code from the
+            # first, while it is still awake.
+            pc1.add_device(pc3)
             pc1.stop()
             wait_for(lambda: hub.peko("juno").get("status") == "offline", 120, 3)
             asked_at = now()
