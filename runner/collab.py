@@ -624,13 +624,13 @@ def main() -> int:
             asked_at = now()
             start = time.monotonic()
             pc1.run("channel", "post", group, "me", ASK_HANDOFF_WORK)
-            reached = wait_for(lambda: approver.asked_since("otto", start), 600, 2)
-            step("handoff_work_owner_asked", None if reached is None else round(time.monotonic() - start, 1))
-            work: dict[str, str] = {"asked_at": asked_at}
+            work: dict = {"asked_at": asked_at}
 
+            # otto may answer from a run it already made (when it made the
+            # fix itself), so asking Noah is recorded, not required.
             def otto_reported_work():
-                if not approver.approved_since("otto", start):
-                    return False
+                if "owner_asked_s" not in work and approver.asked_since("otto", start):
+                    work["owner_asked_s"] = round(time.monotonic() - start, 1)
                 events = pc1.channel_events("group")
                 posts = [e for e in (events[0][1] if events else [])
                          if e.get("kind") == "posted" and e.get("at", "") > asked_at
@@ -641,8 +641,9 @@ def main() -> int:
                     work["reported"] = posts[-1]["at"]
                 return bool(posts)
 
-            reached = wait_for(otto_reported_work, 900, 3) if reached is not None else None
+            reached = wait_for(otto_reported_work, 900, 3)
             step("handoff_work_done", None if reached is None else round(time.monotonic() - start, 1))
+            log.write(f"{now()} handoff_work owner asked: {work.get('owner_asked_s', 'no')}")
 
             def juno_relayed():
                 events = pc1.channel_events("group")
@@ -727,7 +728,7 @@ def main() -> int:
 
     for name in ("group_formed", "noah_joined", "otto_joined", "tests_reported", "fix_pushed", "fix_passes",
                  *(("handoff_peer_answered", "handoff_reported", "handoff2_peer_answered", "handoff2_reported",
-                    "handoff_work_owner_asked", "handoff_work_done", "handoff_work_reported")
+                    "handoff_work_done", "handoff_work_reported")
                    if args.handoff else ()),
                  *(() if args.skip_uc1 else ("uc1_queued", "uc1_delivered", "uc1_answered"))):
         milestones.setdefault(name, None)
