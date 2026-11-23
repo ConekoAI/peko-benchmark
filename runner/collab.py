@@ -63,6 +63,21 @@ ASK_FIX_MAYA = "@juno please fix median so the even-length test passes, and push
 ASK_FIX_NOAH = "@otto can you fix the even-length median bug and push the fix to a branch?"
 ASK_OTTO_JOIN = "Please join our stats-team group with this link: {link}"
 ASK_WHILE_ASLEEP = "When you're back: what is still open on the stats-team board?"
+# No @ before otto: a person's mention wakes otto by itself, and the step
+# measures juno reaching otto. The second question follows the first at
+# once, while otto has just had a turn.
+ASK_HANDOFF = [
+    "@juno please ask otto whether Noah still wants otto's own fix now that yours is "
+    "pushed, and tell me what otto says.",
+    "@juno thanks. Now ask otto which file otto would add a regression test to for this "
+    "bug, and tell me what otto says.",
+]
+# Work only otto's owner can let it do (ADR-120 D5): otto hands it to Noah,
+# who approves it.
+ASK_HANDOFF_WORK = (
+    "@juno one more: ask otto to clone the repo, run the tests on your fix branch, and "
+    "report the result to you, then tell me what it found."
+)
 
 STATS_PY = '''"""Small statistics helpers."""
 
@@ -383,6 +398,9 @@ class Approver(threading.Thread):
         self.log = log
         self.first_seen: dict[str, float] = {}
         self.approved: list[str] = []
+        # request -> (peko, monotonic time approved)
+        self.approved_at: dict[str, tuple[str, float]] = {}
+        self.peko_of: dict[str, str] = {}
         self.stop_event = threading.Event()
 
     def run(self):
@@ -394,11 +412,19 @@ class Approver(threading.Thread):
                     continue
                 for request in re.findall(r"^(apr_[0-9a-f]+)", listing, re.M):
                     seen = self.first_seen.setdefault(request, time.monotonic())
+                    self.peko_of.setdefault(request, peko)
                     if request in self.approved or time.monotonic() - seen < self.delay:
                         continue
                     runtime.run("approve", peko, request, timeout=60, check=False)
                     self.approved.append(request)
+                    self.approved_at[request] = (peko, time.monotonic())
                     self.log.write(f"{now()} approved {request} for {peko}")
+
+    def asked_since(self, peko: str, since: float) -> bool:
+        return any(p == peko and self.first_seen[r] >= since for r, p in self.peko_of.items())
+
+    def approved_since(self, peko: str, since: float) -> bool:
+        return any(p == peko and at >= since for p, at in self.approved_at.values())
 
     def counts(self) -> dict:
         return {"requested": len(self.first_seen), "approved": len(self.approved)}
@@ -449,6 +475,9 @@ def main() -> int:
     parser.add_argument("--quiet", type=float, default=360,
                         help="seconds of nobody posting after the fix (default 360)")
     parser.add_argument("--skip-uc1", action="store_true", help="skip the sleeping-computer part")
+    parser.add_argument("--handoff", action="store_true",
+                        help="after the fix, Maya has juno ask otto something and report back "
+                             "(peko-to-peko hand-off, peko-runtime ADR-120)")
     args = parser.parse_args()
     key = os.environ.get("PEKO_API_KEY", "")
     if not key:
@@ -493,7 +522,10 @@ def main() -> int:
         # 1. Maya asks juno for the group, with otto and a link for Noah.
         start = time.monotonic()
         reply = pc1.run("send", "juno", ASK_GROUP, timeout=600)
-        link = re.search(r"https?://\S+/g/\S+?invite=[A-Za-z0-9._\-]+", reply)
+        # The last link the CLI prints: it shows a link the runtime
+        # corrected after the reply streamed ("Invite link as sent").
+        links = list(re.finditer(r"https?://\S+/g/\S+?invite=[A-Za-z0-9._\-]+", reply))
+        link = links[-1] if links else None
         group = None
 
         def group_formed():
@@ -543,6 +575,85 @@ def main() -> int:
         step("fix_pushed", wait_for(lambda: branches(origin), 900, 10))
         pushed = branches(origin)
         step("fix_passes", 0.0 if any(branch_passes(origin, b, run_dir) for b in pushed) else None)
+
+        # 4b. Hand-offs between pekos (ADR-120): juno asks otto, otto
+        # answers, juno tells Maya; twice, the second right after the
+        # first. Measured from Maya's post.
+        if args.handoff:
+            time.sleep(30)  # let the fix's last turns finish
+            handoffs = []
+            for n, question in enumerate(ASK_HANDOFF, 1):
+                suffix = "" if n == 1 else str(n)
+                asked_at = now()
+                start = time.monotonic()
+                pc1.run("channel", "post", group, "me", question)
+                marks: dict[str, str] = {"asked_at": asked_at}
+
+                def peko_posts():
+                    events = pc1.channel_events("group")
+                    return [e for e in (events[0][1] if events else [])
+                            if e.get("kind") == "posted" and collab_score.is_peko(e.get("author", ""))
+                            and not e.get("text", "").startswith("board:") and e.get("at", "") > asked_at]
+
+                def otto_answered():
+                    # juno's first post after Maya's: it may name otto by
+                    # its address rather than its name.
+                    asks = [e for e in peko_posts() if e["author"].startswith("principal:local:")]
+                    if not asks:
+                        return False
+                    answers = [e for e in peko_posts() if e["author"].startswith("principal:hub:")
+                               and e["at"] > asks[0]["at"]]
+                    if answers:
+                        marks["asked"], marks["answered"] = asks[0]["at"], answers[0]["at"]
+                    return bool(answers)
+
+                reached = wait_for(otto_answered, 900, 2)
+                step(f"handoff{suffix}_peer_answered",
+                     None if reached is None else round(time.monotonic() - start, 1))
+
+                def juno_reported():
+                    return any(e["author"].startswith("principal:local:") and e["at"] > marks["answered"]
+                               for e in peko_posts())
+
+                reached = wait_for(juno_reported, 900, 2) if "answered" in marks else None
+                step(f"handoff{suffix}_reported",
+                     None if reached is None else round(time.monotonic() - start, 1))
+                handoffs.append(marks)
+            # 4c. Work otto needs its owner for: otto hands it to Noah,
+            # Noah's approver lets it run, the report comes back, juno tells Maya.
+            asked_at = now()
+            start = time.monotonic()
+            pc1.run("channel", "post", group, "me", ASK_HANDOFF_WORK)
+            reached = wait_for(lambda: approver.asked_since("otto", start), 600, 2)
+            step("handoff_work_owner_asked", None if reached is None else round(time.monotonic() - start, 1))
+            work: dict[str, str] = {"asked_at": asked_at}
+
+            def otto_reported_work():
+                if not approver.approved_since("otto", start):
+                    return False
+                events = pc1.channel_events("group")
+                posts = [e for e in (events[0][1] if events else [])
+                         if e.get("kind") == "posted" and e.get("at", "") > asked_at
+                         and e.get("author", "").startswith("principal:hub:")
+                         and not e.get("text", "").startswith("board:")
+                         and re.search(r"\b(pass|passed|passing|fail|failed|OK)\b", e.get("text", ""), re.I)]
+                if posts:
+                    work["reported"] = posts[-1]["at"]
+                return bool(posts)
+
+            reached = wait_for(otto_reported_work, 900, 3) if reached is not None else None
+            step("handoff_work_done", None if reached is None else round(time.monotonic() - start, 1))
+
+            def juno_relayed():
+                events = pc1.channel_events("group")
+                return any(e.get("kind") == "posted" and e.get("author", "").startswith("principal:local:")
+                           and not e.get("text", "").startswith("board:") and e.get("at", "") > work["reported"]
+                           for e in (events[0][1] if events else []))
+
+            reached = wait_for(juno_relayed, 600, 3) if "reported" in work else None
+            step("handoff_work_reported", None if reached is None else round(time.monotonic() - start, 1))
+            handoffs.append(work)
+            evidence["handoff"] = handoffs
 
         # 5. Nobody posts for a while: the pekos should go quiet too.
         time.sleep(60)  # let the last turns finish before the window opens
@@ -615,6 +726,9 @@ def main() -> int:
         hub.stop()
 
     for name in ("group_formed", "noah_joined", "otto_joined", "tests_reported", "fix_pushed", "fix_passes",
+                 *(("handoff_peer_answered", "handoff_reported", "handoff2_peer_answered", "handoff2_reported",
+                    "handoff_work_owner_asked", "handoff_work_done", "handoff_work_reported")
+                   if args.handoff else ()),
                  *(() if args.skip_uc1 else ("uc1_queued", "uc1_delivered", "uc1_answered"))):
         milestones.setdefault(name, None)
     (run_dir / "evidence.json").write_text(json.dumps({"meta": meta, **evidence}, indent=2))
