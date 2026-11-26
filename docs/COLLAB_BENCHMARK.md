@@ -63,6 +63,23 @@ spend an approval on it.
 - **Approvals** requested and approved; **branches** pushed; **spend** per peko
   (its `quota_state.json`).
 
+- **Pekos talking to pekos** (peko-runtime ADR-128), read and not graded:
+  - *Exchanges*: runs of peko messages between two messages by people in which
+    one addresses another peko (a mention, or a reply to its post). Each ended
+    by itself, or was held: a peko's wake limit held a post during it (the
+    `holds` times in the pekos' wake books).
+  - *Wakes by other pekos* per peko, the posts its limit held, and what is
+    still held at the end.
+  - *Turns* from each peko's sessions: turns another peko's post started,
+    compiled wakes (several posts delivered at once), how often a turn ended
+    with a reply the peko did not post and whether it posted it when asked,
+    and turns a `ChannelRead` watch result started, which the limit does not see.
+  - *Posts to a peko with nothing from it after*: no message, reaction or board
+    change. A thanks that needs no answer counts too, so read the list.
+
+  These say when the limit can be raised or removed: once exchanges end by
+  themselves and no reply is left unposted, it is not doing anything.
+
 A run **passes** when every milestone is reached and:
 
 - peko posts per human post ≤ 3;
@@ -91,7 +108,7 @@ PEKO_API_KEY=... python3 runner/collab.py
 | `PEKOHUB_DB_CONTAINER` / `PEKOHUB_DB_PORT` | `pekohub-db` / `5433` |
 | `COLLAB_HUB_PORT` | `3931` (the run's hub; `+1` is its unused web origin) |
 
-Flags: `--approve-after SECONDS`, `--quiet SECONDS`, `--skip-uc1`, `--handoff` (step 4b; peko-runtime ADR-120 lets one peko's mention wake another, so the hand-off takes one wake each way instead of waiting for keepalives).
+Flags: `--approve-after SECONDS`, `--quiet SECONDS`, `--skip-uc1`, `--handoff` (step 4b; peko-runtime ADR-120 lets one peko's mention wake another, so the hand-off takes one wake each way instead of waiting for keepalives). `--wake-limit N` lets other pekos wake each peko only N times an hour in the group (peko-runtime ADR-128), so the limit is reached: posts are held, each owner gets a request to let their peko continue, and the approver grants it after the same delay as any request (counted as `wake_limits_lifted`).
 
 A run writes `reports/<run>-collab/`: `run.log` (steps and milestones), one
 command log per computer (`pc1.log`, …, key redacted), the hub's logs,
