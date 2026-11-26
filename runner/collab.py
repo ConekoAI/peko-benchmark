@@ -372,6 +372,30 @@ class Runtime:
                 continue
         return out
 
+    def wake_book(self, peko: str) -> dict:
+        """The peko's wake books (peko-runtime ADR-128), all its groups
+        together: when other pekos woke it, when its limit held a post,
+        and what is still held."""
+        book: dict = {"spent": [], "holds": [], "held": []}
+        for f in self.peko_home.glob(f"data/pekos/{peko}/local/group_wakes/*.json"):
+            try:
+                one = json.loads(f.read_text())
+            except ValueError:
+                continue
+            for key in book:
+                book[key] += one.get(key, [])
+        return book
+
+    def session_counts(self, peko: str) -> dict:
+        """What the peko's sessions say about turns other pekos started."""
+        totals: dict = {}
+        for f in self.peko_home.glob(f"data/pekos/{peko}/local/sessions/*.jsonl"):
+            try:
+                collab_score.add_counts(totals, collab_score.session_counts(f.read_text()))
+            except OSError:
+                continue
+        return totals
+
     def quota(self, peko: str) -> dict:
         """The peko's usage this run: requests and tokens (its cost is 0
         unless the model catalog has prices for the model)."""
@@ -401,6 +425,9 @@ class Approver(threading.Thread):
         # request -> (peko, monotonic time approved)
         self.approved_at: dict[str, tuple[str, float]] = {}
         self.peko_of: dict[str, str] = {}
+        # (peko, wake-limit request) -> monotonic time first seen
+        self.wake_seen: dict[tuple[str, str], float] = {}
+        self.wake_limits_lifted = 0
         self.stop_event = threading.Event()
 
     def run(self):
@@ -410,6 +437,17 @@ class Approver(threading.Thread):
                     listing = runtime.run("approvals", peko, timeout=30, check=False)
                 except Exception:  # noqa: BLE001
                     continue
+                # A wake limit that holds posts (peko-runtime ADR-128 D6): the
+                # owner lets the peko continue, after the same delay. Kept
+                # apart from the requests a step waits for.
+                for request in re.findall(r"^(wakes-\S+)", listing, re.M):
+                    seen = self.wake_seen.setdefault((peko, request), time.monotonic())
+                    if time.monotonic() - seen < self.delay:
+                        continue
+                    runtime.run("approve", peko, request, timeout=60, check=False)
+                    del self.wake_seen[(peko, request)]
+                    self.wake_limits_lifted += 1
+                    self.log.write(f"{now()} let {peko} continue past its wake limit")
                 for request in re.findall(r"^(apr_[0-9a-f]+)", listing, re.M):
                     seen = self.first_seen.setdefault(request, time.monotonic())
                     self.peko_of.setdefault(request, peko)
@@ -427,7 +465,8 @@ class Approver(threading.Thread):
         return any(p == peko and at >= since for p, at in self.approved_at.values())
 
     def counts(self) -> dict:
-        return {"requested": len(self.first_seen), "approved": len(self.approved)}
+        return {"requested": len(self.first_seen), "approved": len(self.approved),
+                **({"wake_limits_lifted": self.wake_limits_lifted} if self.wake_limits_lifted else {})}
 
 
 def seed_repo(run_dir: Path) -> Path:
@@ -478,6 +517,9 @@ def main() -> int:
     parser.add_argument("--handoff", action="store_true",
                         help="after the fix, Maya has juno ask otto something and report back "
                              "(peko-to-peko hand-off, peko-runtime ADR-120)")
+    parser.add_argument("--wake-limit", type=int, default=None, metavar="N",
+                        help="let other pekos wake each peko only N times an hour in the group, so the "
+                             "limit is reached and the owner lets it continue (peko-runtime ADR-128)")
     args = parser.parse_args()
     key = os.environ.get("PEKO_API_KEY", "")
     if not key:
@@ -492,7 +534,8 @@ def main() -> int:
     run_dir.mkdir(parents=True)
     log = Log(run_dir / "run.log", [key])
     meta = {"run_id": run_id, "runtime_commit": commit_of(RUNTIME_DIR), "hub_commit": commit_of(HUB_DIR),
-            "model": MODEL, "approve_after": args.approve_after, "quiet": args.quiet}
+            "model": MODEL, "approve_after": args.approve_after, "quiet": args.quiet,
+            **({"wake_limit": args.wake_limit} if args.wake_limit is not None else {})}
     log.write(f"{now()} run {json.dumps(meta)}")
 
     hub = Hub(run_dir, Log(run_dir / "hub.log", []))
@@ -551,6 +594,12 @@ def main() -> int:
             pc2.run("send", "otto", ASK_OTTO_JOIN.format(link=link.group(0)), timeout=600)
         reached = wait_for(lambda: "otto" in members(), 180, 5)
         step("otto_joined", None if reached is None else round(time.monotonic() - start, 1))
+
+        if args.wake_limit is not None:
+            for rt, peko in ((pc1, "juno"), (pc2, "otto")):
+                grp = group_of(rt.run("channel", "ls", peko, "--json", check=False))
+                if grp:
+                    rt.run("channel", "wakes", grp, "--peko", peko, "--hour", str(args.wake_limit))
 
         approver = Approver([(pc1, "juno"), (pc2, "otto")], args.approve_after, log)
         approver.start()
@@ -718,8 +767,18 @@ def main() -> int:
             evidence["approvals"] = approver.counts() if approver else {}
             origin_path = run_dir / "origin.git"
             evidence["branches_pushed"] = branches(origin_path) if origin_path.exists() else []
-            evidence["spend"] = {p: rt.quota(p) for rt, p in
-                                 [(r, "juno" if r.name == "pc1" else "otto") for r in runtimes[:2]]}
+            pekos = [(r, "juno" if r.name == "pc1" else "otto") for r in runtimes[:2]]
+            evidence["spend"] = {p: rt.quota(p) for rt, p in pekos}
+            # Pekos talking to pekos (peko-runtime ADR-128). In pc1's copy of
+            # the group, its own peko is `principal:local:…` and the other
+            # computer's is `principal:hub:…`.
+            authors = {e.get("author", "") for e in evidence.get("group_events", [])}
+            evidence["peko_names"] = {
+                a: ("juno" if a.startswith("principal:local:") else "otto")
+                for a in authors if collab_score.is_peko(a)
+            }
+            evidence["wakes"] = {p: rt.wake_book(p) for rt, p in pekos}
+            evidence["sessions"] = {p: rt.session_counts(p) for rt, p in pekos}
         except Exception as e:  # noqa: BLE001
             log.write(f"collect failed: {e!r}")
         for rt in runtimes:
